@@ -42,6 +42,7 @@
   --chamfer-16: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
   --pad-x: clamp(16px, 5vw, 48px);
   --dbm-nav: 100px;
+  --nav-pad: 20px; --nav-pad-tight: 12px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -69,11 +70,22 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 
 /* Header: Home sample (R sticky nav, Archivo navigation, header phone plate with hazard strip) */
 .nav { position: sticky; top: 0; z-index: 40; background: var(--charcoal); padding: 0 var(--pad-x); }
-.navbar { display: flex; align-items: center; justify-content: space-between; gap: clamp(18px, 3vw, 44px); flex-wrap: wrap; padding: 20px 0; transition: padding .25s ease; }
+.navbar { display: flex; align-items: center; justify-content: space-between; gap: clamp(18px, 3vw, 44px); flex-wrap: wrap; padding: var(--nav-pad) 0; transition: padding .25s ease; }
 .brand { flex: none; display: flex; align-items: center; }
 .brand img { height: 54px; width: auto; transition: height .25s ease; }
+/* Tightened header (Home sample R: 12 px padding, 38 px logo, 30 px on phones), switched by service-page.js once the page scrolls past 92 px.
+   The spacer under the header grows by exactly what the header loses, on the same 0.25 s ease, so the page below never moves
+   and the browser's scroll anchoring has nothing to correct. Before this, the corrections pushed the scroll position back across
+   92 px and the header kept switching between its two sizes. The spacer is charcoal so that it reads as header if it is ever on screen. */
+.nav.is-tight .navbar { padding-top: var(--nav-pad-tight); padding-bottom: var(--nav-pad-tight); }
+.nav.is-tight .brand img { height: 38px; }
+.nav-spacer { display: block; height: 0; background: var(--charcoal); transition: height .25s ease; }
+.nav.is-tight + .nav-spacer { height: calc(2 * (var(--nav-pad) - var(--nav-pad-tight))); }
+.nav.is-snap .navbar, .nav.is-snap .brand img, .nav.is-snap + .nav-spacer { transition: none; }
 .nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
-.nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
+/* word-spacing makes each space in a label 0.32 em with its letter spacing, the width the Char Stagger gives it, so the menu row
+   does not shift when the motion engine starts and lines up with the Home page */
+.nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; word-spacing: -0.1764em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
 /* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
 @media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
@@ -101,10 +113,11 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 /* Primary call button: board C07/C06 orange chamfer, with the Home sample's Slat Wipe and its type settings
    (Archivo 700 capitals at 0.30 em for the label, Sora 700 for the number) */
 .btn-orange { position: relative; display: inline-flex; border: 0; padding: 0; margin: 0; background: none; cursor: pointer; text-decoration: none; }
-.btn-orange .cf { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 30px; background: var(--orange); color: #FFFFFF; clip-path: var(--chamfer-16); transition: clip-path .32s cubic-bezier(.215,.61,.355,1); }
-.btn-orange:hover .cf, .btn-orange:focus-visible .cf { clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 26px 100%, 0 calc(100% - 26px)); }
+/* The notch rests at 14 px and opens to 22 px, the values the Home rig in dbm-motion.js sets, so the button does not change shape when the engine starts */
+.btn-orange .cf { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 30px; background: var(--orange); color: #FFFFFF; clip-path: var(--chamfer-14); transition: clip-path .3s cubic-bezier(.25,.46,.45,.94); }
+.btn-orange:hover .cf, .btn-orange:focus-visible .cf { clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px)); }
 .btn-orange .slats { position: absolute; inset: 0; }
-.btn-orange .slat { position: absolute; top: -12%; bottom: -12%; width: 27%; background: var(--charcoal); transform: skewX(-20deg) scaleY(0); transform-origin: bottom center; transition: transform .26s ease; }
+.btn-orange .slat { position: absolute; top: -12%; bottom: -12%; width: 27%; background: var(--charcoal); transform: skewX(-20deg) scaleY(0); transform-origin: top center; transition: transform .26s cubic-bezier(.25,.46,.45,.94); }
 .btn-orange .slat:nth-child(1) { left: -6%; } .btn-orange .slat:nth-child(2) { left: 15%; transition-delay: .04s; } .btn-orange .slat:nth-child(3) { left: 36%; transition-delay: .08s; } .btn-orange .slat:nth-child(4) { left: 57%; transition-delay: .12s; } .btn-orange .slat:nth-child(5) { left: 78%; transition-delay: .16s; }
 .btn-orange:hover .slat, .btn-orange:focus-visible .slat { transform: skewX(-20deg) scaleY(1); }
 .btn-orange:active .cf { transform: translateY(2px); }
@@ -345,8 +358,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 /* Phone width only: board C04 BAR-01 Phone Action Bar */
 .callbar { display: none; }
 @media (max-width: 700px) {
-  .callbar { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(20,20,20,0.97); box-shadow: 0 -1px 0 var(--dark-rule); transform: translateY(115%); transition: transform .34s ease; }
-  .callbar.on { transform: none; }
+  /* Board C04 BAR-01 timings: the bar rises in 0.34 s (power3.out) and steps down in 0.26 s (power2.in). While it is down it is
+     hidden from pointer, keyboard, and screen reader once the step-down ends. */
+  .callbar { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(20,20,20,0.97); box-shadow: 0 -1px 0 var(--dark-rule); transform: translateY(115%); visibility: hidden; transition: transform .26s cubic-bezier(.55,.085,.68,.53), visibility 0s linear .26s; }
+  .callbar.on { transform: none; visibility: visible; transition: transform .34s cubic-bezier(.215,.61,.355,1), visibility 0s; }
   .callbar .btn-orange .cf { min-height: 54px; padding: 12px 10px; }
   .callbar .btn-orange .num { font-size: 16px; }
   .callbar .btn-orange .k { font-size: 11px; letter-spacing: 0.2em; }
@@ -365,8 +380,9 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   .cards { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
 }
 @media (max-width: 620px) {
-  .navbar { padding: 14px 0; }
+  :root { --nav-pad: 14px; }
   .brand img { height: 34px; }
+  .nav.is-tight .brand img { height: 30px; }
   .phone-plate .plate-face { min-height: 46px; gap: 7px; padding: 9px 10px 14px 12px; }
   .phone-plate .k { font-size: 10.5px; }
   .phone-plate .num { font-size: 15px; }
@@ -396,7 +412,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .stag-a, .stag-b { display: block; white-space: nowrap; }
 .stag-b { position: absolute; left: 0; top: 0; }
 .stag-a > span, .stag-b > span { display: inline-block; }
-.stag .sp { width: 0.3em; }
+.stag .sp { width: 0.32em; }
 
 /* Home sample orange action button: one Archivo label with an arrow, and the striped busy state while a form sends */
 .btn-orange .cf { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; }
@@ -1101,7 +1117,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
           <div class="strip"><span>DBM · WHAT THIS USUALLY MEANS</span></div>
           <div class="pb" data-replybody>
             <div data-reply="leak">
-              <h3>Visible leak</h3>
+              <h3>Visible Leak</h3>
               <dl class="fields1b">
                 <div><dt data-f>LIKELY CAUSE</dt><dd>A burst or chafed hose, a loose or cracked fitting, a leaking valve seal, or a worn rod seal, which leaves a ring of oil on the cylinder rod.</dd></div>
                 <div><dt data-f>WE CHECK</dt><dd>Where the oil comes from, with the area cleaned and the system under pressure, because oil runs downhill and the wet spot is often below the leak.</dd></div>
@@ -1110,7 +1126,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
               </dl>
             </div>
             <div data-reply="slow" hidden>
-              <h3>Slow or weak function</h3>
+              <h3>Slow or Weak Function</h3>
               <dl class="fields1b">
                 <div><dt data-f>LIKELY CAUSE</dt><dd>A worn pump, a <span class="tw" data-tipwrap><button type="button" data-tiptrigger aria-describedby="tp-relief">relief valve</button><span id="tp-relief" role="tooltip" data-tip><b>RELIEF VALVE</b><span>A valve that opens to cap the system pressure. One that opens too early leaves a function weak.</span></span></span> that opens too early, a clogged filter or suction strainer, or oil passing the seals inside a cylinder or a motor.</dd></div>
                 <div><dt data-f>WE CHECK</dt><dd>Pump flow and system pressure with test gauges, compared with the maker’s specifications, to find whether the loss is at the pump, the valve, or the cylinder.</dd></div>
@@ -1119,7 +1135,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
               </dl>
             </div>
             <div data-reply="move" hidden>
-              <h3>Erratic movement or drift</h3>
+              <h3>Erratic Movement or Drift</h3>
               <dl class="fields1b">
                 <div><dt data-f>LIKELY CAUSE</dt><dd>Air in the oil, a low oil level, a sticking control valve spool, or worn piston seals that let a cylinder creep down while it holds a load.</dd></div>
                 <div><dt data-f>WE CHECK</dt><dd>The oil level and condition, the control valve, and a <span class="tw" data-tipwrap><button type="button" data-tiptrigger aria-describedby="tp-drift">drift test</button><span id="tp-drift" role="tooltip" data-tip><b>DRIFT TEST</b><span>The technician holds a load up and measures how far each cylinder creeps down over a set time.</span></span></span> on each cylinder with a load held up.</dd></div>
@@ -1128,7 +1144,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
               </dl>
             </div>
             <div data-reply="heat" hidden>
-              <h3>Hot oil or a loud pump</h3>
+              <h3>Hot Oil or a Loud Pump</h3>
               <dl class="fields1b">
                 <div><dt data-f>LIKELY CAUSE</dt><dd>A low oil level, a clogged oil cooler or filter, a relief valve that stays open, or a worn pump. Foamy oil points to air getting in on the suction side, and milky oil points to water.</dd></div>
                 <div><dt data-f>WE CHECK</dt><dd>The oil level, the cooler, the filters, and the relief settings, and we take an oil sample when the oil looks contaminated.</dd></div>
@@ -1286,7 +1302,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
             </a>
           </li>
           <li class="svcitem">
-            <div class="svcwin"><img src="../../assets/b36d203e72429fea.jpg" alt="A gear assembly taken apart, showing a splined shaft, a large toothed gear, and a retainer plate with bolts" loading="lazy" style="object-position: 50% 50%"></div>
+            <div class="svcwin"><img src="../../assets/c6805e859dd5098e.jpg" alt="A white DBM crane service truck parked on a gravel lot beside a flatbed trailer loaded with a yellow excavator bucket and arm parts" loading="lazy" style="object-position: 50% 68%"></div>
             <a class="svclink" href="../../services/#parts">
               <span class="svccap">Order a hydraulic part</span>
               <span class="svcchip" aria-hidden="true"><span class="sl"></span><span class="sl"></span><span class="sl"></span><span class="sl"></span><span class="sl"></span><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span>
@@ -2475,7 +2491,8 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
       cnfRows.innerHTML = list.map(function (r) { return '<span>' + r[0] + '</span><span' + (r[1] ? '>' + esc(r[1]) : ' class="nil">Not given') + '</span>'; }).join('');
       recState.textContent = 'SENT'; recState.style.color = '#8FBF9F';
     };
-    if (cnf) cnf.send('Send the Machine Details', fill);
+    // The receipt is shorter than the form, so the page brings it into view instead of leaving the visitor below it
+    if (cnf) { cnf.send('Send the Machine Details', fill); setTimeout(function () { var t = card.getBoundingClientRect().top; if (t < 0 || t > innerHeight * 0.4) card.scrollIntoView({ block: 'start', behavior: R ? 'auto' : 'smooth' }); }, R ? 110 : 910); }
     else { fill(); form.style.display = 'none'; done.style.display = 'flex'; done.focus(); }
   });
   var dCopy = $('[data-dcopy]', done), dLab = $('[data-dcopylabel]', done), dSay = $('[data-dsay]', done), dBase = dLab.textContent, dDef = dSay.textContent, dT = null;

@@ -42,6 +42,7 @@
   --chamfer-16: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
   --pad-x: clamp(16px, 5vw, 48px);
   --dbm-nav: 100px;
+  --nav-pad: 20px; --nav-pad-tight: 12px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -755,6 +756,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .slides { margin-top: 28px; flex: 1 1 auto; }
 .slide { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: start; }
 .slide[hidden] { display: none; }
+/* CAR-08: every step shares one grid cell, so the card keeps the height of its longest step and the Back and Next buttons never move */
+.slides { display: grid; }
+.slides > .slide { grid-area: 1 / 1; }
+.slides > .slide[hidden] { display: grid; visibility: hidden; }
 .slide .big { color: #EF5016; font-family: 'Chakra Petch', sans-serif; font-size: 64px; font-weight: 700; line-height: 0.9; }
 .slide h4 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; line-height: 1.15; }
 .slide p { margin: 10px 0 0; color: #4B4F56; font-size: 17px; line-height: 1.6; max-width: 54ch; text-wrap: pretty; }
@@ -856,10 +861,11 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
   .rcard { min-height: 0; }
 }
 @media (max-width: 620px) {
-  .hero-fb { min-height: 0; }
-  .hero-fb .fb-copy { padding-top: 150px; }
-  .hero-fb .fb-img { object-position: 30% 50%; height: 62%; }
-  .hero-fb .fb-scrim { background: linear-gradient(0deg, #1A1A1A 0%, #1A1A1A 50%, rgba(26,26,26,0.86) 62%, rgba(26,26,26,0.3) 74%, rgba(26,26,26,0) 82%); }
+  /* Phone hero: the photo sits in its own 300 px band above the copy, as on the Hydraulic Services page, so the headline and lede never cross the bright sky or the white trucks */
+  .hero-fb { min-height: 0; justify-content: flex-start; }
+  .hero-fb .fb-img { position: relative; inset: auto; flex: none; height: 300px; object-position: 62% 60%; }
+  .hero-fb .fb-scrim { bottom: auto; height: 300px; background: linear-gradient(180deg, rgba(26,26,26,0.1) 0%, rgba(26,26,26,0) 45%, #1A1A1A 100%); }
+  .hero-fb .fb-copy { padding-top: 6px; }
   .hero-fb .acts .ch-btn, .hero-fb .acts .kb, .hero-fb .acts .kb [data-kplate] { width: 100%; }
   .hero-fb .facts { gap: 12px 16px; }
   .hero-fb .facts dd { font-size: 14px; }
@@ -1436,7 +1442,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
           </div>
         </div>
         <div class="track" tabindex="0" aria-label="Photos of DBM field service jobs">
-          <figure class="frame"><span class="win"><img src="../../assets/eda62f425e6e7200.jpg" alt="Two white service trucks, a black pickup, and a yellow rough-terrain crane beside a large orange Hitachi mining excavator in an open pit" loading="lazy"></span><figcaption><span class="t">Mining Excavator in an Open Pit</span><span class="d">Two of our service trucks and a rough-terrain crane set up beside a Hitachi mining excavator.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/3708d526786952c9.jpg" alt="A yellow mobile crane lifts the upper structure off an orange mining excavator in a gravel pit while a worker in a high-visibility vest stands by" loading="lazy" style="object-position: 50% 40%"></span><figcaption><span class="t">Mining Excavator Lift in the Pit</span><span class="d">A mobile crane lifts the upper structure off a mining excavator in the pit, so the repair happens where the machine works.</span></figcaption></figure>
           <figure class="frame"><span class="win"><img src="../../assets/912ce495ef962535.jpg" alt="Four service trucks and a mobile crane stand around a mining haul truck with its dump body raised" loading="lazy" style="object-position: 50% 35%"></span><figcaption><span class="t">Haul Truck Repair at the Mine</span><span class="d">Four service trucks and a mobile crane work around a mining haul truck with its dump body raised.</span></figcaption></figure>
           <figure class="frame"><span class="win"><img src="../../assets/ce5771d2435d4813.jpg" alt="Two white crane service trucks with booms raised beside the lift arm and bucket of a large wheel loader set on the ground" loading="lazy" style="object-position: 50% 62%"></span><figcaption><span class="t">Loader Lift Arm Removed in the Field</span><span class="d">Two crane trucks took a wheel loader’s lift arm and bucket off the machine and set them on the ground.</span></figcaption></figure>
           <figure class="frame"><span class="win"><img src="../../assets/1eb013588af150a4.jpg" alt="A large diesel engine hangs from a truck crane while a technician in a hard hat holds a tag line" loading="lazy" style="object-position: 50% 35%"></span><figcaption><span class="t">Engine Lift at the Job Site</span><span class="d">A technician steadies a diesel engine with a tag line while the truck’s crane lifts it.</span></figcaption></figure>
@@ -2535,7 +2541,8 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
       var d = data();
       lastText = 'DBM field service request\n' + d.map(function (r) { return r[1] + ': ' + (r[2] || NIL[r[0]] || 'Not given'); }).join('\n') + '\nField service dispatch: (775) 625-0062';
       var fill = function () { rows2.innerHTML = d.map(function (r) { return '<span>' + r[1] + '</span><span>' + esc(r[2] || NIL[r[0]] || 'Not given') + '</span>'; }).join(''); head.style.display = 'none'; };
-      if (cnf) cnf.send('Send to Field Service Dispatch', fill);
+      // The receipt is shorter than the form, so the page brings it into view instead of leaving the visitor below it
+      if (cnf) { cnf.send('Send to Field Service Dispatch', fill); setTimeout(function () { var t = card.getBoundingClientRect().top; if (t < 0 || t > innerHeight * 0.4) card.scrollIntoView({ block: 'start', behavior: R ? 'auto' : 'smooth' }); }, R ? 110 : 910); }
       else { fill(); form.style.display = 'none'; done.style.display = 'flex'; done.focus(); }
     });
     // CPY-03 What You Sent: copies the request as labeled lines and says what was copied
@@ -2575,7 +2582,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
   // TIP-01: a tooltip near the right edge of the screen opens leftward so it stays on screen
   $$('[data-tipwrap]').forEach(function (w) {
     var tip = w.querySelector('[data-tip]');
-    var place = function () { var r = w.getBoundingClientRect(); var wide = r.left + tip.offsetWidth > document.documentElement.clientWidth - 12; tip.style.left = wide ? 'auto' : '0'; tip.style.right = wide ? '0' : 'auto'; };
+    var place = function () { var vw = document.documentElement.clientWidth, r = w.getBoundingClientRect(), tw = tip.offsetWidth, x = 0; if (r.left + tw > vw - 12) x = vw - 12 - tw - r.left; if (r.left + x < 12) x = 12 - r.left; tip.style.right = 'auto'; tip.style.left = Math.round(x) + 'px'; };
     w.addEventListener('pointerenter', place); w.addEventListener('focusin', place);
     place(); window.addEventListener('resize', place);
   });

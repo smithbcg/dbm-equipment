@@ -42,6 +42,7 @@
   --chamfer-16: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
   --pad-x: clamp(16px, 5vw, 48px);
   --dbm-nav: 100px;
+  --nav-pad: 20px; --nav-pad-tight: 12px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -681,8 +682,11 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   .srow + .srow [data-edge] { left: 0; }
 }
 @media (max-width: 620px) {
-  .hero-fb { min-height: 82vh; }
-  .hero-fb .fb-img { object-position: 46% 70%; }
+  /* Phone hero: the photo sits in its own 300 px band above the copy, as on the Hydraulic Services page, so the headline and lede never cross the bright sky or the white trucks */
+  .hero-fb { min-height: 0; justify-content: flex-start; }
+  .hero-fb .fb-img { position: relative; inset: auto; flex: none; height: 300px; object-position: 46% 72%; }
+  .hero-fb .fb-scrim { bottom: auto; height: 300px; background: linear-gradient(180deg, rgba(26,26,26,0.1) 0%, rgba(26,26,26,0) 45%, #1A1A1A 100%); }
+  .hero-fb .fb-copy { padding-top: 6px; }
   .hero-fb .acts .ch-btn, .hero-fb .acts .kb, .hero-fb .acts .kb [data-kplate] { width: 100%; }
   .ch-btn { justify-content: center; padding: 18px 20px; letter-spacing: 0.18em; }
   .srow { grid-template-columns: 40px minmax(0, 1fr) 22px; gap: 14px; }
@@ -1973,7 +1977,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       done.querySelector('[data-donebody]').textContent = need === 'parts' ? 'The parts department looks up the part and calls or texts you with the price and the delivery date before anything is ordered. A request sent after hours is answered the next day.' : 'The service team reviews the machine details and calls or texts you back to schedule the technician. A request sent after hours is answered the next day, so for a machine that is down right now, call the office.';
       rows.innerHTML = list.map(function (r) { return '<span>' + r[0] + '</span><span>' + (r[1] ? esc(r[1]) : 'Not given') + '</span>'; }).join('');
     };
-    if (cnf) cnf.send('Send the request', fill);
+    // The receipt is shorter than the form, so the page brings it into view instead of leaving the visitor below it
+    if (cnf) { cnf.send('Send the request', fill); setTimeout(function () { var t = card.getBoundingClientRect().top; if (t < 0 || t > innerHeight * 0.4) card.scrollIntoView({ block: 'start', behavior: R ? 'auto' : 'smooth' }); }, R ? 110 : 910); }
     else { fill(); form.style.display = 'none'; done.style.display = 'flex'; }
   });
   done.querySelector('[data-cnfreset]').addEventListener('click', function () {
