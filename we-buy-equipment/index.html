@@ -42,6 +42,7 @@
   --chamfer-16: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
   --pad-x: clamp(16px, 5vw, 48px);
   --dbm-nav: 100px;
+  --nav-pad: 20px; --nav-pad-tight: 12px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -69,11 +70,26 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 
 /* Header: Home sample (R sticky nav, Archivo navigation, header phone plate with hazard strip) */
 .nav { position: sticky; top: 0; z-index: 40; background: var(--charcoal); padding: 0 var(--pad-x); }
-.navbar { display: flex; align-items: center; justify-content: space-between; gap: clamp(18px, 3vw, 44px); flex-wrap: wrap; padding: 20px 0; transition: padding .25s ease; }
+.navbar { display: flex; align-items: center; justify-content: space-between; gap: clamp(18px, 3vw, 44px); flex-wrap: wrap; padding: var(--nav-pad) 0; transition: padding .25s ease; }
 .brand { flex: none; display: flex; align-items: center; }
 .brand img { height: 54px; width: auto; transition: height .25s ease; }
-.nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
-.nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
+/* Tightened header (Home sample R: 12 px padding, 38 px logo, 30 px on phones), switched by service-page.js once the page scrolls past 92 px.
+   The spacer under the header grows by exactly what the header loses, on the same 0.25 s ease, so the page below never moves
+   and the browser's scroll anchoring has nothing to correct. Before this, the corrections pushed the scroll position back across
+   92 px and the header kept switching between its two sizes. The spacer is charcoal so that it reads as header if it is ever on screen. */
+.nav.is-tight .navbar { padding-top: var(--nav-pad-tight); padding-bottom: var(--nav-pad-tight); }
+.nav.is-tight .brand img { height: 38px; }
+.nav-spacer { display: block; height: 0; background: var(--charcoal); transition: height .25s ease; }
+.nav.is-tight + .nav-spacer { height: calc(2 * (var(--nav-pad) - var(--nav-pad-tight))); }
+.nav.is-snap .navbar, .nav.is-snap .brand img, .nav.is-snap + .nav-spacer { transition: none; }
+.nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; position: relative; }
+/* Page-to-page moves: one orange line travels from the last page's section to this page's section (board C08 NAV-01, 0.42 s
+   power3.inOut), driven by the header partial. The current link's own underline waits until the line arrives. */
+.nav-kerf { position: absolute; left: 0; top: 0; width: 0; height: 3px; background: var(--orange); pointer-events: none; }
+.nav nav a.kerf-wait { background-size: 0% 3px !important; }
+/* word-spacing makes each space in a label 0.32 em with its letter spacing, and kerning is off, which is how the Char Stagger sets
+   each letter in its own box, so the menu row does not shift when the motion engine starts and lines up with the Home page */
+.nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; word-spacing: -0.1764em; font-kerning: none; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
 /* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
 @media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
@@ -101,10 +117,11 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 /* Primary call button: board C07/C06 orange chamfer, with the Home sample's Slat Wipe and its type settings
    (Archivo 700 capitals at 0.30 em for the label, Sora 700 for the number) */
 .btn-orange { position: relative; display: inline-flex; border: 0; padding: 0; margin: 0; background: none; cursor: pointer; text-decoration: none; }
-.btn-orange .cf { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 30px; background: var(--orange); color: #FFFFFF; clip-path: var(--chamfer-16); transition: clip-path .32s cubic-bezier(.215,.61,.355,1); }
-.btn-orange:hover .cf, .btn-orange:focus-visible .cf { clip-path: polygon(0 0, calc(100% - 26px) 0, 100% 26px, 100% 100%, 26px 100%, 0 calc(100% - 26px)); }
+/* The notch rests at 14 px and opens to 22 px, the values the Home rig in dbm-motion.js sets, so the button does not change shape when the engine starts */
+.btn-orange .cf { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 30px; background: var(--orange); color: #FFFFFF; clip-path: var(--chamfer-14); transition: clip-path .3s cubic-bezier(.25,.46,.45,.94); }
+.btn-orange:hover .cf, .btn-orange:focus-visible .cf { clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px)); }
 .btn-orange .slats { position: absolute; inset: 0; }
-.btn-orange .slat { position: absolute; top: -12%; bottom: -12%; width: 27%; background: var(--charcoal); transform: skewX(-20deg) scaleY(0); transform-origin: bottom center; transition: transform .26s ease; }
+.btn-orange .slat { position: absolute; top: -12%; bottom: -12%; width: 27%; background: var(--charcoal); transform: skewX(-20deg) scaleY(0); transform-origin: top center; transition: transform .26s cubic-bezier(.25,.46,.45,.94); }
 .btn-orange .slat:nth-child(1) { left: -6%; } .btn-orange .slat:nth-child(2) { left: 15%; transition-delay: .04s; } .btn-orange .slat:nth-child(3) { left: 36%; transition-delay: .08s; } .btn-orange .slat:nth-child(4) { left: 57%; transition-delay: .12s; } .btn-orange .slat:nth-child(5) { left: 78%; transition-delay: .16s; }
 .btn-orange:hover .slat, .btn-orange:focus-visible .slat { transform: skewX(-20deg) scaleY(1); }
 .btn-orange:active .cf { transform: translateY(2px); }
@@ -290,21 +307,31 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
 @media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
 @media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
 
-/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
-   Reduced motion: the transition is not switched on, so pages change at once. */
+/* Page-to-page moves: cross-document view transitions.
+   The header and the phone call bar are shown live and never fade. The new page's header and call bar open in the state the last
+   page left them in (service-page.js and the two partials carry it across), then ease to this page's state on their own timings,
+   so the header keeps its place and size and the bar keeps its position.
+   The new page dissolves in over the old one in 0.3 s and rises 8 px. The old page stays opaque underneath until the new one is in,
+   so a dark page never passes through white on the way to another dark page.
+   An open route menu folds up with its board close (C08 _menus: 0.26 s, power2.in) while the next page comes in.
+   Reduced motion: the transition is not switched on, so pages change at once.
+   The Home page carries its own copy of this block, so the names here must stay the same. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
 }
 .nav { view-transition-name: dbm-header; }
 .callbar { view-transition-name: dbm-callbar; }
-::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
-::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header), ::view-transition-group(dbm-callbar), ::view-transition-new(dbm-callbar) { animation: none; }
+::view-transition-old(dbm-header), ::view-transition-old(dbm-callbar) { animation: none; opacity: 0; }
 ::view-transition-group(dbm-header) { z-index: 3; }
-::view-transition-group(dbm-menu) { z-index: 2; }
-::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
-::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
-@keyframes dbm-page-out { to { opacity: 0; } }
+::view-transition-group(dbm-callbar) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; animation: none; }
+::view-transition-old(dbm-menu) { animation: .26s cubic-bezier(.55, .085, .68, .53) both dbm-menu-fold; }
+::view-transition-old(root), ::view-transition-new(root) { mix-blend-mode: normal; }
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) { animation: .3s cubic-bezier(0, 0, .2, 1) both dbm-page-in; }
 @keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes dbm-menu-fold { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
 /* NAV-05 route menus: end */
 
 /* Buy pages only (the four pages whose link row is labeled "Buy equipment"): that row of links to each other sits directly under
@@ -345,8 +372,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 /* Phone width only: board C04 BAR-01 Phone Action Bar */
 .callbar { display: none; }
 @media (max-width: 700px) {
-  .callbar { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(20,20,20,0.97); box-shadow: 0 -1px 0 var(--dark-rule); transform: translateY(115%); transition: transform .34s ease; }
-  .callbar.on { transform: none; }
+  /* Board C04 BAR-01 timings: the bar rises in 0.34 s (power3.out) and steps down in 0.26 s (power2.in). While it is down it is
+     hidden from pointer, keyboard, and screen reader once the step-down ends. */
+  .callbar { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(20,20,20,0.97); box-shadow: 0 -1px 0 var(--dark-rule); transform: translateY(115%); visibility: hidden; transition: transform .26s cubic-bezier(.55,.085,.68,.53), visibility 0s linear .26s; }
+  .callbar.on { transform: none; visibility: visible; transition: transform .34s cubic-bezier(.215,.61,.355,1), visibility 0s; }
   .callbar .btn-orange .cf { min-height: 54px; padding: 12px 10px; }
   .callbar .btn-orange .num { font-size: 16px; }
   .callbar .btn-orange .k { font-size: 11px; letter-spacing: 0.2em; }
@@ -365,8 +394,9 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   .cards { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
 }
 @media (max-width: 620px) {
-  .navbar { padding: 14px 0; }
+  :root { --nav-pad: 14px; }
   .brand img { height: 34px; }
+  .nav.is-tight .brand img { height: 30px; }
   .phone-plate .plate-face { min-height: 46px; gap: 7px; padding: 9px 10px 14px 12px; }
   .phone-plate .k { font-size: 10.5px; }
   .phone-plate .num { font-size: 15px; }
@@ -396,7 +426,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .stag-a, .stag-b { display: block; white-space: nowrap; }
 .stag-b { position: absolute; left: 0; top: 0; }
 .stag-a > span, .stag-b > span { display: inline-block; }
-.stag .sp { width: 0.3em; }
+.stag .sp { width: 0.32em; }
 
 /* Home sample orange action button: one Archivo label with an arrow, and the striped busy state while a form sends */
 .btn-orange .cf { font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; }
@@ -867,6 +897,45 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     </div>
   </div>
 </header>
+<div class="nav-spacer" aria-hidden="true"></div>
+<script>
+/* Page-to-page moves: when the last page handed over its header size for this address (service-page.js, on pageswap), the header
+   opens at that size before its first paint, with no transition, and service-page.js then eases it to this page's own size. */
+(function () {
+  var c = null;
+  try { c = JSON.parse(sessionStorage.getItem('dbm-carry') || 'null'); } catch (e) {}
+  if (!c || c.to !== location.href || Date.now() - c.t > 8000) return;
+  try { sessionStorage.removeItem('dbm-carry'); } catch (e) {}
+  window.dbmCarry = c;
+  var nav = document.getElementById('nav');
+  if (!nav) return;
+  if (c.tight) { nav.classList.add('is-snap', 'is-tight'); void nav.offsetHeight; nav.classList.remove('is-snap'); }
+  // One orange line travels from the last page's section to this page's section (board C08 NAV-01: 0.42 s, power3.inOut).
+  // It grows in from the left when the last page had no current section and runs out to the right when this page has none.
+  // Positions are read on every frame, so the logo easing to its new size or the fonts arriving cannot leave the line behind.
+  var row = nav.querySelector('nav'), from = null, to = null;
+  if (!row || typeof c.cur !== 'string') return;
+  Array.prototype.forEach.call(row.querySelectorAll('a[href]'), function (a) { if (c.cur && a.href === c.cur) from = a; if (a.hasAttribute('aria-current')) to = a; });
+  if (from === to) return;
+  var kerf = document.createElement('span');
+  kerf.className = 'nav-kerf'; kerf.setAttribute('aria-hidden', 'true');
+  row.appendChild(kerf);
+  if (to) to.classList.add('kerf-wait');
+  var box = function (a) { return { l: a.offsetLeft, w: a.offsetWidth, t: a.offsetTop + a.offsetHeight - 3 }; };
+  var ease = function (p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; };
+  var t0 = null;
+  var step = function (now) {
+    if (t0 === null) t0 = now;
+    var p = Math.min(1, (now - t0) / 420), e = ease(p);
+    var A = from ? box(from) : { l: to.offsetLeft, w: 0, t: box(to).t }, B = to ? box(to) : { l: from.offsetLeft + from.offsetWidth, w: 0, t: box(from).t };
+    kerf.style.transform = 'translate(' + (A.l + (B.l - A.l) * e) + 'px, ' + (A.t + (B.t - A.t) * e) + 'px)';
+    kerf.style.width = (A.w + (B.w - A.w) * e) + 'px';
+    if (p < 1) requestAnimationFrame(step);
+    else { if (to) { to.style.transition = 'none'; to.classList.remove('kerf-wait'); void to.offsetWidth; to.style.transition = ''; } kerf.remove(); }
+  };
+  requestAnimationFrame(step);
+})();
+</script>
 
 
 <main>
@@ -1071,6 +1140,15 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
   <a class="kplate" href="#request" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
 </div>
+<script>
+/* Page-to-page moves: on a phone the call bar opens where the last page's bar was (handed over in the header partial), and
+   service-page.js then raises it or steps it down to this page's position on the board's timings. */
+(function () {
+  var c = window.dbmCarry, bar = document.currentScript && document.currentScript.previousElementSibling;
+  if (!c || !c.bar || !bar || !window.matchMedia('(max-width: 700px)').matches) return;
+  bar.style.transition = 'none'; bar.classList.add('on'); void bar.offsetHeight; bar.style.transition = '';
+})();
+</script>
 
 
 <script>
@@ -1082,9 +1160,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     var a = e.target.closest('a[href^="/"]');
     if (a) e.preventDefault();
   });
-  // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset
+  // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset.
+  // The tightened sizes and the spacer that keeps the page below from moving are in service-page.css (.nav.is-tight, .nav-spacer).
   var navEl = document.getElementById('nav'), navbar = navEl && navEl.querySelector('.navbar'), navLogo = navEl && navEl.querySelector('.brand img');
-  function setTight(t) { navbar.style.paddingTop = navbar.style.paddingBottom = t ? '12px' : ''; navLogo.style.height = t ? (window.innerWidth <= 620 ? '30px' : '38px') : ''; }
+  function setTight(t) { navEl.classList.toggle('is-tight', !!t); }
   // Buy pages: their row of links to each other moves directly under the header (CSS already shows it there), so keyboard order matches what is seen
   var buyRow = document.querySelector('main > .subnav[aria-label="Buy equipment"]');
   if (buyRow && buyRow.parentNode.firstElementChild !== buyRow) buyRow.parentNode.insertBefore(buyRow, buyRow.parentNode.firstElementChild);
@@ -1108,7 +1187,22 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   var box = document.getElementById('show-assume');
   if (box) box.addEventListener('change', function () { document.body.classList.toggle('show-assume', box.checked); });
 
-  // ACC-01: one open at a time, height tween, state word
+  // Keeps an element at the same height on screen while panels above it close, for example when a tapped question opens and the
+  // answer above it folds shut at the same time. A ResizeObserver sees each frame of the closing panels after layout and before
+  // paint, and the page scrolls by the distance the element moved, so it never visibly moves. Browser scroll anchoring is paused
+  // meanwhile so that it does not add a second correction. dbm-motion.js uses the same helper for its accordions.
+  window.dbmHoldPlace = function (el, watch, ms) {
+    watch = Array.prototype.filter.call(watch || [], Boolean);
+    if (!el || !watch.length || !('ResizeObserver' in window)) return;
+    var y0 = el.getBoundingClientRect().top, root = document.documentElement, prev = root.style.overflowAnchor;
+    root.style.overflowAnchor = 'none';
+    var fix = function () { var d = el.getBoundingClientRect().top - y0; if (Math.abs(d) >= 0.5) window.scrollBy({ top: d, left: 0, behavior: 'instant' }); };
+    var ro = new ResizeObserver(fix);
+    watch.forEach(function (w) { ro.observe(w); });
+    setTimeout(function () { fix(); ro.disconnect(); root.style.overflowAnchor = prev; }, (ms || 0) + 80);
+  };
+
+  // ACC-01: one open at a time, height tween, state word. The tapped question keeps its place while an answer above it closes.
   var heads = document.querySelectorAll('.acc-head');
   function setOpen(head, open) {
     var panel = document.getElementById(head.getAttribute('aria-controls'));
@@ -1128,8 +1222,9 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   }
   heads.forEach(function (head) {
     head.addEventListener('click', function () {
-      var open = head.getAttribute('aria-expanded') !== 'true';
-      heads.forEach(function (h) { if (h !== head && h.getAttribute('aria-expanded') === 'true') setOpen(h, false); });
+      var open = head.getAttribute('aria-expanded') !== 'true', others = Array.prototype.filter.call(heads, function (h) { return h !== head && h.getAttribute('aria-expanded') === 'true'; });
+      window.dbmHoldPlace(head.parentNode, others.map(function (h) { return document.getElementById(h.getAttribute('aria-controls')); }), reduce ? 0 : 320);
+      others.forEach(function (h) { setOpen(h, false); });
       setOpen(head, open);
     });
   });
@@ -1161,19 +1256,51 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   report();
   }
 
-  // BAR-01: on phones, the bar rises once the banner's buttons scroll away and steps down when the call band is on screen
+  // BAR-01 (board C04 _bar): on phones the bar rises once the banner's own buttons pass under the header, and it steps down once the
+  // top of the call band comes within 40 px of the bottom of the screen, staying down from there to the end of the page.
+  // The rise and step-down timings are in service-page.css. The banner's buttons are found on every hero type, then the hero itself.
   var callbar = document.querySelector('.callbar');
-  var heroActs = document.querySelector('.hero-lb .acts, .hero-fb');
+  var heroActs = document.querySelector('[data-heroacts]') || document.querySelector('[data-hero] .acts') || document.querySelector('.hero-lb .acts') || document.querySelector('[data-hero]') || document.querySelector('.hero-fb');
   var callBand = document.getElementById('call');
-  var heroGone = false, bandOn = false;
+  var barOn = null;
   function sync() {
-    var on = heroGone && !bandOn;
+    if (!callbar) return;
+    var past = heroActs ? heroActs.getBoundingClientRect().bottom < (navEl ? navEl.getBoundingClientRect().bottom : 0) : window.pageYOffset > 300;
+    var atBand = callBand ? callBand.getBoundingClientRect().top < window.innerHeight - 40 : false;
+    var on = past && !atBand;
+    if (on === barOn) return;
+    barOn = on;
     callbar.classList.toggle('on', on);
     callbar.setAttribute('aria-hidden', on ? 'false' : 'true');
     callbar.querySelectorAll('a').forEach(function (a) { a.tabIndex = on ? 0 : -1; });
   }
-  if (callbar && heroActs) new IntersectionObserver(function (es) { heroGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(heroActs);
-  if (callbar && callBand) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(callBand);
+  if (callbar) {
+    var barTick = false;
+    window.addEventListener('scroll', function () { if (barTick) return; barTick = true; requestAnimationFrame(function () { barTick = false; sync(); }); }, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    sync();
+  }
+
+  // Page-to-page moves (cross-document view transitions, set up in service-page.css). When this page is left for another page with a
+  // transition, it records the header size and the call bar position for that address. The next page's header and call bar partials
+  // open in that state before their first paint, and the code above then eases them to their own state. A page restored from the
+  // back-forward cache does the same here when it is shown again.
+  var KEY = 'dbm-carry';
+  window.addEventListener('pageswap', function (e) {
+    if (!e.viewTransition || !e.activation || !e.activation.entry || !navEl) return;
+    var cur = navEl.querySelector('nav a[aria-current]');
+    try { sessionStorage.setItem(KEY, JSON.stringify({ to: e.activation.entry.url, t: Date.now(), tight: navEl.classList.contains('is-tight'), bar: !!(callbar && callbar.classList.contains('on')), cur: cur ? cur.href : '' })); } catch (x) {}
+  });
+  window.addEventListener('pagereveal', function (e) {
+    var c = null;
+    try { c = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (x) {}
+    if (!c || c.to !== location.href) return;
+    try { sessionStorage.removeItem(KEY); } catch (x) {}
+    if (!e.viewTransition || !navEl || Date.now() - c.t > 8000) return;
+    navEl.classList.add('is-snap'); setTight(c.tight); void navEl.offsetHeight; navEl.classList.remove('is-snap');
+    if (callbar) { callbar.style.transition = 'none'; callbar.classList.toggle('on', !!c.bar); void callbar.offsetHeight; callbar.style.transition = ''; barOn = !!c.bar; }
+    requestAnimationFrame(function () { requestAnimationFrame(function () { setTight(window.pageYOffset >= 92); measure(); sync(); }); });
+  });
 })();
 
 /* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
@@ -1190,7 +1317,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   var toggles = nav.querySelectorAll('[data-mt]'), open = null;
   var panelOf = function (k) { return document.getElementById('menu-' + k); };
   var toggleOf = function (k) { return nav.querySelector('[data-mt="' + k + '"]'); };
-  var fit = function (p) { p.style.maxHeight = Math.max(160, window.innerHeight - nav.getBoundingClientRect().bottom) + 'px'; };
+  // An open panel ends at the bottom of the screen, or at the top of the phone call bar while that bar is up, so that its last
+  // links can always be scrolled into view
+  var fit = function (p) {
+    var bar = document.querySelector('.callbar.on'), bottom = window.innerHeight;
+    if (bar && getComputedStyle(bar).display !== 'none') bottom = Math.min(bottom, bar.getBoundingClientRect().top);
+    p.style.maxHeight = Math.max(160, bottom - nav.getBoundingClientRect().bottom) + 'px';
+  };
 
   // The menu link for the page the visitor is on is marked as the current page. Review copies live at pages/<folder>/hifi.html.
   var m = location.pathname.match(/\/([^\/]+)\/hifi\.html$/), special = { home: '', 'line-boring': '/services/line-boring', 'welding-fabrication': '/services/welding-fabrication' };
@@ -1258,6 +1391,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   }, true);
   document.addEventListener('click', function (e) { if (open && !host.contains(e.target) && !(e.target.closest && e.target.closest('[data-mt]'))) close(false); }, true);
   window.addEventListener('resize', function () { if (open) fit(panelOf(open)); }, { passive: true });
+  var fitTick = false;
+  window.addEventListener('scroll', function () { if (!open || fitTick) return; fitTick = true; requestAnimationFrame(function () { fitTick = false; if (open) fit(panelOf(open)); }); }, { passive: true });
   if ('ResizeObserver' in window) new ResizeObserver(function () { if (open) fit(panelOf(open)); }).observe(nav);
   window.addEventListener('pageshow', function (e) { if (e.persisted && open) close(false, true); });
 
@@ -1517,18 +1652,34 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     if (hover) el.__tl = hover;
   });
 
-  /* Hero entry (C07 _entry, lines 1034 to 1052): the accent strikes and the bottom kerf cuts across */
+  /* Anything already on screen when the engine starts may have been painted complete before it ran, so hiding it to play an entry
+     would make it flash off and back on. As in C07 _entry, such pieces are left complete, and only pieces below the screen wait. */
+  var onScreen = function (el) { return el.getBoundingClientRect().top < window.innerHeight; };
+
+  /* Hero entry (C07 _entry, lines 1034 to 1052): a hero still below the screen strikes its accent and cuts its bottom kerf when it
+     comes in (0.5 s power3.out after 0.1 s, then 0.7 s power2.inOut after 0.25 s); a hero on screen stays complete.
+     The accent of a Card 1b data plate inside a hero belongs to the plate's hover and is left alone. */
   $$('[data-hero]').forEach(function (h) {
-    var ac = h.querySelector('[data-accent]'), kf = h.querySelector('[data-kerf]');
-    if (R) return;
-    if (ac) g.fromTo(ac, { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out', delay: 0.1 });
-    if (kf && window.DrawSVGPlugin) g.fromTo(kf, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.7, ease: 'power2.inOut', delay: 0.25 });
+    var ac = $$('[data-accent]', h).filter(function (a) { return !a.closest('[data-plate1b]'); })[0], kf = h.querySelector('[data-kerf]');
+    var D2 = !!window.DrawSVGPlugin;
+    if (R || onScreen(h) || !window.IntersectionObserver) return;
+    if (ac) g.set(ac, { scaleX: 0, transformOrigin: 'left center' });
+    if (kf && D2) g.set(kf, { drawSVG: '0%' });
+    var io = new IntersectionObserver(function (es) {
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      io.disconnect();
+      if (ac) g.to(ac, { scaleX: 1, duration: 0.5, ease: 'power3.out', delay: 0.1, overwrite: 'auto' });
+      if (kf && D2) g.to(kf, { drawSVG: '100%', duration: 0.7, ease: 'power2.inOut', delay: 0.25, overwrite: 'auto' });
+    }, { rootMargin: '0px 0px -15% 0px' });
+    io.observe(h);
   });
 
-  /* BAN-06 reveal (C06 _cta): when a band reaches 80 % of the viewport, its accent strikes, then its kerf draws */
+  /* BAN-06 reveal (C06 _cta): when a band reaches 80 % of the viewport, its accent strikes (0.5 s power3.out), then its kerf draws
+     (0.7 s power2.inOut after 0.15 s). Accents and kerfs already on screen when the engine starts stay complete. */
   if (window.ScrollTrigger && !R) {
     $$('[data-reveal]').forEach(function (band) {
-      var ac = $$('[data-scrollaccent]', band), kf = $$('[data-scrollkerf]', band);
+      var ac = $$('[data-scrollaccent]', band).filter(function (a) { return !onScreen(a); }), kf = $$('[data-scrollkerf]', band).filter(function (k) { return !onScreen(k); });
+      if (!ac.length && !kf.length) return;
       if (ac.length) g.set(ac, { scaleX: 0, transformOrigin: 'left center' });
       if (kf.length && window.DrawSVGPlugin) g.set(kf, { drawSVG: '0%' });
       window.ScrollTrigger.create({ trigger: band, start: 'top 80%', once: true, onEnter: function () {
@@ -1582,9 +1733,11 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       on(head, 'pointerleave', function () { brackets(head, false); head.style.background = '#FFFFFF'; g.to(head, { y: 0, duration: 0.1 }); });
       on(head, 'pointerdown', function () { g.to(head, { y: 1, duration: 0.06 }); });
       on(head, 'pointerup', function () { g.to(head, { y: 0, duration: 0.12 }); });
+      // The tapped question keeps its place on screen while an answer above it folds shut (dbmHoldPlace in service-page.js)
       on(head, 'click', function () {
-        var next = !item.__open;
-        items.forEach(function (o) { if (o !== item && o.__open) o.__set(false); });
+        var next = !item.__open, others = items.filter(function (o) { return o !== item && o.__open; });
+        if (window.dbmHoldPlace) window.dbmHoldPlace(item, others.map(function (o) { return o.querySelector('[data-accpanel]'); }), D(0.38) * 1000);
+        others.forEach(function (o) { o.__set(false); });
         item.__set(next);
       });
     });
@@ -1779,9 +1932,33 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     show(0, true);
   });
 
-  /* CNF-01 Confirmation (C05 _confirm): the button shows its sending state, the card flips to the receipt, the green kerf draws, the receipt lines stagger in */
+  /* CNF-01 Confirmation (C05 _confirm): the button shows its sending state, the card flips to the receipt, the green kerf draws, the
+     receipt lines stagger in. The card's height eases from the form's height to the receipt's (0.42 s power2.inOut, the board's flip),
+     so the sections below slide up instead of jumping. Then, if the receipt's top sits above the screen or low on it, the page scrolls it
+     to just under the sticky header (the --dbm-nav offset), smoothly unless reduced motion is on, and focus stays on the receipt.
+     Several pages scroll to their own receipt within 40 ms of the flip. The shared scroll waits 80 ms and stands down when the page has
+     already moved or the receipt is already in view, so the page never scrolls twice. Browser scroll anchoring is paused meanwhile so
+     that it does not drag the page along with the shrinking card. A card inside a fixed panel is left to that panel. */
+  var inFixed = function (el) { for (var p = el; p && p !== document.body; p = p.parentElement) if (getComputedStyle(p).position === 'fixed') return true; return false; };
   window.dbmConfirm = function (card, form, done, send, kerf) {
-    var flip = function (fn) { var st = window.Flip ? window.Flip.getState(card) : null; fn(); if (st && !R) window.Flip.from(st, { duration: 0.42, ease: 'power2.inOut', scale: false }); };
+    var root = document.documentElement;
+    var flip = function (fn) {
+      var st = window.Flip ? window.Flip.getState(card) : null;
+      fn();
+      if (!st || R) return;
+      g.killTweensOf(card);
+      window.Flip.from(st, { duration: 0.42, ease: 'power2.inOut', scale: false, simple: true, onComplete: function () { card.style.height = ''; card.style.width = ''; } });
+    };
+    var bring = function () {
+      var y0 = window.pageYOffset, prev = root.style.overflowAnchor;
+      root.style.overflowAnchor = 'none';
+      setTimeout(function () {
+        var nav = parseFloat(getComputedStyle(root).getPropertyValue('--dbm-nav')) || 100, top = done.getBoundingClientRect().top;
+        var moved = Math.abs(window.pageYOffset - y0) > 1, inView = top >= nav - 8 && top <= window.innerHeight * 0.6;
+        if (!moved && !inView && !inFixed(card)) window.scrollTo({ top: Math.max(0, window.pageYOffset + top - nav), behavior: R ? 'instant' : 'smooth' });
+        setTimeout(function () { root.style.overflowAnchor = prev; }, R ? 0 : 1000);
+      }, 80);
+    };
     return {
       send: function (label, after) {
         window.dbmDisable(send, true, 'Sending…');
@@ -1792,6 +1969,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           if (kerf && window.DrawSVGPlugin) g.fromTo(kerf, { drawSVG: '0%' }, { drawSVG: '100%', duration: D(0.6), ease: 'power2.inOut', delay: D(0.25) });
           if (!R) g.fromTo(done.children, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.32, stagger: 0.05, delay: 0.15, ease: 'power2.out' });
           done.focus({ preventScroll: true });
+          bring();
         }, R ? 100 : 900);
       },
       reset: function () { flip(function () { done.style.display = 'none'; form.style.display = ''; }); }
@@ -1945,14 +2123,7 @@ window.dbmForm = (function () {
       var g = f.querySelector('[data-rgroup="plan"]');
       return [['Sell or trade', planNames[g.dataset.value] || '', g], ['Make and model', val('machine'), el('machine')], ['Where it is', val('location'), el('location')], ['Year', val('year'), el('year')], ['Hours', val('hours'), el('hours')], ['Serial number', val('serial'), el('serial')], ['Condition', val('condition'), el('condition')], ['Next machine', val('next'), el('next')], ['Photos', (function () { var n = ph.count(); return n ? n + (n === 1 ? ' photo' : ' photos') : ''; })(), f.querySelector('[data-photos]')], ['Anything else', val('more'), el('more')], ['Name', val('name'), el('name')], ['Company', val('company'), el('company')], ['Phone', val('phone'), el('phone')], ['Email', val('email'), el('email')]];
     },
-    onReset: function () { plan.clear(); ph.reset(); rep.hidden = true; },
-    // Round 2: the receipt is much shorter than the form, so after Send the page was left below it. Bring the receipt's card into view under the sticky header.
-    onSent: function () {
-      setTimeout(function () {
-        var nav = document.getElementById('nav'), off = card.getBoundingClientRect().top - (nav ? nav.getBoundingClientRect().height : 90) - 16;
-        if (off < 0 || off > window.innerHeight * 0.5) window.scrollBy({ top: off, behavior: R ? 'auto' : 'smooth' });
-      }, 30);
-    }
+    onReset: function () { plan.clear(); ph.reset(); rep.hidden = true; }
   });
 })();
 

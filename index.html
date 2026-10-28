@@ -819,21 +819,25 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
 @media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
 @media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
 
-/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
-   Reduced motion: the transition is not switched on, so pages change at once. */
+/* Page-to-page moves: cross-document view transitions, copied from service-page.css so Home matches every other page.
+   The new page dissolves in over the old one and rises 8 px, and the old page stays opaque underneath, so a move into or out of Home
+   never passes through white. Reduced motion: the transition is not switched on, so pages change at once. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
 }
 .nav { view-transition-name: dbm-header; }
 .callbar { view-transition-name: dbm-callbar; }
-::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
-::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header), ::view-transition-group(dbm-callbar), ::view-transition-new(dbm-callbar) { animation: none; }
+::view-transition-old(dbm-header), ::view-transition-old(dbm-callbar) { animation: none; opacity: 0; }
 ::view-transition-group(dbm-header) { z-index: 3; }
-::view-transition-group(dbm-menu) { z-index: 2; }
-::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
-::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
-@keyframes dbm-page-out { to { opacity: 0; } }
+::view-transition-group(dbm-callbar) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; animation: none; }
+::view-transition-old(dbm-menu) { animation: .26s cubic-bezier(.55, .085, .68, .53) both dbm-menu-fold; }
+::view-transition-old(root), ::view-transition-new(root) { mix-blend-mode: normal; }
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) { animation: .3s cubic-bezier(0, 0, .2, 1) both dbm-page-in; }
 @keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes dbm-menu-fold { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
 /* NAV-05 route menus: end */
 </style>
 </head>
