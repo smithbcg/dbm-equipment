@@ -56,6 +56,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--silver); outlin
 .on-light button:focus-visible, .on-light a:focus-visible { outline-color: var(--steel); }
 /* The link rows under the header (Buy pages and service pages) sit on white or light gray, so their focus ring is Steel Gray, not Silver */
 .subnav a:focus-visible { outline-color: var(--steel); }
+/* The call plate at the foot of most pages is a dark plate set inside a light .on-light section, so its two buttons keep the Silver ring (Steel Gray measured 2.2:1 on the plate) */
+.on-light .call-plate a:focus-visible, .on-light .call-plate button:focus-visible { outline-color: var(--silver); }
 /* The mono buttons (.mono-btn, and .monol on the industry pages) cut two corners with clip-path, and that clip also cut off the focus ring.
    On keyboard focus the clip below keeps the two cut corners, and it also leaves an 8 px margin open around the button, so the 2 px ring set 4 px outside shows. */
 .mono-btn:focus-visible, .monol:focus-visible { clip-path: polygon(evenodd, calc(100% - 10px) -8px, calc(100% + 8px) -8px, calc(100% + 8px) calc(100% + 8px), 10px calc(100% + 8px), 10px 100%, 0 100%, 0 calc(100% - 10px), 10px 100%, 10px calc(100% + 8px), -8px calc(100% + 8px), -8px -8px, calc(100% - 10px) -8px, calc(100% - 10px) 0, 100% 0, 100% 10px, calc(100% - 10px) 0); }
@@ -618,6 +620,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .cfg-rail { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 6px; background: #1A1A1A; box-shadow: inset 0 2px 7px rgba(0,0,0,0.7), inset 0 0 0 1px #0A0A0A; clip-path: var(--chamfer-12); }
 .cfg-rail [data-cfgmarker] { position: absolute; left: 6px; top: 6px; width: 0; height: 0; background: linear-gradient(#565D67, #31353B); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -3px 0 #EF5016; clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px)); }
 .cfg-rail button { position: relative; z-index: 1; border: 0; cursor: pointer; background: transparent; color: #C7C9CC; font-family: 'Familjen Grotesk', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.35; padding: 15px 10px; transition: color 0.18s ease; }
+/* The rail is dark inside a light .on-light section, so its buttons keep the Silver ring (Steel Gray measured 1.2 to 2.1:1 on the rail) */
+.cfg-rail button:focus-visible { outline-color: #C7C9CC; }
 .cfg-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 14px; }
 .cfg-pic { position: relative; min-height: 460px; background: #DEE0E3; overflow: hidden; }
 .cfg-pic [data-cfgshot] { position: absolute; inset: 0; }
@@ -668,6 +672,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .viewer figcaption { color: #E9EAEC; font-size: 15.5px; line-height: 1.55; margin-top: 12px; display: flex; gap: 16px; align-items: baseline; }
 .viewer .ct { font-family: 'Chakra Petch', sans-serif; font-weight: 700; color: #C7C9CC; white-space: nowrap; }
 .viewer .vbtns { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; flex-wrap: wrap; }
+/* The viewer's spoken photo number ("Photo 2 of 4") is read by screen readers and is not shown */
+.viewer .vsay { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* Section 6: C10 fields and photo slots, C05 CNF-01 receipt */
 .formcard { position: relative; margin-top: 36px; max-width: 980px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; padding: 30px clamp(18px, 3vw, 34px); }
@@ -1288,7 +1294,8 @@ body.show-assume .plate1b [data-assume], body.show-assume .mapband [data-assume]
 
 
 <div class="viewer" role="dialog" aria-modal="true" aria-label="Photo viewer">
-  <figure><img alt=""><figcaption><span class="ct"></span><span class="tx"></span></figcaption>
+  <figure><img alt=""><figcaption><span class="ct" aria-hidden="true"></span><span class="tx"></span></figcaption>
+    <p class="vsay" aria-live="polite" data-say></p>
     <div class="vbtns">
       <button type="button" class="kb" data-kb="sec" data-travel="4" data-v="prev"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Previous</span></span></button>
       <button type="button" class="kb" data-kb="sec" data-travel="4" data-v="next"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Next</span></span></button>
@@ -1460,11 +1467,20 @@ body.show-assume .plate1b [data-assume], body.show-assume .mapband [data-assume]
   if (count) { count.removeAttribute('aria-live'); count.setAttribute('aria-hidden', 'true'); }
   function step() { return frames[0].getBoundingClientRect().width + 26; }
   function go(left) { track.scrollBy({ left: left, behavior: reduce ? 'auto' : 'smooth' }); }
+  // The count and the spoken position name the photos that are wholly in view. They are worked out from where each photo sits in the
+  // row, not from the scroll distance, because the row cannot scroll its last photo to the left edge. At 1440 px the scroll distance
+  // still gave "4–5 of 6" after the last press of Next, with the sixth photo in view.
   function report() {
-    var n = frames.length, w = step();
-    var first = Math.round(track.scrollLeft / w);
-    var shown = Math.max(1, Math.floor((track.clientWidth + 26) / w));
-    var last = Math.min(n, first + shown);
+    var n = frames.length, box = track.getBoundingClientRect(), lo = box.left - 2, hi = box.left + track.clientWidth + 2;
+    var first = -1, last = 0, most = -Infinity;
+    for (var i = 0; i < n; i++) {
+      var fr = frames[i].getBoundingClientRect();
+      if (fr.left >= lo && fr.right <= hi) { if (first < 0) first = i; last = i + 1; }
+      var seen = Math.min(fr.right, hi) - Math.max(fr.left, lo);
+      if (first < 0 && seen > most) { most = seen; last = i; }
+    }
+    // When no photo is wholly in view (a very narrow screen), the count names the photo with the most of it in view
+    if (first < 0) { first = last; last = first + 1; }
     count.textContent = (first + 1) + (last > first + 1 ? '–' + last : '') + ' OF ' + n;
     bar.style.width = Math.max(10, (last - first) / n * 100) + '%';
     bar.style.left = (first / n * 100) + '%';
@@ -2261,17 +2277,32 @@ body.show-assume .plate1b [data-assume], body.show-assume .mapband [data-assume]
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Section 5: photo viewer (C04 DLG-02)
-  var viewer = document.querySelector('.viewer'), vImg = viewer.querySelector('img'), vCt = viewer.querySelector('.ct'), vTx = viewer.querySelector('.tx');
+  // Section 5: photo viewer (C04 DLG-02), keyboard handling from the DBM Design System's PhotoViewer.
+  // While the viewer is open, Tab and Shift+Tab move only among Previous, Next, and Close, and they wrap from the last to the first and back.
+  // Escape closes the viewer, and focus returns to the photo window that opened it. A hidden live region says "Photo 2 of 4" as the visitor moves.
+  var viewer = document.querySelector('.viewer'), vImg = viewer.querySelector('img'), vCt = viewer.querySelector('.ct'), vTx = viewer.querySelector('.tx'), vSay = viewer.querySelector('[data-say]');
   var shots = Array.prototype.slice.call(document.querySelectorAll('.win2[data-view]'));
   var at = 0, lastFocus = null;
-  function show(i) { at = (i + shots.length) % shots.length; var b = shots[at], img = b.querySelector('img'); vImg.src = img.src; vImg.alt = img.alt; vCt.textContent = (at + 1) + ' / ' + shots.length; vTx.textContent = b.parentNode.querySelector('.cap2 p').textContent; }
-  function open(i) { lastFocus = document.activeElement; show(i); viewer.classList.add('on'); viewer.querySelector('[data-v="close"]').focus(); }
-  function close() { viewer.classList.remove('on'); if (lastFocus) lastFocus.focus(); }
+  function isOpen() { return viewer.classList.contains('on'); }
+  function show(i) { at = (i + shots.length) % shots.length; var b = shots[at], img = b.querySelector('img'); vImg.src = img.src; vImg.alt = img.alt; vCt.textContent = (at + 1) + ' / ' + shots.length; vTx.textContent = b.parentNode.querySelector('.cap2 p').textContent; vSay.textContent = 'Photo ' + (at + 1) + ' of ' + shots.length + '.'; }
+  function open(i) { lastFocus = shots[i]; show(i); viewer.classList.add('on'); viewer.querySelector('[data-v="close"]').focus(); }
+  function close() { viewer.classList.remove('on'); vSay.textContent = ''; if (lastFocus) lastFocus.focus(); }
   shots.forEach(function (b, i) { b.addEventListener('click', function () { open(i); }); });
   viewer.querySelector('.vbtns').addEventListener('click', function (e) { var b = e.target.closest('[data-v]'); if (!b) return; var v = b.getAttribute('data-v'); if (v === 'prev') show(at - 1); if (v === 'next') show(at + 1); if (v === 'close') close(); });
   viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
-  document.addEventListener('keydown', function (e) { if (!viewer.classList.contains('on')) return; if (e.key === 'Escape') close(); if (e.key === 'ArrowRight') show(at + 1); if (e.key === 'ArrowLeft') show(at - 1); });
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(at + 1); return; }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(at - 1); return; }
+    if (e.key !== 'Tab') return;
+    var f = Array.prototype.slice.call(viewer.querySelectorAll('button')), first = f[0], last = f[f.length - 1], a = document.activeElement;
+    if (!viewer.contains(a)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+    else if (e.shiftKey && a === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && a === last) { e.preventDefault(); first.focus(); }
+  });
+  // If focus reaches the page behind the open viewer some other way, such as a screen reader's own commands, it goes back to Close
+  document.addEventListener('focusin', function (e) { if (isOpen() && !viewer.contains(e.target)) viewer.querySelector('[data-v="close"]').focus(); });
 
   // Section 4: a tooltip near the right edge of the screen opens leftward so it stays on screen
   document.querySelectorAll('[data-tipwrap]').forEach(function (w) {

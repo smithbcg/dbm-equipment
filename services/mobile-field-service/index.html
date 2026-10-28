@@ -55,6 +55,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--silver); outlin
 .on-light button:focus-visible, .on-light a:focus-visible { outline-color: var(--steel); }
 /* The link rows under the header (Buy pages and service pages) sit on white or light gray, so their focus ring is Steel Gray, not Silver */
 .subnav a:focus-visible { outline-color: var(--steel); }
+/* The call plate at the foot of most pages is a dark plate set inside a light .on-light section, so its two buttons keep the Silver ring (Steel Gray measured 2.2:1 on the plate) */
+.on-light .call-plate a:focus-visible, .on-light .call-plate button:focus-visible { outline-color: var(--silver); }
 /* The mono buttons (.mono-btn, and .monol on the industry pages) cut two corners with clip-path, and that clip also cut off the focus ring.
    On keyboard focus the clip below keeps the two cut corners, and it also leaves an 8 px margin open around the button, so the 2 px ring set 4 px outside shows. */
 .mono-btn:focus-visible, .monol:focus-visible { clip-path: polygon(evenodd, calc(100% - 10px) -8px, calc(100% + 8px) -8px, calc(100% + 8px) calc(100% + 8px), 10px calc(100% + 8px), 10px 100%, 0 100%, 0 calc(100% - 10px), 10px 100%, 10px calc(100% + 8px), -8px calc(100% + 8px), -8px -8px, calc(100% - 10px) -8px, calc(100% - 10px) 0, 100% 0, 100% 10px, calc(100% - 10px) 0); }
@@ -639,7 +641,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .tri .tans .mono-btn[aria-checked="true"] { background: #FFFFFF; color: #1A1A1A; box-shadow: none; }
 .tri .tout { position: relative; background: #141414; padding: 44px 44px 40px 40px; min-height: 400px; min-width: 0; }
 /* The answer panel is near-black inside a light section, so the call buttons' focus ring is Silver here instead of Steel Gray. */
-.tri .ch-btn:focus-visible { outline-color: #C7C9CC; }
+.tri .ch-btn:focus-visible, .tri .tbig:focus-visible { outline-color: #C7C9CC; }
 .tpanel { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-height: 316px; }
 .tpanel[hidden] { display: none; }
 .tlab { color: #F4703F; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
@@ -721,6 +723,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .seg[data-at="1"] [data-segplate] { transform: translateX(100%); }
 .seg button { position: relative; z-index: 1; border: 0; cursor: pointer; background: transparent; color: #C7C9CC; font-family: 'Familjen Grotesk', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 18px; transition: color .18s ease; }
 .seg button[aria-checked="true"] { color: #FFFFFF; }
+/* The contact switch, the rental plate, and the line boring caption plate are dark inside light .on-light sections, so their controls keep the Silver ring (Steel Gray measured 2.1 to 2.2:1 on them) */
+.seg button:focus-visible, .p2d a:focus-visible, .cap8 .cgo a:focus-visible { outline-color: #C7C9CC; }
+/* The switch clips everything outside its 5 px padding, so its ring sits 2 px outside the button, where the whole 2 px line stays on the dark switch */
+.seg button:focus-visible { outline-offset: 2px; }
 .formact { margin-top: 6px; padding-top: 24px; box-shadow: inset 0 1px 0 #E9EAEC; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
 .formact .fnote { margin: 0; color: #4B4F56; font-size: 14.5px; line-height: 1.55; max-width: 64ch; }
 .formact .fnote b { color: #1A1A1A; }
@@ -1882,11 +1888,20 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
   if (count) { count.removeAttribute('aria-live'); count.setAttribute('aria-hidden', 'true'); }
   function step() { return frames[0].getBoundingClientRect().width + 26; }
   function go(left) { track.scrollBy({ left: left, behavior: reduce ? 'auto' : 'smooth' }); }
+  // The count and the spoken position name the photos that are wholly in view. They are worked out from where each photo sits in the
+  // row, not from the scroll distance, because the row cannot scroll its last photo to the left edge. At 1440 px the scroll distance
+  // still gave "4–5 of 6" after the last press of Next, with the sixth photo in view.
   function report() {
-    var n = frames.length, w = step();
-    var first = Math.round(track.scrollLeft / w);
-    var shown = Math.max(1, Math.floor((track.clientWidth + 26) / w));
-    var last = Math.min(n, first + shown);
+    var n = frames.length, box = track.getBoundingClientRect(), lo = box.left - 2, hi = box.left + track.clientWidth + 2;
+    var first = -1, last = 0, most = -Infinity;
+    for (var i = 0; i < n; i++) {
+      var fr = frames[i].getBoundingClientRect();
+      if (fr.left >= lo && fr.right <= hi) { if (first < 0) first = i; last = i + 1; }
+      var seen = Math.min(fr.right, hi) - Math.max(fr.left, lo);
+      if (first < 0 && seen > most) { most = seen; last = i; }
+    }
+    // When no photo is wholly in view (a very narrow screen), the count names the photo with the most of it in view
+    if (first < 0) { first = last; last = first + 1; }
     count.textContent = (first + 1) + (last > first + 1 ? '–' + last : '') + ' OF ' + n;
     bar.style.width = Math.max(10, (last - first) / n * 100) + '%';
     bar.style.left = (first / n * 100) + '%';

@@ -55,6 +55,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--silver); outlin
 .on-light button:focus-visible, .on-light a:focus-visible { outline-color: var(--steel); }
 /* The link rows under the header (Buy pages and service pages) sit on white or light gray, so their focus ring is Steel Gray, not Silver */
 .subnav a:focus-visible { outline-color: var(--steel); }
+/* The call plate at the foot of most pages is a dark plate set inside a light .on-light section, so its two buttons keep the Silver ring (Steel Gray measured 2.2:1 on the plate) */
+.on-light .call-plate a:focus-visible, .on-light .call-plate button:focus-visible { outline-color: var(--silver); }
 /* The mono buttons (.mono-btn, and .monol on the industry pages) cut two corners with clip-path, and that clip also cut off the focus ring.
    On keyboard focus the clip below keeps the two cut corners, and it also leaves an 8 px margin open around the button, so the 2 px ring set 4 px outside shows. */
 .mono-btn:focus-visible, .monol:focus-visible { clip-path: polygon(evenodd, calc(100% - 10px) -8px, calc(100% + 8px) -8px, calc(100% + 8px) calc(100% + 8px), 10px calc(100% + 8px), 10px 100%, 0 100%, 0 calc(100% - 10px), 10px 100%, 10px calc(100% + 8px), -8px calc(100% + 8px), -8px -8px, calc(100% - 10px) -8px, calc(100% - 10px) 0, 100% 0, 100% 10px, calc(100% - 10px) 0); }
@@ -547,6 +549,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .more.dark { color: #FFFFFF; }
 .more.dark svg { color: #F4703F; }
 .more.dark:hover, .more.dark:focus-visible { color: #FFFFFF; }
+/* On the Bone bands the hover color #C9430D measured 2.8:1, so links there turn the darker orange #8F2E09 (4.7:1) */
+.sec.bone .more:hover, .sec.bone .more:focus-visible, .fin-ban .more:hover, .fin-ban .more:focus-visible { color: #8F2E09; }
 
 /* Section heads: the Home sample head, with BAN-06's accent strike on scroll */
 .shead { position: relative; padding-top: 26px; max-width: 760px; }
@@ -1411,11 +1415,20 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   if (count) { count.removeAttribute('aria-live'); count.setAttribute('aria-hidden', 'true'); }
   function step() { return frames[0].getBoundingClientRect().width + 26; }
   function go(left) { track.scrollBy({ left: left, behavior: reduce ? 'auto' : 'smooth' }); }
+  // The count and the spoken position name the photos that are wholly in view. They are worked out from where each photo sits in the
+  // row, not from the scroll distance, because the row cannot scroll its last photo to the left edge. At 1440 px the scroll distance
+  // still gave "4–5 of 6" after the last press of Next, with the sixth photo in view.
   function report() {
-    var n = frames.length, w = step();
-    var first = Math.round(track.scrollLeft / w);
-    var shown = Math.max(1, Math.floor((track.clientWidth + 26) / w));
-    var last = Math.min(n, first + shown);
+    var n = frames.length, box = track.getBoundingClientRect(), lo = box.left - 2, hi = box.left + track.clientWidth + 2;
+    var first = -1, last = 0, most = -Infinity;
+    for (var i = 0; i < n; i++) {
+      var fr = frames[i].getBoundingClientRect();
+      if (fr.left >= lo && fr.right <= hi) { if (first < 0) first = i; last = i + 1; }
+      var seen = Math.min(fr.right, hi) - Math.max(fr.left, lo);
+      if (first < 0 && seen > most) { most = seen; last = i; }
+    }
+    // When no photo is wholly in view (a very narrow screen), the count names the photo with the most of it in view
+    if (first < 0) { first = last; last = first + 1; }
     count.textContent = (first + 1) + (last > first + 1 ? '–' + last : '') + ' OF ' + n;
     bar.style.width = Math.max(10, (last - first) / n * 100) + '%';
     bar.style.left = (first / n * 100) + '%';

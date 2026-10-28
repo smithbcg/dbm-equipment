@@ -55,6 +55,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--silver); outlin
 .on-light button:focus-visible, .on-light a:focus-visible { outline-color: var(--steel); }
 /* The link rows under the header (Buy pages and service pages) sit on white or light gray, so their focus ring is Steel Gray, not Silver */
 .subnav a:focus-visible { outline-color: var(--steel); }
+/* The call plate at the foot of most pages is a dark plate set inside a light .on-light section, so its two buttons keep the Silver ring (Steel Gray measured 2.2:1 on the plate) */
+.on-light .call-plate a:focus-visible, .on-light .call-plate button:focus-visible { outline-color: var(--silver); }
 /* The mono buttons (.mono-btn, and .monol on the industry pages) cut two corners with clip-path, and that clip also cut off the focus ring.
    On keyboard focus the clip below keeps the two cut corners, and it also leaves an 8 px margin open around the button, so the 2 px ring set 4 px outside shows. */
 .mono-btn:focus-visible, .monol:focus-visible { clip-path: polygon(evenodd, calc(100% - 10px) -8px, calc(100% + 8px) -8px, calc(100% + 8px) calc(100% + 8px), 10px calc(100% + 8px), 10px 100%, 0 100%, 0 calc(100% - 10px), 10px 100%, 10px calc(100% + 8px), -8px calc(100% + 8px), -8px -8px, calc(100% - 10px) -8px, calc(100% - 10px) 0, 100% 0, 100% 10px, calc(100% - 10px) 0); }
@@ -1038,7 +1040,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <div class="row"><button type="button" class="kb" data-kb="sec" data-travel="4" data-copy="(775) 625-0062"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Copy the number</span></span></button><span class="say" data-copysay role="status" aria-live="polite"></span></div>
           </div>
       </div>
-      <div class="formcard" id="contactcard">
+      <div class="formcard on-light" id="contactcard">
         <form novalidate aria-labelledby="req-title">
           <div class="rgw"><span class="lab2" id="need-lab">What is this request about?</span><div class="rcg" role="radiogroup" aria-labelledby="need-lab" data-rgroup="need"><button type="button" class="rc" role="radio" aria-checked="false" data-rc="service" data-say="Service requests go to our service team, which calls or texts you to schedule a technician, usually for the next day and sometimes the same day."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Service or repair</span><span class="rd">We repair any make in the field or in our shop.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="parts" data-say="Parts requests go to our parts department. Before anything is ordered, the parts department calls, texts, or emails you to confirm the part, the price, and the delivery date."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Parts</span><span class="rd">We supply XCMG, SAS, and aftermarket parts.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="buy" data-say="Purchase requests go to our sales team. The sales team replies by call, text, or email with availability, pricing, and delivery for the machine you describe."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Buy a machine</span><span class="rd">We sell new XCMG and used machines.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="rent" data-say="Rental requests go to our rental team. The rental team replies with availability, the monthly rate, and the delivery cost, and books the machine after you approve. Most rentals run by the month, and some large machines carry a three-month minimum. We rent to contractors and commercial operators, not to homeowners."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Rent a machine</span><span class="rd">We rent to contractors, mostly by the month.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="sell" data-say="Sale and trade-in requests go to our sales team, which reviews the details and photos and replies with an offer or a trade value."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Sell or trade</span><span class="rd">We buy machines outright or in trade.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="finance" data-say="Someone from DBM contacts you about financing a used machine, another brand, or the rental purchase option. For a new XCMG machine and the attachments you buy with it, you apply through QuickFi’s XCMG application at quickfi.ai/xcmg, with 0% financing available on approved credit."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Financing</span><span class="rd">QuickFi covers new XCMG, and we work with other lenders too.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="careers" data-say="Your experience goes to the managers who hire our technicians, and they contact you by phone, text, or email when an opening fits your work."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Careers</span><span class="rd">We hire field and shop technicians.</span><span class="rs" aria-hidden="true"></span></span></button><button type="button" class="rc" role="radio" aria-checked="false" data-rc="other" data-say="The office reads a general request and passes it to the team that can answer it."><span class="sock" aria-hidden="true"><span class="plug"></span></span><span><span class="rt">Something else</span><span class="rd">The office routes any other question.</span><span class="rs" aria-hidden="true"></span></span></button></div><p class="rsay" data-rsay data-start="You have not chosen a request type yet. When you choose one, the form shows only the fields that request needs." role="status" aria-live="polite">You have not chosen a request type yet. When you choose one, the form shows only the fields that request needs.</p></div>
           <div class="fgrid2">
@@ -1363,11 +1365,20 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   if (count) { count.removeAttribute('aria-live'); count.setAttribute('aria-hidden', 'true'); }
   function step() { return frames[0].getBoundingClientRect().width + 26; }
   function go(left) { track.scrollBy({ left: left, behavior: reduce ? 'auto' : 'smooth' }); }
+  // The count and the spoken position name the photos that are wholly in view. They are worked out from where each photo sits in the
+  // row, not from the scroll distance, because the row cannot scroll its last photo to the left edge. At 1440 px the scroll distance
+  // still gave "4–5 of 6" after the last press of Next, with the sixth photo in view.
   function report() {
-    var n = frames.length, w = step();
-    var first = Math.round(track.scrollLeft / w);
-    var shown = Math.max(1, Math.floor((track.clientWidth + 26) / w));
-    var last = Math.min(n, first + shown);
+    var n = frames.length, box = track.getBoundingClientRect(), lo = box.left - 2, hi = box.left + track.clientWidth + 2;
+    var first = -1, last = 0, most = -Infinity;
+    for (var i = 0; i < n; i++) {
+      var fr = frames[i].getBoundingClientRect();
+      if (fr.left >= lo && fr.right <= hi) { if (first < 0) first = i; last = i + 1; }
+      var seen = Math.min(fr.right, hi) - Math.max(fr.left, lo);
+      if (first < 0 && seen > most) { most = seen; last = i; }
+    }
+    // When no photo is wholly in view (a very narrow screen), the count names the photo with the most of it in view
+    if (first < 0) { first = last; last = first + 1; }
     count.textContent = (first + 1) + (last > first + 1 ? '–' + last : '') + ' OF ' + n;
     bar.style.width = Math.max(10, (last - first) / n * 100) + '%';
     bar.style.left = (first / n * 100) + '%';
