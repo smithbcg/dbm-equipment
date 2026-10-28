@@ -732,6 +732,14 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
 @media (max-width: 620px) {
   .plate1b .strip { flex-wrap: wrap; row-gap: 4px; padding-left: 32px; padding-right: 32px; letter-spacing: 0.18em; }
 }.nw { white-space: nowrap; }
+/* Round 2 (2026-10-28): a three-item checklist fills one row on wide screens, and the tab panels share one grid cell so the card keeps the height of its tallest panel when the visitor changes tabs */
+@media (min-width: 1101px) {
+  .checks:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 44px; }
+}
+.tabcard { display: grid; grid-template-columns: minmax(0, 1fr); }
+.tabcard > .tabstrip { justify-self: start; }
+.tabcard > .tabpanel { grid-row: 2; grid-column: 1; }
+.tabcard > .tabpanel[hidden] { display: block; visibility: hidden; }
 </style>
 </head>
 <body>
@@ -930,7 +938,8 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
         </div>
         <div class="tabpanel" role="tabpanel" id="panel-buy" aria-labelledby="tab-buy" tabindex="0">
           <h3>Buying this machine</h3>
-          <p>Request a price quote, and our sales team sends a quote that lists the price, this machine's serial number and attachments, the delivery date and cost to your site, and the financing that applies. New XCMG machines qualify for 0% financing on approved credit through QuickFi, XCMG's lender, which also finances attachments bought with the machine. QuickFi does not cover used machines or other makes, so for those, call <span class="nw">(775) 625-0062</span> or send a request, and our sales team follows up about financing.</p>
+          <p>Request a price quote, and our sales team sends a quote that lists the price, this machine's serial number and attachments, and the delivery date and cost to your site. Our sales or service rep delivers the machine and goes over its controls and daily checks with your operator before leaving the site.</p>
+          <p>New XCMG machines qualify for 0% financing on approved credit through QuickFi, XCMG's lender, which also finances attachments bought with the machine. QuickFi does not cover used machines or other makes, so for those, call <span class="nw">(775) 625-0062</span> or send a request, and our sales team follows up about financing.</p>
           <div class="acts"><a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26" data-prefill="Please send a price quote for this machine with delivery to my jobsite."><span data-nfill aria-hidden="true"></span><span class="l">Request a price quote</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a><a class="kb paper" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener" aria-label="Apply for XCMG financing on QuickFi (opens in a new tab)" data-kb="paper" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Apply for XCMG financing</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a></div>
         </div>
         <div class="tabpanel" role="tabpanel" id="panel-rent" aria-labelledby="tab-rent" tabindex="0" hidden>
@@ -2048,17 +2057,28 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
     });
   });
 
-  // C04 BAR-01 on phones: the bar rises once the record band's buttons scroll away and steps down while the contact band is on screen
-  var callbar = document.querySelector('.callbar'), acts = document.querySelector('[data-heroacts]'), band = document.getElementById('call');
-  if (callbar && acts && 'IntersectionObserver' in window) {
-    var gone = false, bandOn = false;
+  // Links that add a related need to the rental request, such as a repair of the renter's own machine
+  $$('[data-related]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var sel = document.querySelector('[data-reqform] select[name="relatedNeed"]');
+      if (!sel) return;
+      sel.value = a.getAttribute('data-related');
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
+
+  // C04 BAR-01 on phones: the bar rises once the title and lede scroll away, steps down while the record band's own buttons or the contact band are on screen, and rises again between them
+  var callbar = document.querySelector('.callbar'), head = document.querySelector('.rec-head'), acts = document.querySelector('[data-heroacts]'), band = document.getElementById('call');
+  if (callbar && head && acts && 'IntersectionObserver' in window) {
+    var gone = false, actsOn = false, bandOn = false;
     var sync = function () {
-      var on = gone && !bandOn;
+      var on = gone && !actsOn && !bandOn;
       callbar.classList.toggle('on', on);
       callbar.setAttribute('aria-hidden', on ? 'false' : 'true');
       $$('a', callbar).forEach(function (a) { a.tabIndex = on ? 0 : -1; });
     };
-    new IntersectionObserver(function (es) { gone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(acts);
+    new IntersectionObserver(function (es) { gone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(head);
+    new IntersectionObserver(function (es) { actsOn = es[0].isIntersecting; sync(); }).observe(acts);
     if (band) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(band);
   }
 })();

@@ -560,6 +560,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .sec.bone { background: #CDC4AF; }
 .cover { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
 .cover .say { margin: 18px 0 0; min-height: 5.2em; color: #1A1A1A; font-size: 17.5px; line-height: 1.65; max-width: 54ch; text-wrap: pretty; }
+/* Every coverage sentence sits in one grid cell, with hidden copies of the other two, so the box always has the height of the longest sentence and nothing below it moves when a chip changes the sentence. */
+.cover .saybox { display: grid; margin-top: 18px; max-width: 54ch; }
+.cover .saybox > .say { grid-area: 1 / 1; margin: 0; min-height: 0; }
+.cover .say.ghost { visibility: hidden; }
 .cchips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .monol { position: relative; border: 0; cursor: pointer; background: transparent; color: #33363B; font-family: 'Chivo Mono', monospace; font-size: 11.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 18px; min-height: 44px; text-align: center; box-shadow: inset 0 0 0 1.5px #8C8470; clip-path: var(--chamfer-10); }
 .monol[aria-pressed="true"] { background: #1A1A1A; color: #FFFFFF; box-shadow: none; }
@@ -647,7 +651,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   .cover .ctext > .slede { order: 2; }
   .cover .cchips { order: 3; }
   .cover .ymap { order: 4; width: 100%; max-width: 640px; margin-top: 24px; }
-  .cover .say { order: 5; }
+  .cover .saybox { order: 5; }
   .cover .cfine { order: 6; }
 }
 @media (max-width: 960px) {
@@ -807,7 +811,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   
   <section class="sec white on-light" id="operation" aria-labelledby="operation-title" data-reveal>
     <div class="wrap">
-      <div class="hrow"><div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="operation-title">What to Tell Us About Your Yard &amp; the Material You Move</h2></div><p class="slede">Our sales team needs four details to match a machine or an attachment to a recycling yard: what moves through the yard, the task the machine does with it, the machine and coupler you run today, and what you want to change.</p></div><ul class="checks"><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>The Material</h3><p>What you handle, such as car bodies, engines and cores, ferrous scrap, or demolition debris, and how it arrives at your yard.</p></div></li><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>The Task</h3><p>What has to be stacked, sorted, loaded into trucks or containers, or fed to a crusher, baler, or shear, and what your current setup cannot do.</p></div></li><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>Your Machine</h3><p>The make, model, and serial number, and the attachment and quick coupler on it now, with photos if you do not know the coupler type.</p></div></li><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>What You Want to Change</h3><p>An attachment for a machine you will keep, a different machine for the work, or a repair to a machine that used to handle the load.</p></div></li></ul>
+      <div class="hrow"><div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="operation-title">What to Tell Us About Your Yard &amp; the Material You Move</h2></div><p class="slede">Our sales team matches a machine or an SAS attachment to your yard from the four details below, and photos of the machine and the coupler on it now let us check the fit before anything is ordered.</p></div><ul class="checks"><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>The Material</h3><p>What you handle, such as car bodies, engines and cores, ferrous scrap, or demolition debris, and how it arrives at your yard.</p></div></li><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>The Task</h3><p>What has to be stacked, sorted, loaded into trucks or containers, or fed to a crusher, baler, or shear, and what your current setup cannot do.</p></div></li><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>Your Machine</h3><p>The make, model, and serial number, and the attachment and quick coupler on it now, with photos if you do not know the coupler type.</p></div></li><li><img class="ck" src="../../assets/759a273d55e57bdc.svg" alt="" aria-hidden="true"><div><h3>What You Want to Change</h3><p>An attachment for a machine you will keep, a different machine for the work, or a repair to a machine that used to handle the load.</p></div></li></ul>
     </div>
   </section>
 
@@ -839,9 +843,9 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       <div class="cover" data-cover>
         <div class="ctext">
           <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="coverage-title">Where Our Service Trucks, Rentals &amp; Parts Reach Your Yard</h2></div>
-          <p class="slede">Field service, new XCMG sales and rentals, and parts shipping each cover a different area, and each button below lights that area on the map.</p>
+          <p class="slede">Our service trucks repair machines anywhere in Nevada and in California from Sacramento to Bakersfield, new XCMG sales and rentals cover Nevada and the California counties next to it, and parts and used machines ship anywhere in the country. Choose one below to see its area on the map.</p>
           <div class="cchips" role="group" aria-label="Show what reaches your job"><button type="button" class="monol" data-mono="light" data-cchip data-show="nv ca" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Field service trucks</span><template><span>Our service trucks carry their own generators, cranes, and tooling to repair machines on site anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes, and a technician usually reaches your machine the day after you call and sometimes the same day.</span></template></button><button type="button" class="monol" data-mono="light" data-cchip data-show="nv near" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">New XCMG sales &amp; rentals</span><template><span>New XCMG sales and rental deliveries cover all of Nevada and the California counties next to Nevada, so give us the county and the site address when you call about a California job.</span></template></button><button type="button" class="monol" data-mono="light" data-cchip data-show="us" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Parts &amp; used machines</span><template><span>We ship parts and used machines anywhere in the United States, we can get almost any part within 48 hours, and overnight shipping is available when a machine is down and waiting on the part.</span></template></button></div>
-          <p class="say" data-csay role="status" aria-live="polite"><span>Our service trucks carry their own generators, cranes, and tooling to repair machines on site anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes, and a technician usually reaches your machine the day after you call and sometimes the same day.</span></p>
+          <div class="saybox" data-csaybox><p class="say" data-csay role="status" aria-live="polite"><span>Our service trucks carry their own generators, cranes, and tooling to repair machines on site anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes, and a technician usually reaches your machine the day after you call and sometimes the same day.</span></p></div>
           <p class="cfine">Our service trucks and rental deliveries leave from our yard, shop, and parts counter at 2366 Resource Dr, Fernley, NV 89408, on Interstate 80 east of Reno.</p>
         </div>
         <div class="ymap">
@@ -896,7 +900,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       <div class="faq2">
         <div>
           <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="questions-title">Recycling Yard Equipment Questions</h2></div>
-          <a class="rowlink" href="../../contact/"><span><span class="rl-t">Ask a Question About Your Yard</span><span class="rl-d">Our team calls or texts you back about the question you send through our request form, <span>and a question that arrives after hours gets its answer the next day</span>.</span></span><svg  viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+          <a class="rowlink" href="../../contact/"><span><span class="rl-t">Ask a Question About Your Yard</span><span class="rl-d">Send the question through our request form, and the sales, rental, or service team that handles it calls or texts you back. <span>A question sent after hours is answered the next day.</span></span></span><svg  viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
         </div>
         <div class="acc1" data-acc>
           <div data-accitem>
@@ -912,7 +916,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <div data-accitem>
             <button type="button" data-acchead aria-expanded="false" aria-controls="qr3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I finance SAS forks or attachments?</span><span data-accstate aria-hidden="true">OPEN</span></button>
             <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-            <div data-accpanel id="qr3" role="region"><div><p><span>Yes, when you buy them with a new XCMG machine, because QuickFi, XCMG’s lender, finances the machine and the attachment together, with 0% financing available on approved credit, and you can <a href="https://quickfi.ai/xcmg" target="_blank" rel="noopener">apply for XCMG financing on QuickFi’s website</a>. For an attachment on its own or a used machine, call us, because we work with other lenders on those purchases.</span></p></div></div>
+            <div data-accpanel id="qr3" role="region"><div><p><span>Yes, when you buy them with a new XCMG machine, because QuickFi, XCMG’s lender, finances the machine and the attachment together, with 0% financing available on approved credit, and you can <a class="inl" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener">apply for XCMG financing on QuickFi’s website</a>. For an attachment on its own or a used machine, call us, because we work with other lenders on those purchases.</span></p></div></div>
           </div>
           <div data-accitem>
             <button type="button" data-acchead aria-expanded="false" aria-controls="qr4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Does DBM design recycling yards or processes?</span><span data-accstate aria-hidden="true">OPEN</span></button>
@@ -1714,6 +1718,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   // Coverage band (C06 BAN-04 chips): each chip sets the coverage sentence and lights its layer of the territory map
   document.querySelectorAll('[data-cover]').forEach(function (root) {
     var chips = root.querySelectorAll('[data-cchip]'), say = root.querySelector('[data-csay]'), layers = root.querySelectorAll('.ymap [data-l]');
+    var box = root.querySelector('[data-csaybox]');
+    if (box) root.querySelectorAll('[data-cchip] template').forEach(function (t) { var g = document.createElement('p'); g.className = 'say ghost'; g.setAttribute('aria-hidden', 'true'); g.innerHTML = t.innerHTML; box.appendChild(g); });
     var setChip = function (c, a) { if (window.dbmMonoSet) window.dbmMonoSet(c, a); else c.setAttribute('aria-pressed', a ? 'true' : 'false'); };
     var pick = function (c, now) {
       chips.forEach(function (o) { setChip(o, o === c); });

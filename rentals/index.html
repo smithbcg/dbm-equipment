@@ -580,11 +580,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .ff-all [data-c] { width: 13px; height: 13px; }
 /* Fleet cards: the Home sample's lift, photo zoom, and arrow step */
 [data-card] { transition: transform .3s cubic-bezier(0.2,0.7,0.3,1) !important; }
-[data-card]:hover, [data-card]:focus-visible { transform: translateY(-6px) !important; }
+[data-fleetgrid]:not(.is-moving) [data-card]:hover, [data-fleetgrid]:not(.is-moving) [data-card]:focus-visible { transform: translateY(-6px) !important; }
 [data-card] > span:first-child { overflow: hidden; }
 [data-card] > span:first-child img { transition: transform .6s cubic-bezier(0.2,0.7,0.3,1); }
 [data-card]:hover > span:first-child img, [data-card]:focus-visible > span:first-child img { transform: scale(1.06); }
 [data-card]:hover [data-mfoot] .barr, [data-card]:focus-visible [data-mfoot] .barr { transform: translateX(7px); }
+/* Round 2: while the fleet filter moves the cards, the cards' own CSS transition and hover lift stay off, so the script's movement is not delayed or overridden */
+[data-fleetgrid].is-moving [data-card] { transition: none !important; }
 @media (max-width: 620px) {
   [data-screen-label="Hero"] .ch-btn, [data-screen-label="Hero"] .kb, [data-screen-label="Hero"] .kb [data-kplate] { width: 100%; justify-content: center; }
   .rent-plate, .rent-plate .plate-face { width: 100%; justify-content: center; }
@@ -849,7 +851,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
           <div data-state="done" hidden>
             <div style="padding: clamp(28px, 4vw, 42px); display: flex; flex-direction: column; align-items: flex-start;">
-              <span style="font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Rental request received</span>
+              <span style="font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 34px); font-weight: 800; line-height: 1.08; letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Rental request received</span>
               <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.65; color: #4B4F56; max-width: 56ch; text-wrap: pretty;">Our rental team checks the machine against our own fleet and our partners’ fleets and calls or texts you back with availability, the monthly rate, and the delivery date. <span>If this is your first rental with DBM, we also send our credit application, and after our office reviews it, we either set up a credit line for your rentals or ask for a credit card to secure the rental.</span> If the machine has to be on your jobsite sooner, call or text <span style="white-space: nowrap;">(775) 625-0062</span> now.</p>
               <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px;">
                 <a href="tel:+17756250062" data-mono="1" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease, transform 0.09s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"><span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
@@ -977,7 +979,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <div style="position: relative; padding-top: 26px; max-width: 640px;">
           <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
             <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Machines in the DBM Rental Fleet</h2>
-          <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">Each machine class below rents by the month, and because we also sublease from partners with large fleets, we can supply machines this page does not show, up to 50-ton mining trucks, once you call or text us the machine class and the start date.</p>
+          <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">Each machine class below rents by the month, and because we also sublease from partners with large fleets, our rental team can supply classes this page does not show, up to 50-ton mining trucks, when you call or text the class you need and the start date.</p>
         </div>
         <span class="f-count" data-fcount>7 of 7 machines shown</span>
       </div>
@@ -1225,13 +1227,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         
           <a href="../case-studies/sewer-pump-lift/" data-tile="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx39 rx40 cut-bl">
             <span style="position: relative; display: block; aspect-ratio: 16 / 9; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/841744a1f1820203.jpg" alt="A DBM crane lifting a large machine component on a job site" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/637ff61233ee2153.jpg" alt="A DBM crane truck lifting an engine with its own crane on a gravel job site" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; display: block;">
               <span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 2.25px; background: #EF5016;"></span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Case study</span>
               <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.32; letter-spacing: 0.01em; color: #1A1A1A; margin-top: 11px; text-wrap: pretty;">Our crane truck was already on site, so we lifted sewer pumps into a new build</span>
-              <span style="font-size: 14.5px; line-height: 1.6; color: #5B5F66; margin-top: 10px; text-wrap: pretty;">Our crew and a DBM crane truck were already working on a new construction site, so we used the truck’s crane to lift the sewer pumps into place, even though crane lifts are not a service we sell, and the customer on that job still works with us.</span>
+              <span style="font-size: 14.5px; line-height: 1.6; color: #5B5F66; margin-top: 10px; text-wrap: pretty;">Our crew and a DBM crane truck were already working on a new construction site, so we used the truck’s crane to lift the sewer pumps into place, even though lifting pumps is not work we advertise, and the customer on that job still works with us.</span>
               <span style="display: flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 16px; font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #1A1A1A;">Read the case study<svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
             </span>
           </a>
@@ -2115,6 +2117,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         formState.hidden = true; formState.style.display = 'none'; doneState.hidden = false; doneState.style.display = 'contents';
         if (window.gsap && !reduce) gsap.fromTo(doneState.children, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.32, stagger: 0.05, ease: 'power2.out' });
         var t = doneState.querySelector('h3, h4, [tabindex], button'); if (t && t.focus) t.focus({ preventScroll: true });
+        // Round 2: the receipt is shorter than the form, so on a phone its heading ended up above the screen. Bring the receipt's card into view below the sticky header.
+        var box = doneState.parentElement, nav = document.getElementById('nav');
+        var off = box.getBoundingClientRect().top - (nav ? nav.getBoundingClientRect().height : 90) - 16;
+        if (off < 0 || off > window.innerHeight * 0.5) window.scrollBy({ top: off, behavior: reduce ? 'auto' : 'smooth' });
       }, reduce ? 100 : 900);
     });
   });
@@ -2146,19 +2152,45 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   var tiles = Array.prototype.slice.call(document.querySelectorAll('[data-tile][data-job]'));
   var cards = Array.prototype.slice.call(document.querySelectorAll('[data-card][data-jobs]'));
   var bar = document.querySelector('[data-fleetbar]'), fcount = document.querySelector('[data-fcount]');
+  var grid = document.querySelector('[data-fleetgrid]'), run = 0;
+  /* Round 2 (2026-10-28): the old Flip call used absolute positioning, which collapsed the grid to zero height for half a second,
+     pulled the next section up the page, and flew the cards in from far above. The fleet now fades out the cards that leave,
+     slides the cards that stay to their new places, eases the grid's height, and fades in the cards that arrive. */
+  function shows(c, key) { return !key || (' ' + c.getAttribute('data-jobs') + ' ').indexOf(' ' + key + ' ') > -1; }
+  function move(key) {
+    var token = ++run, g = window.gsap;
+    if (!g || !window.Flip || reduce || !grid) { cards.forEach(function (c) { c.classList.toggle('is-out', !shows(c, key)); }); return; }
+    g.killTweensOf(cards); g.killTweensOf(grid);
+    g.set(cards, { clearProps: 'opacity,transform' }); g.set(grid, { clearProps: 'height,overflow' });
+    var leaving = cards.filter(function (c) { return !c.classList.contains('is-out') && !shows(c, key); });
+    var entering = cards.filter(function (c) { return c.classList.contains('is-out') && shows(c, key); });
+    var staying = cards.filter(function (c) { return !c.classList.contains('is-out') && shows(c, key); });
+    var h0 = grid.offsetHeight;
+    grid.classList.add('is-moving');
+    function apply() {
+      if (token !== run) return;
+      var st = Flip.getState(staying);
+      cards.forEach(function (c) { c.classList.toggle('is-out', !shows(c, key)); });
+      g.set(leaving, { clearProps: 'opacity,transform' });
+      var h1 = grid.offsetHeight;
+      if (h1 !== h0) g.fromTo(grid, { height: h0, overflow: h1 > h0 ? 'hidden' : 'visible' }, { height: h1, duration: 0.42, ease: 'power2.inOut', clearProps: 'height,overflow' });
+      if (staying.length) Flip.from(st, { targets: staying, duration: 0.42, ease: 'power2.inOut' });
+      if (entering.length) g.fromTo(entering, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.32, delay: 0.14, stagger: 0.04, ease: 'power2.out', clearProps: 'opacity,transform' });
+      g.delayedCall(0.6, function () { if (token === run) grid.classList.remove('is-moving'); });
+    }
+    if (leaving.length) g.to(leaving, { opacity: 0, y: -8, duration: 0.16, ease: 'power1.in', onComplete: apply }); else apply();
+  }
   function filter(key) {
-    var st = window.Flip && !reduce ? Flip.getState(cards) : null;
     tiles.forEach(function (t) { var on = t.getAttribute('data-job') === key; t.classList.toggle('is-on', on); t.setAttribute('aria-pressed', on ? 'true' : 'false'); });
-    cards.forEach(function (c) { c.classList.toggle('is-out', !(!key || (' ' + c.getAttribute('data-jobs') + ' ').indexOf(' ' + key + ' ') > -1)); });
+    move(key);
     if (key) {
       var j = JOBS[key];
       bar.hidden = false;
       bar.querySelector('[data-jobname]').textContent = j.name;
       var link = bar.querySelector('[data-joblink]'); link.hidden = !j.link; if (j.link) link.setAttribute('href', j.link);
     } else bar.hidden = true;
-    var shown = cards.filter(function (c) { return !c.classList.contains('is-out') && c.querySelector('[data-mname]'); }).length, all = cards.filter(function (c) { return c.querySelector('[data-mname]'); }).length;
+    var shown = cards.filter(function (c) { return shows(c, key) && c.querySelector('[data-mname]'); }).length, all = cards.filter(function (c) { return c.querySelector('[data-mname]'); }).length;
     if (fcount) fcount.textContent = shown + ' of ' + all + ' machines shown';
-    if (st) Flip.from(st, { duration: 0.45, ease: 'power2.inOut', absolute: true, onEnter: function (els) { return gsap.fromTo(els, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.35 }); }, onLeave: function (els) { return gsap.to(els, { opacity: 0, scale: 0.96, duration: 0.25 }); } });
   }
   tiles.forEach(function (t) {
     t.setAttribute('role', 'button'); t.setAttribute('aria-pressed', 'false');

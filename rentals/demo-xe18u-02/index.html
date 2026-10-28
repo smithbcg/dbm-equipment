@@ -732,6 +732,14 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
 @media (max-width: 620px) {
   .plate1b .strip { flex-wrap: wrap; row-gap: 4px; padding-left: 32px; padding-right: 32px; letter-spacing: 0.18em; }
 }.nw { white-space: nowrap; }
+/* Round 2 (2026-10-28): a three-item checklist fills one row on wide screens, and the tab panels share one grid cell so the card keeps the height of its tallest panel when the visitor changes tabs */
+@media (min-width: 1101px) {
+  .checks:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 44px; }
+}
+.tabcard { display: grid; grid-template-columns: minmax(0, 1fr); }
+.tabcard > .tabstrip { justify-self: start; }
+.tabcard > .tabpanel { grid-row: 2; grid-column: 1; }
+.tabcard > .tabpanel[hidden] { display: block; visibility: hidden; }
 </style>
 </head>
 <body>
@@ -892,7 +900,7 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
           <p class="film-note">These are XCMG&#x27;s product photos of the XE18U, so this unit may carry a different bucket or attachments, which our rental team confirms before delivery.</p>
         </div>
         <div class="rec-status"><span class="stamp warn">In the shop</span><div><strong>Out for service until the work is done</strong><p>Send your dates, and our rental team tells you when this unit is back or offers another machine of the same size.</p></div></div>
-        <a class="rec-ask" href="#request"><span><strong>Is your own machine down?</strong><span class="t">Rent from our fleet while our field service crew repairs your machine, and choose that option in the request form below.</span></span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a class="rec-ask" href="#request" data-related="repair" data-prefill="My own machine is down and needs a repair while I rent this one. My machine, what it is doing, and where it is: "><span><strong>Is your own machine down?</strong><span class="t">Rent this machine while our field service crew repairs yours. This link adds the repair to your rental request below, so one request covers both.</span></span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
       </div>
     </div>
     <svg class="hero-kerf" viewBox="0 0 1200 3" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1.5" x2="1200" y2="1.5" stroke="#EF5016" stroke-width="3" data-kerf/></svg>
@@ -2019,17 +2027,28 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
     });
   });
 
-  // C04 BAR-01 on phones: the bar rises once the record band's buttons scroll away and steps down while the contact band is on screen
-  var callbar = document.querySelector('.callbar'), acts = document.querySelector('[data-heroacts]'), band = document.getElementById('call');
-  if (callbar && acts && 'IntersectionObserver' in window) {
-    var gone = false, bandOn = false;
+  // Links that add a related need to the rental request, such as a repair of the renter's own machine
+  $$('[data-related]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var sel = document.querySelector('[data-reqform] select[name="relatedNeed"]');
+      if (!sel) return;
+      sel.value = a.getAttribute('data-related');
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
+
+  // C04 BAR-01 on phones: the bar rises once the title and lede scroll away, steps down while the record band's own buttons or the contact band are on screen, and rises again between them
+  var callbar = document.querySelector('.callbar'), head = document.querySelector('.rec-head'), acts = document.querySelector('[data-heroacts]'), band = document.getElementById('call');
+  if (callbar && head && acts && 'IntersectionObserver' in window) {
+    var gone = false, actsOn = false, bandOn = false;
     var sync = function () {
-      var on = gone && !bandOn;
+      var on = gone && !actsOn && !bandOn;
       callbar.classList.toggle('on', on);
       callbar.setAttribute('aria-hidden', on ? 'false' : 'true');
       $$('a', callbar).forEach(function (a) { a.tabIndex = on ? 0 : -1; });
     };
-    new IntersectionObserver(function (es) { gone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(acts);
+    new IntersectionObserver(function (es) { gone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(head);
+    new IntersectionObserver(function (es) { actsOn = es[0].isIntersecting; sync(); }).observe(acts);
     if (band) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(band);
   }
 })();

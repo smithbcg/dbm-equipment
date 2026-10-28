@@ -504,6 +504,18 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .subnav a:hover, .subnav a:focus-visible, .subnav a[aria-current] { color: #1A1A1A; }
 .subnav a:hover::after, .subnav a:focus-visible::after, .subnav a[aria-current]::after { transform: scaleX(1); }
 .subnav a svg { width: 18px; height: 9px; color: #C9430D; }
+/* Round 2: the orange bar under this page's link is a real element with its own view-transition name, so when the visitor moves
+   between Buy pages the page transition slides the bar from the last page's link to this one. The hover underline stays on the other links. */
+.subnav .sn-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; pointer-events: none; view-transition-name: dbm-buy-bar; }
+.subnav a[aria-current]::after { display: none; }
+::view-transition-group(dbm-buy-bar) { animation-duration: .42s; animation-timing-function: cubic-bezier(.22, 1, .36, 1); }
+::view-transition-old(dbm-buy-bar) { animation: none; opacity: 0; }
+::view-transition-new(dbm-buy-bar) { animation: none; }
+/* On a phone the row scrolls sideways: its right edge fades while more links sit past it, as the header's menu row does */
+@media (max-width: 700px) {
+  .subnav ul { -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); }
+  .subnav ul.at-end { -webkit-mask-image: none; mask-image: none; }
+}
 
 /* Machine cards: the Home sample's R fleet card (lift, photo push, orange Slat Wipe on the action row) */
 .fleet-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 34px; }
@@ -879,6 +891,26 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
 
 <main>
   
+  <nav class="subnav" aria-label="Buy equipment">
+    <ul class="wrap"><li><a href="../../equipment/">All equipment</a></li><li><a href="../../equipment/new/">New XCMG equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../equipment/xcmg/" aria-current="page">XCMG at DBM<span class="sn-bar" aria-hidden="true"></span></a></li><li><a href="../../we-buy-equipment/">Sell or trade in</a></li></ul>
+  </nav>
+  <script>
+  /* Buy row on a narrow screen: the row keeps the sideways position it had on the last Buy page, then scrolls only as far as it must to show this page's link.
+     It runs here, before the page is first drawn, so the row never jumps after the page appears. */
+  (function () {
+    var ul = document.currentScript.previousElementSibling.querySelector('ul'), cur = ul.querySelector('[aria-current]'), KEY = 'dbm-buy-row-x';
+    try { var x = sessionStorage.getItem(KEY); sessionStorage.removeItem(KEY); if (x !== null) ul.scrollLeft = +x; } catch (e) {}
+    if (cur) {
+      var u = ul.getBoundingClientRect(), r = cur.getBoundingClientRect(), pad = 34;
+      if (r.right > u.right - pad) ul.scrollLeft += r.right - (u.right - pad);
+      else if (r.left < u.left) ul.scrollLeft -= u.left - r.left;
+    }
+    var end = function () { ul.classList.toggle('at-end', ul.scrollLeft + ul.clientWidth >= ul.scrollWidth - 2); };
+    end(); ul.addEventListener('scroll', end, { passive: true });
+    ul.addEventListener('click', function (e) { if (e.target.closest('a')) try { sessionStorage.setItem(KEY, String(ul.scrollLeft)); } catch (x) {} });
+  })();
+  </script>
+  
   <section class="hero-lb pr" aria-labelledby="page-title" data-hero>
     <div class="split">
       <div class="pic">
@@ -904,10 +936,6 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
     <svg class="hero-kerf" viewBox="0 0 1200 3" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1.5" x2="1200" y2="1.5" stroke="#EF5016" stroke-width="3" data-kerf/></svg>
   </section>
 
-  
-  <nav class="subnav" aria-label="Buy equipment">
-    <ul class="wrap"><li><a href="../../equipment/">All equipment</a></li><li><a href="../../equipment/new/">New XCMG equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../equipment/xcmg/" aria-current="page">XCMG at DBM</a></li><li><a href="../../we-buy-equipment/">Sell or trade in</a></li></ul>
-  </nav>
 
   
   <section class="sec white on-light" id="team" aria-labelledby="team-title" data-reveal>
@@ -1924,7 +1952,12 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
   var g = window.gsap;
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
-  var navH = function () { var n = document.getElementById('nav'); return n ? n.getBoundingClientRect().height : 0; };
+  /* The space the sticky header covers, plus the sticky Buy row under it on a wide screen, so a scroll target is never hidden under the row */
+  var navH = function () {
+    var n = document.getElementById('nav'), h = n ? n.getBoundingClientRect().height : 0, row = document.querySelector('main > .subnav');
+    if (row && getComputedStyle(row).position === 'sticky') h += row.getBoundingClientRect().height;
+    return h;
+  };
   window.dbmScrollTo = function (el) {
     var top = el.getBoundingClientRect().top + window.pageYOffset - navH() - 16;
     window.scrollTo({ top: top, behavior: R ? 'auto' : 'smooth' });
@@ -2005,7 +2038,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
       if (input) input.value = '';
       if (seg) window.dbmSegSet(seg, a.dataset.setcat, true);
       if (fr.__apply) fr.__apply(false);
-      window.dbmScrollTo(root);
+      window.dbmScrollTo(fr.querySelector('.ctlbar') || root);
     });
   });
 

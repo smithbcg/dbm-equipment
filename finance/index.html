@@ -625,6 +625,11 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   .hand .hacts .ch-btn, .hand .hacts .kb, .hand .hacts .kb [data-kplate] { width: 100%; }
 }
 
+
+/* Round 2 (2026-10-28): words read aloud to screen readers only, such as "(opens in a new tab)" */
+.nt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+/* Round 2: on a phone the card's dark corner plate already carries the arrow, so the text link drops its own arrow and wraps cleanly */
+@media (max-width: 620px) { .card .txt .cact { letter-spacing: 0.1em; } .card .txt .cact svg { display: none; } }
 /* Copy pass 2026-10-28: keep the phone number on one line inside sentences */
 .nw { white-space: nowrap; }
 </style>
@@ -742,13 +747,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     <div class="wrap">
       <div class="headrow"><div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="start-title">Where to Apply for Each Kind of Financing</h2></div><p class="hintro">New XCMG purchases are financed through QuickFi’s online credit application. For a rental account, a used machine, another brand, or the rental purchase option, you call <span class="nw">(775) 625-0062</span> or send an inquiry, and someone from DBM reaches out with the next step.</p></div>
       <div class="cards two">
-        <a class="card notext" href="#handoff" data-handopen aria-controls="handoff" aria-expanded="false"><span class="bd" aria-hidden="true"></span><span class="face"><span class="txt"><span class="ct">XCMG financing through QuickFi</span><span class="cd">QuickFi, XCMG’s lender, finances new XCMG machines and any SAS attachment bought with the same XCMG machine, with 0% financing available on approved credit, and you complete the credit application on QuickFi’s secure website, where QuickFi reviews it and confirms your rate and terms.</span><span class="cact">Apply on QuickFi’s website <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
-        <a class="card notext" href="../contact/" id="credit-application"><span class="bd" aria-hidden="true"></span><span class="face"><span class="txt"><span class="ct">DBM credit application for rental accounts</span><span class="cd">Contractors who rent from DBM on account fill out our credit application, which our office reviews to set up an internal credit line for your rentals, and when a credit line is not set up, we secure each rental with a credit card instead.</span><span class="cact">Request the credit application <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
+        <a class="card notext" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener" data-handopen><span class="bd" aria-hidden="true"></span><span class="face"><span class="txt"><span class="ct">XCMG financing through QuickFi</span><span class="cd">QuickFi, XCMG’s lender, finances new XCMG machines and any SAS attachment bought with the same XCMG machine, with 0% financing available on approved credit, and you complete the credit application on QuickFi’s secure website, where QuickFi reviews it and confirms your rate and terms.</span><span class="cact">Apply on QuickFi’s website<span class="nt"> (opens in a new tab)</span> <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
+        <a class="card notext" href="../contact/" id="credit-application"><span class="bd" aria-hidden="true"></span><span class="face"><span class="txt"><span class="ct">DBM credit application for rental accounts</span><span class="cd">To rent from DBM on account, you fill out our credit application, and our office reviews it and either sets up a credit line for your rentals or secures each rental with a credit card.</span><span class="cact">Request the credit application <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
       </div>
       <div class="hand" id="handoff" hidden tabindex="-1" aria-labelledby="hand-title">
         <div>
-          <h3 id="hand-title">The application opens on QuickFi’s website</h3>
-          <p class="hb">Continue to QuickFi opens QuickFi’s credit application in a new tab, where you enter your business and financial details directly with QuickFi, XCMG’s lender, which reviews the application, makes the credit decision, and confirms your rate and terms.</p>
+          <h3 id="hand-title">QuickFi’s application opened in a new tab</h3>
+          <p class="hb">You enter your business and financial details directly with QuickFi, XCMG’s lender, which reviews the application, makes the credit decision, and confirms your rate and terms. If the new tab did not open, the button below opens the application again.</p>
         </div>
         <div class="route" aria-hidden="true">
           <span><span class="nm">DBM</span><span class="sb">You choose the XCMG machine</span></span>
@@ -756,8 +761,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <span class="r"><span class="nm">QUICKFI</span><span class="sb">Secure credit application</span></span>
         </div>
         <div class="hacts">
-          <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-handback><span data-kbase aria-hidden="true"></span><span data-kplate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M10 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4"/></svg><span class="l">Back</span></span></button>
-          <a class="ch-btn" href="https://quickfi.ai/xcmg" data-nadv="1" data-cut="16" data-cut-to="26" target="_blank" rel="noopener" data-handgo><span data-nfill aria-hidden="true"></span><span class="l">Continue to QuickFi</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+          <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-handback><span data-kbase aria-hidden="true"></span><span data-kplate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M10 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4"/></svg><span class="l">Close</span></span></button>
+          <a class="ch-btn" href="https://quickfi.ai/xcmg" data-nadv="1" data-cut="16" data-cut-to="26" target="_blank" rel="noopener" data-handgo><span data-nfill aria-hidden="true"></span><span class="l">Open QuickFi’s Application</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
         </div>
         <p class="hsay" data-handsay role="status" aria-live="polite">This page does not collect financial details.</p>
       </div>
@@ -797,7 +802,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
         <div class="pb">
           <dl class="fields1b">
-            <div><dt data-f>New XCMG through QuickFi</dt><dd><p>You complete QuickFi’s credit application online, and QuickFi reviews it, makes the credit decision, and confirms the rate and terms. <span>When the machine is ready, a DBM sales or parts and service representative delivers it to you and goes over its controls and operation with you, as we do with every new or used machine we sell.</span></p><a class="olink" href="#handoff" data-handopen><span>Apply on QuickFi’s website</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></dd></div>
+            <div><dt data-f>New XCMG through QuickFi</dt><dd><p>You complete QuickFi’s credit application online, and QuickFi reviews it, makes the credit decision, and confirms the rate and terms. <span>When the machine is ready, a DBM sales or parts and service representative delivers it to you and goes over its controls and operation with you, as we do with every new or used machine we sell.</span></p><a class="olink" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener"><span>Apply on QuickFi’s website<span class="nt"> (opens in a new tab)</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></dd></div>
             <div><dt data-f>Used machines and other brands</dt><dd><p>You call <span class="nw">(775) 625-0062</span> or send an inquiry, and someone from our sales team reaches out, takes the machine and business details, and sends them to the outside lender that fits the machine. These lenders do not take online applications.</p><a class="olink" href="tel:+17756250062" aria-label="Call our sales team about financing a used machine at (775) 625-0062"><span>Call about financing a used machine</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></dd></div>
             <div><dt data-f>DBM rental account</dt><dd><p>You call <span class="nw">(775) 625-0062</span> or send an inquiry, and we send you DBM’s credit application. Once you return it, our office reviews it and either sets up an internal credit line for your rentals or asks for a credit card to secure each rental.</p><a class="olink" href="../contact/"><span>Request the credit application</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></dd></div>
             <div><dt data-f>Rental purchase option</dt><dd><p>You rent the machine first on monthly terms, and if you buy it within six months, the agreed share of the rent you have paid applies toward the price, with the split set before the rental starts.</p><a class="olink" href="../contact/"><span>Ask about rental purchase terms</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></dd></div>
@@ -829,10 +834,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="fq-3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What rate will I get?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="fq-3" role="region"><div><p>0% financing is available on approved credit for new XCMG machines, and QuickFi sets your actual rate and term after it reviews your credit application, so the rate you receive depends on QuickFi’s credit decision.</p><p class="alink"><a class="olink" href="#handoff" data-handopen><span>Apply on QuickFi’s website</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="fq-3" role="region"><div><p>0% financing is available on approved credit for new XCMG machines, and QuickFi sets your actual rate and term after it reviews your credit application, so the rate you receive depends on QuickFi’s credit decision.</p><p class="alink"><a class="olink" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener"><span>Apply on QuickFi’s website<span class="nt"> (opens in a new tab)</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="fq-4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Should I put bank or card numbers in a request form on this site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="fq-4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Should I send bank or card numbers through a request form?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
           <div data-accpanel id="fq-4" role="region"><div><p>No. DBM’s request forms ask only for your contact details and the machine, and your financial details go directly on QuickFi’s secure application or on DBM’s credit application, which our office reviews.</p></div></div>
         </div>
@@ -1620,21 +1625,20 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 (function () {
   var R = window.matchMedia('(prefers-reduced-motion: reduce)').matches, g = window.gsap;
-  // Section 2: C06 BAN-09 Hand-off. The QuickFi card and links open the notice in place; the route line draws while Continue is pointed at or focused.
+  // Section 2: C06 BAN-09 Hand-off. After the QuickFi card opens the application in a new tab, the notice appears in place with its route line drawn.
   var hand = document.getElementById('handoff'), line = hand.querySelector('[data-handline]'), go = hand.querySelector('[data-handgo]'), back = hand.querySelector('[data-handback]'), say = hand.querySelector('[data-handsay]');
-  var opener = document.querySelector('.card[data-handopen]'), lastFocus = null;
+  var opener = document.querySelector('.card[data-handopen]');
   var D = !!(g && window.DrawSVGPlugin);
   if (D) g.set(line, { drawSVG: '0%' });
   function draw(v) { if (D) g.to(line, { drawSVG: v ? '100%' : '0%', duration: R ? 0 : (v ? 0.55 : 0.3), ease: 'power2.inOut', overwrite: 'auto' }); }
-  function open(e) {
-    if (e) e.preventDefault();
-    lastFocus = document.activeElement;
+  // Round 2 (2026-10-28): the QuickFi card now opens https://quickfi.ai/xcmg in a new tab itself, as Mike asked at 4:17 a.m.
+  // The notice below the cards then confirms what happened and offers the application again, without moving the page or the focus.
+  function open() {
     var was = !hand.hidden;
-    hand.hidden = false; opener.setAttribute('aria-expanded', 'true');
-    say.textContent = 'This page does not collect financial details.';
+    hand.hidden = false;
+    say.textContent = 'QuickFi’s credit application opened in a new tab.';
     if (!was && g && !R) g.fromTo(hand, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out' });
-    hand.scrollIntoView({ block: 'center', behavior: R ? 'auto' : 'smooth' });
-    setTimeout(function () { go.focus({ preventScroll: true }); }, R ? 0 : 350);
+    draw(true); go.__sent = true;
   }
   document.querySelectorAll('[data-handopen]').forEach(function (a) { a.addEventListener('click', open); });
   ['pointerenter', 'focus'].forEach(function (ev) { go.addEventListener(ev, function () { draw(true); }); });
@@ -1642,8 +1646,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   go.addEventListener('click', function () { go.__sent = true; draw(true); say.textContent = 'QuickFi’s credit application opened in a new tab.'; });
   back.addEventListener('click', function () {
     go.__sent = false; draw(false);
-    hand.hidden = true; opener.setAttribute('aria-expanded', 'false');
-    (lastFocus && lastFocus !== go ? lastFocus : opener).focus();
+    hand.hidden = true;
+    opener.focus();
   });
 })();
 

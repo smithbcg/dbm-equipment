@@ -601,6 +601,11 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .smap a[aria-current] .nm { color: #C9430D; }
 @media (max-width: 1000px) { .smap ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { .smap ul { grid-template-columns: minmax(0, 1fr); } .smap { padding-top: 44px; padding-bottom: 56px; } }
+/* Round 2 audit, 2026-10-28: the A to Z list runs down each column instead of across each row, so a visitor reads it in order.
+   The row counts fit the 32 pages (11, 11, and 10 in three columns, 16 and 16 in two); update them if pages are added. */
+.smap ul { grid-auto-flow: column; grid-template-rows: repeat(11, auto); }
+@media (max-width: 1000px) { .smap ul { grid-template-rows: repeat(16, auto); } }
+@media (max-width: 620px) { .smap ul { grid-auto-flow: row; grid-template-rows: none; } }
 
 </style>
 </head>

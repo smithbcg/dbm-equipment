@@ -732,6 +732,14 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
 @media (max-width: 620px) {
   .plate1b .strip { flex-wrap: wrap; row-gap: 4px; padding-left: 32px; padding-right: 32px; letter-spacing: 0.18em; }
 }.nw { white-space: nowrap; }
+/* Round 2 (2026-10-28): a three-item checklist fills one row on wide screens, and the tab panels share one grid cell so the card keeps the height of its tallest panel when the visitor changes tabs */
+@media (min-width: 1101px) {
+  .checks:has(> li:nth-child(3):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 44px; }
+}
+.tabcard { display: grid; grid-template-columns: minmax(0, 1fr); }
+.tabcard > .tabstrip { justify-self: start; }
+.tabcard > .tabpanel { grid-row: 2; grid-column: 1; }
+.tabcard > .tabpanel[hidden] { display: block; visibility: hidden; }
 </style>
 </head>
 <body>
@@ -831,7 +839,7 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
     <div class="wrap rec-grid">
       <div class="rec-head">
         <h1 id="page-title">Used XCMG XE18U mini excavator</h1>
-        <p class="rec-lede">Stock number U001 is a 2024 XCMG XE18U mini excavator with 820 hours, an open canopy, and a standard bucket, in our yard in Fernley. We sell used machines anywhere in the US, quote shipping to your site, and send close photos of the machine, or show it to you and your mechanic at our Fernley yard, before you commit to buy.</p>
+        <p class="rec-lede">Stock number U001 is a 2024 XCMG XE18U mini excavator with 820 hours, an open canopy, and a standard bucket, in our yard in Fernley. Our used machines come from our own rental fleet and from trade-ins, and we sell them anywhere in the US, quote shipping to your site, and send close photos of the machine, or show it to you and your mechanic at our Fernley yard, before you commit to buy.</p>
       </div>
       <div class="rec-body">
         <div class="rec-note"><strong>Check this machine before you buy it.</strong><p>Ask for close photos of the tracks, the pins and bushings, and the hour meter, or bring your own mechanic to inspect the machine at our Fernley yard before you pay for it.</p></div>
@@ -908,8 +916,8 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
         <p class="intro">The maker's published figures describe the model, so ask our sales team about these points to learn the condition of this particular machine.</p>
       </div>
       <ul class="checks">
-      <li><span class="ck" aria-hidden="true"><img src="../../../assets/07b896c90263e89e.svg" alt=""></span><div><h3>Wear you can see</h3><p>Close photos of the tracks or tires, the pins and bushings, the hour meter, and any repairs, or a look at the machine yourself at our Fernley yard.</p></div></li>
-      <li><span class="ck" aria-hidden="true"><img src="../../../assets/02b1cb204e92e9e3.svg" alt=""></span><div><h3>Attachments and inspection</h3><p>Which bucket and attachments come with the machine, and an inspection by you or your own mechanic before you pay.</p></div></li>
+      <li><span class="ck" aria-hidden="true"><img src="../../../assets/07b896c90263e89e.svg" alt=""></span><div><h3>Wear you can see</h3><p>Close photos of the tracks or tires, the pins and bushings, the hour meter, and any dents or cracks in the boom, arm, or bucket, or a look at the machine yourself at our Fernley yard.</p></div></li>
+      <li><span class="ck" aria-hidden="true"><img src="../../../assets/c122a457a15159b0.svg" alt=""></span><div><h3>Attachments and inspection</h3><p>Which bucket and attachments come with the machine, and an inspection by you or your own mechanic before you pay.</p></div></li>
       <li><span class="ck" aria-hidden="true"><img src="../../../assets/710ce1ad1f303ac6.svg" alt=""></span><div><h3>Price, financing, and shipping</h3><p>The price with shipping to your site, and the financing that applies. QuickFi finances only new XCMG machines, so for a used machine our sales team follows up about financing when you call or send a request.</p></div></li>
       </ul>
       
@@ -2022,17 +2030,28 @@ body.show-assume .rec [data-assume], body.show-assume .plate1b [data-assume], bo
     });
   });
 
-  // C04 BAR-01 on phones: the bar rises once the record band's buttons scroll away and steps down while the contact band is on screen
-  var callbar = document.querySelector('.callbar'), acts = document.querySelector('[data-heroacts]'), band = document.getElementById('call');
-  if (callbar && acts && 'IntersectionObserver' in window) {
-    var gone = false, bandOn = false;
+  // Links that add a related need to the rental request, such as a repair of the renter's own machine
+  $$('[data-related]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var sel = document.querySelector('[data-reqform] select[name="relatedNeed"]');
+      if (!sel) return;
+      sel.value = a.getAttribute('data-related');
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
+
+  // C04 BAR-01 on phones: the bar rises once the title and lede scroll away, steps down while the record band's own buttons or the contact band are on screen, and rises again between them
+  var callbar = document.querySelector('.callbar'), head = document.querySelector('.rec-head'), acts = document.querySelector('[data-heroacts]'), band = document.getElementById('call');
+  if (callbar && head && acts && 'IntersectionObserver' in window) {
+    var gone = false, actsOn = false, bandOn = false;
     var sync = function () {
-      var on = gone && !bandOn;
+      var on = gone && !actsOn && !bandOn;
       callbar.classList.toggle('on', on);
       callbar.setAttribute('aria-hidden', on ? 'false' : 'true');
       $$('a', callbar).forEach(function (a) { a.tabIndex = on ? 0 : -1; });
     };
-    new IntersectionObserver(function (es) { gone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(acts);
+    new IntersectionObserver(function (es) { gone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(head);
+    new IntersectionObserver(function (es) { actsOn = es[0].isIntersecting; sync(); }).observe(acts);
     if (band) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(band);
   }
 })();

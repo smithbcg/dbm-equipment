@@ -606,6 +606,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   .plate1b .strip { padding-left: 32px; padding-right: 32px; }
   .rowlink { padding: 16px 16px 16px 20px; }
 }
+/* Reduced motion: the card row moves one card at a time without the smooth glide */
+@media (prefers-reduced-motion: reduce) {
+  .rtrack6 { scroll-behavior: auto; }
+}
 </style>
 </head>
 <body>
@@ -703,7 +707,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     <div class="wrap">
       <div class="btitle">
         <h1 id="page-title">Job stories and guides</h1>
-        <p>The stories come from real DBM jobs, and the two that have no page of their own are written out in full below the cards. Each guide card opens the page that answers its question, such as what to send us when a machine is down in the field or how the rental purchase option counts rent toward the price of the machine. Pick one or more topics to narrow the cards.</p>
+        <p><span>When a customer’s demo compactor broke down after the customer signed to buy it, we paid for a competitor’s rental machine until we had the compactor running again.</span> That story and two others from our jobs are below. Each guide card opens the page that answers one question, such as what to send us when a machine goes down in the field or how the rental purchase option counts part of your rent toward the price.</p>
       </div>
 
       <div class="c6" data-topics>
@@ -783,7 +787,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
               <a class="hcard" href="../case-studies/sewer-pump-lift/" data-hcard data-tags="stories">
                 <span data-hborder aria-hidden="true"></span>
                 <span class="hf"><span data-hacc aria-hidden="true"></span>
-                  <span class="hw"><img src="../assets/f9ab4a4b4f96b4a4.jpg" alt="" style="object-position: 50% 30%"><span class="hring" aria-hidden="true"></span></span>
+                  <span class="hw"><img src="../assets/1eb013588af150a4.jpg" alt="" style="object-position: 50% 34%"><span class="hring" aria-hidden="true"></span></span>
                   <span class="ht"><span class="htag">Job stories</span><span class="htitle">Sewer pumps lifted into new construction with our crane truck</span><span class="hmeta">Case study page</span></span>
                 </span>
                 <span data-hchip aria-hidden="true"><span class="cb"></span><span data-hchipplate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span>
@@ -904,12 +908,12 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <div>
           <div class="nblocks">
             <div class="nblock"><h3>What happened?</h3><p><span>A customer had been running one of our compactors on a demo and decided to buy it. The customer signed the purchase paperwork, and before the financing had gone through, the compactor had a major breakdown.</span></p></div>
-            <div class="nblock"><h3>What did we do?</h3><p><span>We didn’t have another compactor to send, so we rented a machine from a competitor, dropped it off at the customer’s site, and paid for that rental ourselves</span> <span>until our technicians had the customer’s compactor running again.</span> <span>The rental cost us money, and the customer’s crew kept working while the compactor the customer had just signed for was down.</span></p></div>
+            <div class="nblock"><h3>What did we do?</h3><p><span>We didn’t have another compactor to send, so we rented a machine from a competitor, dropped it off at the customer’s site, and paid for that rental ourselves</span> <span>until we had the customer’s compactor running again.</span> <span>The rental cost us money, and the customer’s crew kept working while the compactor the customer had just signed for was down.</span></p></div>
             <div class="nblock"><h3>What does that mean if your machine breaks down?</h3><p><span>If a machine you rent from us breaks down, we come fix it where it is, and if we can’t fix it the same day, we take the down time off your rent.</span> <span>If a repair will keep your own machine down for a while, we can deliver one of our rental machines to your site so the work keeps going, and our technician repairs your machine on a later visit.</span></p></div>
           </div>
           <div class="wlinks">
-            <a class="rowlink" href="../rentals/"><span><span class="rl-t">See how our rentals work</span><span class="rl-d">Monthly rentals for contractors, delivery to your site, and repairs where the machine is.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
-            <a class="rowlink" href="../services/"><span><span class="rl-t">Ask for a rental with your repair</span><span class="rl-d">Add a rental machine to your service request, and we plan the repair and the rental together.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+            <a class="rowlink" href="../rentals/"><span><span class="rl-t">See how our rentals work</span><span class="rl-d">We rent to contractors mostly by the month, deliver the machine to your site, and come fix it where it sits if it breaks down.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+            <a class="rowlink" href="../services/"><span><span class="rl-t">Ask for a rental with your repair</span><span class="rl-d">Choose “Discuss a temporary rental” in the service request on our Service &amp; Parts page, and we plan the repair and the rental together.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
           </div>
         </div>
       </div>
@@ -948,8 +952,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <div class="nblock"><h3>What do we ask before we recommend a machine?</h3><p><span>We ask what kind of work you do most, whether that’s mostly utility work or mass grading, whether you work in small, tight areas, and what the machine will do after the job in front of you.</span> <span>Your answers decide which machine we recommend, even when the right machine is one we don’t sell.</span></p></div>
           </div>
           <div class="wlinks">
-            <a class="rowlink" href="../contact/"><span><span class="rl-t">Tell us about the work you do</span><span class="rl-d">Describe the jobs ahead, and we’ll recommend a machine to buy or rent for them.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
-            <a class="rowlink" href="../equipment/"><span><span class="rl-t">See the equipment we sell</span><span class="rl-d">New XCMG machines, and used machines of other makes that we ship nationwide.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+            <a class="rowlink" href="../contact/"><span><span class="rl-t">Tell us about the work you do</span><span class="rl-d">Send us the jobs ahead through our request form, and our sales team calls or texts you back with a machine to buy or rent for them.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+            <a class="rowlink" href="../equipment/"><span><span class="rl-t">See the equipment we sell</span><span class="rl-d">We sell new XCMG machines and used machines of any make, and we ship used machines anywhere in the country.</span></span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
           </div>
         </div>
       </div>
@@ -965,10 +969,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <div style="display:flex; flex-direction:column; gap:16px;">
             <span class="accent" aria-hidden="true" style="margin-top:0"></span>
             <h2 class="h" id="call-title">Call or text us about your machine</h2>
-            <p class="cl"><span>Our office phone takes texts. Tell us the machine, where it is, and what you need, whether that’s a repair, a part, a rental, a purchase, financing, or an offer on a machine you want to sell, and send photos of the machine if you have them.</span></p>
+            <p class="cl"><span>The office line at (775) 625-0062 takes calls and texts. Tell us the machine, where it sits, and whether you need a repair, a part, a rental, a purchase, financing, or an offer on a machine you want to sell. Send photos if you have them, and our service, parts, rental, or sales team calls or texts you back. A request that reaches us after hours gets its answer the next day.</span></p>
           </div>
           <div class="acts">
-            <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
+            <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call or text DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call or text</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
             <a class="kplate" href="../contact/"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
           </div>
           <p class="fine">Our yard and shop are at 2366 Resource Dr, Fernley, NV 89408.</p>
@@ -1788,7 +1792,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         var a = k === i;
         s.style.visibility = a ? 'visible' : 'hidden';
         s.setAttribute('aria-hidden', a ? 'false' : 'true');
-        if (g) { if (a && !now && !R) g.fromTo(s, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' }); else g.set(s, { opacity: a ? 1 : 0 }); }
+        /* A quick double press must not leave a half-finished fade running on a slide that is already hidden */
+        if (g) { g.killTweensOf(s); if (a && !now && !R) g.fromTo(s, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' }); else g.set(s, { opacity: a ? 1 : 0 }); }
       });
       if (cnt) cnt.textContent = String(i + 1).padStart(2, '0');
       if (prev && next) pair(prev, next, i === 0, i === slides.length - 1);
@@ -1814,8 +1819,9 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       var max = track.scrollWidth - track.clientWidth;
       if (prev && next) pair(prev, next, track.scrollLeft <= 2, max - track.scrollLeft <= 2);
     };
-    on(prev, 'click', function () { track.scrollBy({ left: -stepW(), behavior: R ? 'auto' : 'smooth' }); });
-    on(next, 'click', function () { track.scrollBy({ left: stepW(), behavior: R ? 'auto' : 'smooth' }); });
+    /* 'instant', not 'auto': the track's CSS asks for smooth scrolling, and 'auto' would follow it under reduced motion */
+    on(prev, 'click', function () { track.scrollBy({ left: -stepW(), behavior: R ? 'instant' : 'smooth' }); });
+    on(next, 'click', function () { track.scrollBy({ left: stepW(), behavior: R ? 'instant' : 'smooth' }); });
     track.addEventListener('scroll', report, { passive: true });
     if (window.ResizeObserver) new ResizeObserver(function () { report(); }).observe(track);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(report);
@@ -1880,11 +1886,15 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     var paint = function () {
       chips.forEach(function (c) { paintChip(c, false); });
       var n = 0;
-      cards.forEach(function (c) { var s = !sel.length || tagsOf(c).some(has); c.style.display = s ? '' : 'none'; if (s) n++; });
-      if (say) say.innerHTML = 'Showing <b>' + n + ' of ' + cards.length + ' stories and guides</b>' + (sel.length ? ' matching the selected topics' : '');
-      if (clear) clear.style.visibility = sel.length ? 'visible' : 'hidden';
+      /* The row turns off scroll snapping and smooth scrolling while cards hide or return. Otherwise the browser re-snaps to the card that
+         was first in the filtered row, jumps several cards to the right, and then sweeps back to the start. */
       var tr = rail && rail.querySelector('[data-rtrack]');
-      if (tr) tr.scrollLeft = 0;
+      if (tr) { tr.style.scrollSnapType = 'none'; tr.style.scrollBehavior = 'auto'; }
+      cards.forEach(function (c) { var s = !sel.length || tagsOf(c).some(has); c.style.display = s ? '' : 'none'; if (s) n++; });
+      /* The count stays one line long at every width, so the card row below it never moves when a topic is chosen */
+      if (say) say.innerHTML = 'Showing <b>' + n + ' of ' + cards.length + ' stories and guides</b>';
+      if (clear) clear.style.visibility = sel.length ? 'visible' : 'hidden';
+      if (tr) { tr.scrollLeft = 0; requestAnimationFrame(function () { tr.scrollLeft = 0; tr.style.scrollSnapType = ''; tr.style.scrollBehavior = ''; }); }
       if (rail && rail.__report) { rail.__report(); requestAnimationFrame(function () { rail.__report(); }); }
       var rw = rail && rail.querySelector('.rwrap');
       if (rw && rw.__fade) requestAnimationFrame(rw.__fade);
