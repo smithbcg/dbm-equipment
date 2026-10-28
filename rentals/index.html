@@ -458,6 +458,33 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 /* Footer address lines (shared footer) */
 .foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
+
+/* Round 3, phone width (2026-10-28). Every link and button in the shared header, route menus, footer, and call band can be tapped
+   over at least 44 by 44 px, and every button label fits inside its plate. These rules apply at phone widths only, so the desktop
+   layout does not change. The Home page does not load this file and carries its own copy of the header, menu, and footer rules. */
+@media (max-width: 620px) {
+  /* The logo link and the footer phone number gain tap height with padding, and equal negative margins keep the layout where it was */
+  .brand { padding: 7px 0; margin: -7px 0; }
+  /* The menu links gain 2.5 px of tap width on each side, so that "Buy" reaches 44 px, and equal negative margins keep the row in place */
+  .nav nav a { padding: 12px 2.5px; margin: 0 -2.5px; }
+  /* Each menu diamond's button is 44 px square. It reaches 1 px into the 2 px gap on its left and 19 px into the 18 px gap on its
+     right, so its layout width stays 24 px, the menu row does not move, and the diamond stays where it was drawn. */
+  .nav .mt { width: 44px; height: 44px; margin: 0 -19px 0 -1px; justify-content: flex-start; padding-left: 8.5px; transform-origin: 13px 50%; }
+  .mread { padding: 11px 0 12px; }
+  .foot-facts a { padding: 9.5px 0; margin: -9.5px 0; }
+  .foot-col ul { gap: 0; }
+  .foot-col a { padding: 11px 0; min-width: 44px; }
+  .copy-mono a { display: inline-block; padding: 16px 0; margin: -16px 0; }
+  /* The gallery's arrow buttons lose their words on a phone, so they keep a 44 px square instead of shrinking to 36 px */
+  .rail-ctl .nbtn { min-width: 48px; min-height: 44px; justify-content: center; }
+  /* The call band's second button is 290 px wide on a phone. Its label tightens to 0.2 em and may take a second line instead of
+     running past both edges of the plate. */
+  .acts .kplate .kface { white-space: normal; text-align: center; line-height: 1.35; letter-spacing: 0.2em; padding-left: 22px; padding-right: 18px; }
+}
+@media (max-width: 700px) {
+  /* The call bar's second key is 142 px wide. A short label stays on one line, and a long one such as "Ask about a machine" takes two. */
+  .callbar .kplate .kface { white-space: normal; text-align: center; line-height: 1.2; letter-spacing: 0.12em; padding-left: 8px; padding-right: 8px; }
+}
 </style>
 <style>
 /* Rentals page (2026-10-28): Mike's Rentals design, converted section by section from its template. Its own styles follow. */
@@ -686,6 +713,18 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 /* Fixes for the shared header and footer on this page */
 .foot img, .nav img { display: block; }
+
+/* Round 3, phone width (2026-10-28): the sections below the hero use the 56 px top and bottom spacing that every other page uses
+   on a phone, in place of the design's 74 px and 82 px (the sections carry that spacing in their style attributes, so these rules
+   need !important). The orange buttons take the 0.18 em letter spacing and centered label that the orange buttons on other pages
+   use on a phone. */
+@media (max-width: 620px) {
+  [data-screen-label]:not([data-screen-label="Hero"]) { padding-top: 56px !important; padding-bottom: 56px !important; }
+  .ch-btn { justify-content: center; padding: 18px 20px; letter-spacing: 0.18em; }
+  /* The request form's fields use 16 px type like the fields on every other page, because a phone zooms the page when a field
+     under 16 px gets focus */
+  #request input, #request textarea { font-size: 16px !important; }
+}
 </style>
 </head>
 <body>
@@ -746,8 +785,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <li><a class="mrow" href="../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding &amp; fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a part</span><span class="msub">Send the brand, model, and serial number, and we can get almost any part within 48 hours and ship it anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
@@ -823,7 +862,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     <div style="position: relative; max-width: 1256px; margin: 0 auto; padding: clamp(24px, 3.1vw, 46px) clamp(20px, 5vw, 48px) clamp(26px, 3.7vw, 56px);">
       <div style="position: relative; max-width: 760px; display: flex; flex-direction: column;">
         <h1 style="margin: 10px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(30px, 3.9vw, 46px); line-height: 1; letter-spacing: 0.005em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Monthly Heavy Equipment Rentals for Nevada Contractors</h1>
-        <p style="margin: 14px 0 0; max-width: 60ch; color: #C7C9CC; font-size: 15px; line-height: 1.55; text-wrap: pretty;">DBM rents excavators, dozers, wheel loaders, motor graders, articulated haul trucks, and compaction equipment to contractors and commercial operators by the month, delivers each machine to your jobsite in Nevada or nearby California, and sends a field technician to the jobsite if the machine breaks down while it is on rent.</p>
+        <p style="margin: 14px 0 0; max-width: 60ch; color: #C7C9CC; font-size: 15px; line-height: 1.55; text-wrap: pretty;">DBM rents excavators, dozers, wheel loaders, motor graders, articulated haul trucks, and compaction equipment by the month to contractors and commercial operators from our yard in Fernley. We truck each machine to your jobsite in Nevada or nearby California, and if it breaks down while it is on rent, one of our field technicians repairs it where it sits.</p>
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 21px;">
           <a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l" data-label>Send a Rental Request</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
           <a class="kb" href="#fleet" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">See the Rental Fleet</span></span></a>
@@ -844,7 +883,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <div style="position: relative; padding-top: 26px; max-width: 680px;">
           <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
           <h2 style="margin: 8px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: 0.002em; line-height: 1.06; color: #1A1A1A;">Rental Requests &amp; Machine Availability</h2>
-          <p style="margin: 12px 0 0; max-width: 62ch; color: #4B4F56; font-size: 15px; line-height: 1.6; text-wrap: pretty;">Send the machine you need, the jobsite location, and the start date, and our rental team checks that machine against our own fleet and our partners’ fleets, then calls or texts you back with availability, the monthly rate, and the delivery date.</p>
+          <p style="margin: 12px 0 0; max-width: 62ch; color: #4B4F56; font-size: 15px; line-height: 1.6; text-wrap: pretty;">Send the machine you need, the jobsite town, and the start date. Our rental team checks that machine against our own fleet and our partners’ fleets, calls or texts you back with availability, the monthly rate, and the delivery cost to your jobsite, and books the machine once you approve that quote.</p>
         </div>
         <span style="position: relative; display: inline-block; padding: 0 0 5px 0; filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));">
           <a class="phone-plate rent-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call or text DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call or text</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
@@ -905,7 +944,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
               </div>
 
               <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid #E9EAEC;">
-                <span data-navsay="1" style="color: #4B4F56; font-size: 12.5px; line-height: 1.6;">Every field is optional. If you are not sure which machine class fits, describe the work, the material, and the site access, and our rental team recommends a machine and attachments when we call you back.</span>
+                <span data-navsay="1" style="color: #4B4F56; font-size: 12.5px; line-height: 1.6;">Every field is optional. If you are not sure which machine class fits, describe the work and how a delivery truck reaches the site, and our rental team recommends a machine and its attachments when we call you back.</span>
                 <span data-formacts style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                   <a href="sms:+17756250062" data-mono="1" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));" class="rx4">
                     <span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
@@ -921,7 +960,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <div data-state="done" hidden>
             <div style="padding: clamp(28px, 4vw, 42px); display: flex; flex-direction: column; align-items: flex-start;">
               <span style="font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 34px); font-weight: 800; line-height: 1.08; letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Rental request received</span>
-              <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.65; color: #4B4F56; max-width: 56ch; text-wrap: pretty;">Our rental team checks the machine against our own fleet and our partners’ fleets and calls or texts you back with availability, the monthly rate, and the delivery date. <span>If this is your first rental with DBM, we also send our credit application, and after our office reviews it, we either set up a credit line for your rentals or ask for a credit card to secure the rental.</span> If the machine has to be on your jobsite sooner, call or text <span style="white-space: nowrap;">(775) 625-0062</span> now.</p>
+              <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.65; color: #4B4F56; max-width: 56ch; text-wrap: pretty;"><span>Our rental team checks the machine against our own fleet and our partners’ fleets and calls or texts you back with availability, the monthly rate, and the delivery cost, and we book the machine only after you approve that quote.</span> <span>If this is your first rental with DBM, we also send our credit application, and after our office reviews it, we either set up a credit line for your rentals or ask for a credit card to secure the rental.</span> If the machine has to be on your jobsite this week, call or text <span style="white-space: nowrap;">(775) 625-0062</span>, and our rental team checks the fleet while you are on the line.</p>
               <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px;">
                 <a href="tel:+17756250062" data-mono="1" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"><span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
                     <span data-c="br" aria-hidden="true" style="position: absolute; bottom: 0; right: 0; width: 13px; height: 13px; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform: scale(0); transform-origin: bottom right; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span><span style="position: relative;">Call (775) 625-0062</span></a>
@@ -988,7 +1027,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/97498a88399560cd.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Excavation</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Footings, foundations, basements, and trench work, with excavators up to the 30-ton class and mini excavators for tight sites.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Excavators up to the 30-ton class dig footings, basements, and trenches, and mini excavators work the tight lots a full-size machine cannot reach.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Excavators · Mini excavators</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -999,7 +1038,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/5fba405786f2daac.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Earthmoving</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Mass grading, cut and fill, building pads, and hauling dirt and rock across the site.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Dozers and graders cut and fill building pads, while loaders and articulated haul trucks move the dirt and rock across the site.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Dozers · Loaders · Graders · Haul trucks</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -1010,7 +1049,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/27ac96d9b9a739d6.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Pipeline &amp; utility</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Trenching, setting pipe and conduit, and compacting backfill for water, sewer, and utility lines.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Mini excavators dig the trench for water, sewer, and conduit lines, and compactors pack the backfill once the pipe is set.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Mini excavators · Track loaders · Compactors</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -1021,7 +1060,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/05c8aed8a703585d.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Demolition</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Taking down structures, sorting debris, and loading out trucks for haul-off.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Excavators take a structure down and sort the debris, and loaders and skid steers fill the trucks that haul it off.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Excavators · Loaders · Skid steers</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -1032,7 +1071,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/404b0a9832d04741.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Landscaping</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Compact machines that fit through gates and dig, grade, and move material on residential lots.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Landscape contractors use compact machines that fit through a yard gate to dig, grade, and move material on a finished lot.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Skid steers · Track loaders · Mini excavators</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -1066,7 +1105,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Mini excavator</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Footings and utility trenches on lots and between structures.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Digs footings and utility trenches on tight lots and between buildings.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx18">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1082,7 +1121,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Wheel loader</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Loading trucks and moving stockpiles at pits, yards, and jobsites.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Loads trucks and moves stockpiles at pits, recycling yards, and jobsites.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx21">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1098,7 +1137,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Dozer</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Pushing dirt, cutting slopes, and rough grading.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Pushes dirt and cuts slopes to rough grade before the grader finishes it.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx24">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1114,7 +1153,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Excavator</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Mass excavation, trenching, loading trucks, and demolition.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Digs basements and trenches, loads trucks, and takes down structures.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx27">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1130,7 +1169,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Motor grader</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Finish grade on building pads, subgrade, and haul roads.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Cuts finish grade on building pads, subgrade, and haul roads.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx30">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1146,7 +1185,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Articulated haul truck</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Hauling dirt and rock over rough ground a road truck cannot cross.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Carries dirt and rock over rough ground that a road truck cannot cross.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx33">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1162,7 +1201,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Soil compactor</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Compacting soil and base for pads, roads, and trench backfill.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Packs soil and road base for pads, roads, and trench backfill.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx36">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -1185,13 +1224,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       </div>
     </div>
   </div>
-<div data-reveal data-screen-label="Rent then buy" style="position: relative; background: #1A1A1A; padding: 82px clamp(20px, 5vw, 48px);">
+<div data-reveal data-screen-label="Rent then buy" id="rent-then-buy" style="position: relative; background: #1A1A1A; padding: 82px clamp(20px, 5vw, 48px);">
     <div style="max-width: 1256px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(28px, 4vw, 56px); align-items: center;">
       <div style="position: relative;">
         <h2 style="margin: 16px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); line-height: 1.06; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Try an XCMG Machine on Your Jobsite Before You Buy One</h2>
         <p style="margin: 20px 0 0; font-size: 16px; line-height: 1.65; color: #C7C9CC; max-width: 56ch; text-wrap: pretty;">If your crew has not run XCMG equipment before, we can deliver an XCMG machine to your jobsite at no charge so your operators can work it on your own job, and if it suits the work, we put it on rent for you or sell it to you.</p>
         <p style="margin: 16px 0 0; font-size: 15px; line-height: 1.65; color: #8A8D93; max-width: 56ch; text-wrap: pretty;">Every machine in our rental fleet is also for sale, and under our rental purchase option a share of the rent you have paid applies toward the price when you buy the machine within six months, with a larger share applied the earlier you buy. Ask our sales team for the split on a specific machine, or read how the option works on <a href="../finance/" style="color: #EF5016;">Finance</a>.</p>
-        <div class="sales-act"><a class="kb" href="../contact/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Contact our sales team</span></span></a></div>
+        <div class="sales-act"><a class="kb" href="../contact/?need=buy#contactcard" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Ask Our Sales Team About Buying</span></span></a></div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 14px;">
         
@@ -1211,7 +1250,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
             <img src="../assets/152a49a6af44629e.svg" alt="" style="width: 32px; height: 32px; display: block; flex: none;">
             <span style="display: flex; flex-direction: column; gap: 5px;">
               <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Jobsite delivery &amp; pickup</span>
-              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">We haul the machine to your jobsite and pick it up when the rental ends, and the delivery charge is quoted with the rental, so you know it before the machine ships.</span>
+              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">We truck the machine to your jobsite and pick it up when the rental ends, and the quote lists the delivery charge beside the monthly rate, so you know both numbers before the machine leaves the yard.</span>
             </span>
           </div>
         
@@ -1244,7 +1283,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       <div style="position: relative; padding-top: 26px;">
         <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
         <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A; max-width: 24ch; text-wrap: balance;">Rental Delivery &amp; Field Service Coverage</h2>
-        <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">We deliver rental machines anywhere in Nevada and to jobsites in the California counties near the state line, our field service trucks repair machines anywhere in Nevada and in California from Sacramento to Bakersfield, and used machines and parts ship to any address in the US.</p>
+        <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">We deliver rental machines anywhere in Nevada and to jobsites in the California counties near the state line. Our field service trucks reach farther, covering all of Nevada and California from Sacramento to Bakersfield, while used machines and parts ship to any address in the US.</p>
       </div>
       <div data-grid2="1" style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(22px, 3vw, 36px); align-items: stretch; margin-top: 32px;">
         <div style="position: relative; min-height: 372px; background: #141414; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px)); overflow: hidden;">
@@ -1279,7 +1318,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
                 <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Used equipment and parts</span>
               </span>
               <span style="display: block; font-family: 'Familjen Grotesk', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.03em; color: #1A1A1A; margin-top: 10px;">Nationwide</span>
-              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Used machines and parts ship to any address in the US, and we can source almost any part within 48 hours, with overnight shipping available.</span>
+              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Used machines and parts ship to any address in the US, and we can get almost any part within 48 hours, with overnight shipping for a down machine.</span>
             </div>
           
         </div>
@@ -1324,7 +1363,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
           <span aria-hidden="true" style="position: absolute; top: 15px; right: 13px; width: 9px; height: 9px; border-radius: 50%; background: #E9EAEC; box-shadow: inset 0 1.5px 2px rgba(0,0,0,.55);"></span>
           <span style="font-family: 'Sora', sans-serif; font-size: clamp(20px, 2.2vw, 27px); font-weight: 800; line-height: 1.14; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Not sure which machine you need?</span>
-          <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #8A8D93; text-wrap: pretty;">Call or text <span style="white-space: nowrap;">(775) 625-0062</span> with the work, the material, and the site access, and our rental team recommends the machine class and attachments for it, subleasing the machine from a partner’s fleet when our own fleet has none available.</p>
+          <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #8A8D93; text-wrap: pretty;">Call or text <span style="white-space: nowrap;">(775) 625-0062</span> with the work and the ground it runs on, and our rental team recommends the machine class and attachments for it, subleasing the machine from a partner’s fleet when our own fleet has none available.</p>
           <a href="tel:+17756250062" data-ripple="#F4703F" style="position: relative; display: inline-flex; align-items: center; gap: 11px; align-self: flex-start; margin-top: 24px; font-family: 'Chivo Mono', monospace; font-size: 14.5px; font-weight: 700; letter-spacing: 0.04em; color: #FFFFFF; padding: 15px 22px 15px 26px; background: linear-gradient(#3B3F46, #232629); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.55); clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); overflow: hidden; transition: transform 0.09s ease;" class="rx43">
             <span aria-hidden="true" style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016;"></span>
             <img src="../assets/1f66dada037aff36.svg" alt="" style="position: relative; width: 18px; height: 18px; display: block;">
@@ -1343,8 +1382,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <img src="../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
         <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
-      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../rentals/" aria-current="page">Rentals</a></li><li><a href="../equipment/new/">New equipment</a></li><li><a href="../equipment/used/">Used equipment</a></li><li><a href="../we-buy-equipment/">We buy equipment</a></li><li><a href="../finance/">Finance</a></li></ul></div>
-      <div class="foot-col"><h3>Service</h3><ul><li><a href="../services/">Service &amp; repair</a></li><li><a href="../services/mobile-field-service/">Mobile field service</a></li><li><a href="../services/line-boring/">Line boring</a></li><li><a href="../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../services/">Request a part</a></li></ul></div>
+      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../rentals/" aria-current="page">Rentals</a></li><li><a href="../equipment/new/">New equipment</a></li><li><a href="../equipment/used/">Used equipment</a></li><li><a href="../we-buy-equipment/">Sell &amp; trade</a></li><li><a href="../finance/">Finance</a></li></ul></div>
+      <div class="foot-col"><h3>Service</h3><ul><li><a href="../services/">Service &amp; parts</a></li><li><a href="../services/mobile-field-service/">Mobile field service</a></li><li><a href="../services/line-boring/">Line boring</a></li><li><a href="../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../services/#parts">Request a part</a></li></ul></div>
       <div class="foot-col"><h3>Company</h3><ul><li><a href="../about/">About DBM</a></li><li><a href="../case-studies/">Case studies</a></li><li><a href="../faqs/">FAQs</a></li><li><a href="../blog/">Job stories and guides</a></li><li><a href="../careers/">Careers</a></li><li><a href="../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">

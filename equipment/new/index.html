@@ -458,6 +458,33 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 /* Footer address lines (shared footer) */
 .foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
+
+/* Round 3, phone width (2026-10-28). Every link and button in the shared header, route menus, footer, and call band can be tapped
+   over at least 44 by 44 px, and every button label fits inside its plate. These rules apply at phone widths only, so the desktop
+   layout does not change. The Home page does not load this file and carries its own copy of the header, menu, and footer rules. */
+@media (max-width: 620px) {
+  /* The logo link and the footer phone number gain tap height with padding, and equal negative margins keep the layout where it was */
+  .brand { padding: 7px 0; margin: -7px 0; }
+  /* The menu links gain 2.5 px of tap width on each side, so that "Buy" reaches 44 px, and equal negative margins keep the row in place */
+  .nav nav a { padding: 12px 2.5px; margin: 0 -2.5px; }
+  /* Each menu diamond's button is 44 px square. It reaches 1 px into the 2 px gap on its left and 19 px into the 18 px gap on its
+     right, so its layout width stays 24 px, the menu row does not move, and the diamond stays where it was drawn. */
+  .nav .mt { width: 44px; height: 44px; margin: 0 -19px 0 -1px; justify-content: flex-start; padding-left: 8.5px; transform-origin: 13px 50%; }
+  .mread { padding: 11px 0 12px; }
+  .foot-facts a { padding: 9.5px 0; margin: -9.5px 0; }
+  .foot-col ul { gap: 0; }
+  .foot-col a { padding: 11px 0; min-width: 44px; }
+  .copy-mono a { display: inline-block; padding: 16px 0; margin: -16px 0; }
+  /* The gallery's arrow buttons lose their words on a phone, so they keep a 44 px square instead of shrinking to 36 px */
+  .rail-ctl .nbtn { min-width: 48px; min-height: 44px; justify-content: center; }
+  /* The call band's second button is 290 px wide on a phone. Its label tightens to 0.2 em and may take a second line instead of
+     running past both edges of the plate. */
+  .acts .kplate .kface { white-space: normal; text-align: center; line-height: 1.35; letter-spacing: 0.2em; padding-left: 22px; padding-right: 18px; }
+}
+@media (max-width: 700px) {
+  /* The call bar's second key is 142 px wide. A short label stays on one line, and a long one such as "Ask about a machine" takes two. */
+  .callbar .kplate .kface { white-space: normal; text-align: center; line-height: 1.2; letter-spacing: 0.12em; padding-left: 8px; padding-right: 8px; }
+}
 </style>
 <style>
 /* Buy section pages (Equipment, New, Used, XCMG), version 1 (2026-10-28). Each page keeps the sections, order and controls of its page in DBM HTML 5.
@@ -840,6 +867,15 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
 @media (max-width: 620px) {
   .mtgrid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Round 3, phone width (2026-10-28): the page heading takes the 30 px phone size that every page now shares. The text links with
+   arrows are 44 px tall with the underline kept 8 px under the words, and the light buttons on the machine cards are 44 px tall. */
+@media (max-width: 620px) {
+  #page-title { font-size: 30px; line-height: 1.04; }
+  .more { padding-top: 12px; padding-bottom: 12px; background-position: left calc(100% - 4px); }
+  .mt-a .more { padding-top: 13.5px; padding-bottom: 13.5px; background-position: left calc(100% - 5.5px); }
+  .kb.paper [data-kplate] { min-height: 41px; }
+}
 </style>
 </head>
 <body>
@@ -900,8 +936,8 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <li><a class="mrow" href="../../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding &amp; fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a part</span><span class="msub">Send the brand, model, and serial number, and we can get almost any part within 48 hours and ship it anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="../../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
@@ -1050,9 +1086,9 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <article class="mtile" data-item data-cat="mini" data-text="xcmg xe18u xe18u compact excavator mini compact excavator">
             <span class="mt-k">Compact excavator</span>
             <h3 class="mt-n">XCMG XE18U</h3>
-            <p class="mt-d">The lightest excavator in XCMG’s US lineup at 3,968 lb, sized for backyards, gates, and interior work where a larger machine cannot reach the dig.</p>
+            <p class="mt-d">The lightest excavator in XCMG’s US lineup at 3,968 lb, with an undercarriage that retracts to 39 inches so the machine passes through gates and doorways to dig where a larger excavator cannot reach.</p>
             <dl class="mt-s"><div><dt>Power</dt><dd>15.8 hp</dd></div><div><dt>Weight</dt><dd>3,968 lb</dd></div></dl>
-            <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/excavators/xe18u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE18U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE18U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE18U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
+            <div class="mt-a"><a class="more" href="../../equipment/new/xcmg-xe18u/">Open the XE18U page<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><a class="more" href="https://xcmg-usa.com/products/excavators/xe18u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE18U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE18U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE18U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
           <article class="mtile" data-item data-cat="mini" data-text="xcmg xe27u xe27u compact excavator mini compact excavator">
             <span class="mt-k">Compact excavator</span>
@@ -1078,7 +1114,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <article class="mtile" data-item data-cat="mini" data-text="xcmg xe55u xe55u compact excavator mini compact excavator">
             <span class="mt-k">Compact excavator</span>
             <h3 class="mt-n">XCMG XE55U</h3>
-            <p class="mt-d">A 6-ton class compact excavator at 12,566 lb for trenching and setting pipe on utility jobs; ask our sales team which attachments it runs on your work.</p>
+            <p class="mt-d">A 6-ton class compact excavator at 12,566 lb for trenching and setting pipe on utility jobs, quoted with the buckets and attachments your pipe work needs.</p>
             <dl class="mt-s"><div><dt>Power</dt><dd>41.2 hp</dd></div><div><dt>Weight</dt><dd>12,566 lb</dd></div></dl>
             <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/excavators/xe55u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE55U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE55U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE55U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
@@ -1106,7 +1142,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <article class="mtile" data-item data-cat="exc" data-text="xcmg xe155u xe155u excavator excavator">
             <span class="mt-k">Excavator</span>
             <h3 class="mt-n">XCMG XE155U</h3>
-            <p class="mt-d">A 15-ton class excavator with the same 121 hp rating as the XE135U and about 5,300 lb more operating weight; compare the two on XCMG’s specification pages.</p>
+            <p class="mt-d">A 15-ton class excavator that carries the same 121 hp rating as the XE135U on about 5,300 lb more operating weight, for contractors who want a heavier machine without stepping up to the 173 hp XE210U.</p>
             <dl class="mt-s"><div><dt>Power</dt><dd>121 hp</dd></div><div><dt>Weight</dt><dd>35,031 lb</dd></div></dl>
             <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/excavators/xe155u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE155U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE155U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE155U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
@@ -1127,7 +1163,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <article class="mtile" data-item data-cat="exc" data-text="xcmg xe225u xe225u excavator excavator">
             <span class="mt-k">Excavator</span>
             <h3 class="mt-n">XCMG XE225U</h3>
-            <p class="mt-d">A 22-ton class excavator with the same 173 hp rating as the XE210U and about 1,100 lb more operating weight; compare the two on XCMG’s specification pages.</p>
+            <p class="mt-d">A 22-ton class excavator that carries the same 173 hp rating as the XE210U on about 1,100 lb more operating weight, one size below the 194.5 hp XE250U.</p>
             <dl class="mt-s"><div><dt>Power</dt><dd>173 hp</dd></div><div><dt>Weight</dt><dd>51,809 lb</dd></div></dl>
             <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/excavators/xe225u-2/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE225U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE225U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE225U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
@@ -1150,7 +1186,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
             <h3 class="mt-n">XCMG XE300U</h3>
             <p class="mt-d">A 30-ton class excavator for mass excavation, quarry stripping, and loading articulated haul trucks.</p>
             <dl class="mt-s"><div><dt>Power</dt><dd>232 hp</dd></div><div><dt>Weight</dt><dd>71,650 lb</dd></div></dl>
-            <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/excavators/xe300u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE300U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE300U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE300U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
+            <div class="mt-a"><a class="more" href="../../equipment/machine/">See the XE300U in our yard<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><a class="more" href="https://xcmg-usa.com/products/excavators/xe300u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XE300U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XE300U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XE300U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
           <article class="mtile" data-item data-cat="exc" data-text="xcmg xe360u xe360u excavator excavator">
             <span class="mt-k">Excavator</span>
@@ -1232,7 +1268,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <article class="mtile" data-item data-cat="grad" data-text="xcmg gr2605u gr2605u motor grader grader motor grader">
             <span class="mt-k">Motor grader</span>
             <h3 class="mt-n">XCMG GR2605U</h3>
-            <p class="mt-d">A heavier version of the GR2605 at 44,092 lb with the same 260 hp rating; compare the two on XCMG’s specification pages.</p>
+            <p class="mt-d">The heavier version of the GR2605, at 44,092 lb or about 2,200 lb more on the same 260 hp rating, with the 350 hp GR3505Tpro as the next size up.</p>
             <dl class="mt-s"><div><dt>Power</dt><dd>260 hp</dd></div><div><dt>Weight</dt><dd>44,092 lb</dd></div></dl>
             <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/motor-graders/gr2605u/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the GR2605U (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG GR2605U" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG GR2605U"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
@@ -1267,7 +1303,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <article class="mtile" data-item data-cat="roll" data-text="xcmg xmr3035 xmr3035 roller roller compactor compaction drum">
             <span class="mt-k">Roller</span>
             <h3 class="mt-n">XCMG XMR3035</h3>
-            <p class="mt-d">A 7,011 lb roller with a 47 in compacting width; ask our sales team for its drum setup and the work it suits.</p>
+            <p class="mt-d">A 7,011 lb roller with a 47 in compacting width, and our sales team sends its drum configuration and the work XCMG builds it for along with your price.</p>
             <dl class="mt-s"><div><dt>Weight</dt><dd>7,011 lb</dd></div><div><dt>Drum</dt><dd>47 in</dd></div></dl>
             <div class="mt-a"><a class="more" href="https://xcmg-usa.com/products/rollers/xmr3o35/" target="_blank" rel="noopener" aria-label="Open XCMG’s full specifications for the XMR3035 (opens in a new tab)">XCMG’s full specs<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-ask="XCMG XMR3035" data-cond="New" data-target="#request-card" aria-label="Ask our sales team for the price and availability of the XCMG XMR3035"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Ask price &amp; availability</span></span></button></div>
           </article>
@@ -1397,7 +1433,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
         <a class="fleet" href="#catalog" data-setcat="load">
           <span class="cf">
             <span class="ph"><img src="../../assets/6a9caeec320c6afd.jpg" alt="An XCMG XC958 wheel loader in the DBM yard" loading="lazy" style="object-position: 50% 58%"></span>
-            <span class="bd"><span class="cat">7 XCMG models</span><span class="nm">Wheel loaders</span><span class="ds">Five wheel loaders plus XCMG’s skid steer and compact track loader; tell us the material you load, the trucks or hoppers you fill, and the bucket or forks you need.</span><span class="sp">0.78 to 4.6 yd³ buckets</span></span>
+            <span class="bd"><span class="cat">7 XCMG models</span><span class="nm">Wheel loaders</span><span class="ds">XCMG lists five wheel loaders with its skid steer and compact track loader, so tell us the material you load, the trucks or hoppers you fill, and the bucket or forks you need.</span><span class="sp">0.78 to 4.6 yd³ buckets</span></span>
             <span class="ft"><span>Show these models</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
@@ -1431,7 +1467,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
     <div class="wrap">
       <div class="headrow">
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="compare-title">What a Price Quote Leaves Out</h2></div>
-        <p class="slede">A quoted price does not show which bucket, coupler, or thumb comes with the machine, what you have to add before it can work, or who repairs it where it works, so our sales team asks the five questions below before it quotes a machine.</p>
+        <p class="slede">A quoted price does not show which bucket, coupler, or thumb comes with the machine, what you have to add before it can work, or who repairs it where it works, so our sales team settles the five points below before it quotes a machine.</p>
       </div>
       <div class="plate1b wide" data-plate1b>
         <span class="acc1b" data-accent aria-hidden="true"></span>
@@ -1443,7 +1479,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <dl class="fields1b">
             <div><dt data-f>YOUR REGULAR WORK</dt><dd>Tell us whether your usual job is utility trenching, mass grading, or something else, and whether your sites are tight, because that decides the machine class before any model number does.</dd></div>
             <div><dt data-f>THE WORK AFTER THIS JOB</dt><dd>List what the machine will do after this project, because a machine bought for one dig can sit idle or fall short on the work you do every month.</dd></div>
-            <div><dt data-f>WHAT’S INCLUDED</dt><dd>Compare the attachments, coupler, and options that come with each machine, and count the cost of anything you have to add before you compare prices.</dd></div>
+            <div><dt data-f>WHAT’S INCLUDED</dt><dd>List the bucket, coupler, and thumb each quoted machine comes with, and add the cost of anything you would have to buy before it can work, so the prices you compare cover the same setup.</dd></div>
             <div><dt data-f>WHERE IT WORKS</dt><dd>We sell new XCMG machines for jobs in Nevada and nearby California, so give us the job location and we confirm that we can sell and deliver the machine there.</dd></div>
             <div><dt data-f>WHO SUPPORTS IT</dt><dd>A machine bought from a dealer hundreds of miles away still needs parts and repairs where it works, and we service every machine we sell in Nevada from our field trucks and Fernley shop.</dd></div>
           </dl>
@@ -1474,7 +1510,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
       <div class="fin-ban">
         <div class="fb-copy">
           <h2 id="finance-title">0% financing available on approved credit</h2>
-          <p>QuickFi, XCMG’s lender, finances new XCMG machines and the attachments you buy with them. The Apply for XCMG Financing button opens QuickFi’s XCMG credit application in a new tab. QuickFi reviews it and confirms your rate and terms.</p>
+          <p>QuickFi, XCMG’s lender, finances new XCMG machines and the attachments you buy with them, and the Apply for XCMG Financing button opens QuickFi’s XCMG credit application for DBM in a new tab, where QuickFi reviews your application and confirms the rate and terms.</p>
           <p class="fb-fine">Financing a used machine or another brand starts with a call to <span style="white-space: nowrap;">(775) 625-0062</span> or an inquiry, and someone from DBM reaches out to you.</p>
         </div>
         <div class="fb-acts">
@@ -1512,7 +1548,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I rent or try a new XCMG machine before I buy it?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q4" role="region"><div><p>Yes. Our rental purchase option rents the machine by the month for up to six months and applies part of the rent to the purchase price when you buy, with a larger share counting in the first three months. We can also drop off an XCMG machine for you to try on your own job at no charge.</p></div></div>
+          <div data-accpanel id="q4" role="region"><div><p>Yes. Our rental purchase option rents the machine by the month for up to six months and applies part of the rent to the purchase price when you buy, with a larger share counting the sooner you buy and the split set for each machine. We can also drop off an XCMG machine for you to try on your own job at no charge.</p></div></div>
         </div>
       </div>
     </div>
@@ -1524,7 +1560,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
       <div class="reqside">
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="request-title">Ask for Price &amp; Availability on a New XCMG</h2></div>
         <p class="slede">Tell us the work you do, where the machine will work, and what comes after this project, and add a model if you know it or leave it blank if you want a recommendation.</p>
-        <p class="slede">Our sales team reads every request and replies by phone or email with the price, whether the machine is on our lot or when we can get it, and the financing options for it. To talk it through now, call or text us.</p>
+        <p class="slede">Our sales team reads every request and replies by call, text, or email with the price, whether the machine is on our lot or when we can get it, and the financing options for it. To talk it through now, call or text us.</p>
         <div class="acts">
           <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
         </div>
@@ -1558,7 +1594,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
             <span class="edge" aria-hidden="true"></span>
             <span class="sent">SENT · JUST NOW</span>
             <span class="dh">Your request is with our sales team</span>
-            <span class="db">Our sales team replies by phone or email with the price and availability of the machine you asked about and the financing that applies. For a faster answer, call or text (775) 625-0062.</span>
+            <span class="db">Our sales team replies by call, text, or email with the price and availability of the machine you asked about and the financing that applies. For a faster answer, call or text (775) 625-0062.</span>
             <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#486F5D" stroke-width="2" data-cnfkerf/></svg>
             <div class="rows" data-cnfsent></div>
             <div class="dact">
@@ -1601,8 +1637,8 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
         <img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
         <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
-      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/" aria-current="page">New equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../we-buy-equipment/">We buy equipment</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
-      <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; repair</a></li><li><a href="../../services/mobile-field-service/">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/">Request a part</a></li></ul></div>
+      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/" aria-current="page">New equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../we-buy-equipment/">Sell &amp; trade</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
+      <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; parts</a></li><li><a href="../../services/mobile-field-service/">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/#parts">Request a part</a></li></ul></div>
       <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../blog/">Job stories and guides</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">

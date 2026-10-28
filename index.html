@@ -839,6 +839,27 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
 @keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
 @keyframes dbm-menu-fold { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
 /* NAV-05 route menus: end */
+
+/* Round 3, phone width (2026-10-28), copied from service-page.css so the Home header, route menus, and footer match every other page.
+   Every link and button in them can be tapped over at least 44 by 44 px. These rules apply at phone widths only, so the desktop
+   layout does not change. */
+@media (max-width: 620px) {
+  .brand { padding: 7px 0; margin: -7px 0; }
+  /* The menu links gain 2.5 px of tap width on each side, so that "Buy" reaches 44 px, and equal negative margins keep the row in place */
+  .nav nav a { padding: 12px 2.5px; margin: 0 -2.5px; }
+  /* Each menu diamond's button is 44 px square. It reaches 1 px into the 2 px gap on its left and 19 px into the 18 px gap on its
+     right, so its layout width stays 24 px, the menu row does not move, and the diamond stays where it was drawn. */
+  .nav .mt { width: 44px; height: 44px; margin: 0 -19px 0 -1px; justify-content: flex-start; padding-left: 8.5px; transform-origin: 13px 50%; }
+  .mread { padding: 11px 0 12px; }
+  .foot-facts a { padding: 9.5px 0; margin: -9.5px 0; }
+  .foot-col ul { gap: 0; }
+  .foot-col a { padding: 11px 0; min-width: 44px; }
+  .copy-mono a { display: inline-block; padding: 16px 0; margin: -16px 0; }
+  /* Home's own links: the text links with arrows are 44 px tall with the underline kept 8 px under the words, and the brand links
+     in the attachment list gain tap height without moving the list */
+  .more { padding-top: 12px; padding-bottom: 12px; background-position: left calc(100% - 4px); }
+  .att-list a { padding: 9.5px 0; margin: -9.5px 0; }
+}
 </style>
 </head>
 <body class="layout-b">
@@ -908,8 +929,8 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
           <li><a class="mrow" href="services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding &amp; fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a part</span><span class="msub">Send the brand, model, and serial number, and we can get almost any part within 48 hours and ship it anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
@@ -946,7 +967,7 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
     <div class="hero-grid">
       <div class="hero-copy">
         <h1 id="hero-title">Heavy equipment sales, service and rental</h1>
-        <p class="hero-lede">We sell equipment nationwide, and we rent and service machines across Nevada. We also buy used equipment.</p>
+        <p class="hero-lede"><span>We sell equipment nationwide</span>, and we rent and service machines across Nevada. We also buy used equipment.</p>
       </div>
 
       <form id="req" class="on-light" novalidate aria-label="Send DBM a request" action="#" data-topic="none">
@@ -966,7 +987,7 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
             <a class="need need-go" href="rentals/" data-cat data-ripple="rgba(244,112,63,0.9)">
               <span class="need-face" data-slot="plate">
                 <span class="need-name">Rent a machine</span>
-                <span class="need-note">Days, weeks or months</span>
+                <span class="need-note">Mostly by the month</span>
                 <span class="need-ic need-arr" aria-hidden="true"></span>
               </span>
               <span class="need-ring" aria-hidden="true"></span>
@@ -1116,7 +1137,7 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
     <div class="wrap">
       <div class="sec-head">
         <h2 id="brands-title">New and used equipment</h2>
-        <p>DBM is the exclusive XCMG dealer and sells SAS Forks, Taurox, and DRKhorse Tools attachments. It services every machine it sells.</p>
+        <p>DBM is the exclusive XCMG dealer and sells SAS Forks, Taurox, and DRKhorse Tools attachments. It services every machine it sells in Nevada.</p>
       </div>
       <div class="brands">
         <div class="brand-card">
@@ -1133,7 +1154,7 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
             <h3 class="bc-h">Attachments</h3>
             <p>DBM sells attachments from three makers. An attachment bought with a new XCMG machine can be financed with it.</p>
             <ul class="att-list">
-              <li><a href="https://sasforks.com/" target="_blank" rel="noopener">SAS Forks</a><span>Salvage forks, pallet and multi-use forks, and the Gladiator quick coupler</span></li>
+              <li><a href="https://sasforks.com/" target="_blank" rel="noopener">SAS Forks</a><span>Long forks, pallet and multi-use forks, and the Gladiator quick coupler</span></li>
               <li><span class="nm">Taurox</span><span>Attachments for excavators and loaders</span></li>
               <li><a href="https://www.drkhorsetools.com/" target="_blank" rel="noopener">DRKhorse Tools</a><span>Attachments for heavy equipment</span></li>
             </ul>
@@ -1173,12 +1194,12 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
         <div class="fb-copy">
           <div class="fb-top"><span class="fk">FINANCE</span><span class="fs">NEW XCMG MACHINES · THROUGH QUICKFI, XCMG’S LENDER</span></div>
           <h3>0% financing available on approved credit</h3>
-          <p>Tell us which machine you want, and we’ll send you to the XCMG financing application, which QuickFi runs under DBM’s name. QuickFi confirms the current rates and terms.</p>
+          <p>Apply for financing opens the XCMG financing application, which QuickFi runs under DBM’s name, in a new tab. QuickFi confirms the current rates and terms.</p>
           <p class="fb-fine">Used machines and other brands are financed through our lending partners, so call (775) 625-0062. Rental accounts use our own credit application.</p>
         </div>
-        <div class="fb-acts"><a href="finance/#apply" class="nbtn" data-nadv="1" data-cut="14" data-cut-to="22"><span data-nfill aria-hidden="true"></span><span class="l">Apply for financing</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a><a class="more" href="finance/#credit-application" data-b="stag">Rental credit application</a></div>
+        <div class="fb-acts"><a href="https://quickfi.ai/xcmg" target="_blank" rel="noopener" class="nbtn" data-nadv="1" data-cut="14" data-cut-to="22"><span data-nfill aria-hidden="true"></span><span class="l">Apply for financing</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a><a class="more" href="finance/#credit-application" data-b="stag">Rental credit application</a></div>
       </div>
-      <div class="tco-l"><h3>What a machine costs to own</h3><p>One buyer passed on our quote and bought a used mini excavator in Los Angeles for $15,000 less. He then spent about $15,000 on repairs, and his monthly payment is now higher than a new machine from us would have cost. A machine bought far away also has its parts and service far away.</p></div>
+      <div class="tco-l"><h3>What a machine costs to own</h3><p>One buyer passed on our quote and bought a used mini excavator in Los Angeles for about $15,000 less. He then spent about $15,000 bringing it up to the setup our machine already had, and his monthly payment is now higher than a new machine from us would have cost. A machine bought far away also has its parts and service far away.</p></div>
     </div>
   </section>
 
@@ -1227,7 +1248,7 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
         <div class="tc-pic"><img src="assets/8284e140e61d1b9b.jpg" alt="A DBM service truck with its tool body open, showing parts drawers, shelves, and a generator" loading="lazy"></div>
         <div class="tc-body">
           <div class="tabstrip" data-tabstrip role="tablist" aria-label="Parts or service"><span data-tabplate aria-hidden="true"></span><button type="button" role="tab" data-tab id="ps-tab-0" aria-controls="ps-panel-0" aria-selected="true" tabindex="0">Parts</button><button type="button" role="tab" data-tab id="ps-tab-1" aria-controls="ps-panel-1" aria-selected="false" tabindex="-1">Service</button></div>
-          <div data-tabpanel role="tabpanel" id="ps-panel-0" aria-labelledby="ps-tab-0" tabindex="0"><h3 class="tp-title">Parts for XCMG, SAS, and most other machines</h3><p class="tp-lede">We carry XCMG and SAS parts, and we can get aftermarket parts for most other machines. We ship anywhere in the country.</p><dl class="qa"><div><dt>How fast can I get a part?</dt><dd>Almost any part arrives within 48 hours, and we can ship it overnight when your machine is down.</dd></div><div><dt>How do I order a part?</dt><dd>Call or text (775) 625-0062, or send us the make, model, serial number, and the part you need. We confirm the price and how long it will take before we order it.</dd></div><div><dt>Can I get parts for a machine I didn’t buy from DBM?</dt><dd>Yes. We supply parts for machines bought anywhere, and we know the parts people at Caterpillar, Case, and other makers.</dd></div></dl><div class="tp-acts"><button type="button" class="nbtn" data-nadv="1" data-cut="14" data-cut-to="22" data-open-blank><span data-nfill aria-hidden="true"></span><span class="l">Request a part</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></button></div></div>
+          <div data-tabpanel role="tabpanel" id="ps-panel-0" aria-labelledby="ps-tab-0" tabindex="0"><h3 class="tp-title">Parts for XCMG, SAS, and most other machines</h3><p class="tp-lede">We carry XCMG and SAS parts, and we can get aftermarket parts for most other machines. We ship anywhere in the country.</p><dl class="qa"><div><dt>How fast can I get a part?</dt><dd>Almost any part reaches us within 48 hours, and we can ship it overnight when your machine is down.</dd></div><div><dt>How do I order a part?</dt><dd>Call or text (775) 625-0062, or send us the make, model, serial number, and the part you need. We confirm the price and how long it will take before we order it.</dd></div><div><dt>Can I get parts for a machine I didn’t buy from DBM?</dt><dd>Yes. We supply parts for machines bought anywhere, and we know the parts people at Caterpillar, Case, and other makers.</dd></div></dl><div class="tp-acts"><button type="button" class="nbtn" data-nadv="1" data-cut="14" data-cut-to="22" data-open-blank><span data-nfill aria-hidden="true"></span><span class="l">Request a part</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></button></div></div>
           <div data-tabpanel role="tabpanel" id="ps-panel-1" aria-labelledby="ps-tab-1" tabindex="0" hidden><h3 class="tp-title">Field service and shop repair for any make</h3><p class="tp-lede">Our service trucks fix machines at the job site, the mine, or the quarry. If we sold you a machine in Nevada, we service it anywhere in the state.</p><dl class="qa"><div><dt>How soon can someone get here?</dt><dd>Usually the day after you call, and sometimes the same day.</dd></div><div><dt>What do I use while my machine is being fixed?</dt><dd>We can put a rental machine on your site until yours is running again.</dd></div><div><dt>What if a DBM rental breaks down?</dt><dd>If we can’t fix it the same day, we take those days off your rent.</dd></div><div><dt>What if it’s after hours?</dt><dd>Send us a service request any time, and we’ll get back to you the next day.</dd></div></dl><div class="tp-acts"><button type="button" class="nbtn" data-nadv="1" data-cut="14" data-cut-to="22" data-open-blank><span data-nfill aria-hidden="true"></span><span class="l">Request service</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></button></div></div>
         </div>
       </div>

@@ -458,6 +458,33 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 /* Footer address lines (shared footer) */
 .foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
+
+/* Round 3, phone width (2026-10-28). Every link and button in the shared header, route menus, footer, and call band can be tapped
+   over at least 44 by 44 px, and every button label fits inside its plate. These rules apply at phone widths only, so the desktop
+   layout does not change. The Home page does not load this file and carries its own copy of the header, menu, and footer rules. */
+@media (max-width: 620px) {
+  /* The logo link and the footer phone number gain tap height with padding, and equal negative margins keep the layout where it was */
+  .brand { padding: 7px 0; margin: -7px 0; }
+  /* The menu links gain 2.5 px of tap width on each side, so that "Buy" reaches 44 px, and equal negative margins keep the row in place */
+  .nav nav a { padding: 12px 2.5px; margin: 0 -2.5px; }
+  /* Each menu diamond's button is 44 px square. It reaches 1 px into the 2 px gap on its left and 19 px into the 18 px gap on its
+     right, so its layout width stays 24 px, the menu row does not move, and the diamond stays where it was drawn. */
+  .nav .mt { width: 44px; height: 44px; margin: 0 -19px 0 -1px; justify-content: flex-start; padding-left: 8.5px; transform-origin: 13px 50%; }
+  .mread { padding: 11px 0 12px; }
+  .foot-facts a { padding: 9.5px 0; margin: -9.5px 0; }
+  .foot-col ul { gap: 0; }
+  .foot-col a { padding: 11px 0; min-width: 44px; }
+  .copy-mono a { display: inline-block; padding: 16px 0; margin: -16px 0; }
+  /* The gallery's arrow buttons lose their words on a phone, so they keep a 44 px square instead of shrinking to 36 px */
+  .rail-ctl .nbtn { min-width: 48px; min-height: 44px; justify-content: center; }
+  /* The call band's second button is 290 px wide on a phone. Its label tightens to 0.2 em and may take a second line instead of
+     running past both edges of the plate. */
+  .acts .kplate .kface { white-space: normal; text-align: center; line-height: 1.35; letter-spacing: 0.2em; padding-left: 22px; padding-right: 18px; }
+}
+@media (max-width: 700px) {
+  /* The call bar's second key is 142 px wide. A short label stays on one line, and a long one such as "Ask about a machine" takes two. */
+  .callbar .kplate .kface { white-space: normal; text-align: center; line-height: 1.2; letter-spacing: 0.12em; padding-left: 8px; padding-right: 8px; }
+}
 </style>
 <style>
 /* Page styles for the DBM pages updated on 2026-10-28 from their DBM HTML 5 versions. Each block names the board component it follows.
@@ -632,6 +659,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .notice a.tel { white-space: nowrap; }
 @media (max-width: 620px) { .notice { padding-top: 52px; padding-bottom: 56px; } .notice p, .notice li { font-size: 16.5px; } }
 
+
+/* Round 3, phone width (2026-10-28): the page heading and its opening paragraph take the 30 px and 17 px phone sizes that every
+   page now shares */
+@media (max-width: 620px) {
+  #page-title { font-size: 30px; line-height: 1.04; }
+  .hp .hp-lede { font-size: 17px; }
+}
 </style>
 </head>
 <body>
@@ -692,8 +726,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <li><a class="mrow" href="../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding &amp; fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a part</span><span class="msub">Send the brand, model, and serial number, and we can get almost any part within 48 hours and ship it anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
@@ -819,7 +853,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           </div>
           <div class="acts">
             <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-            <a class="kplate" href="../contact/"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a written request</span></a>
+            <a class="kplate" href="../contact/#contactcard"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a written request</span></a>
           </div>
           <p class="fine">Our shop, yard, and parts department are at 2366 Resource Dr, Fernley, NV 89408, east of Reno on I-80.</p>
         </div>
@@ -836,8 +870,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         <img src="../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
         <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
-      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../rentals/">Rentals</a></li><li><a href="../equipment/new/">New equipment</a></li><li><a href="../equipment/used/">Used equipment</a></li><li><a href="../we-buy-equipment/">We buy equipment</a></li><li><a href="../finance/">Finance</a></li></ul></div>
-      <div class="foot-col"><h3>Service</h3><ul><li><a href="../services/">Service &amp; repair</a></li><li><a href="../services/mobile-field-service/">Mobile field service</a></li><li><a href="../services/line-boring/">Line boring</a></li><li><a href="../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../services/">Request a part</a></li></ul></div>
+      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../rentals/">Rentals</a></li><li><a href="../equipment/new/">New equipment</a></li><li><a href="../equipment/used/">Used equipment</a></li><li><a href="../we-buy-equipment/">Sell &amp; trade</a></li><li><a href="../finance/">Finance</a></li></ul></div>
+      <div class="foot-col"><h3>Service</h3><ul><li><a href="../services/">Service &amp; parts</a></li><li><a href="../services/mobile-field-service/">Mobile field service</a></li><li><a href="../services/line-boring/">Line boring</a></li><li><a href="../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../services/#parts">Request a part</a></li></ul></div>
       <div class="foot-col"><h3>Company</h3><ul><li><a href="../about/">About DBM</a></li><li><a href="../case-studies/">Case studies</a></li><li><a href="../faqs/">FAQs</a></li><li><a href="../blog/">Job stories and guides</a></li><li><a href="../careers/">Careers</a></li><li><a href="../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
@@ -852,7 +886,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 <div class="callbar" aria-hidden="true">
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-  <a class="kplate" href="../contact/" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
+  <a class="kplate" href="../contact/#contactcard" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
 </div>
 <script>
 /* Page-to-page moves: on a phone the call bar opens where the last page's bar was (handed over in the header partial), and

@@ -458,6 +458,33 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
 /* Footer address lines (shared footer) */
 .foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
+
+/* Round 3, phone width (2026-10-28). Every link and button in the shared header, route menus, footer, and call band can be tapped
+   over at least 44 by 44 px, and every button label fits inside its plate. These rules apply at phone widths only, so the desktop
+   layout does not change. The Home page does not load this file and carries its own copy of the header, menu, and footer rules. */
+@media (max-width: 620px) {
+  /* The logo link and the footer phone number gain tap height with padding, and equal negative margins keep the layout where it was */
+  .brand { padding: 7px 0; margin: -7px 0; }
+  /* The menu links gain 2.5 px of tap width on each side, so that "Buy" reaches 44 px, and equal negative margins keep the row in place */
+  .nav nav a { padding: 12px 2.5px; margin: 0 -2.5px; }
+  /* Each menu diamond's button is 44 px square. It reaches 1 px into the 2 px gap on its left and 19 px into the 18 px gap on its
+     right, so its layout width stays 24 px, the menu row does not move, and the diamond stays where it was drawn. */
+  .nav .mt { width: 44px; height: 44px; margin: 0 -19px 0 -1px; justify-content: flex-start; padding-left: 8.5px; transform-origin: 13px 50%; }
+  .mread { padding: 11px 0 12px; }
+  .foot-facts a { padding: 9.5px 0; margin: -9.5px 0; }
+  .foot-col ul { gap: 0; }
+  .foot-col a { padding: 11px 0; min-width: 44px; }
+  .copy-mono a { display: inline-block; padding: 16px 0; margin: -16px 0; }
+  /* The gallery's arrow buttons lose their words on a phone, so they keep a 44 px square instead of shrinking to 36 px */
+  .rail-ctl .nbtn { min-width: 48px; min-height: 44px; justify-content: center; }
+  /* The call band's second button is 290 px wide on a phone. Its label tightens to 0.2 em and may take a second line instead of
+     running past both edges of the plate. */
+  .acts .kplate .kface { white-space: normal; text-align: center; line-height: 1.35; letter-spacing: 0.2em; padding-left: 22px; padding-right: 18px; }
+}
+@media (max-width: 700px) {
+  /* The call bar's second key is 142 px wide. A short label stays on one line, and a long one such as "Ask about a machine" takes two. */
+  .callbar .kplate .kface { white-space: normal; text-align: center; line-height: 1.2; letter-spacing: 0.12em; padding-left: 8px; padding-right: 8px; }
+}
 </style>
 <style>
 /* Mobile Field Service page, version 2 (2026-10-28). The sections and their order follow the existing page,
@@ -940,6 +967,23 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
   .acc1 [data-accstate] { display: none; }
   .acc1 [data-accpanel] > div { padding: 8px 20px 22px 52px; }
 }
+
+/* Round 3, phone width (2026-10-28): every control on the page can be tapped over at least 44 px. The photo explainer's numbered
+   pins grow to 44 px squares, the stepper's numbered tabs and its Next button are 44 px tall, the underlined text links with arrows
+   are 44 px tall, and each term with a tooltip gains an invisible 8 px of tap height above and below without moving the text.
+   The page heading already uses the shared 30 px. */
+@media (max-width: 620px) {
+  .xpin { width: 44px; height: 44px; margin: -22px 0 0 -22px; font-size: 17px; }
+  .strack button { min-height: 44px; }
+  /* The step names stay readable to screen readers while only the numbers show */
+  .strack .lab { position: relative; }
+  .strack .tx { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .nx { min-height: 44px; }
+  .tlink { padding: 12px 0 10px; }
+  .tbig { padding-bottom: 7px; }
+  .tw button { position: relative; }
+  .tw button::after { content: ""; position: absolute; left: -4px; right: -4px; top: -8px; bottom: -8px; }
+}
 </style>
 </head>
 <body>
@@ -1000,8 +1044,8 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
           <li><a class="mrow" href="../../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
-          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding &amp; fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a part</span><span class="msub">Send the brand, model, and serial number, and we can get almost any part within 48 hours and ship it anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="../../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
@@ -1078,13 +1122,13 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
     <div class="wrap fb-copy">
       <div class="eyebrow">Mobile Field Service · From Fernley, Nevada</div>
       <h1 id="page-title">On-Site Heavy Equipment Repair Across Nevada &amp; Central California</h1>
-      <p class="fb-lede"><span>Our 10 field service trucks and 11 technicians leave our yard in Fernley for stopped machines on job sites and in mines anywhere in Nevada and in California from Sacramento to Bakersfield. The technician usually reaches the machine the day after you call, and often the same day.</span></p>
+      <p class="fb-lede"><span>Our 10 field service trucks and 11 technicians leave our yard in Fernley for stopped machines on job sites and in mines anywhere in Nevada and in California from Sacramento to Bakersfield. The technician usually reaches the machine the day after you call, and sometimes the same day.</span></p>
       <div class="acts">
         <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
         <a class="kb" href="#request" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send the Machine Details</span></span></a>
       </div>
       <dl class="facts">
-        <div><dt>Arrival</dt><dd>Next day, often the same day</dd></div>
+        <div><dt>Arrival</dt><dd>Next day, sometimes the same day</dd></div>
         <div><dt>Dealer crews</dt><dd>Often one to three weeks</dd></div>
         <div><dt>Fleet</dt><dd>10 service trucks, 11 technicians</dd></div>
         <div><dt>Machines</dt><dd>Any make, including machines we didn’t sell</dd></div>
@@ -1110,7 +1154,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
     <div class="wrap covgrid">
       <div>
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="cov-title">Field Service Coverage Across Nevada &amp; California</h2></div>
-        <p class="lead">Our service trucks leave from 2366 Resource Dr in Fernley, east of Reno on Interstate 80, and work anywhere in Nevada and in California from Sacramento south to Bakersfield, and each area button below zooms the map to the towns and highways our trucks cover there.</p>
+        <p class="lead">Our service trucks leave from 2366 Resource Dr in Fernley, east of Reno on Interstate 80, and work anywhere in Nevada and in California from Sacramento south to Bakersfield. Each area button below zooms the map to the towns and highways our trucks cover in that area.</p>
         <div class="chips" role="group" aria-label="Show an area on the map">
           <button type="button" class="mono-btn" data-mono="dark" data-area="all" aria-pressed="true"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">All coverage</span></button>
           <button type="button" class="mono-btn" data-mono="dark" data-area="reno" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Reno, Carson City &amp; Fernley</span></button>
@@ -1180,7 +1224,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
           </svg>
         </div>
         <div class="covlegend" aria-hidden="true"><span><i class="k-nv"></i>Nevada: anywhere in the state</span><span><i class="k-ca"></i>California field service</span><span><i class="k-hw"></i>Highways our trucks drive</span></div>
-        <p class="covnote">Areas are approximate. Dispatch confirms your site on the call.</p>
+        <p class="covnote">The shaded areas are approximate, and dispatch confirms your site on the call.</p>
       </div>
     </div>
   </section>
@@ -1197,7 +1241,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
       <div class="tri" data-tri>
         <div class="tq">
           <h3 id="tri-q">Is the Machine Holding Up a Job Right Now?</h3>
-          <p class="tsub">Your answer changes what we ask next, and a person on our service team reads every call, text, and request.</p>
+          <p class="tsub">Your answer shows whether to call dispatch now or send the details, and a person on our service team reads every call, text, and request.</p>
           <div class="tans" role="radiogroup" aria-labelledby="tri-q">
             <button type="button" class="mono-btn" data-mono="dark" role="radio" aria-checked="false" data-ans="stopped"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Yes, the job has stopped</span></button>
             <button type="button" class="mono-btn" data-mono="dark" role="radio" aria-checked="false" data-ans="wait"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">No, it can wait a few days</span></button>
@@ -1208,11 +1252,11 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
           <div class="tpanel" data-tp="none">
             <span class="tlab">The fastest way to reach dispatch</span>
             <a class="tbig" href="tel:+17756250062" aria-label="Call DBM at (775) 625-0062">(775) 625-0062</a>
-            <p>The office phone takes calls and texts. Our office isn’t staffed around the clock, so a call, text, or request sent after hours is answered the next day. Pick the answer that fits your job, and the next step shows here.</p>
+            <p>The office phone in Fernley takes calls and texts, and because the office isn’t staffed around the clock, a call, text, or request sent after hours is answered the next day. Pick the answer that fits your job, and the next step shows here.</p>
           </div>
           <div class="tpanel" data-tp="stopped" hidden>
             <span class="tlab">Call dispatch now</span>
-            <h4>A Stopped Job Is Worth a Phone Call</h4>
+            <h4>Call Dispatch to Get a Truck Scheduled</h4>
             <p>Tell dispatch the make, where the machine is sitting, and what it stopped doing. The serial number, photos, and the rest can follow by text after the call.</p>
             <div class="tacts">
               <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
@@ -1225,7 +1269,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
             <h4>Send the Details, and We’ll Call to Schedule the Visit</h4>
             <p>The request below takes where the machine is, the make and model, and what changed, and our service team calls or texts you to set the day the technician arrives.</p>
             <div class="tacts">
-              <a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26" data-goform="wait"><span data-nfill aria-hidden="true"></span><span class="l">Fill In the Request</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+              <a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26" data-goform="wait"><span data-nfill aria-hidden="true"></span><span class="l">Go to the Request Form</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
             </div>
             <span class="tfoot">No field in the request is required</span>
           </div>
@@ -1260,7 +1304,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
             <fieldset class="grp" data-grp="where">
               <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">Where the Machine Is</span></legend>
               <div class="gbody">
-                <p class="gd">A street address, cross streets, or a mine or pit name, plus who meets the technician and any gate, badge, or escort rules for the site.</p>
+                <p class="gd">Give a street address, cross streets, or the mine or pit name, and say who meets the technician and what gate, badge, or escort rules the site has.</p>
                 <div class="fld">
                   <label for="f-site">Site address, cross streets, or mine name</label>
                   <div class="locrow">
@@ -1288,7 +1332,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
             <fieldset class="grp" data-grp="what">
               <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">What Changed</span></legend>
               <div class="gbody">
-                <p class="gd">Pick what fits and describe it in your own words. No error code or diagnosis is needed.</p>
+                <p class="gd">Pick the symptoms that fit and describe the rest in your own words, because the technician needs no error code or diagnosis from you.</p>
                 <div class="syms" role="group" aria-label="What the machine is doing">
                   <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Won’t start</span></button>
                   <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Lost power</span></button>
@@ -1315,7 +1359,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
             <fieldset class="grp" data-grp="job">
               <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">The Effect on Your Job</span></legend>
               <div class="gbody">
-                <p class="gd" id="urg-q">This tells dispatch how soon the machine has to be running and whether you need a rental in the meantime.</p>
+                <p class="gd" id="urg-q">Your answer tells dispatch how soon the machine has to be running and whether a rental machine should go out in the meantime.</p>
                 <div class="rcards" role="radiogroup" aria-labelledby="urg-q">
                   <button type="button" class="rcard" role="radio" aria-checked="false" tabindex="0" data-urg="stopped"><span class="rmk" aria-hidden="true"></span><span class="rt">The job has stopped</span><span class="rd">Crews or other machines are waiting on this one.</span></button>
                   <button type="button" class="rcard" role="radio" aria-checked="false" tabindex="-1" data-urg="around"><span class="rmk" aria-hidden="true"></span><span class="rt">We’re working around it</span><span class="rd">Other machines are covering, but not for long.</span></button>
@@ -1392,12 +1436,12 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
         <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
         <div class="et">
           <h3>Days From Your Call to a Technician at the Machine</h3>
-          <p>Dealer field crews are busiest with their largest customers, so a contractor who calls in with one stopped machine often waits, and a large dealer recently told one of our customers to expect two to three weeks after a breakdown.</p>
+          <p>Dealer field crews are busiest with their largest customers, so a contractor who calls in with one stopped machine often waits. When a large dealer pitched two loaders to a customer we were also quoting, it told that customer to expect two to three weeks for a technician after a breakdown.</p>
           <p class="fine">When every crew is committed, our founder drives a service truck to the job himself.</p>
         </div>
         <div class="er">
           <div class="read dbm">
-            <div class="rh"><span class="rl">DBM FIELD SERVICE</span><span class="rval">Same day to next day</span></div>
+            <div class="rh"><span class="rl">DBM FIELD SERVICE</span><span class="rval">Usually the next day</span></div>
             <div class="dscale" aria-hidden="true"><span class="tk"></span><span class="rg" data-rg data-from="0" data-to="1.15"></span><span class="en"><span style="left:0">0</span><span style="left:33.333%">7</span><span style="left:66.667%">14</span><span style="left:100%">21 DAYS</span></span></div>
           </div>
           <div class="read dlr">
@@ -1420,7 +1464,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
             <h3 class="xtitle">What Arrives With the Technician</h3>
             <span class="xname" data-xname>Service truck</span>
             <ol class="xkeys" data-xkeys="0"><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Crane</span><span class="xd">A truck-mounted crane lifts wheels, engines, and heavy components on and off the machine where it stopped.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Tool compartments</span><span class="xd">Side compartments carry the hand tools, power tools, and common parts for the repair.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">The machine</span><span class="xd">Our crews repair machines as large as mining haul trucks at the pit, without hauling them to a shop.</span></span></li></ol>
-            <ol class="xkeys" data-xkeys="1" hidden><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Crane boom</span><span class="xd">The boom swings out over the machine to lift a wheel and tire on or off the axle.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Wheel and tire</span><span class="xd">A loader wheel and tire hang from the hook, taken off at the job site instead of at a shop.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Truck body</span><span class="xd">The truck parks beside the machine with its tools, parts, and power on board.</span></span></li></ol>
+            <ol class="xkeys" data-xkeys="1" hidden><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Crane boom</span><span class="xd">The boom swings out over the machine to lift a wheel and tire on or off the axle.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Wheel and tire</span><span class="xd">A loader wheel and tire hang from the hook, taken off at the job site instead of at a shop.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Truck body</span><span class="xd">The truck parks beside the machine and carries its own generator and tools, so the repair needs no power or lifting equipment from your site.</span></span></li></ol>
             <ol class="xkeys" data-xkeys="2" hidden><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Technician</span><span class="xd">One of our technicians works at the undercarriage of a Cat D9T dozer in a hard hat and high-visibility vest.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Crane</span><span class="xd">The truck’s crane stands ready to lift heavy undercarriage parts off and on.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Dozer track</span><span class="xd">The dozer stays where it was working while the technician repairs it.</span></span></li></ol>
             <div class="xnav">
               <button type="button" class="kb paper icon" data-kb="paper" data-travel="4" data-xnav="prev" aria-label="Previous photo"><span data-kbase aria-hidden="true"></span><span data-kplate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M10 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></button>
@@ -1497,7 +1541,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
     <div class="wrap">
       <div class="why-head">
         <h2 id="work-title">Field Service Jobs at Mines, Pits &amp; Job Sites</h2>
-        <p class="why-lede">Each photo below is a DBM field job, where a crane truck lifted the engine, the wheel, or the lift arm off the machine where it stopped, from mining excavators and haul trucks in open pits to loaders and excavators on snowed-in job sites.</p>
+        <p class="why-lede">The six photos below come from DBM field jobs, where crane trucks lifted engines, a loader’s lift arm, and an excavator’s upper structure off machines that stayed in the pit or on the job site, including one repair in heavy snow.</p>
       </div>
       <div class="rail" aria-labelledby="rail-title">
         <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
@@ -1514,7 +1558,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
           <figure class="frame"><span class="win"><img src="../../assets/912ce495ef962535.jpg" alt="Four service trucks and a mobile crane stand around a mining haul truck with its dump body raised" loading="lazy" style="object-position: 50% 35%"></span><figcaption><span class="t">Haul Truck Repair at the Mine</span><span class="d">Four service trucks and a mobile crane work around a mining haul truck with its dump body raised.</span></figcaption></figure>
           <figure class="frame"><span class="win"><img src="../../assets/ce5771d2435d4813.jpg" alt="Two white crane service trucks with booms raised beside the lift arm and bucket of a large wheel loader set on the ground" loading="lazy" style="object-position: 50% 62%"></span><figcaption><span class="t">Loader Lift Arm Removed in the Field</span><span class="d">Two crane trucks took a wheel loader’s lift arm and bucket off the machine and set them on the ground.</span></figcaption></figure>
           <figure class="frame"><span class="win"><img src="../../assets/1eb013588af150a4.jpg" alt="A large diesel engine hangs from a truck crane while a technician in a hard hat holds a tag line" loading="lazy" style="object-position: 50% 35%"></span><figcaption><span class="t">Engine Lift at the Job Site</span><span class="d">A technician steadies a diesel engine with a tag line while the truck’s crane lifts it.</span></figcaption></figure>
-          <figure class="frame"><span class="win"><img src="../../assets/c9035bf852b7908e.jpg" alt="A snow-covered black service truck and an excavator in heavy snowfall, with a technician in a high-visibility jacket" loading="lazy"></span><figcaption><span class="t">Repairs Through a Snowstorm</span><span class="d">A service truck and an excavator under fresh snow, with a technician in a high-visibility jacket at the machine.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/c9035bf852b7908e.jpg" alt="A snow-covered black service truck and an excavator in heavy snowfall, with a technician in a high-visibility jacket" loading="lazy"></span><figcaption><span class="t">Repairs Through a Snowstorm</span><span class="d">A technician in a high-visibility jacket stands at an excavator while fresh snow covers the machine and the service truck beside it.</span></figcaption></figure>
           <figure class="frame"><span class="win"><img src="../../assets/dbd82d99d30d49e2.jpg" alt="A black service truck's crane lifts an engine out of a yellow machine that has been taken apart on gravel" loading="lazy" style="object-position: 50% 40%"></span><figcaption><span class="t">Engine Out of a Stripped Machine</span><span class="d">A service truck’s crane lifts an engine out of a machine taken apart on the gravel where it stopped.</span></figcaption></figure>
         </div>
         <div class="bar" aria-hidden="true"><span></span></div>
@@ -1528,14 +1572,14 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
       <div class="stmt">
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s5-title">Rental Machines During an Extended Field Repair</h2></div>
         <div class="body">
-          <p>When a repair will keep your machine down for days or weeks, we put a rental machine on your site so the work keeps going, and the same service team plans the repair and the rental together. Our rentals go to contractors and run mostly by the month, and some large machines need a three-month minimum.</p>
-          <p>When our own fleet had no matching machine, we rented one from a competitor at our own cost so the customer’s job kept running.</p>
+          <p>When a repair will keep your machine down for days or weeks, we put a rental machine on your site so the work keeps going, and we plan the repair and the rental together on the same call. <span>We rent mostly by the month to contractors and commercial operators rather than homeowners, and some large machines need a three-month minimum.</span></p>
+          <p>When a compactor a customer had just agreed to buy broke down and our fleet had no second compactor, we rented one from a competitor at our own cost and paid for it until the customer’s machine was running again.</p>
         </div>
       </div>
       <div class="p2d">
         <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
-        <a class="w2d" href="#request" data-rental><span class="win"><img src="../../assets/8e5e3e10377ac700.jpg" alt="A blue tractor pulling a lowboy trailer that carries a yellow wheel loader across a gravel lot under storm clouds" loading="lazy"></span><span class="cap"><span class="ct">Add a Rental to Your Request</span><span class="cd">Tick the rental box in the request above and say what work has to continue and for how long, and we plan the repair and the rental together.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
-        <a class="w2d" href="../../rentals/"><span class="win"><img src="../../assets/7ce7c67e420ba9ca.jpg" alt="A yellow XCMG articulated haul truck parked in front of a row of yellow XCMG excavators on a dirt yard" loading="lazy" style="object-position: 50% 52%"></span><span class="cap"><span class="ct">See the Rental Fleet</span><span class="cd">If a machine you rent from us breaks down and we can’t fix it the same day, we take those days off your rent.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
+        <a class="w2d" href="#request" data-rental><span class="win"><img src="../../assets/8e5e3e10377ac700.jpg" alt="A blue tractor pulling a lowboy trailer that carries a yellow wheel loader across a gravel lot under storm clouds" loading="lazy"></span><span class="cap"><span class="ct">Add a Rental to Your Request</span><span class="cd">This card ticks the rental box in the request above, and the description field is where you say what work has to keep going and for how long.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
+        <a class="w2d" href="../../rentals/#fleet"><span class="win"><img src="../../assets/7ce7c67e420ba9ca.jpg" alt="A yellow XCMG articulated haul truck parked in front of a row of yellow XCMG excavators on a dirt yard" loading="lazy" style="object-position: 50% 52%"></span><span class="cap"><span class="ct">See the Rental Fleet</span><span class="cd">If a machine you rent from us breaks down and we can’t fix it the same day, we take those days off your rent.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
       </div>
     </div>
   </section>
@@ -1557,7 +1601,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Will someone come out right away?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q2" role="region"><div><p>A technician usually reaches the machine the day after you call and often the same day. Our office isn’t staffed around the clock, so a call, text, or request sent after hours is answered the next day.</p></div></div>
+          <div data-accpanel id="q2" role="region"><div><p>A technician usually reaches the machine the day after you call and sometimes the same day. Our office isn’t staffed around the clock, so a call, text, or request sent after hours is answered the next day.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Do you repair machines you didn’t sell?</span><span data-accstate aria-hidden="true">OPEN</span></button>
@@ -1600,7 +1644,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
         </div>
         <div class="ctext">
           <h3>Line Boring, Hydraulic Repair &amp; Welding From the Same Trucks</h3>
-          <p class="cl">The crew that answers a breakdown call also line bores worn pin joints and welds cracked booms and buckets where the machine stands. Hydraulic leaks and failed cylinders are repaired the same way, so the machine stays on the job site instead of going to a machine shop.</p>
+          <p class="cl">The crew that answers a breakdown call also line bores worn pin joints and welds cracked booms and buckets where the machine stands, so the machine stays on the job site instead of going to a machine shop. Hydraulic leaks are traced and repaired at the machine the same way, and only a cylinder that needs a full rebuild comes back to our Fernley shop.</p>
           <div class="cchips" role="group" aria-label="Choose a specialty repair">
             <button type="button" class="mono-btn" data-mono="dark" data-cap="lb" aria-pressed="true"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="ic ic-lb" aria-hidden="true"></span><span class="l">Line boring</span></button>
             <button type="button" class="mono-btn" data-mono="dark" data-cap="hyd" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="ic ic-hyd" aria-hidden="true"></span><span class="l">Hydraulic services</span></button>
@@ -1643,8 +1687,8 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
         <img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
         <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
-      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/">New equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../we-buy-equipment/">We buy equipment</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
-      <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; repair</a></li><li><a href="../../services/mobile-field-service/" aria-current="page">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/">Request a part</a></li></ul></div>
+      <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/">New equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../we-buy-equipment/">Sell &amp; trade</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
+      <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; parts</a></li><li><a href="../../services/mobile-field-service/" aria-current="page">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/#parts">Request a part</a></li></ul></div>
       <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../blog/">Job stories and guides</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
@@ -2598,7 +2642,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
     var syms = $$('[data-sym]', form), cards = $$('[data-urg]', form), slots = $$('.slot', form);
     var URG = { stopped: 'The job has stopped', around: 'Working around it', wait: 'Can wait a few days' };
     var SAY = {
-      stopped: 'A stopped job is worth a phone call. Send this, then call or text (775) 625-0062 so dispatch can start planning the truck now.',
+      stopped: 'Send this request, then call or text (775) 625-0062 as well, so dispatch can start planning the truck while your crew waits.',
       around: 'Dispatch schedules the visit around your work and confirms the arrival day when we call or text you back.',
       wait: 'Dispatch calls or texts you to set a day for the visit that suits the job.'
     };
@@ -2768,7 +2812,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
     var root = document.querySelector('[data-cap8]'); if (!root) return;
     var CAP = {
       lb: ['Portable boring bars machine worn, oval pin bores back to round at the jobsite, so the machine stays assembled where it stopped.', '/services/line-boring', 'See line boring'],
-      hyd: ['Leaking hoses, slow or drifting functions, and worn hydraulic cylinders are diagnosed and repaired where the machine is working.', '/services/hydraulic-services', 'See hydraulic services'],
+      hyd: ['Leaking hoses and slow or drifting functions are diagnosed and repaired where the machine is working, and worn cylinders are rebuilt in our Fernley shop.', '/services/hydraulic-services', 'See hydraulic services'],
       weld: ['Cracked booms, frames, and buckets are gouged out and rewelded in the field, and worn buckets are rebuilt with wear plate.', '/services/welding-fabrication', 'See welding & fabrication']
     };
     var chips = $$('[data-cap]', root), imgs = $$('[data-capimg]', root), cap = root.querySelector('[data-capcap]'), goA = root.querySelector('[data-capgo]'), goL = root.querySelector('[data-capgol]');
