@@ -1454,7 +1454,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
 })();
 
 /* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
-   The diamond beside a route opens that route's panel under the bar on click, never on hover, and one panel is open at a time.
+   The diamond beside a route opens that route's panel under the bar on click, and on a computer with a mouse, pointing at the route opens it too. One panel is open at a time.
    The same diamond, Escape, or a click outside closes it. Tab moves from an open diamond into its panel and from the panel's
    last link on to the next route. Durations and eases are the board's, and reduced motion sets them to 0. */
 (function () {
@@ -1522,8 +1522,33 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
     if (!R) g.fromTo(p.querySelectorAll('[data-mitem]'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.28, stagger: 0.04, delay: 0.08, ease: 'power2.out' });
   }
 
+  // Hover (Mike, 2026-10-28): on a computer with a mouse, resting the pointer on a route's name or diamond opens that route's panel,
+  // and pointing at another route switches panels. The panel closes 280 ms after the pointer leaves both the route and the panel, so
+  // the pointer can travel down into it. A click on the diamond keeps a hover-opened panel open. Phones and tablets keep the click.
+  var hoverable = window.matchMedia('(hover: hover) and (pointer: fine)'), byHover = false, inT = null, outT = null;
+  var clearT = function () { clearTimeout(inT); clearTimeout(outT); };
+  var leave = function () { clearT(); if (open && byHover) outT = setTimeout(function () { if (byHover) { byHover = false; close(false); } }, 280); };
   each(toggles, function (t) {
-    t.addEventListener('click', function (e) { e.stopPropagation(); show(t.getAttribute('data-mt')); });
+    var k = t.getAttribute('data-mt'), route = t.closest('.route') || t;
+    route.addEventListener('pointerenter', function (e) {
+      if (!hoverable.matches || e.pointerType !== 'mouse') return;
+      clearT();
+      if (open === k) return;
+      inT = setTimeout(function () { byHover = true; show(k); }, open ? 0 : 110);
+    });
+    route.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') leave(); });
+  });
+  each(host.querySelectorAll('.menu'), function (p) {
+    p.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') clearT(); });
+    p.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') leave(); });
+  });
+  each(toggles, function (t) {
+    t.addEventListener('click', function (e) {
+      e.stopPropagation(); clearT();
+      var k = t.getAttribute('data-mt');
+      if (open === k && byHover) { byHover = false; return; }
+      byHover = false; show(k);
+    });
     t.addEventListener('pointerenter', function () { var g = G(); if (g) g.to(t, { scale: 1.12, duration: D(0.18) }); });
     t.addEventListener('pointerleave', function () { var g = G(); if (g) g.to(t, { scale: 1, duration: D(0.18) }); });
   });
