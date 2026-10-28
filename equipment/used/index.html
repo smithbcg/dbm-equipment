@@ -53,6 +53,8 @@ img { display: block; max-width: 100%; }
 [id] { scroll-margin-top: var(--dbm-nav); }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
 .on-light button:focus-visible, .on-light a:focus-visible { outline-color: var(--steel); }
+/* The link rows under the header (Buy pages and service pages) sit on white or light gray, so their focus ring is Steel Gray, not Silver */
+.subnav a:focus-visible { outline-color: var(--steel); }
 @keyframes tread-march { to { background-position: 22.63px 0; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
