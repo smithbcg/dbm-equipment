@@ -491,7 +491,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 /* Section 1: the existing full-width photo hero, board C07 H3 Full Bleed without route cards, with the C07 fact strip */
 .hero-fb { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: clamp(580px, calc(100vh - 160px), 790px); background: #1A1A1A; overflow: hidden; color: #FFFFFF; }
 .hero-fb .fb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
-.hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(0deg, #1A1A1A 0%, rgba(26,26,26,0.95) 32%, rgba(26,26,26,0.74) 50%, rgba(26,26,26,0.2) 70%, rgba(26,26,26,0) 82%, rgba(26,26,26,0.3) 100%), linear-gradient(90deg, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0) 62%); }
+.hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(0deg, #1A1A1A 0%, rgba(26,26,26,0.95) 32%, rgba(26,26,26,0.74) 50%, rgba(26,26,26,0.2) 70%, rgba(26,26,26,0) 82%, rgba(26,26,26,0.3) 100%), linear-gradient(90deg, rgba(26,26,26,0.72) 0%, rgba(26,26,26,0.4) 42%, rgba(26,26,26,0) 70%); }
 .hero-fb .fb-copy { position: relative; width: min(100%, calc(1256px + 2 * var(--pad-x))); max-width: none; margin: 0 auto; padding: 0 var(--pad-x) clamp(34px, 4vw, 52px); display: flex; flex-direction: column; gap: 16px; }
 .hero-fb .eyebrow { color: #F4703F; }
 .hero-fb h1 { margin: 0; max-width: 22ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(34px, 4.3vw, 62px); line-height: 1; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
@@ -519,7 +519,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .covread { position: relative; margin-top: 26px; padding: 22px 24px 24px 28px; background: #1C1E21; box-shadow: inset 0 0 0 1px #2E3135; min-height: 176px; }
 .covread::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016; }
 .covread [data-covtxt][hidden] { display: none; }
-.covread .ct { display: block; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; line-height: 1.2; }
+.covread .ct { display: block; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; line-height: 1.2; text-wrap: balance; }
 .covread p { margin: 10px 0 0; color: #C7C9CC; font-size: 16px; line-height: 1.6; text-wrap: pretty; }
 .covmap { position: relative; aspect-ratio: 700 / 730; background: #0F1012; box-shadow: inset 0 0 0 1px #2A2C30; overflow: hidden; }
 .covmap svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -834,7 +834,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
 @media (max-width: 1100px) {
   .s2grid { grid-template-columns: minmax(0, 1fr); }
   .intake { grid-template-columns: minmax(0, 1fr); }
-  .record { position: relative; top: auto; }
+  .record { display: none; } /* stacked under the form, the live record repeats the form; the receipt still lists every detail sent */
   .crew { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .crew li:nth-child(3) { padding-left: 0; box-shadow: inset 0 1px 0 #E1E3E6; }
   .crew li:nth-child(4) { box-shadow: inset 1px 0 0 #E1E3E6, inset 0 1px 0 #E1E3E6; }
@@ -842,7 +842,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
 @media (max-width: 960px) {
   .covgrid { display: flex; flex-direction: column; gap: 0; }
   .covgrid > div:first-child { display: contents; }
-  .covgrid .shead { order: 1; } .cov .lead { order: 2; } .covright { order: 3; margin-bottom: 24px; } .cov .chips { order: 4; } .covread { order: 5; }
+  .covgrid .shead { order: 1; } .cov .lead { order: 2; } .cov .chips { order: 3; margin-bottom: 16px; } .covright { order: 4; } .covread { order: 5; } /* the chips sit right above the map they zoom */
   .headrow, .stmt, .faqgrid, .covgrid, .tri, .eta, .xpl-in, .cap8 { grid-template-columns: minmax(0, 1fr); }
   .faqgrid .left { position: static; }
   .tri .tq { border-right: 0; border-bottom: 1px solid #2A2A2A; }
@@ -859,14 +859,15 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
   .hero-fb { min-height: 0; }
   .hero-fb .fb-copy { padding-top: 150px; }
   .hero-fb .fb-img { object-position: 30% 50%; height: 62%; }
-  .hero-fb .fb-scrim { background: linear-gradient(0deg, #1A1A1A 0%, #1A1A1A 44%, rgba(26,26,26,0.6) 58%, rgba(26,26,26,0) 72%); }
+  .hero-fb .fb-scrim { background: linear-gradient(0deg, #1A1A1A 0%, #1A1A1A 50%, rgba(26,26,26,0.86) 62%, rgba(26,26,26,0.3) 74%, rgba(26,26,26,0) 82%); }
   .hero-fb .acts .ch-btn, .hero-fb .acts .kb, .hero-fb .acts .kb [data-kplate] { width: 100%; }
   .hero-fb .facts { gap: 12px 16px; }
   .hero-fb .facts dd { font-size: 14px; }
   .ch-btn { justify-content: center; padding: 18px 20px; letter-spacing: 0.16em; width: 100%; }
   .cov { padding-top: 56px; padding-bottom: 56px; }
   .covread { padding: 18px 18px 20px 22px; min-height: 0; }
-  .cov .chips .mono-btn { flex: 1 1 auto; font-size: 10.5px; letter-spacing: 0.1em; padding: 11px 12px; }
+  .cov .chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .cov .chips .mono-btn { font-size: 10px; letter-spacing: 0.08em; padding: 10px 8px; line-height: 1.35; }
   .hero-fb h1 { font-size: 30px; line-height: 1.04; }
   .tri .tq { padding: 30px 20px 26px; }
   .tri .tout { padding: 30px 20px 26px; min-height: 0; }
@@ -1460,7 +1461,7 @@ body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.s
       <div class="p2d">
         <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
         <a class="w2d" href="#request" data-rental><span class="win"><img src="../../assets/8e5e3e10377ac700.jpg" alt="A blue tractor pulling a lowboy trailer that carries a yellow wheel loader across a gravel lot under storm clouds" loading="lazy"></span><span class="cap"><span class="ct">Add a Rental to Your Request</span><span class="cd">Tick the rental box in the request above and say what work has to continue and for how long, and we plan the repair and the rental together.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
-        <a class="w2d" href="../../rentals/"><span class="win"><img src="../../assets/91e6a6b2ae3e1f8e.jpg" alt="Two crane service trucks with their cranes raised on both sides of a yellow articulated haul truck with its dump body raised" loading="lazy"></span><span class="cap"><span class="ct">See the Rental Fleet</span><span class="cd">If a machine you rent from us breaks down and we can’t fix it the same day, we take those days off your rent.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
+        <a class="w2d" href="../../rentals/"><span class="win"><img src="../../assets/7ce7c67e420ba9ca.jpg" alt="A yellow XCMG articulated haul truck parked in front of a row of yellow XCMG excavators on a dirt yard" loading="lazy" style="object-position: 50% 52%"></span><span class="cap"><span class="ct">See the Rental Fleet</span><span class="cd">If a machine you rent from us breaks down and we can’t fix it the same day, we take those days off your rent.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
       </div>
     </div>
   </section>

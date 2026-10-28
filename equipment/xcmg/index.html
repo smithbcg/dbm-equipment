@@ -582,6 +582,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .fin-ban { position: relative; background: #CDC4AF; box-shadow: inset 0 0 0 1px #8C8470; padding: 40px 44px 40px 50px; display: flex; justify-content: space-between; align-items: center; gap: 44px; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.2)) drop-shadow(0 3px 5px rgba(26,26,26,0.16)); }
 .fin-ban::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #1A1A1A; }
 .fb-copy { min-width: 0; }
+.fin-ban .fb-copy > h2:first-child { margin-top: 0; }
 .fb-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .fb-top .fk { color: #1A1A1A; font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; }
 .fb-top .fs { color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; }
@@ -905,7 +906,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
 
   
   <nav class="subnav" aria-label="Buy equipment">
-    <ul class="wrap"><li><a href="../../equipment/">Buying overview</a></li><li><a href="../../equipment/new/">New XCMG models</a></li><li><a href="../../equipment/used/">Used machines</a></li><li><a href="../../equipment/xcmg/" aria-current="page">Why XCMG from DBM</a></li><li><a href="../../we-buy-equipment/">Sell or trade in</a></li></ul>
+    <ul class="wrap"><li><a href="../../equipment/">All equipment</a></li><li><a href="../../equipment/new/">New XCMG equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../equipment/xcmg/" aria-current="page">XCMG at DBM</a></li><li><a href="../../we-buy-equipment/">Sell or trade in</a></li></ul>
   </nav>
 
   
@@ -930,7 +931,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
     <div class="wrap">
       <div class="headrow">
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="classes-title">Which XCMG Machine Class Fits the Job?</h2></div>
-        <p class="slede">XCMG sells six classes of earthmoving machines in the US. Each card opens that class in our list of new XCMG models, and the text on each card names what our sales team needs to know about your work to recommend a model and confirm its setup and availability.</p>
+        <p class="slede">XCMG sells six classes of earthmoving machines in the US. Each card opens that class in our list of new XCMG models and names the details our sales team needs, such as trench depth, gate width, lift thickness, or haul distance, to recommend a model and confirm its setup and availability.</p>
       </div>
       <div class="fleet-grid">
         <a class="fleet" href="../../equipment/new/#class-exc">
@@ -1047,7 +1048,6 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-fb [data-assume]
     <div class="wrap">
       <div class="fin-ban">
         <div class="fb-copy">
-          <div class="fb-top"><span class="fk">FINANCE</span><span class="fs">NEW XCMG MACHINES · THROUGH QUICKFI, XCMG’S LENDER</span></div>
           <h2 id="finance-title">0% financing available on approved credit</h2>
           <p>QuickFi, XCMG’s lender, finances new XCMG machines and the attachments bought with them. The Apply for XCMG Financing button opens QuickFi’s XCMG credit application in a new tab. QuickFi reviews it and confirms your rate and terms.</p>
           <p class="fb-fine">Financing a used machine or another brand starts with a call to <span style="white-space: nowrap;">(775) 625-0062</span> or an inquiry, and someone from DBM reaches out to you.</p>

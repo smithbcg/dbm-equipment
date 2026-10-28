@@ -483,16 +483,16 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 .hero-fb .fb-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
 .hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, #1A1A1A 0%, #1A1A1A 24%, rgba(26,26,26,0.9) 40%, rgba(26,26,26,0.5) 58%, rgba(26,26,26,0.12) 78%, rgba(26,26,26,0) 100%), linear-gradient(0deg, rgba(26,26,26,0.75) 0%, rgba(26,26,26,0) 30%); }
 .hero-fb .fb-copy { position: relative; padding: 0 var(--pad-x); }
-.hero-fb .fb-col { max-width: 700px; padding: clamp(40px, 4.4vw, 60px) 0 clamp(32px, 3.6vw, 46px); display: flex; flex-direction: column; gap: 16px; }
+.hero-fb .fb-col { max-width: 700px; padding: clamp(30px, 3vw, 44px) 0 clamp(24px, 2vw, 28px); display: flex; flex-direction: column; gap: 12px; }
 .hero-fb .eyebrow { color: #F4703F; }
 .hero-fb h1 { margin: 0; max-width: 15ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 48px); line-height: 1.02; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
-.hero-fb .lede { margin: 0; color: #E4E4E4; font-size: 17px; line-height: 1.6; text-wrap: pretty; }
-.qual { background: rgba(20,20,20,0.92); box-shadow: inset 0 0 0 1px #3A3D42; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.hero-fb .lede { margin: 0; color: #E4E4E4; font-size: 17px; line-height: 1.55; text-wrap: pretty; }
+.qual { background: rgba(20,20,20,0.92); box-shadow: inset 0 0 0 1px #3A3D42; padding: 15px 20px; display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
 .qual .q { color: #FFFFFF; font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
 .qual .qrow { display: flex; gap: 10px; flex-wrap: wrap; }
 .qual [data-qsay] { margin: 0; color: #C7C9CC; font-size: 14px; line-height: 1.55; min-height: 22px; text-wrap: pretty; }
 .hero-fb .acts { margin-top: 4px; }
-.hero-fb .facts { margin: 6px 0 0; }
+.hero-fb .facts { margin: 0; }
 .hero-fb .facts div { border-top-color: #3A3D42; }
 .hero-fb .facts dd { font-size: 14.5px; }
 .hero-kerf { position: relative; display: block; width: 100%; height: 3px; }
@@ -791,7 +791,8 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
   .hx-rail button { font-size: 11px; letter-spacing: 0.08em; padding: 13px 4px; }
   .xpics { aspect-ratio: 1 / 1; }
   .hx.is-cyl .xpics { aspect-ratio: 680 / 740; }
-  .xpanel.draw .ln { font-size: 31px; }
+  .xpanel.draw .ln { font-size: 29px; transform: translateX(22px); }
+  .hx.is-cyl .xpin { width: 28px; height: 28px; margin: -14px 0 0 -14px; font-size: 13px; }
   .xpanel.draw .ls { display: none; }
   .xpanel.draw .mhide { display: none; }
   .xpanel.draw { background-color: #F2F3F4; background-image: linear-gradient(#E3E5E8 1px, transparent 1px), linear-gradient(90deg, #E3E5E8 1px, transparent 1px); background-size: 30px 30px; background-position: center; }
@@ -800,6 +801,9 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
   .plate1b .pb { padding-left: 22px; padding-right: 22px; }
   .plate1b .strip { padding-left: 34px; padding-right: 34px; }
   .fields1b div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .tw { position: static; }
+  .fields1b dd { position: relative; }
+  .tw [data-tip] { left: 0; right: 0; width: auto; max-width: none; }
   .reply .pact .kb, .reply .pact .kb [data-kplate] { width: 100%; }
   .fgrid2, .slotrow { grid-template-columns: minmax(0, 1fr); }
   .locrow { flex-direction: column; }
@@ -922,7 +926,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
     <div class="fb-copy">
       <div class="wrap">
         <div class="fb-col">
-          <div class="eyebrow">Heavy Equipment Service · Field &amp; Shop Hydraulics</div>
+          <div class="eyebrow">Specialty Service · Field &amp; Shop Hydraulics</div>
           <h1 id="page-title">Hydraulic Repair &amp; Cylinder Rebuilds Across Nevada</h1>
           <p class="lede">Our field service trucks carry <span>bulk hydraulic hose, a crimper, and pressure test gauges</span> to the machine where it stopped, so the technician can follow a leak or a weak boom back to the hose, valve, pump, or seal that failed and replace it on site. Cylinders that need a full rebuild come into <span>our Fernley shop to be resealed and pressure tested</span>.</p>
           <div class="qual" data-qual>
@@ -966,7 +970,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
     <div class="wrap">
       <div class="headrow">
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s1-title">Hydraulic System Repair &amp; Cylinder Rebuilds</h2></div>
-        <p class="slede">Most hydraulic jobs are one of two kinds. A system repair happens on the machine, where the technician follows the fault from the pump through the control valve, the steel lines, and the hoses until the failed part turns up. A cylinder rebuild takes a leaking or drifting cylinder off the machine so it can be taken apart and resealed on a bench. Point at a number to see what the technician checks at that spot.</p>
+        <p class="slede">A system repair happens on the machine, where the technician follows the fault from the pump through the control valve, the steel lines, and the hoses until the failed part turns up. A cylinder rebuild takes a leaking or drifting cylinder off the machine, so it can be taken apart, measured, and resealed on a bench <span>in our Fernley shop</span>. Tap a number on the photo or the drawing to see what the technician checks at that spot.</p>
       </div>
       <div class="hx" data-hx>
         <div class="hx-rail" role="group" aria-label="Choose the hydraulic job">
@@ -1082,7 +1086,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
     <div class="wrap">
       <div class="headrow">
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s2-title">Which Hydraulic Symptom Is the Machine Showing?</h2></div>
-        <p class="slede">Pick what you can see from the seat or the ground. The plate then shows the part that usually causes it, the first test the technician runs, the details to send us, and whether the machine can keep working until the truck arrives. You do not need to name the failed part, because the technician finds it before the repair is priced.</p>
+        <p class="slede">Choose what you can see from the seat or the ground, and the panel beside the list shows the part that usually causes it, the first test the technician runs, the details to send us, and whether the machine can keep working until the truck arrives. You do not need to name the failed part, because the technician finds it before the repair is priced.</p>
       </div>
       <div class="symgrid">
         <div class="rcards" role="radiogroup" aria-label="What are you seeing?">
@@ -1318,8 +1322,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
         <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s5-title">Keep the Job Running While the Machine Is Repaired</h2></div>
         <p>A pump that waits on parts or a cylinder that comes into our shop for a rebuild can keep a machine off the job for days. Tell us in the same request, and we plan the repair and a rental machine together, so a matching excavator or loader works your site until yours comes back.</p>
         <ul class="ticks">
-          <li>Rentals run by the month, and some large machines have a three-month minimum.</li>
-          <li>We rent to contractors.</li>
+          <li>We rent to contractors by the month, and some large machines carry a three-month minimum.</li>
           <li>Our rental team quotes the rental on the same call back as the repair, so you approve both at once.</li>
         </ul>
       </div>
@@ -1329,7 +1332,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume
           <span class="ltxt">
             <span class="lmeta"><b>RENTAL · DURING A REPAIR</b><span>FERNLEY, NV</span></span>
             <span data-platetitle>A Rental Machine on Your Site</span>
-            <span class="ldesc">Press this card to tick the rental box on the request form, and our rental team includes a matching machine in the call back about the repair.</span>
+            <span class="ldesc">Tap this card to tick the rental box on the request form, so our rental team prices a matching machine in the same call back as the repair.</span>
             <span class="lbtn"><span class="lkey" aria-hidden="true"><span class="lb"></span><span class="lf">Add a Rental to the Request<svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span>
           </span>
           <span class="tread" aria-hidden="true"><span data-treadpads></span><span class="tshade"></span><span data-treadrail></span><span class="tfoot"></span></span>
