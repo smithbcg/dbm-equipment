@@ -6,6 +6,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../assets/bc77390d9895822a.svg">
 <title>Rent Heavy Equipment in Nevada · DBM Heavy Equipment</title>
 <script>document.documentElement.classList.add('js');</script>
 <style>
@@ -74,8 +75,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
 .nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
-@media (min-width: 1240px) { .navbar { flex-wrap: nowrap; } .nav nav { flex-wrap: nowrap; } }
-@media (max-width: 1239px) {
+/* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
+@media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
+@media (max-width: 1359px) {
   .navbar { row-gap: 10px; }
   .nav nav { order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 2px 0; -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); }
   .nav nav::-webkit-scrollbar { display: none; }
@@ -249,6 +251,69 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .call-plate { position: relative; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); overflow: hidden; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.32)) drop-shadow(0 3px 5px rgba(26,26,26,0.26)); }
 .call-plate .rv.bl, .call-plate .rv.br { bottom: 17px; }
 .call-in { padding: 54px clamp(24px, 4.5vw, 58px) 46px; display: flex; flex-direction: column; gap: 30px; }
+/* NAV-05 route menus: start (board C08 NAV-05, ported 2026-10-28; the same block is copied into the Home page) */
+.nav nav .route { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.nav .mt { appearance: none; border: 0; background: transparent; cursor: pointer; width: 24px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; flex: none; transition: transform .18s ease; }
+.nav .mt:focus-visible { outline-offset: -4px; }
+.nav .diam { display: block; width: 9px; height: 9px; background: var(--dim); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transition: transform .3s cubic-bezier(.34,1.56,.64,1), background-color .24s ease; }
+.nav .mt[aria-expanded="true"] .diam { transform: rotate(180deg); background: var(--orange); }
+html:not(.gsap-on) .nav .mt:hover { transform: scale(1.12); }
+.gsap-on .nav .diam { transition: none; }
+.menus { position: absolute; left: 0; right: 0; top: 100%; }
+.menu { position: relative; background: var(--charcoal); box-shadow: 0 18px 30px rgba(0,0,0,0.35); overflow: hidden; overscroll-behavior: contain; view-transition-name: dbm-menu; }
+.menu[hidden] { display: none; }
+.menu.is-open { overflow-y: auto; }
+.mkerf { display: block; width: 100%; height: 2px; }
+.menu-in { max-width: calc(1256px + 2 * var(--pad-x)); margin: 0 auto; padding: 24px var(--pad-x) 28px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: 34px; }
+.mcol { display: flex; flex-direction: column; min-width: 0; }
+.menu .mh { margin: 0; color: var(--orange-hover); font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; line-height: 1.5; text-transform: uppercase; }
+.mrows, .mreads { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; }
+.mreads { gap: 10px; }
+.mrow { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 14px 12px 16px; min-height: 56px; text-decoration: none; border-bottom: 1px solid #2A2A2A; }
+.medge { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--orange); transform: scaleY(0); transform-origin: top center; }
+.mtext { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mtitle { display: inline-block; align-self: flex-start; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; line-height: 1.3; }
+.msub { color: #9A9A9A; font-size: 13px; line-height: 1.45; }
+.marr { width: 22px; height: 10px; flex: none; color: var(--orange-hover); }
+.mrow[aria-current] .medge { transform: scaleY(1); }
+.mrow[aria-current] .mtitle { color: var(--orange-hover); }
+.mread { display: block; color: var(--silver); font-size: 14px; line-height: 1.5; padding: 6px 0; border-bottom: 1px solid #2A2A2A; text-decoration: none; transition: color .2s ease; }
+.mread:hover, .mread:focus-visible, .mread[aria-current] { color: #FFFFFF; }
+.mreach { align-self: start; display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); }
+.menu .mreach .mh { color: var(--silver); }
+.mreach p:last-child { margin: 0; color: #E4E4E4; font-size: 14px; line-height: 1.6; }
+.menu a:focus-visible { outline-offset: -2px; }
+html:not(.gsap-on) .medge, html:not(.gsap-on) .marr, html:not(.gsap-on) .mtitle { transition: transform .26s ease, color .24s ease; }
+html:not(.gsap-on) .mrow:hover .medge, html:not(.gsap-on) .mrow:focus-visible .medge { transform: scaleY(1); }
+html:not(.gsap-on) .mrow:hover .marr, html:not(.gsap-on) .mrow:focus-visible .marr { transform: translateX(6px); }
+html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .mtitle { transform: translateX(6px); color: var(--orange-hover); }
+@media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
+
+/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
+   Reduced motion: the transition is not switched on, so pages change at once. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+.nav { view-transition-name: dbm-header; }
+.callbar { view-transition-name: dbm-callbar; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
+::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; }
+::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
+::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
+@keyframes dbm-page-out { to { opacity: 0; } }
+@keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+/* NAV-05 route menus: end */
+
+/* Buy pages only (the four pages whose link row is labeled "Buy equipment"): that row of links to each other sits directly under
+   the header and stays there while the page scrolls, so it is in the same place on each Buy page and does not move when the visitor
+   changes page. The service pages' link rows are not affected. */
+main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction: column; }
+main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
+@media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -360,6 +425,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   .formact .btn-orange .cf { padding: 16px 14px; letter-spacing: 0.16em; }
   .btn-orange .lbl { white-space: normal; text-align: center; }
 }
+
+/* Footer address lines (shared footer) */
+.foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
 </style>
 <style>
 /* Rentals page (2026-10-28): Mike's Rentals design, converted section by section from its template. Its own styles follow. */
@@ -594,16 +662,88 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   <div class="wrap navbar">
     <a href="../" class="brand" aria-label="DBM Heavy Equipment, home"><img src="../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment"></a>
     <nav aria-label="Main">
-      <a href="../rentals/" aria-current="true">Rent</a>
-      <a href="../equipment/">Buy</a>
-      <a href="../services/">Service &amp; Parts</a>
-      <a href="../we-buy-equipment/">Sell &amp; Trade</a>
+      <span class="route"><a href="../rentals/" aria-current="true">Rent</a><button type="button" class="mt" data-mt="rent" aria-expanded="false" aria-controls="menu-rent" aria-label="Rent menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../equipment/">Buy</a><button type="button" class="mt" data-mt="buy" aria-expanded="false" aria-controls="menu-buy" aria-label="Buy menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../services/">Service &amp; Parts</a><button type="button" class="mt" data-mt="service" aria-expanded="false" aria-controls="menu-service" aria-label="Service and Parts menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../we-buy-equipment/">Sell &amp; Trade</a><button type="button" class="mt" data-mt="sell" aria-expanded="false" aria-controls="menu-sell" aria-label="Sell and Trade menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
       <a href="../finance/">Finance</a>
       <a href="../about/">About</a>
     </nav>
     <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
   </div>
+  
+  <div class="menus" data-menuhost>
+    <div class="menu" id="menu-rent" data-menu="rent" role="region" aria-label="Rent menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../rentals/#fleet" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Browse the rental fleet</span><span class="msub">Excavators, wheel loaders, motor graders, haul trucks, and compaction machines, grouped by the work they do.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../rentals/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a rental</span><span class="msub">Send the machine, the jobsite, and the start date, and our rental team calls or texts back with the monthly rate and delivery date.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../finance/#rpo" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Buy the machine you rent</span><span class="msub">Under our rental purchase option, part of the rent you pay goes toward the price when you buy within six months.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../industries/construction-earthmoving/" data-mitem>Machines for construction and earthmoving</a></li>
+          <li><a class="mread" href="../industries/utility-pipeline/" data-mitem>Machines for utility and pipeline work</a></li>
+          <li><a class="mread" href="../faqs/#t-rentals" data-mitem>Answers to common rental questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We rent to contractors, mostly by the month, and deliver to jobsites anywhere in Nevada and in the California counties near the state line. Large machines such as mining haul trucks carry a three-month minimum.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-buy" data-menu="buy" role="region" aria-label="Buy menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../equipment/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>All equipment</span><span class="msub">New XCMG machines and used machines of any make, sorted by machine class.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../finance/#how" data-mitem>How financing works for new and used machines</a></li>
+          <li><a class="mread" href="../equipment/sas-luxembourg/" data-mitem>SAS forks and attachments</a></li>
+          <li><a class="mread" href="../industries/excavation/" data-mitem>Machines for excavation</a></li>
+          <li><a class="mread" href="../industries/auto-scrap-recycling/" data-mitem>Machines for auto and scrap recycling</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We sell new XCMG machines in Nevada and the nearby California counties, and we sell used machines anywhere in the US. QuickFi, XCMG’s lender, finances new XCMG machines, and buyers of used machines call us about financing.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-service" data-menu="service" role="region" aria-label="Service and Parts menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
+          <li><a class="mread" href="../case-studies/" data-mitem>All case studies</a></li>
+          <li><a class="mread" href="../blog/" data-mitem>Job stories and guides</a></li>
+          <li><a class="mread" href="../services/#questions" data-mitem>Answers to common service and parts questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>Our service trucks repair machines of any make anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. Parts ship to any address in the US.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-sell" data-menu="sell" role="region" aria-label="Sell and Trade menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../we-buy-equipment/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Sell your machine</span><span class="msub">Send the make, model, serial number, hours, and a few photos, and our sales team replies with an offer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../we-buy-equipment/#start" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Trade toward another machine</span><span class="msub">We price your trade and the new XCMG or used machine you want together.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../we-buy-equipment/#details" data-mitem>What to tell us about the machine</a></li>
+          <li><a class="mread" href="../we-buy-equipment/#next" data-mitem>What happens after you send it</a></li>
+          <li><a class="mread" href="../equipment/used/" data-mitem>Used equipment for sale</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We buy used equipment of any make. Sending your details does not commit you to selling or trading the machine.</p></div>
+      </div>
+    </div>
+  </div>
 </header>
+
 
 <main>
 <div data-screen-label="Hero" class="hero-fb" style="position: relative; background: #1A1A1A; overflow: hidden;">
@@ -611,16 +751,16 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(96deg, #1A1A1A 0%, rgba(26,26,26,0.92) 40%, rgba(26,26,26,0.6) 62%, rgba(140,48,9,0.28) 84%, rgba(239,80,22,0.16) 100%);"></div>
     <div style="position: relative; max-width: 1256px; margin: 0 auto; padding: clamp(24px, 3.1vw, 46px) clamp(20px, 5vw, 48px) clamp(26px, 3.7vw, 56px);">
       <div style="position: relative; max-width: 760px; display: flex; flex-direction: column;">
-        <h1 style="margin: 10px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(30px, 3.9vw, 46px); line-height: 1; letter-spacing: 0.005em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Rent a machine</h1>
-        <p style="margin: 14px 0 0; max-width: 60ch; color: #C7C9CC; font-size: 15px; line-height: 1.55; text-wrap: pretty;">We rent excavators, dozers, loaders, graders and compact machines to contractors, mostly by the month, and deliver them to your site.</p>
+        <h1 style="margin: 10px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(30px, 3.9vw, 46px); line-height: 1; letter-spacing: 0.005em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Monthly Heavy Equipment Rentals for Nevada Contractors</h1>
+        <p style="margin: 14px 0 0; max-width: 60ch; color: #C7C9CC; font-size: 15px; line-height: 1.55; text-wrap: pretty;">DBM rents excavators, dozers, wheel loaders, motor graders, articulated haul trucks, and compaction equipment to contractors and commercial operators by the month, delivers each machine to your jobsite in Nevada or nearby California, and sends a field technician to the jobsite if the machine breaks down while it is on rent.</p>
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 21px;">
-          <a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l" data-label>Request a rental</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
-          <a class="kb" href="#fleet" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">See the fleet</span></span></a>
+          <a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l" data-label>Send a Rental Request</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+          <a class="kb" href="#fleet" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">See the Rental Fleet</span></span></a>
         </div>
         <div data-trustrow style="display: flex; flex-wrap: nowrap; gap: 28px; margin-top: 22px; padding-top: 20px; box-shadow: inset 0 1px 0 #33373C; overflow: hidden;">
-          <span style="display: flex; align-items: center; gap: 12px; white-space: nowrap;"><img src="../assets/152a49a6af44629e.svg" alt="" style="width: 30px; height: 30px; display: block; flex: none;"><span style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #C7C9CC;">Delivery and pickup</span></span>
-          <span data-trust2="1" style="display: flex; align-items: center; gap: 12px; white-space: nowrap;"><img src="../assets/1dbf0f97b19a6ba2.svg" alt="" style="width: 30px; height: 30px; display: block; flex: none;"><span style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #C7C9CC;">11 technicians on staff</span></span>
-          <span data-trust3="1" style="display: flex; align-items: center; gap: 12px; white-space: nowrap;"><img src="../assets/5cbb766141ff720e.svg" alt="" style="width: 30px; height: 30px; display: block; flex: none;"><span style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #C7C9CC;">Nevada and nearby California</span></span>
+          <span style="display: flex; align-items: center; gap: 12px; white-space: nowrap;"><img src="../assets/152a49a6af44629e.svg" alt="" style="width: 30px; height: 30px; display: block; flex: none;"><span style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #C7C9CC;">Delivery &amp; pickup</span></span>
+          <span data-trust2="1" style="display: flex; align-items: center; gap: 12px; white-space: nowrap;"><img src="../assets/1dbf0f97b19a6ba2.svg" alt="" style="width: 30px; height: 30px; display: block; flex: none;"><span style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #C7C9CC;">11 service technicians</span></span>
+          <span data-trust3="1" style="display: flex; align-items: center; gap: 12px; white-space: nowrap;"><img src="../assets/5cbb766141ff720e.svg" alt="" style="width: 30px; height: 30px; display: block; flex: none;"><span style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #C7C9CC;">Nevada &amp; nearby California</span></span>
         </div>
       </div>
     </div>
@@ -632,8 +772,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
         <div style="position: relative; padding-top: 26px; max-width: 680px;">
           <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
-          <h2 style="margin: 8px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: 0.002em; line-height: 1.06; color: #1A1A1A;">Start a rental request</h2>
-          <p style="margin: 12px 0 0; max-width: 62ch; color: #4B4F56; font-size: 15px; line-height: 1.6; text-wrap: pretty;">Tell us the machine you need, where the job is and when you need it, and someone on our rental team will call you back to set up the rental.</p>
+          <h2 style="margin: 8px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: 0.002em; line-height: 1.06; color: #1A1A1A;">Rental Requests &amp; Machine Availability</h2>
+          <p style="margin: 12px 0 0; max-width: 62ch; color: #4B4F56; font-size: 15px; line-height: 1.6; text-wrap: pretty;">Send the machine you need, the jobsite location, and the start date, and our rental team checks that machine against our own fleet and our partners’ fleets, then calls or texts you back with availability, the monthly rate, and the delivery date.</p>
         </div>
         <span style="position: relative; display: inline-block; padding: 0 0 5px 0; filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));">
           <a class="phone-plate rent-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call or text DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call or text</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
@@ -647,7 +787,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
           <div style="display: flex; border-bottom: 1px solid #E9EAEC;">
             <div data-st="0" style="flex: 1; display: flex; align-items: center; gap: 12px; padding: 17px 18px; box-shadow: inset 0 -3px 0 #EF5016;">
               <img src="../assets/23bcb07debcf4a9f.svg" alt="" style="flex: none; width: 28px; height: 28px; display: block;">
-              <span data-slab="1" style="color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;">Your rental request</span>
+              <span data-slab="1" style="color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;">Machine, jobsite &amp; start date</span>
             </div>
           </div>
 
@@ -655,22 +795,22 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <div data-panel="0" style="padding: 26px clamp(20px, 3vw, 30px) 24px; display: flex; flex-direction: column; gap: 20px;">
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 18px;">
                 <div style="display: flex; flex-direction: column; gap: 9px;">
-                  <label for="rf-name" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Name</label>
+                  <label for="rf-name" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Name &amp; company</label>
                   <div style="position: relative;">
-                    <input id="rf-name" data-fi="1" data-slot="name" data-rf="name" type="text" placeholder="Ray Delgado" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
+                    <input id="rf-name" data-fi="1" data-slot="name" data-rf="name" type="text" placeholder="Ray Delgado, Delgado Grading" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
                     <span data-kerf="1" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);"></span>
                   </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 9px;">
-                  <label for="rf-phone" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Phone</label>
+                  <label for="rf-phone" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Phone for a call or text</label>
                   <div style="position: relative;">
-                    <input id="rf-phone" data-fi="1" data-slot="phone" data-rf="phone" type="tel" placeholder="The best number to reach you" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
+                    <input id="rf-phone" data-fi="1" data-slot="phone" data-rf="phone" type="tel" placeholder="The number our rental team should call or text" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
                     <span data-kerf="1" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);"></span>
                   </div>
                 </div>
               </div>
               <div style="display: flex; flex-direction: column; gap: 9px;">
-                <label for="rf-need" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">What do you need?</label>
+                <label for="rf-need" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Machine, size &amp; attachments</label>
                 <div style="position: relative;">
                   <textarea id="rf-need" data-fi="1" data-ta="1" data-slot="need" data-rf="need" rows="3" placeholder="22-ton excavator with an 18-inch bucket for trenching a sewer lateral" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); line-height: 26px; resize: none; overflow: hidden; display: block; min-height: 108px;"></textarea>
                   <span data-kerf="1" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);"></span>
@@ -678,14 +818,14 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
               </div>
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 18px;">
                 <div style="display: flex; flex-direction: column; gap: 9px;">
-                  <label for="rf-where" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Where is the job?</label>
+                  <label for="rf-where" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Jobsite location</label>
                   <div style="position: relative;">
                     <input id="rf-where" data-fi="1" data-slot="where" data-rf="where" type="text" placeholder="Silver Springs, NV" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
                     <span data-kerf="1" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);"></span>
                   </div>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 9px;">
-                  <label for="rf-when" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">When do you need it?</label>
+                  <label for="rf-when" style="display: block; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Start date &amp; rental length</label>
                   <div style="position: relative;">
                     <input id="rf-when" data-fi="1" data-slot="when" data-rf="when" type="text" placeholder="Starting the 14th, about two months" style="width: 100%; box-sizing: border-box; background: #FFFFFF; border: 0; box-shadow: inset 0 0 0 1.5px #B9BCC1; padding: 15px 16px; min-height: 52px; font-size: 15px; color: #1A1A1A; outline: none; transition: box-shadow 0.2s ease; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
                     <span data-kerf="1" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);"></span>
@@ -694,14 +834,14 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
               </div>
 
               <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid #E9EAEC;">
-                <span data-navsay="1" style="color: #4B4F56; font-size: 12.5px; line-height: 1.6;">Every field is optional. If you’re not sure which machine fits, describe the job and we’ll suggest one.</span>
+                <span data-navsay="1" style="color: #4B4F56; font-size: 12.5px; line-height: 1.6;">Every field is optional. If you are not sure which machine class fits, describe the work, the material, and the site access, and our rental team recommends a machine and attachments when we call you back.</span>
                 <span data-formacts style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
                   <a href="sms:+17756250062" data-mono="1" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease, transform 0.09s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));" class="rx4">
                     <span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
                     <span data-c="br" aria-hidden="true" style="position: absolute; bottom: 0; right: 0; width: 13px; height: 13px; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform: scale(0); transform-origin: bottom right; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
-                    <span style="position: relative;">Text us</span>
+                    <span style="position: relative;">Text the details</span>
                   </a>
-                  <button class="ch-btn" type="button" data-action="send" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l" data-label>Send request</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></button>
+                  <button class="ch-btn" type="button" data-action="send" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l" data-label>Send Rental Request</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></button>
                 </span>
               </div>
             </div>
@@ -709,13 +849,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 
           <div data-state="done" hidden>
             <div style="padding: clamp(28px, 4vw, 42px); display: flex; flex-direction: column; align-items: flex-start;">
-              <span style="font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Request sent</span>
-              <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.65; color: #4B4F56; max-width: 56ch; text-wrap: pretty;">Someone on our rental team will call you back about your rental. If you need a machine sooner than that, call or text us.</p>
+              <span style="font-family: 'Sora', sans-serif; font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Rental request received</span>
+              <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.65; color: #4B4F56; max-width: 56ch; text-wrap: pretty;">Our rental team checks the machine against our own fleet and our partners’ fleets and calls or texts you back with availability, the monthly rate, and the delivery date. <span>If this is your first rental with DBM, we also send our credit application, and after our office reviews it, we either set up a credit line for your rentals or ask for a credit card to secure the rental.</span> If the machine has to be on your jobsite sooner, call or text <span style="white-space: nowrap;">(775) 625-0062</span> now.</p>
               <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 26px;">
                 <a href="tel:+17756250062" data-mono="1" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease, transform 0.09s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"><span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
                     <span data-c="br" aria-hidden="true" style="position: absolute; bottom: 0; right: 0; width: 13px; height: 13px; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform: scale(0); transform-origin: bottom right; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span><span style="position: relative;">Call (775) 625-0062</span></a>
                 <a href="sms:+17756250062" data-mono="1" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease, transform 0.09s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"><span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
-                    <span data-c="br" aria-hidden="true" style="position: absolute; bottom: 0; right: 0; width: 13px; height: 13px; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform: scale(0); transform-origin: bottom right; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span><span style="position: relative;">Text us</span></a>
+                    <span data-c="br" aria-hidden="true" style="position: absolute; bottom: 0; right: 0; width: 13px; height: 13px; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform: scale(0); transform-origin: bottom right; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span><span style="position: relative;">Text our rental team</span></a>
                 <button type="button" data-mono="1" data-action="restart" style="position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 22px; min-height: 52px; box-shadow: inset 0 0 0 1.5px #B9BCC1; text-decoration: none; display: inline-flex; align-items: center; transition: box-shadow 0.2s ease, color 0.2s ease, transform 0.09s ease; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));"><span data-c="tl" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform: scale(0); transform-origin: top left; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span>
                     <span data-c="br" aria-hidden="true" style="position: absolute; bottom: 0; right: 0; width: 13px; height: 13px; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform: scale(0); transform-origin: bottom right; transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1);"></span><span style="position: relative;">Send another request</span></button>
               </div>
@@ -742,24 +882,24 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
                 <span data-tval="1" style="color: #9A9EA5; font-family: 'Chivo Mono', monospace; font-size: 12.5px; transition: transform 0.26s ease, color 0.26s ease; overflow-wrap: anywhere;">—</span>
               </div>
               <div data-tslot="need" style="display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #2A2A2A; transition: background 0.6s ease;">
-                <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">NEED</span>
+                <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">MACHINE</span>
                 <span data-tval="1" style="color: #9A9EA5; font-family: 'Chivo Mono', monospace; font-size: 12.5px; transition: transform 0.26s ease, color 0.26s ease; overflow-wrap: anywhere;">—</span>
               </div>
               <div data-tslot="where" style="display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #2A2A2A; transition: background 0.6s ease;">
-                <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">JOB SITE</span>
+                <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">JOBSITE</span>
                 <span data-tval="1" style="color: #9A9EA5; font-family: 'Chivo Mono', monospace; font-size: 12.5px; transition: transform 0.26s ease, color 0.26s ease; overflow-wrap: anywhere;">—</span>
               </div>
               <div data-tslot="when" style="display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #2A2A2A; transition: background 0.6s ease;">
-                <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">WHEN</span>
+                <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">START</span>
                 <span data-tval="1" style="color: #9A9EA5; font-family: 'Chivo Mono', monospace; font-size: 12.5px; transition: transform 0.26s ease, color 0.26s ease; overflow-wrap: anywhere;">—</span>
               </div>
             <div style="display: grid; grid-template-columns: 88px 1fr; gap: 14px; align-items: baseline; padding: 10px 0 14px;">
               <span style="color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em;">SENT TO</span>
               <span style="color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 12.5px;">Our rental team</span>
             </div>
-            <div data-tsay="1" role="status" aria-live="polite" style="color: #C7C9CC; font-size: 12px; line-height: 1.5; padding-top: 12px; border-top: 1px solid #2A2A2A;">Your request will appear here as you type.</div>
+            <div data-tsay="1" role="status" aria-live="polite" style="color: #C7C9CC; font-size: 12px; line-height: 1.5; padding-top: 12px; border-top: 1px solid #2A2A2A;">Each detail you enter appears here as you type.</div>
           </div>
-          <div style="margin-top: 12px; color: #4B4F56; font-size: 12.5px; line-height: 1.6;">This is the note that reaches our rental team when you press Send request.</div>
+          <div style="margin-top: 12px; color: #4B4F56; font-size: 12.5px; line-height: 1.6;">This note is exactly what our rental team receives when you press Send Rental Request.</div>
         </div>
       </div>
     </div>
@@ -768,8 +908,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     <div style="max-width: 1256px; margin: 0 auto;">
       <div style="position: relative; padding-top: 26px;">
         <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
-        <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A; max-width: 20ch; text-wrap: balance;">Machines by job type</h2>
-        <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">Pick the work you’re doing, and we’ll show the machines for it.</p>
+        <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A; max-width: 20ch; text-wrap: balance;">Which Rental Machine Fits the Job?</h2>
+        <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">Choose the work on your jobsite to filter the fleet below to the machines that do it, from mini excavators that fit through residential gates to dozers, motor graders, and articulated haul trucks for bulk earthmoving.</p>
       </div>
       <div data-jobgrid style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; margin-top: 34px;">
         
@@ -777,7 +917,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/97498a88399560cd.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Excavation</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Footings, foundations and trenches. Excavators up to the 30-ton class.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Footings, foundations, basements, and trench work, with excavators up to the 30-ton class and mini excavators for tight sites.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Excavators · Mini excavators</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -788,7 +928,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/5fba405786f2daac.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Earthmoving</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Bulk dirt moving, grade work and hauling on site.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Mass grading, cut and fill, building pads, and hauling dirt and rock across the site.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Dozers · Loaders · Graders · Haul trucks</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -799,7 +939,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/27ac96d9b9a739d6.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Pipeline &amp; utility</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Trenching, pipe setting and backfill.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Trenching, setting pipe and conduit, and compacting backfill for water, sewer, and utility lines.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Mini excavators · Track loaders · Compactors</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -810,7 +950,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/05c8aed8a703585d.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Demolition</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Taking down structures and loading out debris.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Taking down structures, sorting debris, and loading out trucks for haul-off.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Excavators · Loaders · Skid steers</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -821,7 +961,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span data-tilebar="1" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 4px; height: 74px; background: #EF5016; transition: width 0.24s ease;"></span>
             <img src="../assets/404b0a9832d04741.svg" alt="" style="width: 46px; height: 46px; display: block;">
             <span data-tname style="font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A; margin-top: 20px;">Landscaping</span>
-            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Compact machines that fit through gates and work on residential lots.</span>
+            <span data-tblurb style="font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 9px; text-wrap: pretty;">Compact machines that fit through gates and dig, grade, and move material on residential lots.</span>
             <span data-tfoot style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 18px;">
               <span data-tmach style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B5F66;">Skid steers · Track loaders · Mini excavators</span>
               <svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -836,26 +976,26 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
         <div style="position: relative; padding-top: 26px; max-width: 640px;">
           <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
-            <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Our rental fleet</h2>
-          <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">Every machine on this page is for rent, mostly by the month. Our partners’ fleets let us supply more, up to 50-ton mining trucks, so call or text us for anything you don’t see here.</p>
+            <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Machines in the DBM Rental Fleet</h2>
+          <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">Each machine class below rents by the month, and because we also sublease from partners with large fleets, we can supply machines this page does not show, up to 50-ton mining trucks, once you call or text us the machine class and the start date.</p>
         </div>
         <span class="f-count" data-fcount>7 of 7 machines shown</span>
       </div>
       <div class="fleet-filter" data-fleetbar hidden>
           <span class="ff-t" role="status" aria-live="polite">Machines for <b data-jobname>excavation</b></span>
-          <span class="ff-acts"><a class="ff-link" data-joblink href="#">More about this work</a><button type="button" class="ff-all" data-mono="light" data-showall><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Show all machines</span></button></span>
+          <span class="ff-acts"><a class="ff-link" data-joblink href="#">See the industry page</a><button type="button" class="ff-all" data-mono="light" data-showall><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Show all machines</span></button></span>
         </div>
         <div data-fleetgrid style="display: grid; grid-template-columns: repeat(auto-fit, minmax(266px, 1fr)); gap: 18px; margin-top: 34px;">
         
           <a href="#request" data-jobs="excavation utility landscaping" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx16 rx17">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/efdba2ac6efb6581.png" alt="Mini excavator" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/efdba2ac6efb6581.png" alt="An XCMG mini excavator" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Mini excavator</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Fits through gates and between structures.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Footings and utility trenches on lots and between structures.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx18">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -865,13 +1005,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         
           <a href="#request" data-jobs="earthmoving demolition" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx19 rx20">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/e52e3b7dd00816a8.jpg" alt="Wheel loader" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/e52e3b7dd00816a8.jpg" alt="An XCMG wheel loader" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Wheel loader</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Loading trucks and moving stockpile.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Loading trucks and moving stockpiles at pits, yards, and jobsites.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx21">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -881,13 +1021,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         
           <a href="#request" data-jobs="earthmoving" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx22 rx23">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/684ece0abde4f7d4.jpg" alt="Dozer" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/684ece0abde4f7d4.jpg" alt="An XCMG crawler dozer" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Dozer</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Pushing dirt and bulk grading.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Pushing dirt, cutting slopes, and rough grading.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx24">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -897,13 +1037,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         
           <a href="#request" data-jobs="excavation utility demolition" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx25 rx26">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/30dcd55fb2eddebd.jpg" alt="Excavator" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/30dcd55fb2eddebd.jpg" alt="An XCMG excavator" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Excavator</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Mass excavation, trenching and demolition.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Mass excavation, trenching, loading trucks, and demolition.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx27">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -913,13 +1053,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         
           <a href="#request" data-jobs="earthmoving" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx28 rx29">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/6cefd3e47ca560c8.jpg" alt="Motor grader" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/6cefd3e47ca560c8.jpg" alt="An XCMG motor grader" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Motor grader</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Finish grading, pads and haul roads.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Finish grade on building pads, subgrade, and haul roads.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx30">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -929,13 +1069,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         
           <a href="#request" data-jobs="earthmoving" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx31 rx32">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/690644ca62c16434.jpg" alt="Articulated haul truck" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/690644ca62c16434.jpg" alt="An XCMG articulated haul truck" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Articulated haul truck</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Hauling dirt and rock across the site.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Hauling dirt and rock over rough ground a road truck cannot cross.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx33">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -945,13 +1085,13 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         
           <a href="#request" data-jobs="utility earthmoving" data-card="1" style="position: relative; display: flex; flex-direction: column; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.1)); clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); overflow: hidden; transition: filter 0.26s cubic-bezier(0.2,0.7,0.3,1), transform 0.09s ease;" class="rx34 rx35">
             <span style="position: relative; display: block; aspect-ratio: 4 / 3; background: #E9EAEC; overflow: hidden;">
-              <img src="../assets/66de3776f2741cd3.jpg" alt="Soil compactor" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <img src="../assets/66de3776f2741cd3.jpg" alt="An XCMG soil compactor" style="width: 100%; height: 100%; object-fit: cover; display: block;">
               <span style="position: absolute; top: 0; left: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; padding: 7px 14px 7px 12px; clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);">For rent</span>
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 20px 22px 0;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B5F66;">XCMG</span>
               <span data-mname="1" style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.02em; color: #1A1A1A; margin-top: 6px;">Soil compactor</span>
-              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Compacting soil for pads, roads and trenches.</span>
+              <span data-mspec style="font-family: 'Chivo Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: #4B4F56; line-height: 1.75; margin-top: 14px; padding: 14px 0 20px; box-shadow: inset 0 1px 0 #D5D7DA;">Compacting soil and base for pads, roads, and trench backfill.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;" class="rx36">
               <span class="mf-l">Request<span class="mf-x"> this machine</span></span>
@@ -963,10 +1103,10 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span class="also-in">
               <span class="also-k">Also for rent</span>
               <span class="also-list"><span>Compact track loaders</span><span>Skid steers</span><span>Asphalt compactors</span></span>
-              <span class="also-note">Tell us the size you need and when, and we’ll tell you what’s available.</span>
+              <span class="also-note">Send the size, the attachments, and the start date, and our rental team confirms what our fleet or our partners’ fleets have available.</span>
             </span>
             <span data-mfoot="1" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #EF5016; padding: 14px 22px; transition: background 0.26s ease;">
-              <span class="mf-l">Ask<span class="mf-x"> about these</span></span>
+              <span class="mf-l">Request<span class="mf-x"> these machines</span></span>
               <svg class="barr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg>
             </span>
           </a>
@@ -977,10 +1117,10 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 <div data-reveal data-screen-label="Rent then buy" style="position: relative; background: #1A1A1A; padding: 82px clamp(20px, 5vw, 48px);">
     <div style="max-width: 1256px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(28px, 4vw, 56px); align-items: center;">
       <div style="position: relative;">
-        <h2 style="margin: 16px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); line-height: 1.06; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Try a machine before you buy it</h2>
-        <p style="margin: 20px 0 0; font-size: 16px; line-height: 1.65; color: #C7C9CC; max-width: 56ch; text-wrap: pretty;">We deliver a machine to your site at no charge so you can run it before you decide, and afterward you can rent it or buy it.</p>
-        <p style="margin: 16px 0 0; font-size: 15px; line-height: 1.65; color: #8A8D93; max-width: 56ch; text-wrap: pretty;">With our rental purchase option, part of the rent can go toward buying the machine within six months. Details are on <a href="../finance/" style="color: #EF5016;">Finance</a>, or ask when you call.</p>
-        <div class="sales-act"><a class="kb" href="../contact/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Contact sales</span></span></a></div>
+        <h2 style="margin: 16px 0 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); line-height: 1.06; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Try an XCMG Machine on Your Jobsite Before You Buy One</h2>
+        <p style="margin: 20px 0 0; font-size: 16px; line-height: 1.65; color: #C7C9CC; max-width: 56ch; text-wrap: pretty;">If your crew has not run XCMG equipment before, we can deliver an XCMG machine to your jobsite at no charge so your operators can work it on your own job, and if it suits the work, we put it on rent for you or sell it to you.</p>
+        <p style="margin: 16px 0 0; font-size: 15px; line-height: 1.65; color: #8A8D93; max-width: 56ch; text-wrap: pretty;">Every machine in our rental fleet is also for sale, and under our rental purchase option a share of the rent you have paid applies toward the price when you buy the machine within six months, with a larger share applied the earlier you buy. Ask our sales team for the split on a specific machine, or read how the option works on <a href="../finance/" style="color: #EF5016;">Finance</a>.</p>
+        <div class="sales-act"><a class="kb" href="../contact/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Contact our sales team</span></span></a></div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 14px;">
         
@@ -989,8 +1129,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span aria-hidden="true" style="position: absolute; top: 13px; right: 13px; width: 9px; height: 9px; border-radius: 50%; background: #E9EAEC; box-shadow: inset 0 1.5px 2px rgba(0,0,0,.55);"></span>
             <img src="../assets/759a273d55e57bdc.svg" alt="" style="width: 32px; height: 32px; display: block; flex: none;">
             <span style="display: flex; flex-direction: column; gap: 5px;">
-              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Checked before delivery</span>
-              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">Our technicians look the machine over before it leaves the yard.</span>
+              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Inspected &amp; photographed going out and coming back</span>
+              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">Our technicians inspect each rental before it leaves the yard, and we photograph the machine when it goes out and when it comes back, so its condition is on record at both ends of the rental.</span>
             </span>
           </div>
         
@@ -999,8 +1139,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span aria-hidden="true" style="position: absolute; top: 13px; right: 13px; width: 9px; height: 9px; border-radius: 50%; background: #E9EAEC; box-shadow: inset 0 1.5px 2px rgba(0,0,0,.55);"></span>
             <img src="../assets/152a49a6af44629e.svg" alt="" style="width: 32px; height: 32px; display: block; flex: none;">
             <span style="display: flex; flex-direction: column; gap: 5px;">
-              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Delivery and pickup</span>
-              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">We haul the machine to your site and pick it up when you&#x27;re done.</span>
+              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Jobsite delivery &amp; pickup</span>
+              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">We haul the machine to your jobsite and pick it up when the rental ends, and the delivery charge is quoted with the rental, so you know it before the machine ships.</span>
             </span>
           </div>
         
@@ -1009,8 +1149,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span aria-hidden="true" style="position: absolute; top: 13px; right: 13px; width: 9px; height: 9px; border-radius: 50%; background: #E9EAEC; box-shadow: inset 0 1.5px 2px rgba(0,0,0,.55);"></span>
             <img src="../assets/8efa8b5663fc6dee.svg" alt="" style="width: 32px; height: 32px; display: block; flex: none;">
             <span style="display: flex; flex-direction: column; gap: 5px;">
-              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Breakdowns</span>
-              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">We fix it where it is. If we can&#x27;t fix it the same day, we take the down time off your rent.</span>
+              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Breakdowns on rent</span>
+              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">A DBM field technician repairs a broken-down rental where it sits on your jobsite, and if we cannot fix it the same day, we prorate your rent so you do not pay for the days the machine is down.</span>
             </span>
           </div>
         
@@ -1019,8 +1159,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             <span aria-hidden="true" style="position: absolute; top: 13px; right: 13px; width: 9px; height: 9px; border-radius: 50%; background: #E9EAEC; box-shadow: inset 0 1.5px 2px rgba(0,0,0,.55);"></span>
             <img src="../assets/34650ef6ab93c27b.svg" alt="" style="width: 32px; height: 32px; display: block; flex: none;">
             <span style="display: flex; flex-direction: column; gap: 5px;">
-              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Monthly rentals</span>
-              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">Most machines rent by the month. Some large machines need at least three months.</span>
+              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #FFFFFF;">Monthly rental terms</span>
+              <span style="font-size: 14.5px; line-height: 1.55; color: #8A8D93; text-wrap: pretty;">Most machines rent by the month, and large machines such as mining haul trucks carry a three-month minimum because of the cost of hauling them to and from the site. We rent to contractors and commercial operators, not to homeowners.</span>
             </span>
           </div>
         
@@ -1032,8 +1172,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     <div style="max-width: 1256px; margin: 0 auto;">
       <div style="position: relative; padding-top: 26px;">
         <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
-        <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A; max-width: 24ch; text-wrap: balance;">Where we deliver</h2>
-        <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">We deliver rental machines anywhere in Nevada and to nearby California job sites, and our field service trucks reach California from Sacramento to Bakersfield. Used machines and parts ship nationwide.</p>
+        <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A; max-width: 24ch; text-wrap: balance;">Rental Delivery &amp; Field Service Coverage</h2>
+        <p style="margin: 12px 0 0; max-width: 62ch; color: #5B5F66; font-size: 15px; text-wrap: pretty;">We deliver rental machines anywhere in Nevada and to jobsites in the California counties near the state line, our field service trucks repair machines anywhere in Nevada and in California from Sacramento to Bakersfield, and used machines and parts ship to any address in the US.</p>
       </div>
       <div data-grid2="1" style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(22px, 3vw, 36px); align-items: stretch; margin-top: 32px;">
         <div style="position: relative; min-height: 372px; background: #141414; clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px)); overflow: hidden;">
@@ -1048,7 +1188,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
                 <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Rentals</span>
               </span>
               <span style="display: block; font-family: 'Familjen Grotesk', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.03em; color: #1A1A1A; margin-top: 10px;">Nevada and nearby California</span>
-              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">We deliver anywhere in Nevada and to nearby California job sites.</span>
+              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Rental machines are delivered to and picked up from jobsites anywhere in Nevada and in the California counties near the state line.</span>
             </div>
           
             <div class="cut-o" style="--cut: 14px; position: relative; flex: 1; background: #F2F3F4; box-shadow: inset 0 0 0 1px #D5D7DA; padding: 22px 22px 20px 26px; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
@@ -1058,7 +1198,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
                 <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Field service and repairs</span>
               </span>
               <span style="display: block; font-family: 'Familjen Grotesk', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.03em; color: #1A1A1A; margin-top: 10px;">All of Nevada and central California</span>
-              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Anywhere in Nevada, plus California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes.</span>
+              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Service trucks repair rentals and customer-owned machines anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes.</span>
             </div>
           
             <div class="cut-o" style="--cut: 14px; position: relative; flex: 1; background: #F2F3F4; box-shadow: inset 0 0 0 1px #D5D7DA; padding: 22px 22px 20px 26px; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));">
@@ -1068,7 +1208,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
                 <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Used equipment and parts</span>
               </span>
               <span style="display: block; font-family: 'Familjen Grotesk', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.03em; color: #1A1A1A; margin-top: 10px;">Nationwide</span>
-              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Shipped anywhere in the US.</span>
+              <span style="display: block; font-size: 14px; line-height: 1.55; color: #5B5F66; margin-top: 6px; text-wrap: pretty;">Used machines and parts ship to any address in the US, and we can source almost any part within 48 hours, with overnight shipping available.</span>
             </div>
           
         </div>
@@ -1079,7 +1219,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     <div style="max-width: 1256px; margin: 0 auto;">
       <div style="position: relative; padding-top: 26px;">
         <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
-        <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Recent jobs</h2>
+        <h2 style="margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 33px); letter-spacing: 0.01em; text-transform: uppercase; color: #1A1A1A;">Recent Rental &amp; Field Jobs</h2>
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(298px, 1fr)); gap: 18px; margin-top: 32px;">
         
@@ -1090,8 +1230,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Case study</span>
-              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.32; letter-spacing: 0.01em; color: #1A1A1A; margin-top: 11px; text-wrap: pretty;">Our crane truck was already on the site, so we lifted their sewer pumps into place</span>
-              <span style="font-size: 14.5px; line-height: 1.6; color: #5B5F66; margin-top: 10px; text-wrap: pretty;">Lifting pumps isn’t a service we sell, but our crew and crane were there and could do it.</span>
+              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.32; letter-spacing: 0.01em; color: #1A1A1A; margin-top: 11px; text-wrap: pretty;">Our crane truck was already on site, so we lifted sewer pumps into a new build</span>
+              <span style="font-size: 14.5px; line-height: 1.6; color: #5B5F66; margin-top: 10px; text-wrap: pretty;">Our crew and a DBM crane truck were already working on a new construction site, so we used the truck’s crane to lift the sewer pumps into place, even though crane lifts are not a service we sell, and the customer on that job still works with us.</span>
               <span style="display: flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 16px; font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #1A1A1A;">Read the case study<svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
             </span>
           </a>
@@ -1103,8 +1243,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
             </span>
             <span style="display: flex; flex-direction: column; flex: 1; padding: 22px 24px 24px;">
               <span style="font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C9430D;">Rental while yours is repaired</span>
-              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.32; letter-spacing: 0.01em; color: #1A1A1A; margin-top: 11px; text-wrap: pretty;">Their new compactor broke down before the sale closed, so we rented them another one</span>
-              <span style="font-size: 14.5px; line-height: 1.6; color: #5B5F66; margin-top: 10px; text-wrap: pretty;">We didn’t have a second compactor, so we rented one from a competitor and paid for it until theirs was running again.</span>
+              <span style="font-family: 'Familjen Grotesk', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.32; letter-spacing: 0.01em; color: #1A1A1A; margin-top: 11px; text-wrap: pretty;">A demo compactor the customer had just agreed to buy broke down, so we rented them another one</span>
+              <span style="font-size: 14.5px; line-height: 1.6; color: #5B5F66; margin-top: 10px; text-wrap: pretty;">A customer had just agreed to buy the demo compactor they were running, and before their funding went through, the machine had a hard breakdown, so with no second compactor in our fleet, we rented one from a competitor, delivered it to their site, and paid the rent until their machine was repaired.</span>
               <span style="display: flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 16px; font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #1A1A1A;">How a repair rental works<svg class="barr" data-tilearr="1" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
             </span>
           </a>
@@ -1113,7 +1253,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
           <span aria-hidden="true" data-scrollaccent style="position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016;"></span>
           <span aria-hidden="true" style="position: absolute; top: 15px; right: 13px; width: 9px; height: 9px; border-radius: 50%; background: #E9EAEC; box-shadow: inset 0 1.5px 2px rgba(0,0,0,.55);"></span>
           <span style="font-family: 'Sora', sans-serif; font-size: clamp(20px, 2.2vw, 27px); font-weight: 800; line-height: 1.14; letter-spacing: 0.01em; text-transform: uppercase; color: #FFFFFF; text-wrap: balance;">Not sure which machine you need?</span>
-          <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #8A8D93; text-wrap: pretty;">Call or text us about the job, and we’ll tell you which machine fits. If our own fleet doesn’t have it, we can often get one through our partners.</p>
+          <p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #8A8D93; text-wrap: pretty;">Call or text <span style="white-space: nowrap;">(775) 625-0062</span> with the work, the material, and the site access, and our rental team recommends the machine class and attachments for it, subleasing the machine from a partner’s fleet when our own fleet has none available.</p>
           <a href="tel:+17756250062" data-ripple="#F4703F" style="position: relative; display: inline-flex; align-items: center; gap: 11px; align-self: flex-start; margin-top: 24px; font-family: 'Chivo Mono', monospace; font-size: 14.5px; font-weight: 700; letter-spacing: 0.04em; color: #FFFFFF; padding: 15px 22px 15px 26px; background: linear-gradient(#3B3F46, #232629); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.55); clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); overflow: hidden; transition: transform 0.09s ease;" class="rx43">
             <span aria-hidden="true" style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016;"></span>
             <img src="../assets/1f66dada037aff36.svg" alt="" style="position: relative; width: 18px; height: 18px; display: block;">
@@ -1130,11 +1270,11 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
-        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a></div>
+        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
       <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../rentals/" aria-current="page">Rentals</a></li><li><a href="../equipment/new/">New equipment</a></li><li><a href="../equipment/used/">Used equipment</a></li><li><a href="../we-buy-equipment/">We buy equipment</a></li><li><a href="../finance/">Finance</a></li></ul></div>
       <div class="foot-col"><h3>Service</h3><ul><li><a href="../services/">Service &amp; repair</a></li><li><a href="../services/mobile-field-service/">Mobile field service</a></li><li><a href="../services/line-boring/">Line boring</a></li><li><a href="../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../services/">Request a part</a></li></ul></div>
-      <div class="foot-col"><h3>Company</h3><ul><li><a href="../about/">About DBM</a></li><li><a href="../case-studies/">Case studies</a></li><li><a href="../faqs/">FAQs</a></li><li><a href="../careers/">Careers</a></li><li><a href="../contact/">Contact</a></li></ul></div>
+      <div class="foot-col"><h3>Company</h3><ul><li><a href="../about/">About DBM</a></li><li><a href="../case-studies/">Case studies</a></li><li><a href="../faqs/">FAQs</a></li><li><a href="../blog/">Job stories and guides</a></li><li><a href="../careers/">Careers</a></li><li><a href="../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span class="tagline">Built for work. <span>Driven to perform.</span></span>
@@ -1145,10 +1285,12 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 </footer>
 
 
+
 <div class="callbar" aria-hidden="true">
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-  <a class="kb" href="#request" tabindex="-1" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Request a rental</span></span></a>
+  <a class="kplate" href="#request" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Request a rental</span></a>
 </div>
+
 
 
 <script>
@@ -1163,7 +1305,15 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset
   var navEl = document.getElementById('nav'), navbar = navEl && navEl.querySelector('.navbar'), navLogo = navEl && navEl.querySelector('.brand img');
   function setTight(t) { navbar.style.paddingTop = navbar.style.paddingBottom = t ? '12px' : ''; navLogo.style.height = t ? (window.innerWidth <= 620 ? '30px' : '38px') : ''; }
-  function measure() { document.documentElement.style.setProperty('--dbm-nav', Math.ceil(navEl.getBoundingClientRect().height) + 10 + 'px'); }
+  // Buy pages: their row of links to each other moves directly under the header (CSS already shows it there), so keyboard order matches what is seen
+  var buyRow = document.querySelector('main > .subnav[aria-label="Buy equipment"]');
+  if (buyRow && buyRow.parentNode.firstElementChild !== buyRow) buyRow.parentNode.insertBefore(buyRow, buyRow.parentNode.firstElementChild);
+  // --dbm-nav-h is the header's exact height (the sticky Buy row sits under it); --dbm-nav adds the sticky Buy row and 10 px for anchor jumps
+  function measure() {
+    var h = navEl.getBoundingClientRect().height, extra = buyRow && getComputedStyle(buyRow).position === 'sticky' ? buyRow.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--dbm-nav-h', h + 'px');
+    document.documentElement.style.setProperty('--dbm-nav', Math.ceil(h + extra) + 10 + 'px');
+  }
   if (navbar && navLogo) {
     var sentinel = document.createElement('span');
     sentinel.setAttribute('aria-hidden', 'true');
@@ -1171,6 +1321,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     document.body.insertBefore(sentinel, document.body.firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (en) { setTight(!en.isIntersecting); measure(); }); }).observe(sentinel);
     window.addEventListener('resize', measure, { passive: true }); measure();
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(navEl);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
@@ -1244,6 +1395,111 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   if (callbar && heroActs) new IntersectionObserver(function (es) { heroGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(heroActs);
   if (callbar && callBand) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(callBand);
 })();
+
+/* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
+   The diamond beside a route opens that route's panel under the bar on click, never on hover, and one panel is open at a time.
+   The same diamond, Escape, or a click outside closes it. Tab moves from an open diamond into its panel and from the panel's
+   last link on to the next route. Durations and eases are the board's, and reduced motion sets them to 0. */
+(function () {
+  var nav = document.getElementById('nav'), host = nav && nav.querySelector('[data-menuhost]');
+  if (!host) return;
+  var R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D = function (t) { return R ? 0 : t; };
+  var G = function () { return document.documentElement.classList.contains('gsap-on') && window.gsap; };
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  var toggles = nav.querySelectorAll('[data-mt]'), open = null;
+  var panelOf = function (k) { return document.getElementById('menu-' + k); };
+  var toggleOf = function (k) { return nav.querySelector('[data-mt="' + k + '"]'); };
+  var fit = function (p) { p.style.maxHeight = Math.max(160, window.innerHeight - nav.getBoundingClientRect().bottom) + 'px'; };
+
+  // The menu link for the page the visitor is on is marked as the current page. Review copies live at pages/<folder>/hifi.html.
+  var m = location.pathname.match(/\/([^\/]+)\/hifi\.html$/), special = { home: '', 'line-boring': '/services/line-boring', 'welding-fabrication': '/services/welding-fabrication' };
+  var here = m ? (m[1] in special ? special[m[1]] : '/' + m[1].replace(/--/g, '/')) : location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+  each(host.querySelectorAll('a[href]'), function (a) {
+    if (a.getAttribute('href').indexOf('#') !== -1) return;
+    var path = m ? a.getAttribute('href').replace(/\/$/, '') : a.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+    if (path === here) a.setAttribute('aria-current', 'page');
+  });
+
+  function diam(t, on) {
+    var g = G(), d = t.querySelector('[data-diam]');
+    if (g) g.to(d, { rotate: on ? 180 : 0, backgroundColor: on ? '#EF5016' : '#8A8D93', duration: D(on ? 0.3 : 0.24), ease: on ? 'back.out(2)' : 'power1.out', overwrite: 'auto' });
+  }
+  function hideNow(p) {
+    var g = window.gsap;
+    if (g) g.killTweensOf(p);
+    p.hidden = true; p.style.height = ''; p.classList.remove('is-open');
+  }
+  function close(refocus, now) {
+    if (!open) return;
+    var k = open, p = panelOf(k), t = toggleOf(k), g = G();
+    open = null;
+    t.setAttribute('aria-expanded', 'false'); diam(t, false);
+    p.classList.remove('is-open');
+    if (g && !now) { g.killTweensOf(p); g.to(p, { height: 0, duration: D(0.26), ease: 'power2.in', onComplete: function () { hideNow(p); } }); }
+    else hideNow(p);
+    if (refocus) t.focus({ preventScroll: true });
+  }
+  function show(k) {
+    if (open === k) { close(true); return; }
+    if (open) close(false, true);
+    var p = panelOf(k), t = toggleOf(k), g = G();
+    each(host.querySelectorAll('.menu'), function (x) { if (x !== p && !x.hidden) hideNow(x); });
+    open = k;
+    t.setAttribute('aria-expanded', 'true'); diam(t, true);
+    p.hidden = false; fit(p);
+    if (!g) { p.classList.add('is-open'); return; }
+    g.killTweensOf(p);
+    g.fromTo(p, { height: 0 }, { height: 'auto', duration: D(0.34), ease: 'power3.out', onComplete: function () { p.style.height = ''; p.classList.add('is-open'); } });
+    var kerf = p.querySelector('[data-menukerf]');
+    if (kerf && !R) {
+      if (window.DrawSVGPlugin) g.fromTo(kerf, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'power2.inOut' });
+      else g.fromTo(kerf, { strokeDasharray: 1000, strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.inOut', clearProps: 'strokeDasharray,strokeDashoffset' });
+    }
+    if (!R) g.fromTo(p.querySelectorAll('[data-mitem]'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.28, stagger: 0.04, delay: 0.08, ease: 'power2.out' });
+  }
+
+  each(toggles, function (t) {
+    t.addEventListener('click', function (e) { e.stopPropagation(); show(t.getAttribute('data-mt')); });
+    t.addEventListener('pointerenter', function () { var g = G(); if (g) g.to(t, { scale: 1.12, duration: D(0.18) }); });
+    t.addEventListener('pointerleave', function () { var g = G(); if (g) g.to(t, { scale: 1, duration: D(0.18) }); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(true); return; }
+    if (e.key !== 'Tab') return;
+    var t = toggleOf(open), f = panelOf(open).querySelectorAll('a[href]'), a = document.activeElement;
+    if (a === t && !e.shiftKey) { e.preventDefault(); f[0].focus(); }
+    else if (a === f[0] && e.shiftKey) { e.preventDefault(); t.focus(); }
+    else if (a === f[f.length - 1] && !e.shiftKey) {
+      var bar = Array.prototype.slice.call(nav.querySelectorAll('.navbar a[href], .navbar button')), next = bar[bar.indexOf(t) + 1];
+      e.preventDefault(); close(false); (next || t).focus();
+    }
+  }, true);
+  document.addEventListener('click', function (e) { if (open && !host.contains(e.target) && !(e.target.closest && e.target.closest('[data-mt]'))) close(false); }, true);
+  window.addEventListener('resize', function () { if (open) fit(panelOf(open)); }, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (open) fit(panelOf(open)); }).observe(nav);
+  window.addEventListener('pageshow', function (e) { if (e.persisted && open) close(false, true); });
+
+  // Row target (board C08 _rows): pointing at a row strikes the orange line down its leading edge, moves the title and arrow 6 px, and turns the title orange
+  each(host.querySelectorAll('[data-row]'), function (r) {
+    var edge = r.querySelector('[data-edge]'), arr = r.querySelector('[data-rarr]'), title = r.querySelector('[data-rtitle]');
+    function set(v) {
+      var g = G(); if (!g) return;
+      var lit = v || r.hasAttribute('aria-current');
+      g.to(edge, { scaleY: lit ? 1 : 0, duration: D(0.26), ease: 'power2.out', overwrite: 'auto' });
+      g.to(arr, { x: v ? 6 : 0, duration: D(0.26), ease: v ? 'back.out(2)' : 'power2.out', overwrite: 'auto' });
+      g.to(title, { x: v ? 6 : 0, color: lit ? '#F4703F' : '#FFFFFF', duration: D(0.24), ease: 'power2.out', overwrite: 'auto' });
+    }
+    r.addEventListener('pointerenter', function () { set(true); });
+    r.addEventListener('pointerleave', function () { set(false); var g = G(); if (g) g.to(r, { y: 0, duration: 0.1, overwrite: 'auto' }); });
+    r.addEventListener('focus', function () { set(true); });
+    r.addEventListener('blur', function () { set(false); });
+    r.addEventListener('pointerdown', function () { var g = G(); if (g) g.to(r, { y: 1, duration: 0.06, overwrite: 'auto' }); });
+    r.addEventListener('pointerup', function () { var g = G(); if (g) g.to(r, { y: 0, duration: 0.12, overwrite: 'auto' }); });
+  });
+})();
+/* NAV-05 route menus: end */
 </script>
 <script>
 /*!
@@ -1796,7 +2052,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     var k = f.parentElement && f.parentElement.querySelector('[data-kerf]');
     if (k) { k.style.transition = reduce ? 'none' : (onn ? 'transform 0.3s cubic-bezier(0.22,1,0.36,1)' : 'transform 0.24s cubic-bezier(0.55,0,1,0.45)'); k.style.transform = 'scaleX(' + (onn ? 1 : 0) + ')'; }
   }
-  var EMPTY = 'Your request will appear here as you type.';
+  var EMPTY = 'Each detail you enter appears here as you type.';
   function stamp(f) {
     if (f.hasAttribute('data-ta')) { f.style.height = 'auto'; f.style.height = Math.max(108, f.scrollHeight + 2) + 'px'; }
     var form = near(f, '[data-form]') || document;
@@ -1816,7 +2072,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     var slots = Array.prototype.slice.call(form.querySelectorAll('[data-slot]'));
     var filled = slots.filter(function (x) { return x.value.trim(); }).length;
     var say = form.querySelector('[data-tsay]');
-    if (say) say.textContent = filled ? filled + ' of ' + slots.length + ' fields filled in. You can send it now or add more.' : EMPTY;
+    if (say) say.textContent = !filled ? EMPTY : filled === slots.length ? 'All ' + filled + ' details entered. Press Send Rental Request to send them to our rental team.' : filled + ' of ' + slots.length + ' details entered. You can send the request now or add the rest.';
   }
   function hoverFx(e, onn) {
     var leaving = function (t) { return onn || !(t && t.contains && t.contains(e.relatedTarget)); };
@@ -1855,7 +2111,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
       if (b.disabled) return;
       if (window.dbmDisable) window.dbmDisable(b, true, 'Sending…');
       setTimeout(function () {
-        if (window.dbmDisable) window.dbmDisable(b, false, 'Send request');
+        if (window.dbmDisable) window.dbmDisable(b, false, 'Send Rental Request');
         formState.hidden = true; formState.style.display = 'none'; doneState.hidden = false; doneState.style.display = 'contents';
         if (window.gsap && !reduce) gsap.fromTo(doneState.children, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.32, stagger: 0.05, ease: 'power2.out' });
         var t = doneState.querySelector('h3, h4, [tabindex], button'); if (t && t.focus) t.focus({ preventScroll: true });

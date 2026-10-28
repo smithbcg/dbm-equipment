@@ -75,8 +75,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
 .nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
-@media (min-width: 1240px) { .navbar { flex-wrap: nowrap; } .nav nav { flex-wrap: nowrap; } }
-@media (max-width: 1239px) {
+/* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
+@media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
+@media (max-width: 1359px) {
   .navbar { row-gap: 10px; }
   .nav nav { order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 2px 0; -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); }
   .nav nav::-webkit-scrollbar { display: none; }
@@ -250,6 +251,69 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .call-plate { position: relative; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); overflow: hidden; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.32)) drop-shadow(0 3px 5px rgba(26,26,26,0.26)); }
 .call-plate .rv.bl, .call-plate .rv.br { bottom: 17px; }
 .call-in { padding: 54px clamp(24px, 4.5vw, 58px) 46px; display: flex; flex-direction: column; gap: 30px; }
+/* NAV-05 route menus: start (board C08 NAV-05, ported 2026-10-28; the same block is copied into the Home page) */
+.nav nav .route { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.nav .mt { appearance: none; border: 0; background: transparent; cursor: pointer; width: 24px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; flex: none; transition: transform .18s ease; }
+.nav .mt:focus-visible { outline-offset: -4px; }
+.nav .diam { display: block; width: 9px; height: 9px; background: var(--dim); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transition: transform .3s cubic-bezier(.34,1.56,.64,1), background-color .24s ease; }
+.nav .mt[aria-expanded="true"] .diam { transform: rotate(180deg); background: var(--orange); }
+html:not(.gsap-on) .nav .mt:hover { transform: scale(1.12); }
+.gsap-on .nav .diam { transition: none; }
+.menus { position: absolute; left: 0; right: 0; top: 100%; }
+.menu { position: relative; background: var(--charcoal); box-shadow: 0 18px 30px rgba(0,0,0,0.35); overflow: hidden; overscroll-behavior: contain; view-transition-name: dbm-menu; }
+.menu[hidden] { display: none; }
+.menu.is-open { overflow-y: auto; }
+.mkerf { display: block; width: 100%; height: 2px; }
+.menu-in { max-width: calc(1256px + 2 * var(--pad-x)); margin: 0 auto; padding: 24px var(--pad-x) 28px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: 34px; }
+.mcol { display: flex; flex-direction: column; min-width: 0; }
+.menu .mh { margin: 0; color: var(--orange-hover); font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; line-height: 1.5; text-transform: uppercase; }
+.mrows, .mreads { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; }
+.mreads { gap: 10px; }
+.mrow { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 14px 12px 16px; min-height: 56px; text-decoration: none; border-bottom: 1px solid #2A2A2A; }
+.medge { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--orange); transform: scaleY(0); transform-origin: top center; }
+.mtext { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mtitle { display: inline-block; align-self: flex-start; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; line-height: 1.3; }
+.msub { color: #9A9A9A; font-size: 13px; line-height: 1.45; }
+.marr { width: 22px; height: 10px; flex: none; color: var(--orange-hover); }
+.mrow[aria-current] .medge { transform: scaleY(1); }
+.mrow[aria-current] .mtitle { color: var(--orange-hover); }
+.mread { display: block; color: var(--silver); font-size: 14px; line-height: 1.5; padding: 6px 0; border-bottom: 1px solid #2A2A2A; text-decoration: none; transition: color .2s ease; }
+.mread:hover, .mread:focus-visible, .mread[aria-current] { color: #FFFFFF; }
+.mreach { align-self: start; display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); }
+.menu .mreach .mh { color: var(--silver); }
+.mreach p:last-child { margin: 0; color: #E4E4E4; font-size: 14px; line-height: 1.6; }
+.menu a:focus-visible { outline-offset: -2px; }
+html:not(.gsap-on) .medge, html:not(.gsap-on) .marr, html:not(.gsap-on) .mtitle { transition: transform .26s ease, color .24s ease; }
+html:not(.gsap-on) .mrow:hover .medge, html:not(.gsap-on) .mrow:focus-visible .medge { transform: scaleY(1); }
+html:not(.gsap-on) .mrow:hover .marr, html:not(.gsap-on) .mrow:focus-visible .marr { transform: translateX(6px); }
+html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .mtitle { transform: translateX(6px); color: var(--orange-hover); }
+@media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
+
+/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
+   Reduced motion: the transition is not switched on, so pages change at once. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+.nav { view-transition-name: dbm-header; }
+.callbar { view-transition-name: dbm-callbar; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
+::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; }
+::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
+::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
+@keyframes dbm-page-out { to { opacity: 0; } }
+@keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+/* NAV-05 route menus: end */
+
+/* Buy pages only (the four pages whose link row is labeled "Buy equipment"): that row of links to each other sits directly under
+   the header and stays there while the page scrolls, so it is in the same place on each Buy page and does not move when the visitor
+   changes page. The service pages' link rows are not affected. */
+main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction: column; }
+main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
+@media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -361,6 +425,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   .formact .btn-orange .cf { padding: 16px 14px; letter-spacing: 0.16em; }
   .btn-orange .lbl { white-space: normal; text-align: center; }
 }
+
+/* Footer address lines (shared footer) */
+.foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
 </style>
 <style>
 /* Page styles for the DBM pages updated on 2026-10-28 from their DBM HTML 5 versions. Each block names the board component it follows.
@@ -524,7 +591,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .fqh { background: #1A1A1A; color: #FFFFFF; padding: 0 var(--pad-x); }
 .fqh .wrap { position: relative; padding: 70px 0 74px; }
 .fqh .seam { display: block; width: 74px; height: 3px; background: #EF5016; margin-bottom: 26px; }
-.fqh h1 { margin: 0; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(46px, 9vw, 92px); line-height: 0.98; letter-spacing: 0.005em; text-transform: uppercase; }
+.fqh h1 { margin: 0; max-width: 20ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(38px, 6vw, 72px); line-height: 0.98; letter-spacing: 0.005em; text-transform: uppercase; }
 .fqh p { margin: 22px 0 0; max-width: 60ch; color: #C7C9CC; font-size: 17px; line-height: 1.65; text-wrap: pretty; }
 .fqh .acts { margin-top: 34px; }
 
@@ -579,25 +646,97 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   <div class="wrap navbar">
     <a href="../" class="brand" aria-label="DBM Heavy Equipment, home"><img src="../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment"></a>
     <nav aria-label="Main">
-      <a href="../rentals/">Rent</a>
-      <a href="../equipment/">Buy</a>
-      <a href="../services/">Service &amp; Parts</a>
-      <a href="../we-buy-equipment/">Sell &amp; Trade</a>
+      <span class="route"><a href="../rentals/">Rent</a><button type="button" class="mt" data-mt="rent" aria-expanded="false" aria-controls="menu-rent" aria-label="Rent menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../equipment/">Buy</a><button type="button" class="mt" data-mt="buy" aria-expanded="false" aria-controls="menu-buy" aria-label="Buy menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../services/">Service &amp; Parts</a><button type="button" class="mt" data-mt="service" aria-expanded="false" aria-controls="menu-service" aria-label="Service and Parts menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../we-buy-equipment/">Sell &amp; Trade</a><button type="button" class="mt" data-mt="sell" aria-expanded="false" aria-controls="menu-sell" aria-label="Sell and Trade menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
       <a href="../finance/">Finance</a>
       <a href="../about/">About</a>
     </nav>
     <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
   </div>
+  
+  <div class="menus" data-menuhost>
+    <div class="menu" id="menu-rent" data-menu="rent" role="region" aria-label="Rent menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../rentals/#fleet" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Browse the rental fleet</span><span class="msub">Excavators, wheel loaders, motor graders, haul trucks, and compaction machines, grouped by the work they do.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../rentals/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a rental</span><span class="msub">Send the machine, the jobsite, and the start date, and our rental team calls or texts back with the monthly rate and delivery date.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../finance/#rpo" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Buy the machine you rent</span><span class="msub">Under our rental purchase option, part of the rent you pay goes toward the price when you buy within six months.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../industries/construction-earthmoving/" data-mitem>Machines for construction and earthmoving</a></li>
+          <li><a class="mread" href="../industries/utility-pipeline/" data-mitem>Machines for utility and pipeline work</a></li>
+          <li><a class="mread" href="../faqs/#t-rentals" data-mitem>Answers to common rental questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We rent to contractors, mostly by the month, and deliver to jobsites anywhere in Nevada and in the California counties near the state line. Large machines such as mining haul trucks carry a three-month minimum.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-buy" data-menu="buy" role="region" aria-label="Buy menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../equipment/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>All equipment</span><span class="msub">New XCMG machines and used machines of any make, sorted by machine class.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../finance/#how" data-mitem>How financing works for new and used machines</a></li>
+          <li><a class="mread" href="../equipment/sas-luxembourg/" data-mitem>SAS forks and attachments</a></li>
+          <li><a class="mread" href="../industries/excavation/" data-mitem>Machines for excavation</a></li>
+          <li><a class="mread" href="../industries/auto-scrap-recycling/" data-mitem>Machines for auto and scrap recycling</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We sell new XCMG machines in Nevada and the nearby California counties, and we sell used machines anywhere in the US. QuickFi, XCMG’s lender, finances new XCMG machines, and buyers of used machines call us about financing.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-service" data-menu="service" role="region" aria-label="Service and Parts menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
+          <li><a class="mread" href="../case-studies/" data-mitem>All case studies</a></li>
+          <li><a class="mread" href="../blog/" data-mitem>Job stories and guides</a></li>
+          <li><a class="mread" href="../services/#questions" data-mitem>Answers to common service and parts questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>Our service trucks repair machines of any make anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. Parts ship to any address in the US.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-sell" data-menu="sell" role="region" aria-label="Sell and Trade menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../we-buy-equipment/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Sell your machine</span><span class="msub">Send the make, model, serial number, hours, and a few photos, and our sales team replies with an offer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../we-buy-equipment/#start" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Trade toward another machine</span><span class="msub">We price your trade and the new XCMG or used machine you want together.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../we-buy-equipment/#details" data-mitem>What to tell us about the machine</a></li>
+          <li><a class="mread" href="../we-buy-equipment/#next" data-mitem>What happens after you send it</a></li>
+          <li><a class="mread" href="../equipment/used/" data-mitem>Used equipment for sale</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We buy used equipment of any make. Sending your details does not commit you to selling or trading the machine.</p></div>
+      </div>
+    </div>
+  </div>
 </header>
+
 
 <main>
   
   <section class="fqh hero-fb" aria-labelledby="page-title" data-hero>
     <div class="wrap">
       <span class="seam" data-accent aria-hidden="true"></span>
-      <h1 id="page-title">FAQs</h1>
-      <p>Answers to the questions people ask us about service, parts, buying, renting, financing, and selling equipment. Open a question to read the answer and the next step. If your question isn’t here, call or text <a class="tel" href="tel:+17756250062">(775) 625-0062</a>.</p>
-      <div class="acts"><a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call DBM at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call DBM</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a><a class="kb" href="../contact/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send a question</span></span></a></div>
+      <h1 id="page-title">DBM Service, Parts &amp; Equipment FAQs</h1>
+      <p>DBM repairs any make in the field and in our Fernley shop, ships XCMG, SAS, and aftermarket parts nationwide, sells new XCMG and used machines, rents machines to contractors by the month, and buys used equipment. Each answer below ends with a link to the page or form that takes the next step, and <a class="tel" href="tel:+17756250062">(775) 625-0062</a> answers anything else by call or text.</p>
+      <div class="acts"><a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call DBM at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call DBM</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a><a class="kb" href="../contact/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send a written question</span></span></a></div>
     </div>
   </section>
 
@@ -608,51 +747,51 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   <section class="topic" id="t-service" aria-labelledby="t-service-h" data-reveal>
     <div class="wrap">
       <span class="seam" data-scrollaccent aria-hidden="true"></span>
-      <div class="ttl"><span class="ic" style="--ic: url(../assets/d9fcdfd3b18ab829.svg)" aria-hidden="true"></span><h2 id="t-service-h">Service and parts</h2></div>
-      <p class="tl">Repairs in the field and in our shop, and parts for XCMG and most other makes.</p>
+      <div class="ttl"><span class="ic" style="--ic: url(../assets/d9fcdfd3b18ab829.svg)" aria-hidden="true"></span><h2 id="t-service-h">Service &amp; Parts</h2></div>
+      <p class="tl">We repair any make in the field and in our Fernley shop, and we ship XCMG, SAS, and aftermarket parts anywhere in the United States.</p>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What information helps with a service request?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-1" role="region"><div><p>The make, model, and serial number, where the machine is, and what it’s doing. Tell us any error code, what the machine will still do, and when the problem started.</p><p class="alink"><a class="olink" href="../contact/"><span>Send a service request</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-1" role="region"><div><p>The make, model, and serial number, the machine’s location, and what it is or is not doing give the service team enough to plan the visit. Add any fault code on the display, what the machine still does, and when the problem started, and the technician can load the parts and tools most likely to finish the repair on the first trip.</p><p class="alink"><a class="olink" href="../contact/"><span>Send a service request</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Do you repair machines DBM didn’t sell?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-2" role="region"><div><p>Yes. We repair other brands, including Caterpillar and Case, in the field and in our shop.</p><p class="alink"><a class="olink" href="../services/"><span>Read about our service and repair</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-2" role="region"><div><p>Yes. Our technicians repair Caterpillar, Case, and other makes at the jobsite and in our Fernley shop, in addition to the XCMG machines we sell, and the parts department sources aftermarket parts for machines outside the XCMG and SAS lines.</p><p class="alink"><a class="olink" href="../services/"><span>See service and repair</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can a technician come to the job site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-3" role="region"><div><p>Yes. Our 10 service trucks work anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. We usually get to a machine the next day, and sometimes the same day.</p><p class="alink"><a class="olink" href="../services/mobile-field-service/"><span>Read about mobile field service</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-3" role="region"><div><p>Yes. Our 10 service trucks work anywhere in Nevada and in California from Sacramento south to Bakersfield, including Bishop and Mammoth Lakes, and a truck usually reaches the machine the day after you call and sometimes the same day, while the machine makers’ dealers often take one to three weeks.</p><p class="alink"><a class="olink" href="../services/mobile-field-service/"><span>See mobile field service</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I send a service request after hours?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-4" role="region"><div><p>Yes. Send a request any time, and we reply the next day. If a machine is down during the day, call <a class="tel" href="tel:+17756250062">(775) 625-0062</a>.</p><p class="alink"><a class="olink" href="../contact/"><span>Send a service request</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-4" role="region"><div><p>Yes. Send the request form or a text with the machine, what it is doing, and where it is, and the office answers it the next day. When a machine goes down during the workday, a call to <a class="tel" href="tel:+17756250062">(775) 625-0062</a> gets a truck scheduled fastest.</p><p class="alink"><a class="olink" href="../contact/"><span>Send a service request</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-5"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How do I order a part?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-5" role="region"><div><p>Call or text <a class="tel" href="tel:+17756250062">(775) 625-0062</a> with the brand, the serial number, and the part you need. A photo of the part or the serial plate helps. We carry XCMG and SAS parts, we work with aftermarket suppliers for most other makes, and we ship parts anywhere in the country.</p><p class="alink"><a class="olink" href="../services/"><span>Request a part</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-5" role="region"><div><p>Call or text <a class="tel" href="tel:+17756250062">(775) 625-0062</a>, or send the parts request form, with the machine’s brand and serial number and the part you need, plus a photo of the part or the serial plate when you have one, and the parts department confirms the part, the price, and the delivery date before ordering. We stock XCMG and SAS parts, source aftermarket parts for most other makes, and ship anywhere in the United States.</p><p class="alink"><a class="olink" href="../services/"><span>Request a parts quote</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-6"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I ask about a part without a part number?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-6" role="region"><div><p>Yes. Give us the machine’s brand and serial number and describe the part, or send a photo of it.</p><p class="alink"><a class="olink" href="../contact/"><span>Ask about a part</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-6" role="region"><div><p>Yes. The machine’s brand and serial number identify its exact build, so a description of what the part does and where it mounts, or a photo of the part, is enough for the parts department to look up the part number.</p><p class="alink"><a class="olink" href="../contact/"><span>Ask about a part</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-7"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How long does a part take to arrive?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-7" role="region"><div><p>We can get almost any part within 48 hours, and we can ship overnight when you need it sooner.</p><p class="alink"><a class="olink" href="../services/"><span>Request a part</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-7" role="region"><div><p>We can get almost any part within 48 hours, and when the machine is down and that wait would hold up your job, we can ship overnight for an added freight charge, which you approve before the order is placed.</p><p class="alink"><a class="olink" href="../services/"><span>Request a parts quote</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qservice-8"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can you give me a repair price online?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qservice-8" role="region"><div><p>No. We need to know what’s wrong and which parts the repair takes. Before we order anything, we tell you what’s wrong, what the parts cost, and how long they’ll take to arrive.</p><p class="alink"><a class="olink" href="../contact/"><span>Describe the repair you need</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qservice-8" role="region"><div><p>No. A repair price depends on what the technician finds at the machine, so the field visit or shop inspection comes first, and before any part is ordered, we call you with what failed, the parts cost, and the lead time, and nothing is ordered until you approve it.</p><p class="alink"><a class="olink" href="../contact/"><span>Describe the repair you need</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
       </div>
-      <p class="next"><a class="olink" href="../services/"><span>Go to service and parts</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
+      <p class="next"><a class="olink" href="../services/"><span>Open the Service &amp; Parts page</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
     </div>
   </section>
 
@@ -660,31 +799,31 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   <section class="topic tint" id="t-buying" aria-labelledby="t-buying-h" data-reveal>
     <div class="wrap">
       <span class="seam" data-scrollaccent aria-hidden="true"></span>
-      <div class="ttl"><span class="ic" style="--ic: url(../assets/09117a1cac80fd08.svg)" aria-hidden="true"></span><h2 id="t-buying-h">Buying equipment</h2></div>
-      <p class="tl">New XCMG machines, and used machines of any make.</p>
+      <div class="ttl"><span class="ic" style="--ic: url(../assets/09117a1cac80fd08.svg)" aria-hidden="true"></span><h2 id="t-buying-h">Buying Equipment</h2></div>
+      <p class="tl">As the exclusive XCMG dealer, we sell new XCMG machines in Nevada and neighboring California counties, and we sell and ship used machines of any make nationwide.</p>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qbuying-1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What new equipment does DBM sell?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qbuying-1" role="region"><div><p>We’re the exclusive XCMG dealer, and XCMG is our main line. We also carry Taurox attachments, <a href="https://sasforks.com" target="_blank" rel="noopener">SAS forks</a>, and <a href="https://drkhorsetools.com" target="_blank" rel="noopener">DRKhorse tools</a>.</p><p class="alink"><a class="olink" href="../equipment/xcmg/"><span>See XCMG equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qbuying-1" role="region"><div><p>DBM is the exclusive XCMG dealer, so new XCMG machines are our main line, and we also sell Taurox attachments, <a href="https://sasforks.com" target="_blank" rel="noopener">SAS forks</a>, and <a href="https://drkhorsetools.com" target="_blank" rel="noopener">DRKhorse tools</a>, with the SAS and DRKhorse product details on their makers’ websites.</p><p class="alink"><a class="olink" href="../equipment/xcmg/"><span>See XCMG equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qbuying-2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>I haven’t heard of XCMG. What should I ask?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qbuying-2" role="region"><div><p>Ask about the machine’s specifications and how parts and service work. We carry XCMG parts, and we service the XCMG machines we sell. If you want to try one first, we can drop an XCMG machine off at your job at no charge. If you like it, you can rent it or buy it. When you buy a machine, we deliver it and walk you through how it works.</p><p class="alink"><a class="olink" href="../equipment/xcmg/"><span>See XCMG equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qbuying-2" role="region"><div><p>Ask how parts and service work after the sale, because DBM stocks XCMG parts and services the XCMG machines it sells with its own field trucks and shop. To try a machine before you commit, we can drop an XCMG machine at your job at no charge, and if it suits the work, you can rent it or buy it, with delivery and a walkthrough of the machine when you buy.</p><p class="alink"><a class="olink" href="../equipment/xcmg/"><span>See XCMG equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qbuying-3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I buy a machine if I’m outside Nevada?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qbuying-3" role="region"><div><p>For a used machine, yes. We sell used machines anywhere in the country. We sell new XCMG machines in Nevada and nearby California.</p><p class="alink"><a class="olink" href="../equipment/used/"><span>See used equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qbuying-3" role="region"><div><p>Yes for a used machine, which we sell and ship anywhere in the country. New XCMG machines are sold within our XCMG territory, which covers all of Nevada and neighboring California counties, so call us to confirm whether your location falls inside it.</p><p class="alink"><a class="olink" href="../equipment/used/"><span>See used equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qbuying-4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Is every machine on the site in your yard?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qbuying-4" role="region"><div><p>No. Our XCMG pages show the whole XCMG line, whether or not we have a machine in our yard. Call us to check availability on any machine.</p><p class="alink"><a class="olink" href="../equipment/new/"><span>See new equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qbuying-4" role="region"><div><p>No. Our XCMG pages show the full XCMG line whether or not a machine is in our yard, because we keep few machines on the ground and can order the rest, so call or send a request to confirm availability and delivery timing for a specific model.</p><p class="alink"><a class="olink" href="../equipment/new/"><span>See new equipment</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
       </div>
-      <p class="next"><a class="olink" href="../equipment/"><span>Go to equipment for sale</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
+      <p class="next"><a class="olink" href="../equipment/"><span>See equipment for sale</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
     </div>
   </section>
 
@@ -693,35 +832,35 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
     <div class="wrap">
       <span class="seam" data-scrollaccent aria-hidden="true"></span>
       <div class="ttl"><span class="ic" style="--ic: url(../assets/afc2619166b4f5de.svg)" aria-hidden="true"></span><h2 id="t-rentals-h">Rentals</h2></div>
-      <p class="tl">Machines from mini excavators to 50-ton mining trucks, rented mostly by the month.</p>
+      <p class="tl">Our rental fleet runs from mini excavators to 50-ton mining trucks, rented mostly by the month and only to contractors.</p>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qrentals-1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What do you need to arrange a rental?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qrentals-1" role="region"><div><p>The machine you need, where the job is, and the dates. We rent to contractors.</p><p class="alink"><a class="olink" href="../rentals/"><span>See our rental machines</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qrentals-1" role="region"><div><p>Send the machine class you need, the jobsite location, and the start and end dates, and our rental team confirms availability, delivery, and the rate. We rent only to contractors, not to homeowners.</p><p class="alink"><a class="olink" href="../rentals/"><span>Browse the rental fleet</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qrentals-2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How long is a rental?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qrentals-2" role="region"><div><p>Most of our rentals are by the month. Some large machines have a three-month minimum.</p><p class="alink"><a class="olink" href="../rentals/"><span>See our rental machines</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qrentals-2" role="region"><div><p>Most of our rentals run by the month, and some large machines carry a three-month minimum, which the rental team states when it quotes the machine.</p><p class="alink"><a class="olink" href="../rentals/"><span>Browse the rental fleet</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qrentals-3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I reserve a machine through the website?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qrentals-3" role="region"><div><p>No. Send a rental request or call, and we confirm the machine and the dates with you.</p><p class="alink"><a class="olink" href="../contact/"><span>Send a rental request</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qrentals-3" role="region"><div><p>No. The website takes a rental request, and the rental team reserves the machine after it confirms availability, the dates, and delivery with you by phone, text, or email.</p><p class="alink"><a class="olink" href="../contact/"><span>Send a rental request</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qrentals-4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What if a rental machine breaks down?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qrentals-4" role="region"><div><p>Call us. If we can’t fix it the same day, we prorate the rent.</p></div></div>
+          <div data-accpanel id="qrentals-4" role="region"><div><p>Call <a class="tel" href="tel:+17756250062">(775) 625-0062</a> and we send a technician to the machine. If we cannot repair it the same day, the rent is prorated for the days the machine was down.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qrentals-5"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I rent a machine while mine is being repaired?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qrentals-5" role="region"><div><p>Yes. We can rent you a machine from our fleet so the job keeps going while we repair yours.</p><p class="alink"><a class="olink" href="../contact/"><span>Ask about a rental and a repair</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qrentals-5" role="region"><div><p>Yes. When your machine will be down through a shop repair or a parts wait, we put a machine from our rental fleet on your jobsite so the work continues, and the repair and the rental are planned together from one service request.</p><p class="alink"><a class="olink" href="../contact/"><span>Ask about a rental and a repair</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
       </div>
-      <p class="next"><a class="olink" href="../rentals/"><span>Go to rentals</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
+      <p class="next"><a class="olink" href="../rentals/"><span>See the rental fleet</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
     </div>
   </section>
 
@@ -729,21 +868,21 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   <section class="topic tint" id="t-finance" aria-labelledby="t-finance-h" data-reveal>
     <div class="wrap">
       <span class="seam" data-scrollaccent aria-hidden="true"></span>
-      <div class="ttl"><span class="ic" style="--ic: url(../assets/f2c9fdb85515cbbe.svg)" aria-hidden="true"></span><h2 id="t-finance-h">Finance</h2></div>
-      <p class="tl">QuickFi finances new XCMG machines. For used machines and other brands, we work with other lenders.</p>
+      <div class="ttl"><span class="ic" style="--ic: url(../assets/f2c9fdb85515cbbe.svg)" aria-hidden="true"></span><h2 id="t-finance-h">Financing</h2></div>
+      <p class="tl">QuickFi, XCMG’s lender, finances new XCMG machines and the attachments bought with them. For a used machine, another brand, or the rental purchase option, call or send an inquiry, and someone from DBM reaches out to set up the financing.</p>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qfinance-1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What is the rental purchase option?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qfinance-1" role="region"><div><p>You rent a machine from our fleet, and if you buy it within six months, part of the rent you’ve paid goes toward the price. The share that counts gets smaller the longer you rent. Our rental team can tell you how much would apply on the machine you want.</p><p class="alink"><a class="olink" href="../finance/"><span>Read about the rental purchase option</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qfinance-1" role="region"><div><p>The rental purchase option lets you rent a machine from our fleet and buy it within six months, with part of the rent you paid applied to the price. The share applied gets smaller the longer the rental runs and varies by machine. Call <a class="tel" href="tel:+17756250062">(775) 625-0062</a> or send an inquiry before the rental starts, and someone from DBM reaches out with the split for the machine you want.</p><p class="alink"><a class="olink" href="../finance/"><span>Read about the rental purchase option</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qfinance-2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Where do I apply for financing?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qfinance-2" role="region"><div><p>For a new XCMG machine, and attachments you buy with it, apply on QuickFi’s website through our finance page. 0% financing is available on approved credit. For a used machine or another brand, call us. For a rental account, ask for our credit application.</p><p class="alink"><a class="olink" href="../finance/"><span>Go to financing</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qfinance-2" role="region"><div><p>For a new XCMG machine and the attachments bought with it, apply on QuickFi’s XCMG application at quickfi.ai/xcmg, with 0% financing available on approved credit. For a used machine or another brand, call <a class="tel" href="tel:+17756250062">(775) 625-0062</a> or send an inquiry, and someone from DBM reaches out to arrange the financing through one of the other lenders we work with. To open an account with DBM, ask for our credit application on the same call.</p><p class="alink"><a class="olink" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener"><span>Apply for XCMG financing on QuickFi</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
       </div>
-      <p class="next"><a class="olink" href="../finance/"><span>Go to financing</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
+      <p class="next"><a class="olink" href="../finance/"><span>See financing options</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
     </div>
   </section>
 
@@ -751,21 +890,21 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   <section class="topic" id="t-selling" aria-labelledby="t-selling-h" data-reveal>
     <div class="wrap">
       <span class="seam" data-scrollaccent aria-hidden="true"></span>
-      <div class="ttl"><span class="ic" style="--ic: url(../assets/c4c48e620b252173.svg)" aria-hidden="true"></span><h2 id="t-selling-h">Selling and trading</h2></div>
-      <p class="tl">We buy used equipment of any make.</p>
+      <div class="ttl"><span class="ic" style="--ic: url(../assets/c4c48e620b252173.svg)" aria-hidden="true"></span><h2 id="t-selling-h">Selling &amp; Trading In</h2></div>
+      <p class="tl">We buy used equipment and take trade-ins of any make, with an offer based on the details and photos you send.</p>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qselling-1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Will you take other brands in a trade?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qselling-1" role="region"><div><p>Yes. We buy and take trades on any make. Send the make, model, serial number, hours, condition, and photos, and we reply with an offer.</p><p class="alink"><a class="olink" href="../we-buy-equipment/"><span>Send your machine’s details</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qselling-1" role="region"><div><p>Yes. We buy and take trade-ins on any make, and a request with the make, model, serial number, hours, condition, and photos gives our sales team what it needs to reply with an offer.</p><p class="alink"><a class="olink" href="../we-buy-equipment/"><span>Send your machine’s details</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qselling-2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Will the form give me a trade value?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qselling-2" role="region"><div><p>No. Our sales team reviews the details and photos you send, calls you if we have questions, and then replies with an offer.</p><p class="alink"><a class="olink" href="../we-buy-equipment/"><span>Send your machine’s details</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qselling-2" role="region"><div><p>No. The form sends your details and photos to our sales team, which reviews them, calls you with any questions about the machine’s condition, and then replies with an offer.</p><p class="alink"><a class="olink" href="../we-buy-equipment/"><span>Send your machine’s details</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
       </div>
-      <p class="next"><a class="olink" href="../we-buy-equipment/"><span>Go to sell or trade</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
+      <p class="next"><a class="olink" href="../we-buy-equipment/"><span>Open the sell or trade page</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
     </div>
   </section>
 
@@ -774,38 +913,38 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
     <div class="wrap">
       <span class="seam" data-scrollaccent aria-hidden="true"></span>
       <div class="ttl"><span class="ic" style="--ic: url(../assets/6ce98818dd747437.svg)" aria-hidden="true"></span><h2 id="t-about-h">About DBM</h2></div>
-      <p class="tl">Who we are and who you’ll talk to.</p>
+      <p class="tl">DBM runs its shop, yard, and parts department from 2366 Resource Dr in Fernley, Nevada, and its service trucks work anywhere in Nevada and in California from Sacramento to Bakersfield.</p>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qabout-1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What does DBM do?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qabout-1" role="region"><div><p>We sell, rent, and repair heavy equipment, sell parts, and buy used machines. We’re the exclusive XCMG dealer, and our yard, shop, and parts counter are in Fernley, Nevada.</p><p class="alink"><a class="olink" href="../about/"><span>Read about DBM</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qabout-1" role="region"><div><p>DBM repairs heavy equipment of any make in the field and in our shop, sells new XCMG machines as the exclusive XCMG dealer, sells used machines, rents machines to contractors, supplies parts, and buys used equipment, from our shop and yard at 2366 Resource Dr in Fernley, Nevada.</p><p class="alink"><a class="olink" href="../about/"><span>Read about DBM</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qabout-2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Who will I talk to?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qabout-2" role="region"><div><p>Call or text <a class="tel" href="tel:+17756250062">(775) 625-0062</a>. Our sales and rental team handles buying, renting, selling, and financing. Our parts and service team handles parts and repairs.</p><p class="alink"><a class="olink" href="../about/"><span>Meet our team</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qabout-2" role="region"><div><p>Calls and texts to <a class="tel" href="tel:+17756250062">(775) 625-0062</a> reach our office, which passes buying, renting, selling, and financing questions to our sales and rental team, and parts and repair requests to our parts department and service team.</p><p class="alink"><a class="olink" href="../about/"><span>Meet our team</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qabout-3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I see an example of DBM’s work?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qabout-3" role="region"><div><p>Yes. Our case study tells how our crew used a DBM crane truck that was already on a new construction job to lift sewer pumps into place.</p><p class="alink"><a class="olink" href="../case-studies/sewer-pump-lift/"><span>Read the sewer pump lift</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
+          <div data-accpanel id="qabout-3" role="region"><div><p>Yes. Our case study describes a new construction job where our crew and a DBM crane truck were already on site and lifted the customer’s sewer pumps into place, and that customer still works with us.</p><p class="alink"><a class="olink" href="../case-studies/sewer-pump-lift/"><span>Read the sewer pump lift</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="qabout-4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What is DBM’s safety record?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="qabout-4" role="region"><div><p>In our 10 years, no one on our crew has missed work because of an injury on the job.</p></div></div>
+          <div data-accpanel id="qabout-4" role="region"><div><p>In our 10 years, our crews have had no lost-time accidents, which means no one on a DBM crew has missed work because of an injury on the job.</p></div></div>
         </div>
       </div>
-      <p class="next"><a class="olink" href="../about/"><span>Go to about DBM</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
+      <p class="next"><a class="olink" href="../about/"><span>Read about DBM</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></p>
     </div>
   </section>
 
   
   <section class="sec white on-light" id="more" aria-labelledby="more-title" data-reveal>
     <div class="wrap">
-      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="more-title">Pages for each part of our business</h2></div>
-      <ul class="rel"><li><a href="../services/"><span class="rt">Service and parts</span><span class="rd">Field service, shop repair, and parts.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li><li><a href="../equipment/"><span class="rt">Equipment for sale</span><span class="rd">New XCMG machines and used machines of any make.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li><li><a href="../rentals/"><span class="rt">Rentals</span><span class="rd">Machines for your job, mostly by the month.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li><li><a href="../we-buy-equipment/"><span class="rt">Sell or trade</span><span class="rd">Send us your machine’s details for an offer.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li></ul>
+      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="more-title">DBM Service, Sales, Rental &amp; Trade-In Pages</h2></div>
+      <ul class="rel"><li><a href="../services/"><span class="rt">Service &amp; Parts</span><span class="rd">Field service across Nevada and California, shop repair, and XCMG, SAS, and aftermarket parts.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li><li><a href="../equipment/"><span class="rt">Equipment for Sale</span><span class="rd">New XCMG machines, and used machines of any make sold nationwide.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li><li><a href="../rentals/"><span class="rt">Rentals</span><span class="rd">Mini excavators to 50-ton mining trucks, rented mostly by the month to contractors.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li><li><a href="../we-buy-equipment/"><span class="rt">Sell or Trade</span><span class="rd">Send your machine’s details and photos, and our sales team replies with an offer.</span><svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li></ul>
     </div>
   </section>
   
@@ -816,14 +955,14 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
         <div class="call-in">
           <div class="call-top">
             <span class="accent" aria-hidden="true" style="margin-top:0"></span>
-            <h2 class="h" id="call-title">Ask us your question</h2>
-            <p class="cl">Call or text (775) 625-0062, or send us a request. Tell us the machine and the job, and we’ll answer you.</p>
+            <h2 class="h" id="call-title">Questions This Page Does Not Answer</h2>
+            <p class="cl">Call or text (775) 625-0062 with the machine and the job, or send a written question, and the office passes it to the service team, the parts department, or the sales and rental team for an answer.</p>
           </div>
           <div class="acts">
             <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-            <a class="kplate" href="../contact/"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
+            <a class="kplate" href="../contact/"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a written question</span></a>
           </div>
-          <p class="fine">Our yard, shop, and parts counter are at 2366 Resource Dr, Fernley, NV 89408.</p>
+          <p class="fine">Our shop, yard, and parts department are at 2366 Resource Dr, Fernley, NV 89408, east of Reno on I-80.</p>
         </div>
         <span class="kerf" aria-hidden="true"></span>
       </div>
@@ -836,11 +975,11 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
-        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a></div>
+        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
       <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../rentals/">Rentals</a></li><li><a href="../equipment/new/">New equipment</a></li><li><a href="../equipment/used/">Used equipment</a></li><li><a href="../we-buy-equipment/">We buy equipment</a></li><li><a href="../finance/">Finance</a></li></ul></div>
       <div class="foot-col"><h3>Service</h3><ul><li><a href="../services/">Service &amp; repair</a></li><li><a href="../services/mobile-field-service/">Mobile field service</a></li><li><a href="../services/line-boring/">Line boring</a></li><li><a href="../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../services/">Request a part</a></li></ul></div>
-      <div class="foot-col"><h3>Company</h3><ul><li><a href="../about/">About DBM</a></li><li><a href="../case-studies/">Case studies</a></li><li><a href="../faqs/" aria-current="page">FAQs</a></li><li><a href="../careers/">Careers</a></li><li><a href="../contact/">Contact</a></li></ul></div>
+      <div class="foot-col"><h3>Company</h3><ul><li><a href="../about/">About DBM</a></li><li><a href="../case-studies/">Case studies</a></li><li><a href="../faqs/" aria-current="page">FAQs</a></li><li><a href="../blog/">Job stories and guides</a></li><li><a href="../careers/">Careers</a></li><li><a href="../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span class="tagline">Built for work. <span>Driven to perform.</span></span>
@@ -851,10 +990,12 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
 </footer>
 
 
+
 <div class="callbar" aria-hidden="true">
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-  <a class="kb" href="../contact/" tabindex="-1" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send a request</span></span></a>
+  <a class="kplate" href="../contact/" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
 </div>
+
 
 <script>
 (function () {
@@ -868,7 +1009,15 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset
   var navEl = document.getElementById('nav'), navbar = navEl && navEl.querySelector('.navbar'), navLogo = navEl && navEl.querySelector('.brand img');
   function setTight(t) { navbar.style.paddingTop = navbar.style.paddingBottom = t ? '12px' : ''; navLogo.style.height = t ? (window.innerWidth <= 620 ? '30px' : '38px') : ''; }
-  function measure() { document.documentElement.style.setProperty('--dbm-nav', Math.ceil(navEl.getBoundingClientRect().height) + 10 + 'px'); }
+  // Buy pages: their row of links to each other moves directly under the header (CSS already shows it there), so keyboard order matches what is seen
+  var buyRow = document.querySelector('main > .subnav[aria-label="Buy equipment"]');
+  if (buyRow && buyRow.parentNode.firstElementChild !== buyRow) buyRow.parentNode.insertBefore(buyRow, buyRow.parentNode.firstElementChild);
+  // --dbm-nav-h is the header's exact height (the sticky Buy row sits under it); --dbm-nav adds the sticky Buy row and 10 px for anchor jumps
+  function measure() {
+    var h = navEl.getBoundingClientRect().height, extra = buyRow && getComputedStyle(buyRow).position === 'sticky' ? buyRow.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--dbm-nav-h', h + 'px');
+    document.documentElement.style.setProperty('--dbm-nav', Math.ceil(h + extra) + 10 + 'px');
+  }
   if (navbar && navLogo) {
     var sentinel = document.createElement('span');
     sentinel.setAttribute('aria-hidden', 'true');
@@ -876,6 +1025,7 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
     document.body.insertBefore(sentinel, document.body.firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (en) { setTight(!en.isIntersecting); measure(); }); }).observe(sentinel);
     window.addEventListener('resize', measure, { passive: true }); measure();
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(navEl);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
@@ -949,6 +1099,111 @@ a.tel:hover, a.tel:focus-visible { color: #C9430D; }
   if (callbar && heroActs) new IntersectionObserver(function (es) { heroGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(heroActs);
   if (callbar && callBand) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(callBand);
 })();
+
+/* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
+   The diamond beside a route opens that route's panel under the bar on click, never on hover, and one panel is open at a time.
+   The same diamond, Escape, or a click outside closes it. Tab moves from an open diamond into its panel and from the panel's
+   last link on to the next route. Durations and eases are the board's, and reduced motion sets them to 0. */
+(function () {
+  var nav = document.getElementById('nav'), host = nav && nav.querySelector('[data-menuhost]');
+  if (!host) return;
+  var R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D = function (t) { return R ? 0 : t; };
+  var G = function () { return document.documentElement.classList.contains('gsap-on') && window.gsap; };
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  var toggles = nav.querySelectorAll('[data-mt]'), open = null;
+  var panelOf = function (k) { return document.getElementById('menu-' + k); };
+  var toggleOf = function (k) { return nav.querySelector('[data-mt="' + k + '"]'); };
+  var fit = function (p) { p.style.maxHeight = Math.max(160, window.innerHeight - nav.getBoundingClientRect().bottom) + 'px'; };
+
+  // The menu link for the page the visitor is on is marked as the current page. Review copies live at pages/<folder>/hifi.html.
+  var m = location.pathname.match(/\/([^\/]+)\/hifi\.html$/), special = { home: '', 'line-boring': '/services/line-boring', 'welding-fabrication': '/services/welding-fabrication' };
+  var here = m ? (m[1] in special ? special[m[1]] : '/' + m[1].replace(/--/g, '/')) : location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+  each(host.querySelectorAll('a[href]'), function (a) {
+    if (a.getAttribute('href').indexOf('#') !== -1) return;
+    var path = m ? a.getAttribute('href').replace(/\/$/, '') : a.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+    if (path === here) a.setAttribute('aria-current', 'page');
+  });
+
+  function diam(t, on) {
+    var g = G(), d = t.querySelector('[data-diam]');
+    if (g) g.to(d, { rotate: on ? 180 : 0, backgroundColor: on ? '#EF5016' : '#8A8D93', duration: D(on ? 0.3 : 0.24), ease: on ? 'back.out(2)' : 'power1.out', overwrite: 'auto' });
+  }
+  function hideNow(p) {
+    var g = window.gsap;
+    if (g) g.killTweensOf(p);
+    p.hidden = true; p.style.height = ''; p.classList.remove('is-open');
+  }
+  function close(refocus, now) {
+    if (!open) return;
+    var k = open, p = panelOf(k), t = toggleOf(k), g = G();
+    open = null;
+    t.setAttribute('aria-expanded', 'false'); diam(t, false);
+    p.classList.remove('is-open');
+    if (g && !now) { g.killTweensOf(p); g.to(p, { height: 0, duration: D(0.26), ease: 'power2.in', onComplete: function () { hideNow(p); } }); }
+    else hideNow(p);
+    if (refocus) t.focus({ preventScroll: true });
+  }
+  function show(k) {
+    if (open === k) { close(true); return; }
+    if (open) close(false, true);
+    var p = panelOf(k), t = toggleOf(k), g = G();
+    each(host.querySelectorAll('.menu'), function (x) { if (x !== p && !x.hidden) hideNow(x); });
+    open = k;
+    t.setAttribute('aria-expanded', 'true'); diam(t, true);
+    p.hidden = false; fit(p);
+    if (!g) { p.classList.add('is-open'); return; }
+    g.killTweensOf(p);
+    g.fromTo(p, { height: 0 }, { height: 'auto', duration: D(0.34), ease: 'power3.out', onComplete: function () { p.style.height = ''; p.classList.add('is-open'); } });
+    var kerf = p.querySelector('[data-menukerf]');
+    if (kerf && !R) {
+      if (window.DrawSVGPlugin) g.fromTo(kerf, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'power2.inOut' });
+      else g.fromTo(kerf, { strokeDasharray: 1000, strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.inOut', clearProps: 'strokeDasharray,strokeDashoffset' });
+    }
+    if (!R) g.fromTo(p.querySelectorAll('[data-mitem]'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.28, stagger: 0.04, delay: 0.08, ease: 'power2.out' });
+  }
+
+  each(toggles, function (t) {
+    t.addEventListener('click', function (e) { e.stopPropagation(); show(t.getAttribute('data-mt')); });
+    t.addEventListener('pointerenter', function () { var g = G(); if (g) g.to(t, { scale: 1.12, duration: D(0.18) }); });
+    t.addEventListener('pointerleave', function () { var g = G(); if (g) g.to(t, { scale: 1, duration: D(0.18) }); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(true); return; }
+    if (e.key !== 'Tab') return;
+    var t = toggleOf(open), f = panelOf(open).querySelectorAll('a[href]'), a = document.activeElement;
+    if (a === t && !e.shiftKey) { e.preventDefault(); f[0].focus(); }
+    else if (a === f[0] && e.shiftKey) { e.preventDefault(); t.focus(); }
+    else if (a === f[f.length - 1] && !e.shiftKey) {
+      var bar = Array.prototype.slice.call(nav.querySelectorAll('.navbar a[href], .navbar button')), next = bar[bar.indexOf(t) + 1];
+      e.preventDefault(); close(false); (next || t).focus();
+    }
+  }, true);
+  document.addEventListener('click', function (e) { if (open && !host.contains(e.target) && !(e.target.closest && e.target.closest('[data-mt]'))) close(false); }, true);
+  window.addEventListener('resize', function () { if (open) fit(panelOf(open)); }, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (open) fit(panelOf(open)); }).observe(nav);
+  window.addEventListener('pageshow', function (e) { if (e.persisted && open) close(false, true); });
+
+  // Row target (board C08 _rows): pointing at a row strikes the orange line down its leading edge, moves the title and arrow 6 px, and turns the title orange
+  each(host.querySelectorAll('[data-row]'), function (r) {
+    var edge = r.querySelector('[data-edge]'), arr = r.querySelector('[data-rarr]'), title = r.querySelector('[data-rtitle]');
+    function set(v) {
+      var g = G(); if (!g) return;
+      var lit = v || r.hasAttribute('aria-current');
+      g.to(edge, { scaleY: lit ? 1 : 0, duration: D(0.26), ease: 'power2.out', overwrite: 'auto' });
+      g.to(arr, { x: v ? 6 : 0, duration: D(0.26), ease: v ? 'back.out(2)' : 'power2.out', overwrite: 'auto' });
+      g.to(title, { x: v ? 6 : 0, color: lit ? '#F4703F' : '#FFFFFF', duration: D(0.24), ease: 'power2.out', overwrite: 'auto' });
+    }
+    r.addEventListener('pointerenter', function () { set(true); });
+    r.addEventListener('pointerleave', function () { set(false); var g = G(); if (g) g.to(r, { y: 0, duration: 0.1, overwrite: 'auto' }); });
+    r.addEventListener('focus', function () { set(true); });
+    r.addEventListener('blur', function () { set(false); });
+    r.addEventListener('pointerdown', function () { var g = G(); if (g) g.to(r, { y: 1, duration: 0.06, overwrite: 'auto' }); });
+    r.addEventListener('pointerup', function () { var g = G(); if (g) g.to(r, { y: 0, duration: 0.12, overwrite: 'auto' }); });
+  });
+})();
+/* NAV-05 route menus: end */
 </script>
 <script>
 /*!

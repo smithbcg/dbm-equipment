@@ -6,6 +6,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../../assets/bc77390d9895822a.svg">
 <title>Hydraulic Services · DBM Heavy Equipment</title>
 <script>document.documentElement.classList.add('js');</script>
 <style>
@@ -74,8 +75,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
 .nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
-@media (min-width: 1240px) { .navbar { flex-wrap: nowrap; } .nav nav { flex-wrap: nowrap; } }
-@media (max-width: 1239px) {
+/* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
+@media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
+@media (max-width: 1359px) {
   .navbar { row-gap: 10px; }
   .nav nav { order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 2px 0; -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); }
   .nav nav::-webkit-scrollbar { display: none; }
@@ -249,6 +251,69 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .call-plate { position: relative; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); overflow: hidden; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.32)) drop-shadow(0 3px 5px rgba(26,26,26,0.26)); }
 .call-plate .rv.bl, .call-plate .rv.br { bottom: 17px; }
 .call-in { padding: 54px clamp(24px, 4.5vw, 58px) 46px; display: flex; flex-direction: column; gap: 30px; }
+/* NAV-05 route menus: start (board C08 NAV-05, ported 2026-10-28; the same block is copied into the Home page) */
+.nav nav .route { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.nav .mt { appearance: none; border: 0; background: transparent; cursor: pointer; width: 24px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; flex: none; transition: transform .18s ease; }
+.nav .mt:focus-visible { outline-offset: -4px; }
+.nav .diam { display: block; width: 9px; height: 9px; background: var(--dim); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transition: transform .3s cubic-bezier(.34,1.56,.64,1), background-color .24s ease; }
+.nav .mt[aria-expanded="true"] .diam { transform: rotate(180deg); background: var(--orange); }
+html:not(.gsap-on) .nav .mt:hover { transform: scale(1.12); }
+.gsap-on .nav .diam { transition: none; }
+.menus { position: absolute; left: 0; right: 0; top: 100%; }
+.menu { position: relative; background: var(--charcoal); box-shadow: 0 18px 30px rgba(0,0,0,0.35); overflow: hidden; overscroll-behavior: contain; view-transition-name: dbm-menu; }
+.menu[hidden] { display: none; }
+.menu.is-open { overflow-y: auto; }
+.mkerf { display: block; width: 100%; height: 2px; }
+.menu-in { max-width: calc(1256px + 2 * var(--pad-x)); margin: 0 auto; padding: 24px var(--pad-x) 28px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: 34px; }
+.mcol { display: flex; flex-direction: column; min-width: 0; }
+.menu .mh { margin: 0; color: var(--orange-hover); font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; line-height: 1.5; text-transform: uppercase; }
+.mrows, .mreads { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; }
+.mreads { gap: 10px; }
+.mrow { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 14px 12px 16px; min-height: 56px; text-decoration: none; border-bottom: 1px solid #2A2A2A; }
+.medge { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--orange); transform: scaleY(0); transform-origin: top center; }
+.mtext { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mtitle { display: inline-block; align-self: flex-start; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; line-height: 1.3; }
+.msub { color: #9A9A9A; font-size: 13px; line-height: 1.45; }
+.marr { width: 22px; height: 10px; flex: none; color: var(--orange-hover); }
+.mrow[aria-current] .medge { transform: scaleY(1); }
+.mrow[aria-current] .mtitle { color: var(--orange-hover); }
+.mread { display: block; color: var(--silver); font-size: 14px; line-height: 1.5; padding: 6px 0; border-bottom: 1px solid #2A2A2A; text-decoration: none; transition: color .2s ease; }
+.mread:hover, .mread:focus-visible, .mread[aria-current] { color: #FFFFFF; }
+.mreach { align-self: start; display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); }
+.menu .mreach .mh { color: var(--silver); }
+.mreach p:last-child { margin: 0; color: #E4E4E4; font-size: 14px; line-height: 1.6; }
+.menu a:focus-visible { outline-offset: -2px; }
+html:not(.gsap-on) .medge, html:not(.gsap-on) .marr, html:not(.gsap-on) .mtitle { transition: transform .26s ease, color .24s ease; }
+html:not(.gsap-on) .mrow:hover .medge, html:not(.gsap-on) .mrow:focus-visible .medge { transform: scaleY(1); }
+html:not(.gsap-on) .mrow:hover .marr, html:not(.gsap-on) .mrow:focus-visible .marr { transform: translateX(6px); }
+html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .mtitle { transform: translateX(6px); color: var(--orange-hover); }
+@media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
+
+/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
+   Reduced motion: the transition is not switched on, so pages change at once. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+.nav { view-transition-name: dbm-header; }
+.callbar { view-transition-name: dbm-callbar; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
+::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; }
+::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
+::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
+@keyframes dbm-page-out { to { opacity: 0; } }
+@keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+/* NAV-05 route menus: end */
+
+/* Buy pages only (the four pages whose link row is labeled "Buy equipment"): that row of links to each other sits directly under
+   the header and stays there while the page scrolls, so it is in the same place on each Buy page and does not move when the visitor
+   changes page. The service pages' link rows are not affected. */
+main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction: column; }
+main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
+@media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -360,12 +425,15 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   .formact .btn-orange .cf { padding: 16px 14px; letter-spacing: 0.16em; }
   .btn-orange .lbl { white-space: normal; text-align: center; }
 }
+
+/* Footer address lines (shared footer) */
+.foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
 </style>
 <style>
-/* Hydraulic Services page (2026-10-28). The sections, their order, and the controls follow the existing page,
+/* Hydraulic Services page, version 2 (2026-10-28). The nine sections and their order follow the existing page,
    DBM HTML 5/services--hydraulic-services.html. Each block names the board component it was raised to.
-   DBM has given no facts about hydraulic work beyond listing hydraulic systems and cylinder rebuilds, so the hydraulic details carry. */
-:root { --chamfer-10: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+   DBM has given no facts about hydraulic work beyond listing hydraulic systems and cylinder rebuilds, so every hydraulic detail carries. */
+:root { --chamfer-10: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); --chamfer-8: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)); }
 [data-c] { position: absolute; width: 15px; height: 15px; transform: scale(0); pointer-events: none; }
 [data-c="tl"] { top: 0; left: 0; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform-origin: top left; }
 [data-c="br"] { bottom: 0; right: 0; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform-origin: bottom right; }
@@ -376,42 +444,58 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .ch-btn .l { position: relative; z-index: 1; }
 .ch-btn svg { position: relative; z-index: 1; width: 22px; height: 10px; flex: none; }
 
-/* C07 Control Plate, sec and paper */
+/* C07 Control Plate: sec, dark and paper */
 .kb { appearance: none; border: 0; background: transparent; cursor: pointer; display: inline-block; position: relative; padding: 0 0 4px 0; text-decoration: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.38)); transition: padding 0.09s ease; max-width: 100%; }
 .kb [data-kbase] { position: absolute; left: 0; right: 0; bottom: 0; top: 4px; background: #0A0A0A; clip-path: var(--chamfer-12); }
 .kb [data-kplate] { position: relative; overflow: hidden; display: inline-flex; justify-content: center; align-items: center; gap: 12px; padding: 17px 24px 17px 28px; min-height: 52px; max-width: 100%; font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase; text-align: center; color: #C7C9CC; background: linear-gradient(#26292D, #1A1C1F); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -2px 0 rgba(0,0,0,0.4); clip-path: var(--chamfer-12); }
 .kb [data-kedge] { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016; }
 .kb .l { position: relative; }
+.kb svg { position: relative; flex: none; }
+.kb[data-kb="dark"] [data-kplate] { color: #FFFFFF; background: linear-gradient(#3B3F46, #232629); box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.55); }
 .kb.paper { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.22)); }
 .kb.paper [data-kbase] { background: #A9AEB8; }
-.kb.paper [data-kplate] { padding: 14px 22px 14px 26px; min-height: 48px; min-width: 200px; color: #1A1A1A; background: linear-gradient(#FFFFFF, #E2E4E7); box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -2px 0 rgba(0,0,0,0.12); }
+.kb.paper [data-kplate] { padding: 13px 22px 13px 26px; min-height: 48px; color: #1A1A1A; background: linear-gradient(#FFFFFF, #E2E4E7); box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -2px 0 rgba(0,0,0,0.12); }
 .kb.paper [data-kedge] { background: #4B4F56; }
 
-/* Section heads, with the lede beside the heading as on the existing page */
+/* C07 Field Mono, dark and light, with Bracket Lock */
+.mono-btn { position: relative; border: 0; cursor: pointer; background: transparent; font-family: 'Chivo Mono', monospace; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 13px 18px; min-height: 44px; text-align: center; clip-path: var(--chamfer-10); }
+.mono-btn[data-mono="dark"] { color: #C7C9CC; box-shadow: inset 0 0 0 1.5px #3A3D42; }
+.mono-btn[data-mono="light"] { color: #4B4F56; box-shadow: inset 0 0 0 1.5px #B9BCC1; }
+.mono-btn .l { position: relative; }
+
+/* Section heads: Home sample head with BAN-06's accent strike */
 .shead { position: relative; padding-top: 26px; max-width: 760px; }
 .shead .hacc { position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016; }
 .shead h2 { margin: 0; font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: 0.015em; line-height: 1.06; text-transform: uppercase; color: #1A1A1A; text-wrap: balance; }
-.headrow { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 24px clamp(28px, 5vw, 72px); align-items: end; }
-.slede { margin: 0; max-width: 58ch; color: #33363B; font-size: 17px; line-height: 1.65; text-wrap: pretty; }
+.headrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px clamp(28px, 5vw, 72px); align-items: end; }
+.slede { margin: 0; max-width: 60ch; color: #33363B; font-size: 17px; line-height: 1.65; text-wrap: pretty; }
 .tlink { display: inline-flex; align-items: center; gap: 12px; color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 0 8px; border-bottom: 1.5px solid #1A1A1A; transition: color .2s ease, border-color .2s ease; }
 .tlink svg { width: 22px; height: 10px; flex: none; color: #C9430D; transition: transform .3s cubic-bezier(.34,1.7,.64,1); }
 .tlink:hover, .tlink:focus-visible { color: #C9430D; border-bottom-color: #C9430D; }
 .tlink:hover svg, .tlink:focus-visible svg { transform: translateX(7px); }
+.fl { color: #6B6F76; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; }
+.fv { color: #1A1A1A; font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.25; margin-top: 6px; }
 
-/* Section 1: the existing page's full-width photo hero, raised to board C07 H3 Full Bleed without route cards, with the C07 fact strip.
-   The hero is sized so the service-page bar shows in the first screen, as it does on the existing page, and the copy sits on the same 1256 px grid as the logo and every section. */
-.hero-fb { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: clamp(560px, calc(100vh - 160px), 780px); background: #1A1A1A; overflow: hidden; color: #FFFFFF; }
-.hero-fb .fb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-.hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(0deg, #1A1A1A 0%, rgba(26,26,26,0.95) 30%, rgba(26,26,26,0.74) 50%, rgba(26,26,26,0.28) 70%, rgba(26,26,26,0.1) 84%, rgba(26,26,26,0.35) 100%), linear-gradient(90deg, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0) 60%); }
-.hero-fb .fb-copy { position: relative; width: min(100%, calc(1256px + 2 * var(--pad-x))); max-width: none; margin: 0 auto; padding: 0 var(--pad-x) clamp(36px, 4.5vw, 56px); display: flex; flex-direction: column; gap: 18px; }
+/* Section 1: the existing full-width photo hero. The photo fills the right of the band and fades into charcoal under the copy (C07 H3 type zone),
+   with the C07 H5 qualifier above the buttons and the C07 fact strip below them. */
+.hero-fb { position: relative; background: #1A1A1A; color: #FFFFFF; overflow: hidden; }
+.hero-fb .fb-pic { position: absolute; top: 0; right: 0; bottom: 3px; width: min(76%, 1180px); background: #2A2D31; }
+.hero-fb .fb-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+.hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, #1A1A1A 0%, #1A1A1A 24%, rgba(26,26,26,0.9) 40%, rgba(26,26,26,0.5) 58%, rgba(26,26,26,0.12) 78%, rgba(26,26,26,0) 100%), linear-gradient(0deg, rgba(26,26,26,0.75) 0%, rgba(26,26,26,0) 30%); }
+.hero-fb .fb-copy { position: relative; padding: 0 var(--pad-x); }
+.hero-fb .fb-col { max-width: 700px; padding: clamp(40px, 4.4vw, 60px) 0 clamp(32px, 3.6vw, 46px); display: flex; flex-direction: column; gap: 16px; }
 .hero-fb .eyebrow { color: #F4703F; }
-.hero-fb h1 { margin: 0; max-width: 18ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(38px, 5.4vw, 72px); line-height: 0.98; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
-.hero-fb .fb-lede { margin: 4px 0 0; max-width: 700px; color: #E4E4E4; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.6; text-wrap: pretty; }
-.hero-fb .acts { margin-top: 10px; }
-.hero-fb .facts { margin: 14px 0 0; max-width: 980px; }
+.hero-fb h1 { margin: 0; max-width: 15ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 48px); line-height: 1.02; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
+.hero-fb .lede { margin: 0; color: #E4E4E4; font-size: 17px; line-height: 1.6; text-wrap: pretty; }
+.qual { background: rgba(20,20,20,0.92); box-shadow: inset 0 0 0 1px #3A3D42; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.qual .q { color: #FFFFFF; font-family: 'Familjen Grotesk', sans-serif; font-size: 15px; font-weight: 700; }
+.qual .qrow { display: flex; gap: 10px; flex-wrap: wrap; }
+.qual [data-qsay] { margin: 0; color: #C7C9CC; font-size: 14px; line-height: 1.55; min-height: 22px; text-wrap: pretty; }
+.hero-fb .acts { margin-top: 4px; }
+.hero-fb .facts { margin: 6px 0 0; }
 .hero-fb .facts div { border-top-color: #3A3D42; }
-.hero-fb .facts dd { font-size: 15px; }
-.hero-fb .hero-kerf { position: relative; display: block; width: 100%; height: 3px; }
+.hero-fb .facts dd { font-size: 14.5px; }
+.hero-kerf { position: relative; display: block; width: 100%; height: 3px; }
 
 /* Section 2: the existing service bar, raised to the C08 NAV-01 second-level bar */
 .subnav { position: relative; background: #F2F3F4; padding: 0 var(--pad-x); box-shadow: inset 0 -1px 0 #D5D7DA; }
@@ -421,22 +505,40 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .subnav a:hover, .subnav a:focus-visible, .subnav a[aria-current] { color: #1A1A1A; }
 .subnav [data-skerf] { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: #EF5016; pointer-events: none; }
 
-/* Section 3: the existing two cards, raised to Card 1b Riveted Data Plate (Card Explorations) */
-.plates2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 40px; }
-.plate1b { position: relative; display: flex; flex-direction: column; background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; color: #FFFFFF; }
-.plate1b .acc1b { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.34s cubic-bezier(0.22,1,0.36,1); }
-.plate1b .strip { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 38px 13px; border-bottom: 1px solid #2A2A2A; color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.28em; }
-.plate1b .pb { padding: 24px 38px 34px; display: flex; flex-direction: column; gap: 16px; }
-.plate1b h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 23px; font-weight: 800; letter-spacing: 0.03em; line-height: 1.15; text-transform: uppercase; }
-.plate1b .intro { margin: 0; color: #C7C9CC; font-size: 16px; line-height: 1.6; }
-.fields1b { margin: 4px 0 0; border-top: 1px solid #2A2A2A; }
-.fields1b div { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 18px; padding: 15px 0; border-bottom: 1px solid #2A2A2A; }
-.fields1b dt { color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; padding-top: 4px; transition: color 0.2s ease; }
-.fields1b dd { margin: 0; color: #E4E4E4; font-size: 15.5px; line-height: 1.6; }
-body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color: #FFFFFF !important; }
+/* Section 3: the existing two cards (system and cylinder), raised to a C09 CAR-03 switcher rail over a C09 CAR-09 explainer with pins,
+   C05 BDG-01 stamps that say where each repair is done, and CAR-03 fact cells. The cylinder panel is a section drawing, because no DBM photo shows a cylinder taken apart. */
+.hx { margin-top: 36px; background: linear-gradient(#FFFFFF, #F4F5F6); box-shadow: inset 0 0 0 1px #D5D7DA, inset 0 1px 0 #FFFFFF; padding: 14px; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.2)) drop-shadow(0 3px 5px rgba(26,26,26,0.16)); }
+.hx-rail { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 6px; background: #1A1A1A; box-shadow: inset 0 2px 7px rgba(0,0,0,0.7), inset 0 0 0 1px #0A0A0A; clip-path: var(--chamfer-12); }
+.hx-rail [data-hxmarker] { position: absolute; left: 6px; top: 6px; width: 0; height: 0; background: linear-gradient(#565D67, #31353B); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -3px 0 #EF5016; clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px)); }
+.hx-rail button { position: relative; z-index: 1; border: 0; cursor: pointer; background: transparent; color: #C7C9CC; font-family: 'Familjen Grotesk', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.35; padding: 15px 10px; transition: color 0.18s ease; }
+.hx-in { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); margin-top: 14px; }
+.xpics { position: relative; min-height: 540px; background: #DEE0E3; overflow: hidden; }
+.xpanel { position: absolute; inset: 0; }
+.xpanel[hidden] { display: none; }
+.xpanel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.xpanel.draw { background-color: #F2F3F4; background-image: linear-gradient(#E3E5E8 1px, transparent 1px), linear-gradient(90deg, #E3E5E8 1px, transparent 1px); background-size: 30px 30px; background-position: center; }
+.xpanel.draw svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.xpin { appearance: none; border: 0; cursor: pointer; position: absolute; z-index: 2; left: 22px; top: 22px; width: 34px; height: 34px; margin: -17px 0 0 -17px; padding: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chakra Petch', sans-serif; font-size: 15px; font-weight: 700; clip-path: var(--chamfer-8); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); transition: background-color 0.16s ease; }
+.xpics .xrim { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #A9AEB8, inset 0 3px 9px rgba(0,0,0,0.28); pointer-events: none; z-index: 1; }
+.xtext { padding: 22px 14px 8px 30px; min-width: 0; }
+.xtext [data-hxtext][hidden] { display: none; }
+.xtitle { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 25px; font-weight: 800; line-height: 1.14; }
+.xlead { margin: 10px 0 0; color: #1A1A1A; font-size: 16.5px; font-weight: 600; line-height: 1.55; text-wrap: pretty; }
+.xkeys { list-style: none; display: flex; flex-direction: column; margin: 16px 0 0; padding: 0; }
+.xkey { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 14px; padding: 13px 10px; border-top: 1px solid #E1E3E6; transition: background-color 0.16s ease; }
+.xnum { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: #1A1A1A; color: #FFFFFF; font-family: 'Chakra Petch', sans-serif; font-size: 14px; font-weight: 700; clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px)); transition: background-color 0.16s ease; }
+.xkey .xk { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 16px; font-weight: 700; }
+.xkey .xd { display: block; margin-top: 4px; color: #4B4F56; font-size: 15px; line-height: 1.55; text-wrap: pretty; }
+.xkey .xd a { color: #1A1A1A; text-decoration: underline; text-decoration-color: #B9BCC1; text-underline-offset: 3px; }
+.xkey .xd a:hover { text-decoration-color: #EF5016; }
+.stamp { display: inline-block; transform: rotate(-2deg); padding: 4px 8px; border: 1.5px solid #1A1A1A; box-shadow: inset 0 0 0 1.5px #FFFFFF, inset 0 0 0 2.5px #1A1A1A; background: #FFFFFF; color: #1A1A1A; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; line-height: 1.4; }
+.stamp.shop { color: #C9430D; border-color: #C9430D; box-shadow: inset 0 0 0 1.5px #FFFFFF, inset 0 0 0 2.5px #C9430D; }
+.hxfacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin-top: 14px; background: #D5D7DA; box-shadow: inset 0 0 0 1px #D5D7DA; }
+.hxfacts[hidden] { display: none; }
+.hxfacts > div { background: #F7F8F9; padding: 14px 16px; min-width: 0; }
 
-/* Section 4: the existing three symptom cards, raised to C10 Radio cards with a status reply (board Radio Cards, "a status line shows a reply for that choice") */
-.symgrid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px; margin-top: 40px; align-items: stretch; }
+/* Section 4: the existing symptom cards, raised to C10 Radio cards with a Card 1b reply, C05 TIP-01 tooltips, and a Control Plate that carries the symptom into the request */
+.symgrid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px; margin-top: 36px; align-items: start; }
 .rcards { display: flex; flex-direction: column; gap: 12px; }
 .rc { position: relative; border: 0; cursor: pointer; text-align: left; background: #F6F6F7; box-shadow: inset 0 0 0 1px #B9BCC1; padding: 20px 22px; min-height: 88px; display: flex; gap: 16px; align-items: flex-start; clip-path: var(--chamfer-12); font: inherit; }
 .rc .sock { flex: none; position: relative; width: 24px; height: 24px; margin-top: 1px; background: #E9EAEC; box-shadow: inset 0 0 0 1.5px #4B4F56, inset 0 2px 3px rgba(0,0,0,0.18); }
@@ -445,49 +547,202 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
 .rc .rct { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; line-height: 1.2; }
 .rc [data-rword] { color: #C9430D; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; }
 .rc .rcd { color: #4B4F56; font-size: 15px; line-height: 1.5; }
-.reply .pb { gap: 12px; }
+.plate1b { position: relative; display: flex; flex-direction: column; background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; color: #FFFFFF; }
+.plate1b .acc1b { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.34s cubic-bezier(0.22,1,0.36,1); }
+.plate1b .strip { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 38px 13px; border-bottom: 1px solid #2A2A2A; color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.28em; }
+.plate1b .pb { padding: 24px 38px 32px; display: flex; flex-direction: column; gap: 14px; }
+.plate1b h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 23px; font-weight: 800; letter-spacing: 0.03em; line-height: 1.15; text-transform: uppercase; }
+.fields1b { margin: 4px 0 0; border-top: 1px solid #2A2A2A; }
+.fields1b div { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 18px; padding: 14px 0; border-bottom: 1px solid #2A2A2A; }
+.fields1b dt { color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; padding-top: 4px; transition: color 0.2s ease; }
+.fields1b dd { margin: 0; color: #E4E4E4; font-size: 15.5px; line-height: 1.6; }
+.fields1b .warn dd { color: #FFFFFF; }
 .reply [data-replybody] > div[hidden] { display: none; }
+.reply .pact { margin-top: 8px; }
+body.show-assume .plate1b [data-assume], body.show-assume .svcplate [data-assume] { background: #5A4A10 !important; color: #FFFFFF !important; }
+.tw { position: relative; display: inline-block; }
+.tw button { border: 0; background: transparent; cursor: help; padding: 0 0 1px; color: #FFFFFF; font: inherit; font-weight: 600; border-bottom: 1.5px dashed #8A8D93; transition: color 0.18s ease, border-color 0.18s ease; }
+.tw [data-tip] { position: absolute; left: 0; bottom: calc(100% + 10px); width: 270px; max-width: 78vw; background: #2A2D31; box-shadow: 0 8px 18px rgba(0,0,0,0.45); padding: 13px 15px; clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px)); opacity: 0; pointer-events: none; z-index: 5; text-align: left; }
+.tw [data-tip] b { display: block; color: #F4703F; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; }
+.tw [data-tip] span { display: block; color: #E4E4E4; font-size: 13px; font-weight: 400; line-height: 1.55; margin-top: 6px; }
 
-/* Section 5: the existing checklist, with board C05 CPY-03 (copy the questions as labeled plain text) */
-.ctxgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px clamp(28px, 4vw, 56px); margin-top: 40px; align-items: start; }
-.ctxlist { list-style: none; margin: 0; padding: 0; box-shadow: 0 1px 0 #D5D7DA; }
-.ctxlist li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; padding: 20px 0; box-shadow: inset 0 1px 0 #D5D7DA; }
-.ctxlist li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; background: #EF5016; clip-path: polygon(0 0, 100% 0, 0 100%); }
-.ctxlist h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; }
-.ctxlist p { margin: 4px 0 0; color: #4B4F56; font-size: 16px; line-height: 1.55; }
-.cpybox { background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; padding: 26px 28px; display: flex; flex-direction: column; gap: 16px; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.14)); }
-.cpybox .lab { color: #C9430D; font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; }
-.cpybox .ttl { color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 800; }
-.cpyrows { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; border-top: 1px solid #E9EAEC; }
-.cpyrows span { display: block; padding: 11px 0; border-bottom: 1px solid #E9EAEC; color: #1A1A1A; font-family: 'Chivo Mono', monospace; font-size: 12.5px; letter-spacing: 0.04em; }
-.cpybox svg.k { display: block; width: 100%; height: 2px; }
-.cpybox [data-cpysay] { color: #4B4F56; font-size: 14px; line-height: 1.5; min-height: 42px; }
+/* Section 5: the existing checklist became the request form. C10 Text Fields, Field Mono toggles, Segmented, Location, Checkbox and Photo Slots;
+   the C12 request record beside it with C05 CPY-03 copy; C05 ERR-01 and CNF-01 */
+.reqgrid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 26px; margin-top: 36px; align-items: start; }
+.formcard { position: relative; background: #FFFFFF; color: #1A1A1A; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.14)); }
+.formcard .topbar { display: block; height: 4px; background: #EF5016; }
+.formcard form, .formcard .done { padding: 30px clamp(18px, 3vw, 36px) 32px; }
+.grp { border: 0; margin: 0; padding: 22px 0 0; min-width: 0; }
+.grp + .grp { margin-top: 24px; box-shadow: inset 0 1px 0 #E9EAEC; }
+.grp:first-of-type { padding-top: 0; }
+.grp legend { float: left; width: 100%; padding: 0; margin: 0 0 4px; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 800; line-height: 1.25; }
+.grp legend + * { clear: both; }
+.grp .gnote { margin: 0 0 14px; color: #4B4F56; font-size: 14.5px; line-height: 1.55; }
+.fgrid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 18px; }
+.fgrid2 .full { grid-column: 1 / -1; }
+.fld { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.fld label, .lab2 { font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; font-size: 15px; color: #1A1A1A; }
+.opt { color: #6B6F76; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; margin-left: 8px; }
+.chan2 { position: relative; padding: 1.5px; background: #B9BCC1; clip-path: var(--chamfer-14); }
+.chan2:focus-within { background: #4B4F56; }
+.chan2 input, .chan2 textarea { width: 100%; border: 0; outline: none; background: #FFFFFF; padding: 14px 16px; min-height: 52px; font: 16px 'Instrument Sans', sans-serif; color: #1A1A1A; clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px)); border-radius: 0; -webkit-appearance: none; appearance: none; }
+.chan2 input.serial { font-family: 'Chivo Mono', monospace; font-size: 15px; letter-spacing: 0.06em; }
+.chan2 textarea { min-height: 110px; resize: vertical; display: block; line-height: 1.55; }
+.chan2 .kf { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform .3s cubic-bezier(0.22,1,0.36,1); pointer-events: none; }
+.chan2:focus-within .kf { transform: scaleX(1); }
+.hint { margin: 0; color: #4B4F56; font-size: 13.5px; line-height: 1.5; }
+.togs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.locrow { display: flex; gap: 10px; align-items: stretch; }
+.locrow .chan2 { flex: 1 1 auto; min-width: 0; }
+.locrow .kb [data-kplate] { padding: 15px 20px 15px 24px; white-space: nowrap; height: 100%; }
+.locrow .kb svg { width: 18px; height: 18px; }
+.cover { margin: 12px 0 0; background: #F6F6F7; box-shadow: inset 0 0 0 1px #D5D7DA; padding: 14px 16px; color: #4B4F56; font-size: 14px; line-height: 1.55; }
+.seg { position: relative; display: inline-flex; max-width: 100%; background: #D5D7DA; padding: 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.18); }
+.seg [data-segplate] { position: absolute; top: 4px; bottom: 4px; left: 0; width: 0; background: #1A1A1A; clip-path: var(--chamfer-8); }
+.seg button { position: relative; z-index: 1; flex: 1 1 auto; border: 0; background: transparent; cursor: pointer; min-height: 46px; padding: 0 20px; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; transition: color 0.2s ease; }
+.seg button[aria-checked="true"] { color: #FFFFFF; }
+.cbx { appearance: none; border: 0; background: transparent; cursor: pointer; display: flex; gap: 14px; align-items: flex-start; padding: 6px 0; text-align: left; font: inherit; width: 100%; min-height: 48px; }
+.cbx .box { flex: none; position: relative; width: 26px; height: 26px; background: #FFFFFF; box-shadow: inset 0 0 0 1.5px #4B4F56; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px)); transition: box-shadow 0.15s ease; }
+.cbx .box svg { position: absolute; inset: 1px; width: 24px; height: 24px; }
+.cbx[aria-checked="true"] .box { box-shadow: inset 0 0 0 2px #1A1A1A; }
+.cbx .ct { display: flex; flex-direction: column; gap: 3px; padding-top: 2px; }
+.cbx .ct b { color: #1A1A1A; font-size: 15.5px; font-weight: 600; }
+.cbx .ct span { color: #4B4F56; font-size: 14px; line-height: 1.5; }
+.slotrow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.slot { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; aspect-ratio: 16 / 8; background: #F2F3F4; box-shadow: inset 0 0 0 1.5px #B9BCC1; cursor: pointer; text-align: center; padding: 14px; overflow: hidden; transition: box-shadow .2s ease, background .2s ease; }
+.slot:hover, .slot:focus-within { box-shadow: inset 0 0 0 2px #4B4F56; background: #FFFFFF; }
+.slot input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.slot .plus { font-family: 'Chakra Petch', sans-serif; font-size: 30px; font-weight: 700; color: #EF5016; line-height: 1; }
+.slot .sl-t { font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #1A1A1A; }
+.slot .sl-d { color: #4B4F56; font-size: 13px; line-height: 1.4; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.slot.has { box-shadow: inset 0 0 0 2px #1A1A1A; }
+.slot .rm { position: absolute; z-index: 2; right: 8px; top: 8px; display: none; border: 0; cursor: pointer; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; padding: 9px 12px; clip-path: var(--chamfer-8); }
+.slot.has .rm { display: block; }
+.slotsay { margin: 10px 0 0; color: #4B4F56; font-size: 13.5px; }
+.fld .err { display: none; gap: 12px; align-items: flex-start; padding-top: 2px; }
+.fld.bad .err { display: flex; }
+.fld.bad .chan2 { background: #1A1A1A; }
+.err svg, .errsum svg { flex: none; width: 20px; height: 18px; margin-top: 1px; }
+.err b, .errsum b { display: block; color: #1A1A1A; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; }
+.err span, .errsum span { display: block; color: #1A1A1A; font-size: 14px; line-height: 1.5; }
+.errsum { display: none; gap: 14px; align-items: flex-start; margin-bottom: 22px; padding: 16px 18px; background: #F6F6F7; box-shadow: inset 4px 0 0 #1A1A1A, inset 0 0 0 1px #B9BCC1; outline: none; }
+.errsum.on { display: flex; }
+.errsum a { color: #C9430D; text-decoration: underline; text-underline-offset: 3px; font-size: 14px; }
+.formact { margin-top: 28px; padding-top: 24px; box-shadow: inset 0 1px 0 #E9EAEC; display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap; }
+.formact .pv { margin: 0; color: #4B4F56; font-size: 14.5px; line-height: 1.5; max-width: 34ch; }
+.formact .pv a { color: #1A1A1A; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.done { position: relative; display: none; flex-direction: column; gap: 18px; outline: none; }
+.done .edge { position: absolute; left: 0; top: 30px; bottom: 32px; width: 6px; background: #486F5D; }
+.done > *:not(.edge) { margin-left: 22px; }
+.done .sent { color: #486F5D; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; }
+.done .dh { color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 800; line-height: 1.12; }
+.done .db { color: #4B4F56; font-size: 15.5px; line-height: 1.65; max-width: 640px; }
+.done svg.k { display: block; width: calc(100% - 22px); height: 2px; }
+.done .rows { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 6px 0; box-shadow: none; }
+.done .rows span:nth-child(odd) { color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 4px 12px 4px 0; }
+.done .rows span:nth-child(even) { color: #1A1A1A; font-size: 15px; padding: 3px 0; overflow-wrap: anywhere; }
+.done .rows span.nil { color: #8A8D93; }
+.done .dact { display: flex; gap: 14px 18px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+.done .again { border: 0; background: transparent; cursor: pointer; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 12px 4px; border-bottom: 1.5px solid #B9BCC1; }
+.done [data-dsay] { color: #4B4F56; font-size: 14px; min-height: 21px; }
+.rec { position: sticky; top: calc(var(--dbm-nav) + 14px); background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 14px; filter: drop-shadow(0 14px 20px rgba(26,26,26,0.3)); }
+.rec .rv { width: 8px; height: 8px; top: 10px; }
+.rec .rv.tl { left: 10px; } .rec .rv.tr { right: 10px; }
+.rec .rh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-top: 6px; }
+.rec .rh b { color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; }
+.rec [data-rstate] { color: #F4703F; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; white-space: nowrap; }
+.rec [data-rrows] { display: flex; flex-direction: column; border-top: 1px solid #2A2A2A; }
+.rec .rr { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid #222; align-items: baseline; }
+.rec .rr span:first-child { color: #9A9A9A; font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; }
+.rec .rr span:last-child { color: #FFFFFF; font-size: 13.5px; line-height: 1.45; overflow-wrap: anywhere; }
+.rec .rr span.nil { color: #5B5F66; }
+.rec .owner { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.rec .owner span { color: #9A9A9A; font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.18em; }
+.rec .owner b { color: #FFFFFF; font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-align: right; }
+.rec .rn { margin: 0; color: #9A9A9A; font-size: 12.5px; line-height: 1.55; }
+.rec .kb { align-self: flex-start; }
+.rec svg.k { display: block; width: 100%; height: 2px; }
+.rec [data-cpysay] { color: #C7C9CC; font-size: 13px; line-height: 1.5; min-height: 40px; }
+.form-on .callbar { transform: translateY(115%) !important; }
 
-/* Section 6: the existing editorial split, photo on the left */
-.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-.scopy { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-.scopy > p { margin: 0; color: #33363B; font-size: 17px; line-height: 1.65; max-width: 60ch; text-wrap: pretty; }
-.details { align-self: stretch; margin-top: 8px; padding-top: 18px; box-shadow: inset 0 1px 0 #B9BCC1; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-.details h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; line-height: 1.25; }
-.details p { margin: 0; color: #4B4F56; font-size: 16px; line-height: 1.6; text-wrap: pretty; }
-.pwin { position: relative; aspect-ratio: 4 / 3; background: #DEE0E3; overflow: hidden; clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%); }
-.pwin img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.pwin::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #A9AEB8, inset 0 3px 9px rgba(0,0,0,0.3); pointer-events: none; }
+/* Section 6: the existing repair-or-part split, raised to Card 2d Riveted Window Plate (two windows) with C07 fact cells for billing */
+.svcplate { position: relative; margin-top: 36px; padding: 38px; background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; }
+.svcwins { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.svcitem { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.svcwin { position: relative; aspect-ratio: 670 / 324; overflow: hidden; background: #C7C9CC; }
+.svcwin img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.svcwin::after { content: ""; position: absolute; inset: 0; z-index: 1; box-shadow: inset 0 0 0 1px #1A1A1A, inset 0 3px 9px rgba(0,0,0,0.55); pointer-events: none; }
+.svclink { flex: 1 1 auto; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto 1fr; gap: 6px 18px; color: #FFFFFF; text-decoration: none; }
+.svcplate .svclink:focus-visible { outline-color: #C7C9CC; }
+.svccap { grid-column: 1; font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 0.005em; line-height: 1.14; color: #FFFFFF; transition: color .2s ease; }
+.svclink:hover .svccap, .svclink:focus-visible .svccap { color: #F4703F; }
+.svcdesc { grid-column: 1; font-size: 16.5px; line-height: 1.5; color: #E9EAEC; text-wrap: pretty; }
+.svcrows { grid-column: 1 / -1; margin: 8px 0 0; border-top: 1px solid #2A2A2A; }
+.svcrows div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #2A2A2A; }
+.svcrows dt { color: #8A8D93; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; padding-top: 3px; }
+.svcrows dd { margin: 0; color: #DCDDDF; font-size: 15px; line-height: 1.55; }
+.svcchip { position: relative; grid-column: 2; grid-row: 1 / span 2; align-self: start; width: 62px; height: 62px; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; background: #EF5016; clip-path: var(--chamfer-16); transition: clip-path .32s cubic-bezier(.55,.055,.675,.19) .1s, transform .12s ease-out; }
+.svcchip .sl { position: absolute; top: -12%; bottom: -12%; width: 27%; background: #1A1A1A; transform: skewX(-20deg) scaleY(0); transform-origin: top center; transition: transform .26s cubic-bezier(.55,.055,.675,.19); }
+.svcchip .sl:nth-child(1) { left: -6%; transition-delay: .16s; } .svcchip .sl:nth-child(2) { left: 15%; transition-delay: .12s; }
+.svcchip .sl:nth-child(3) { left: 36%; transition-delay: .08s; } .svcchip .sl:nth-child(4) { left: 57%; transition-delay: .04s; }
+.svcchip .sl:nth-child(5) { left: 78%; transition-delay: 0s; }
+.svcchip svg { position: relative; z-index: 1; width: 22px; height: 22px; transition: transform .32s cubic-bezier(.36,0,.66,-.56) .05s; }
+.svclink:hover .svcchip, .svclink:focus-visible .svcchip { clip-path: polygon(0 0, calc(100% - 25px) 0, 100% 25px, 100% 100%, 25px 100%, 0 calc(100% - 25px)); transition: clip-path .32s cubic-bezier(.215,.61,.355,1), transform .06s ease-out; }
+.svclink:hover .sl, .svclink:focus-visible .sl { transform: skewX(-20deg) scaleY(1); transition-timing-function: cubic-bezier(.215,.61,.355,1); }
+.svclink:hover .sl:nth-child(1), .svclink:focus-visible .sl:nth-child(1) { transition-delay: 0s; }
+.svclink:hover .sl:nth-child(2), .svclink:focus-visible .sl:nth-child(2) { transition-delay: .04s; }
+.svclink:hover .sl:nth-child(4), .svclink:focus-visible .sl:nth-child(4) { transition-delay: .12s; }
+.svclink:hover .sl:nth-child(5), .svclink:focus-visible .sl:nth-child(5) { transition-delay: .16s; }
+.svclink:hover .svcchip svg, .svclink:focus-visible .svcchip svg { transform: translateX(7px); transition: transform .32s cubic-bezier(.34,1.7,.64,1) .05s; }
+.svclink:active .svcchip { transform: translateY(2px); }
+.bill { margin-top: 28px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 18px 28px; align-items: start; }
+.bill h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 800; line-height: 1.25; }
+.bill h3 + p { margin: 8px 0 0; color: #4B4F56; font-size: 14.5px; line-height: 1.55; }
+.billcells { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: #C7C9CC; box-shadow: inset 0 0 0 1px #C7C9CC; }
+.billcells > div { background: #F7F8F9; padding: 14px 16px; min-width: 0; }
+.billcells .fv { font-size: 16.5px; }
+.billcells p { margin: 6px 0 0; color: #4B4F56; font-size: 13.5px; line-height: 1.5; }
 
-/* Section 7: the existing statement on the Bone band */
+/* Section 7: the existing rental statement on the Bone band, with Card 1c Tread Ledger */
 .bone { background: #CDC4AF; }
-.bone p { color: #2A2D31; }
-.stmt { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 24px clamp(28px, 5vw, 72px); align-items: start; }
-.stmt .body { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-.stmt .body > p { margin: 0; font-size: 17px; line-height: 1.65; max-width: 60ch; text-wrap: pretty; }
-.stmt .item { align-self: stretch; margin-top: 10px; padding-top: 22px; border-top: 1px solid #A89F88; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.stmt .item h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; }
-.stmt .item p { margin: 0; font-size: 16.5px; line-height: 1.6; }
+.rentgrid { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 28px clamp(28px, 5vw, 64px); align-items: center; }
+.rentcopy { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.rentcopy > p { margin: 0; color: #2A2D31; font-size: 17px; line-height: 1.65; max-width: 60ch; text-wrap: pretty; }
+.ticks { list-style: none; margin: 4px 0 0; padding: 0; align-self: stretch; box-shadow: 0 1px 0 #A89F88; }
+.ticks li { position: relative; padding: 12px 0 12px 28px; box-shadow: inset 0 1px 0 #A89F88; color: #2A2D31; font-size: 16px; line-height: 1.5; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: 18px; width: 12px; height: 12px; background: #EF5016; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.ledger-w { filter: drop-shadow(0 14px 18px rgba(26,26,26,0.26)) drop-shadow(0 3px 4px rgba(26,26,26,0.22)); }
+.ledger { position: relative; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); background: linear-gradient(#FFFFFF, #F4F5F6); box-shadow: inset 0 0 0 1px #D5D7DA, inset 0 1px 0 #FFFFFF; padding-bottom: 26px; text-decoration: none; color: inherit; }
+.ledger .lpic { padding: 14px 0 14px 14px; display: flex; }
+.ledger .lwin { position: relative; flex: 1 1 auto; min-height: 270px; background: #DEE0E3; overflow: hidden; }
+.ledger .lwin img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+.ledger .lwin::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #A9AEB8, inset 0 3px 9px rgba(0,0,0,0.30); pointer-events: none; }
+.ledger .ltxt { padding: 24px 28px 26px 26px; display: flex; flex-direction: column; min-width: 0; }
+.ledger .lmeta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11px; letter-spacing: 0.14em; }
+.ledger .lmeta b { font-weight: 700; letter-spacing: 0.22em; }
+.ledger [data-platetitle] { color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.12; margin-top: 14px; transition: color .2s ease; }
+.ledger .ldesc { color: #4B4F56; font-size: 16px; line-height: 1.55; margin-top: 10px; text-wrap: pretty; }
+.ledger .lbtn { margin-top: auto; padding-top: 22px; display: flex; }
+.ledger .lkey { position: relative; display: inline-block; padding: 0 0 5px; filter: drop-shadow(0 7px 9px rgba(0,0,0,0.3)); }
+.ledger .lkey .lb { position: absolute; left: 0; right: 0; bottom: 0; top: 5px; background: #A9AEB8; clip-path: var(--chamfer-14); }
+.ledger .lkey .lf { position: relative; display: inline-flex; align-items: center; gap: 14px; padding: 12px 20px 12px 24px; background: linear-gradient(#FFFFFF, #E2E4E7); box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -2px 0 rgba(0,0,0,0.12); clip-path: var(--chamfer-14); color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: background .18s ease; }
+.ledger .lkey .lf::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016; }
+.ledger .lkey svg { width: 22px; height: 10px; flex: none; color: #C9430D; }
+.ledger:hover .lkey .lf, .ledger:focus-visible .lkey .lf { background: linear-gradient(#F2F3F5, #D5D8DC); }
+.ledger:active .lkey { padding: 5px 0 0; }
+.ledger .tread { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: #141414; overflow: hidden; }
+.ledger [data-treadpads] { position: absolute; left: -46px; right: -46px; top: 4px; bottom: 4px; background-image: repeating-linear-gradient(100deg, rgba(255,255,255,.5) 0 1px, rgba(255,255,255,.26) 1px 2px, rgba(0,0,0,0) 2px 42px), repeating-linear-gradient(100deg, rgba(0,0,0,0) 0 27px, rgba(0,0,0,.55) 27px 29px, rgba(0,0,0,.9) 29px 30px, #000000 30px 31px, rgba(0,0,0,0) 31px 41px, #000000 41px 42px), repeating-linear-gradient(100deg, #5A5F67 0 30px, rgba(0,0,0,0) 30px 42px); }
+.ledger .tshade { position: absolute; left: 0; right: 0; top: 4px; bottom: 4px; background: linear-gradient(180deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 40%, rgba(0,0,0,.5) 100%); }
+.ledger [data-treadrail] { position: absolute; left: 0; right: 0; top: 0; height: 4px; background: #2A2D31; box-shadow: inset 0 1px 0 rgba(255,255,255,.16); transition: background-color 0.24s ease; }
+.ledger .tfoot { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: #0F0F0F; }
+@keyframes dbmTread { from { transform: translateX(0); } to { transform: translateX(42.65px); } }
+.rentmore { margin-top: 22px; }
 
 /* Section 8: the existing questions layout, raised to C05 ACC-01 */
 .faqgrid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px clamp(28px, 5vw, 72px); align-items: start; }
-.faqgrid .left { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-.faqgrid .left p { margin: 0; color: #33363B; font-size: 16.5px; }
+.faqgrid .left { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; position: sticky; top: calc(var(--dbm-nav) + 20px); }
+.faqgrid .left p { margin: 0; color: #33363B; font-size: 16.5px; line-height: 1.6; max-width: 40ch; }
 .acc1 { background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.14)) drop-shadow(0 3px 5px rgba(26,26,26,0.12)); }
 .acc1 [data-accitem] { border-bottom: 1px solid #E9EAEC; }
 .acc1 [data-accitem]:last-child { border-bottom: 0; }
@@ -503,29 +758,71 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
 .acc1 [data-accpanel] p { margin: 0; color: #4B4F56; font-size: 16px; line-height: 1.65; max-width: 680px; text-wrap: pretty; }
 
 /* Section 9: C06 BAN-06 call band */
-.call-in .cl { margin: 0; color: #DCDDDF; font-size: 17px; line-height: 1.65; max-width: 62ch; text-wrap: pretty; }
+.call-in .cl { margin: 0; color: #DCDDDF; font-size: 17px; line-height: 1.65; max-width: 64ch; text-wrap: pretty; }
 .callbar .kb { width: 100%; }
 .callbar .kb [data-kplate] { width: 100%; min-height: 50px; padding: 12px 10px; font-size: 11px; letter-spacing: 0.18em; }
 
 @media (max-width: 1100px) {
-  .plates2 { grid-template-columns: minmax(0, 1fr); }
+  .reqgrid { grid-template-columns: minmax(0, 1fr); }
+  .rec { position: relative; top: auto; }
+  .hx-in { grid-template-columns: minmax(0, 1fr); }
+  .xpics { min-height: 0; aspect-ratio: 4 / 3; }
+  .xtext { padding: 22px 8px 8px; }
+  .bill { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 960px) {
-  .headrow, .symgrid, .ctxgrid, .split, .stmt, .faqgrid { grid-template-columns: minmax(0, 1fr); }
+  .headrow, .symgrid, .rentgrid, .faqgrid { grid-template-columns: minmax(0, 1fr); }
+  .faqgrid .left { position: static; }
+  .svcwins { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .svcplate { padding: 26px; }
+  .hxfacts, .billcells { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .hero-fb .fb-pic { position: relative; width: 100%; height: 300px; bottom: auto; }
+  .hero-fb .fb-scrim { bottom: auto; height: 300px; background: linear-gradient(180deg, rgba(26,26,26,0.1) 0%, rgba(26,26,26,0) 45%, #1A1A1A 100%); }
+  .hero-fb .fb-col { padding-top: 6px; }
 }
 @media (max-width: 620px) {
-  .hero-fb { min-height: 86vh; }
-  .hero-fb .fb-copy { padding-top: 140px; } /* a band of the photo shows above the copy, as on the Service & Parts page */
   .hero-fb .acts .ch-btn, .hero-fb .acts .kb, .hero-fb .acts .kb [data-kplate] { width: 100%; }
   .ch-btn { justify-content: center; padding: 18px 20px; letter-spacing: 0.18em; }
+  .qual { padding: 16px; }
+  .qual .qrow .mono-btn { flex: 1 1 auto; }
+  .hx { padding: 10px; }
+  .hx-rail button { font-size: 11px; letter-spacing: 0.08em; padding: 13px 4px; }
+  .xpics { aspect-ratio: 1 / 1; }
+  .hx.is-cyl .xpics { aspect-ratio: 680 / 740; }
+  .xpanel.draw .ln { font-size: 31px; }
+  .xpanel.draw .ls { display: none; }
+  .xpanel.draw .mhide { display: none; }
+  .xpanel.draw { background-color: #F2F3F4; background-image: linear-gradient(#E3E5E8 1px, transparent 1px), linear-gradient(90deg, #E3E5E8 1px, transparent 1px); background-size: 30px 30px; background-position: center; }
+  .xtitle { font-size: 22px; }
+  .hxfacts, .billcells { grid-template-columns: minmax(0, 1fr); }
   .plate1b .pb { padding-left: 22px; padding-right: 22px; }
   .plate1b .strip { padding-left: 34px; padding-right: 34px; }
   .fields1b div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
-  .cpybox { padding: 22px 18px; }
+  .reply .pact .kb, .reply .pact .kb [data-kplate] { width: 100%; }
+  .fgrid2, .slotrow { grid-template-columns: minmax(0, 1fr); }
+  .locrow { flex-direction: column; }
+  .locrow .kb, .locrow .kb [data-kplate] { width: 100%; }
+  .seg { display: flex; width: 100%; }
+  .seg button { padding: 0 8px; font-size: 11px; letter-spacing: 0.08em; }
+  .togs .mono-btn { flex: 1 1 auto; }
+  .done .rows { grid-template-columns: minmax(0, 1fr); }
+  .done .rows span:nth-child(odd) { padding-top: 10px; }
+  .svcplate { padding: 18px 16px 22px; margin-left: calc(-1 * var(--pad-x) + 8px); margin-right: calc(-1 * var(--pad-x) + 8px); }
+  .svccap { font-size: 19px; }
+  .svcchip { width: 50px; height: 50px; }
+  .svcrows div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .ledger { grid-template-columns: minmax(0, 1fr); }
+  .ledger .lpic { padding: 14px 14px 0; }
+  .ledger .lwin { min-height: 0; aspect-ratio: 4 / 3; }
+  .ledger .ltxt { padding: 20px 20px 24px; }
+  .ledger [data-platetitle] { font-size: 23px; }
   .acc1 [data-acchead] { padding: 18px 20px; grid-template-columns: 18px minmax(0, 1fr); gap: 14px; }
   .acc1 [data-accstate] { display: none; }
   .acc1 [data-accpanel] > div { padding: 8px 20px 22px 52px; }
 }
+@media (prefers-reduced-motion: reduce) { .svcchip, .svcchip .sl, .svcchip svg, .svclink .svcchip, .svclink .sl, .svclink .svcchip svg { transition-delay: 0s !important; } }
 </style>
 </head>
 <body>
@@ -534,35 +831,120 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   <div class="wrap navbar">
     <a href="../../" class="brand" aria-label="DBM Heavy Equipment, home"><img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment"></a>
     <nav aria-label="Main">
-      <a href="../../rentals/">Rent</a>
-      <a href="../../equipment/">Buy</a>
-      <a href="../../services/" aria-current="true">Service &amp; Parts</a>
-      <a href="../../we-buy-equipment/">Sell &amp; Trade</a>
+      <span class="route"><a href="../../rentals/">Rent</a><button type="button" class="mt" data-mt="rent" aria-expanded="false" aria-controls="menu-rent" aria-label="Rent menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../equipment/">Buy</a><button type="button" class="mt" data-mt="buy" aria-expanded="false" aria-controls="menu-buy" aria-label="Buy menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../services/" aria-current="true">Service &amp; Parts</a><button type="button" class="mt" data-mt="service" aria-expanded="false" aria-controls="menu-service" aria-label="Service and Parts menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../we-buy-equipment/">Sell &amp; Trade</a><button type="button" class="mt" data-mt="sell" aria-expanded="false" aria-controls="menu-sell" aria-label="Sell and Trade menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
       <a href="../../finance/">Finance</a>
       <a href="../../about/">About</a>
     </nav>
     <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
   </div>
+  
+  <div class="menus" data-menuhost>
+    <div class="menu" id="menu-rent" data-menu="rent" role="region" aria-label="Rent menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../rentals/#fleet" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Browse the rental fleet</span><span class="msub">Excavators, wheel loaders, motor graders, haul trucks, and compaction machines, grouped by the work they do.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../rentals/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a rental</span><span class="msub">Send the machine, the jobsite, and the start date, and our rental team calls or texts back with the monthly rate and delivery date.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../finance/#rpo" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Buy the machine you rent</span><span class="msub">Under our rental purchase option, part of the rent you pay goes toward the price when you buy within six months.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../industries/construction-earthmoving/" data-mitem>Machines for construction and earthmoving</a></li>
+          <li><a class="mread" href="../../industries/utility-pipeline/" data-mitem>Machines for utility and pipeline work</a></li>
+          <li><a class="mread" href="../../faqs/#t-rentals" data-mitem>Answers to common rental questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We rent to contractors, mostly by the month, and deliver to jobsites anywhere in Nevada and in the California counties near the state line. Large machines such as mining haul trucks carry a three-month minimum.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-buy" data-menu="buy" role="region" aria-label="Buy menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../equipment/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>All equipment</span><span class="msub">New XCMG machines and used machines of any make, sorted by machine class.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../finance/#how" data-mitem>How financing works for new and used machines</a></li>
+          <li><a class="mread" href="../../equipment/sas-luxembourg/" data-mitem>SAS forks and attachments</a></li>
+          <li><a class="mread" href="../../industries/excavation/" data-mitem>Machines for excavation</a></li>
+          <li><a class="mread" href="../../industries/auto-scrap-recycling/" data-mitem>Machines for auto and scrap recycling</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We sell new XCMG machines in Nevada and the nearby California counties, and we sell used machines anywhere in the US. QuickFi, XCMG’s lender, finances new XCMG machines, and buyers of used machines call us about financing.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-service" data-menu="service" role="region" aria-label="Service and Parts menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
+          <li><a class="mread" href="../../case-studies/" data-mitem>All case studies</a></li>
+          <li><a class="mread" href="../../blog/" data-mitem>Job stories and guides</a></li>
+          <li><a class="mread" href="../../services/#questions" data-mitem>Answers to common service and parts questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>Our service trucks repair machines of any make anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. Parts ship to any address in the US.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-sell" data-menu="sell" role="region" aria-label="Sell and Trade menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../we-buy-equipment/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Sell your machine</span><span class="msub">Send the make, model, serial number, hours, and a few photos, and our sales team replies with an offer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../we-buy-equipment/#start" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Trade toward another machine</span><span class="msub">We price your trade and the new XCMG or used machine you want together.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../we-buy-equipment/#details" data-mitem>What to tell us about the machine</a></li>
+          <li><a class="mread" href="../../we-buy-equipment/#next" data-mitem>What happens after you send it</a></li>
+          <li><a class="mread" href="../../equipment/used/" data-mitem>Used equipment for sale</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We buy used equipment of any make. Sending your details does not commit you to selling or trading the machine.</p></div>
+      </div>
+    </div>
+  </div>
 </header>
+
 
 <main>
   
   <section class="hero-fb" aria-labelledby="page-title" data-hero>
-    <img class="fb-img" src="../../assets/9cb0578716454746.jpg" alt="A hydraulic valve block, two steel hydraulic tubes, and hoses with fittings exposed on the frame of a yellow loader">
+    <div class="fb-pic"><img src="../../assets/4ec65cce995aa18b.jpg" alt="A DBM crane service truck parked under the raised dump body of a large haul truck inside a maintenance building"></div>
     <span class="fb-scrim" aria-hidden="true"></span>
-    <div class="wrap fb-copy">
-      <div class="eyebrow">Hydraulic services</div>
-      <h1 id="page-title">Hydraulic repair and cylinder rebuilds</h1>
-      <p class="fb-lede">Our technicians find and fix leaks, slow or weak functions, and erratic movement in heavy equipment hydraulics, and we rebuild worn hydraulic cylinders. Describe the function that changed, and we’ll find the part that failed.</p>
-      <div class="acts">
-        <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
-        <a class="kb" href="../../services/#request" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l">Send a hydraulic repair request</span></span></a>
+    <div class="fb-copy">
+      <div class="wrap">
+        <div class="fb-col">
+          <div class="eyebrow">Heavy Equipment Service · Field &amp; Shop Hydraulics</div>
+          <h1 id="page-title">Hydraulic Repair &amp; Cylinder Rebuilds Across Nevada</h1>
+          <p class="lede">Our field service trucks carry <span>bulk hydraulic hose, a crimper, and pressure test gauges</span> to the machine where it stopped, so the technician can follow a leak or a weak boom back to the hose, valve, pump, or seal that failed and replace it on site. Cylinders that need a full rebuild come into <span>our Fernley shop to be resealed and pressure tested</span>.</p>
+          <div class="qual" data-qual>
+            <span class="q" id="qual-q">What is the machine doing right now?</span>
+            <div class="qrow" role="group" aria-labelledby="qual-q">
+              <button type="button" class="mono-btn" data-mono="dark" data-q="down" aria-pressed="false" data-say="Call Field Service Dispatch at (775) 625-0062. Our field crews usually reach a stopped machine the day after you call, and sometimes the same day."><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">It has stopped</span></button>
+              <button type="button" class="mono-btn" data-mono="dark" data-q="run" aria-pressed="false" data-say="Send the machine details and a photo of the problem with the request form on this page, and our service team calls or texts you back to schedule a technician. Check the hydraulic oil level before every shift until it is repaired."><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Leaking or slow</span></button>
+              <button type="button" class="mono-btn" data-mono="dark" data-q="spray" aria-pressed="false" data-say="Lower any raised attachment to the ground, shut the machine down, and keep everyone away from the spray, because oil under pressure can pierce skin. Then call (775) 625-0062."><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Oil is spraying</span></button>
+            </div>
+            <p data-qsay role="status" aria-live="polite">Choose the answer that fits, and this line tells you whether to call now or send the details.</p>
+          </div>
+          <div class="acts">
+            <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+            <a class="kb" href="#request" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l">Send the Machine Details</span></span></a>
+          </div>
+          <dl class="facts">
+            <div><dt>Where</dt><dd>Job sites anywhere in Nevada, and in California from Sacramento to Bakersfield</dd></div>
+            <div><dt>Arrival</dt><dd>Usually the day after you call, sometimes the same day</dd></div>
+            <div><dt>Machines</dt><dd>Any make, including machines we did not sell</dd></div>
+          </dl>
+        </div>
       </div>
-      <dl class="facts">
-        <div><dt>Where</dt><dd>At your job site or in our Fernley shop</dd></div>
-        <div><dt>Machines</dt><dd>Any make, including machines we didn’t sell</dd></div>
-        <div><dt>Parts</dt><dd>XCMG and SAS parts, and aftermarket parts for most makes</dd></div>
-      </dl>
     </div>
     <svg class="hero-kerf" viewBox="0 0 1200 3" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1.5" x2="1200" y2="1.5" stroke="#EF5016" stroke-width="3" data-kerf/></svg>
   </section>
@@ -583,39 +965,113 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   <section class="sec white on-light" id="section-1" aria-labelledby="s1-title" data-reveal>
     <div class="wrap">
       <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s1-title">Start with the system or the component</h2></div>
-        <p class="slede">Tell us which function changed and what you’ve seen. You don’t need to know which part failed, because the technician finds the cause before any parts are priced.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s1-title">Hydraulic System Repair &amp; Cylinder Rebuilds</h2></div>
+        <p class="slede">Most hydraulic jobs are one of two kinds. A system repair happens on the machine, where the technician follows the fault from the pump through the control valve, the steel lines, and the hoses until the failed part turns up. A cylinder rebuild takes a leaking or drifting cylinder off the machine so it can be taken apart and resealed on a bench. Point at a number to see what the technician checks at that spot.</p>
       </div>
-      <div class="plates2">
-        <div class="plate1b" data-plate1b>
-          <span class="acc1b" data-accent aria-hidden="true"></span>
-          <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
-          <div class="strip"><span>DBM · HYDRAULIC SYSTEMS</span></div>
-          <div class="pb">
-            <h3>Hydraulic system repair</h3>
-            <p class="intro">When a function leaks, slows down, or moves on its own, the technician traces the problem to the part that failed and repairs it at the machine.</p>
-            <dl class="fields1b">
-              <div><dt data-f>HOSES</dt><dd>Burst or worn hoses and leaking fittings replaced</dd></div>
-              <div><dt data-f>PUMPS, VALVES</dt><dd>Pumps, control valves, and hydraulic motors diagnosed, then repaired or replaced</dd></div>
-              <div><dt data-f>TESTING</dt><dd>Pressure and flow checked against the maker’s specifications after the repair</dd></div>
-              <div><dt data-f>TELL US</dt><dd>Which function changed, when it happens, and any recent work on the machine</dd></div>
-            </dl>
+      <div class="hx" data-hx>
+        <div class="hx-rail" role="group" aria-label="Choose the hydraulic job">
+          <span data-hxmarker aria-hidden="true"></span>
+          <button type="button" data-hxsel="sys" aria-controls="hx-sys">System repair at the machine</button>
+          <button type="button" data-hxsel="cyl" aria-controls="hx-cyl">Cylinder rebuild</button>
+        </div>
+        <div class="hx-in">
+          <div class="xpics">
+            <div class="xpanel" data-hxpanel="sys">
+              <img src="../../assets/9cb0578716454746.jpg" alt="A hydraulic control valve, two steel hydraulic lines, and small hoses and fittings exposed in the front frame of a yellow loader, between two pin lugs" data-op="0.5,0.45" style="object-position: 50% 45%">
+              <button type="button" class="xpin" data-xpin="1" data-ix="0.445" data-iy="0.2" aria-label="1, steel lines">1</button>
+              <button type="button" class="xpin" data-xpin="2" data-ix="0.5" data-iy="0.47" aria-label="2, control valve">2</button>
+              <button type="button" class="xpin" data-xpin="3" data-ix="0.31" data-iy="0.66" aria-label="3, hoses and fittings">3</button>
+              <button type="button" class="xpin" data-xpin="4" data-ix="0.84" data-iy="0.23" aria-label="4, cylinder and arm mounts">4</button>
+            </div>
+            <div class="xpanel draw" data-hxpanel="cyl" hidden>
+              <svg viewBox="0 0 680 740" data-fw="680" data-fh="740" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Section drawing of a double-acting hydraulic cylinder standing rod end up, with leader lines to the rod, the rod wiper and rod seal, the piston seals, the barrel, and the cylinder eyes and bushings">
+<defs>
+                  <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="9" height="9" fill="#9AA0A8"/><line x1="0" y1="0" x2="0" y2="9" stroke="#5B5F66" stroke-width="2.2"/></pattern>
+                  <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F8F9"/><stop offset="0.42" stop-color="#C7C9CC"/><stop offset="0.6" stop-color="#E9EAEC"/><stop offset="1" stop-color="#8A8F97"/></linearGradient>
+                </defs>
+<text class="mhide" x="346" y="40" fill="#4B4F56" font-family="Chivo Mono, monospace" font-size="12" font-weight="700" letter-spacing="2.2">SECTION VIEW</text>
+<g class="mhide" font-family="Chivo Mono, monospace" font-size="11" font-weight="700" letter-spacing="1.4" fill="#4B4F56"><rect x="346" y="60" width="20" height="13" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.2"/><text x="374" y="71">SEALS</text><rect x="496" y="60" width="20" height="13" fill="url(#hatch)" stroke="#1A1A1A" stroke-width="1.2"/><text x="524" y="71">STEEL</text><rect x="346" y="86" width="20" height="13" fill="url(#chrome)" stroke="#1A1A1A" stroke-width="1.2"/><text x="374" y="97">CHROME ROD</text><rect x="496" y="86" width="20" height="13" fill="#E8E1D1" stroke="#1A1A1A" stroke-width="1.2"/><text x="524" y="97">OIL</text></g>
+<g transform="translate(2.8 740.4) scale(0.78) rotate(-90)">
+<line x1="40" y1="240" x2="880" y2="240" stroke="#B9BCC1" stroke-width="1.5" stroke-dasharray="14 6 3 6"/>
+                <rect x="232" y="136" width="26" height="28" fill="#6B6F76" stroke="#1A1A1A" stroke-width="2"/>
+                <rect x="506" y="136" width="26" height="28" fill="#6B6F76" stroke="#1A1A1A" stroke-width="2"/>
+                <path d="M245 136V100H330M519 136V100H440" fill="none" stroke="#1A1A1A" stroke-width="8" stroke-linecap="square"/>
+                <path d="M245 136V100H330M519 136V100H440" fill="none" stroke="#4B4F56" stroke-width="4" stroke-linecap="square"/>
+                <rect x="140" y="218" width="34" height="44" fill="#8A8F97" stroke="#1A1A1A" stroke-width="2"/>
+                <circle cx="112" cy="240" r="52" fill="#8A8F97" stroke="#1A1A1A" stroke-width="2.5"/>
+                <circle cx="112" cy="240" r="31" fill="#C7C9CC" stroke="#EF5016" stroke-width="3"/>
+                <circle cx="112" cy="240" r="21" fill="#F2F3F4" stroke="#1A1A1A" stroke-width="2"/>
+                <rect x="170" y="160" width="34" height="160" fill="url(#hatch)" stroke="#1A1A1A" stroke-width="2.5"/>
+                <rect x="204" y="180" width="340" height="120" fill="#E8E1D1"/>
+                <rect x="204" y="164" width="340" height="16" fill="url(#hatch)" stroke="#1A1A1A" stroke-width="2.5"/>
+                <rect x="204" y="300" width="340" height="16" fill="url(#hatch)" stroke="#1A1A1A" stroke-width="2.5"/>
+                                <rect x="372" y="180" width="66" height="120" fill="#9AA0A8" stroke="#1A1A1A" stroke-width="2.5"/>
+                <rect x="382" y="180" width="12" height="11" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <rect x="416" y="180" width="12" height="11" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <rect x="382" y="289" width="12" height="11" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <rect x="416" y="289" width="12" height="11" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <rect x="438" y="221" width="390" height="38" fill="url(#chrome)" stroke="#1A1A1A" stroke-width="2.5"/>
+                <rect x="544" y="154" width="66" height="67" fill="url(#hatch)" stroke="#1A1A1A" stroke-width="2.5"/>
+                <rect x="544" y="259" width="66" height="67" fill="url(#hatch)" stroke="#1A1A1A" stroke-width="2.5"/>
+                <rect x="560" y="210" width="12" height="11" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <rect x="560" y="259" width="12" height="11" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <path d="M592 221L606 208V221Z M592 259L606 272V259Z" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/>
+                <circle cx="852" cy="240" r="46" fill="#8A8F97" stroke="#1A1A1A" stroke-width="2.5"/>
+                <circle cx="852" cy="240" r="27" fill="#C7C9CC" stroke="#EF5016" stroke-width="3"/>
+                <circle cx="852" cy="240" r="18" fill="#F2F3F4" stroke="#1A1A1A" stroke-width="2"/>
+                </g>
+<text x="190" y="530" text-anchor="middle" fill="#8A7F66" font-family="Chivo Mono, monospace" font-size="11" font-weight="700" letter-spacing="2">OIL</text>
+<text x="40" y="81" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11" letter-spacing="1.8" text-anchor="middle" transform="rotate(-90 40 81)">ROD END</text>
+<text x="40" y="653" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11" letter-spacing="1.8" text-anchor="middle" transform="rotate(-90 40 653)">CAP END</text>
+<line x1="205" y1="179" x2="217" y2="179" stroke="#FFFFFF" stroke-width="5"/><path d="M205 179H268L288 179H300" fill="none" stroke="#1A1A1A" stroke-width="1.5"/><circle cx="205" cy="179" r="4.5" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/><text class="ln" x="346" y="179" dominant-baseline="middle" fill="#1A1A1A" font-family="Familjen Grotesk, sans-serif" font-size="20" font-weight="700">Rod</text><text class="ls" x="346" y="203" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11.5" font-weight="700" letter-spacing="1.6">STRAIGHTENED, POLISHED, OR REPLACED</text>
+<line x1="205" y1="284" x2="217" y2="284" stroke="#FFFFFF" stroke-width="5"/><path d="M205 284H268L288 284H300" fill="none" stroke="#1A1A1A" stroke-width="1.5"/><circle cx="205" cy="284" r="4.5" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/><text class="ln" x="346" y="284" dominant-baseline="middle" fill="#1A1A1A" font-family="Familjen Grotesk, sans-serif" font-size="20" font-weight="700">Rod wiper &amp; rod seal</text><text class="ls" x="346" y="308" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11.5" font-weight="700" letter-spacing="1.6">REPLACED IN EVERY REBUILD</text>
+<line x1="233" y1="438" x2="245" y2="438" stroke="#FFFFFF" stroke-width="5"/><path d="M233 438H268L288 420H300" fill="none" stroke="#1A1A1A" stroke-width="1.5"/><circle cx="233" cy="438" r="4.5" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/><text class="ln" x="346" y="420" dominant-baseline="middle" fill="#1A1A1A" font-family="Familjen Grotesk, sans-serif" font-size="20" font-weight="700">Piston seals</text><text class="ls" x="346" y="444" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11.5" font-weight="700" letter-spacing="1.6">REPLACED IN EVERY REBUILD</text>
+<line x1="243" y1="506" x2="255" y2="506" stroke="#FFFFFF" stroke-width="5"/><path d="M243 506H268L288 516H300" fill="none" stroke="#1A1A1A" stroke-width="1.5"/><circle cx="243" cy="506" r="4.5" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/><text class="ln" x="346" y="516" dominant-baseline="middle" fill="#1A1A1A" font-family="Familjen Grotesk, sans-serif" font-size="20" font-weight="700">Barrel</text><text class="ls" x="346" y="540" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11.5" font-weight="700" letter-spacing="1.6">BORE CHECKED, HONED, OR REPLACED</text>
+<line x1="214" y1="653" x2="226" y2="653" stroke="#FFFFFF" stroke-width="5"/><path d="M214 653H268L288 653H300" fill="none" stroke="#1A1A1A" stroke-width="1.5"/><circle cx="214" cy="653" r="4.5" fill="#EF5016" stroke="#1A1A1A" stroke-width="1.5"/><text class="ln" x="346" y="653" dominant-baseline="middle" fill="#1A1A1A" font-family="Familjen Grotesk, sans-serif" font-size="20" font-weight="700">Eyes &amp; bushings</text><text class="ls" x="346" y="677" fill="#6B6F76" font-family="Chivo Mono, monospace" font-size="11.5" font-weight="700" letter-spacing="1.6">EYES BORED ROUND, NEW BUSHINGS</text>
+</svg>
+              <button type="button" class="xpin" data-xpin="1" data-ix="0.4676" data-iy="0.3838" aria-label="1, rod wiper and rod seal">1</button>
+              <button type="button" class="xpin" data-xpin="2" data-ix="0.4676" data-iy="0.2419" aria-label="2, rod">2</button>
+              <button type="button" class="xpin" data-xpin="3" data-ix="0.4676" data-iy="0.5676" aria-label="3, piston seals">3</button>
+              <button type="button" class="xpin" data-xpin="4" data-ix="0.4676" data-iy="0.6973" aria-label="4, barrel">4</button>
+              <button type="button" class="xpin" data-xpin="5" data-ix="0.4676" data-iy="0.8824" aria-label="5, cylinder eyes and bushings">5</button>
+            </div>
+            <span class="xrim" aria-hidden="true"></span>
+          </div>
+          <div class="xtext">
+            <div data-hxtext="sys" id="hx-sys">
+              <h3 class="xtitle">System Repair at the Machine</h3>
+              <p class="xlead">Most hydraulic faults are repaired where the machine stands, because the failed part is usually a hose, a fitting, a seal, or a valve that the technician can reach and replace in the field.</p>
+              <ol class="xkeys" data-xkeys>
+                <li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Steel lines <span class="stamp">Replaced</span></span><span class="xd">Cracked, rubbed-through, or leaking steel lines are replaced, and the clamps that hold them are reset so the new line does not chafe through again.</span></span></li>
+                <li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Control valve <span class="stamp">Pressure tested</span></span><span class="xd">Sticking spools, leaking spool seals, and relief valves that open too early are found by testing pressure at the valve, then resealed, reset to the maker’s setting, or replaced.</span></span></li>
+                <li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Hoses &amp; fittings <span class="stamp">Made on the truck</span></span><span class="xd">Burst or weeping hoses are made up on the service truck to the original length and pressure rating, and leaking fittings get new O-rings or are replaced.</span></span></li>
+                <li class="xkey" data-xkey="4"><span class="xnum" data-xnum aria-hidden="true">4</span><span><span class="xk">Cylinder &amp; arm mounts <span class="stamp">Line bored</span></span><span class="xd">Worn pin bores at the cylinder and arm mounts let a cylinder knock and wear out its seals, so we machine them back to round with our <a href="../../services/line-boring/">line boring</a> equipment.</span></span></li>
+              </ol>
+            </div>
+            <div data-hxtext="cyl" id="hx-cyl" hidden>
+              <h3 class="xtitle">Cylinder Rebuild in Our Shop</h3>
+              <p class="xlead">A cylinder that leaks past its rod seal, drifts down under load, or has a bent or scored rod comes off the machine to be rebuilt, because resealing a cylinder needs a clean bench and a test stand that a job site does not have.</p>
+              <ol class="xkeys" data-xkeys>
+                <li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Rod wiper &amp; rod seal <span class="stamp shop">Every rebuild</span></span><span class="xd">Both are replaced every time, because a worn wiper lets dirt into the cylinder and a worn rod seal leaves an oil ring on the rod.</span></span></li>
+                <li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Rod <span class="stamp">Measured</span></span><span class="xd">A bent rod is straightened or replaced, and a scored or pitted rod is polished or replaced, because a damaged rod tears up new seals.</span></span></li>
+                <li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Piston seals <span class="stamp shop">Every rebuild</span></span><span class="xd">Worn piston seals let oil pass inside the cylinder, which is why a loaded boom or bucket creeps down, so they are replaced every time.</span></span></li>
+                <li class="xkey" data-xkey="4"><span class="xnum" data-xnum aria-hidden="true">4</span><span><span class="xk">Barrel <span class="stamp">Measured</span></span><span class="xd">The bore of the barrel is checked for scoring, honed when the scoring is light, and replaced when it is deep.</span></span></li>
+                <li class="xkey" data-xkey="5"><span class="xnum" data-xnum aria-hidden="true">5</span><span><span class="xk">Cylinder eyes &amp; bushings <span class="stamp">Measured</span></span><span class="xd">Worn eye bores are machined back to round with our <a href="../../services/line-boring/">line boring</a> equipment and fitted with new bushings.</span></span></li>
+              </ol>
+            </div>
           </div>
         </div>
-        <div class="plate1b" data-plate1b>
-          <span class="acc1b" data-accent aria-hidden="true"></span>
-          <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
-          <div class="strip"><span>DBM · HYDRAULIC CYLINDERS</span></div>
-          <div class="pb">
-            <h3>Cylinder rebuilds</h3>
-            <p class="intro">We take a leaking or drifting cylinder apart, replace what is worn, and test it before it goes back on the machine.</p>
-            <dl class="fields1b">
-              <div><dt data-f>SEALS</dt><dd>Rod seals, piston seals, and wipers replaced</dd></div>
-              <div><dt data-f>ROD</dt><dd>Bent, scored, or pitted rods repaired or replaced</dd></div>
-              <div><dt data-f>MOUNTS</dt><dd>Worn cylinder eyes and pin bores machined back to size with our line boring tools</dd></div>
-              <div><dt data-f>TELL US</dt><dd>The machine, which cylinder, and the leak, damage, or drift you see</dd></div>
-            </dl>
-          </div>
+        <div class="hxfacts" data-hxfacts="sys">
+          <div><div class="fl">TESTING</div><div class="fv">Pressure &amp; flow to the maker’s spec</div></div>
+          <div><div class="fl">PUMPS &amp; MOTORS</div><div class="fv">Tested, then rebuilt or replaced</div></div>
+          <div><div class="fl">FLUID</div><div class="fv">Filters changed, oil topped up or flushed</div></div>
+          <div><div class="fl">MAKES</div><div class="fv">Any make</div></div>
+        </div>
+        <div class="hxfacts" data-hxfacts="cyl" hidden>
+          <div><div class="fl">WHERE</div><div class="fv">Our Fernley shop</div></div>
+          <div><div class="fl">SEALS</div><div class="fv">Full seal kit every time</div></div>
+          <div><div class="fl">TESTING</div><div class="fv">Pressure tested before it ships</div></div>
+          <div><div class="fl">QUOTE</div><div class="fv">Rebuild and new, side by side</div></div>
         </div>
       </div>
     </div>
@@ -625,14 +1081,15 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   <section class="sec cement on-light" id="section-2" aria-labelledby="s2-title" data-reveal>
     <div class="wrap">
       <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s2-title">Which part of the work has changed?</h2></div>
-        <p class="slede">Choose what you’re seeing. You don’t need to name a failed part. The panel shows what the symptom usually means, what our technician checks, and what to tell us.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s2-title">Which Hydraulic Symptom Is the Machine Showing?</h2></div>
+        <p class="slede">Pick what you can see from the seat or the ground. The plate then shows the part that usually causes it, the first test the technician runs, the details to send us, and whether the machine can keep working until the truck arrives. You do not need to name the failed part, because the technician finds it before the repair is priced.</p>
       </div>
       <div class="symgrid">
         <div class="rcards" role="radiogroup" aria-label="What are you seeing?">
-          <button type="button" class="rc" role="radio" aria-checked="true" tabindex="0" data-rc="leak" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Visible leakage <span data-rword>SELECTED</span></span><span class="rcd">Oil on the machine, on a cylinder rod, or on the ground under it.</span></span></button>
-          <button type="button" class="rc" role="radio" aria-checked="false" tabindex="-1" data-rc="slow" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Weak or slow operation <span data-rword></span></span><span class="rcd">A function lifts, digs, or turns more slowly or with less force than it should.</span></span></button>
-          <button type="button" class="rc" role="radio" aria-checked="false" tabindex="-1" data-rc="move" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Inconsistent movement <span data-rword></span></span><span class="rcd">A function jerks, chatters, drifts down under load, or moves on its own.</span></span></button>
+          <button type="button" class="rc" role="radio" aria-checked="true" tabindex="0" data-rc="leak" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Visible leak <span data-rword>SELECTED</span></span><span class="rcd">Oil on the machine, on a cylinder rod, or on the ground under it.</span></span></button>
+          <button type="button" class="rc" role="radio" aria-checked="false" tabindex="-1" data-rc="slow" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Slow or weak function <span data-rword></span></span><span class="rcd">A function lifts, digs, swings, or travels slower or with less force than it should.</span></span></button>
+          <button type="button" class="rc" role="radio" aria-checked="false" tabindex="-1" data-rc="move" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Erratic movement or drift <span data-rword></span></span><span class="rcd">A function jerks, chatters, moves on its own, or creeps down while it holds a load.</span></span></button>
+          <button type="button" class="rc" role="radio" aria-checked="false" tabindex="-1" data-rc="heat" aria-controls="sym-reply"><span class="sock" aria-hidden="true"><span data-plug></span></span><span class="rcx"><span class="rct">Hot oil or a loud pump <span data-rword></span></span><span class="rcd">The oil runs hot, the pump whines or rattles, or the oil looks foamy or milky.</span></span></button>
         </div>
         <div class="plate1b reply" id="sym-reply" data-plate1b aria-live="polite">
           <span class="acc1b" data-accent aria-hidden="true"></span>
@@ -640,30 +1097,42 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
           <div class="strip"><span>DBM · WHAT THIS USUALLY MEANS</span></div>
           <div class="pb" data-replybody>
             <div data-reply="leak">
-              <h3>Visible leakage</h3>
+              <h3>Visible leak</h3>
               <dl class="fields1b">
-                <div><dt data-f>LIKELY CAUSE</dt><dd>A burst or worn hose, a loose or cracked fitting, or a worn cylinder seal. Oil on a cylinder rod usually points to the rod seal.</dd></div>
-                <div><dt data-f>WE CHECK</dt><dd>Where the oil comes from, with the area cleaned and the system under pressure</dd></div>
-                <div><dt data-f>TELL US</dt><dd>Where you’ve seen oil and when you first noticed it. A photo of the wet area helps.</dd></div>
-                <div><dt data-f>SAFETY</dt><dd>If oil is spraying, shut the machine down and keep clear. Oil under pressure can pierce skin.</dd></div>
+                <div><dt data-f>LIKELY CAUSE</dt><dd>A burst or chafed hose, a loose or cracked fitting, a leaking valve seal, or a worn rod seal, which leaves a ring of oil on the cylinder rod.</dd></div>
+                <div><dt data-f>WE CHECK</dt><dd>Where the oil comes from, with the area cleaned and the system under pressure, because oil runs downhill and the wet spot is often below the leak.</dd></div>
+                <div><dt data-f>TELL US</dt><dd>Where you see the oil, how fast the level drops, and when it started. A close photo of the wet area and a wide photo of where it sits on the machine help us bring the right hose and fittings.</dd></div>
+                <div class="warn"><dt data-f>KEEP WORKING?</dt><dd>A slow weep can usually keep working if you check the oil level before every shift. If oil sprays or drips steadily, shut down, because oil under pressure can pierce skin and a low tank starves the pump.</dd></div>
               </dl>
             </div>
             <div data-reply="slow" hidden>
-              <h3>Weak or slow operation</h3>
+              <h3>Slow or weak function</h3>
               <dl class="fields1b">
-                <div><dt data-f>LIKELY CAUSE</dt><dd>A worn pump, a relief valve that sticks or is set wrong, a clogged filter, or oil leaking past seals inside a cylinder or motor</dd></div>
-                <div><dt data-f>WE CHECK</dt><dd>Pump flow and system pressure against the maker’s specifications</dd></div>
-                <div><dt data-f>TELL US</dt><dd>Which functions are slow, and whether it gets worse as the machine warms up</dd></div>
+                <div><dt data-f>LIKELY CAUSE</dt><dd>A worn pump, a <span class="tw" data-tipwrap><button type="button" data-tiptrigger aria-describedby="tp-relief">relief valve</button><span id="tp-relief" role="tooltip" data-tip><b>RELIEF VALVE</b><span>A valve that opens to cap the system pressure. One that opens too early leaves a function weak.</span></span></span> that opens too early, a clogged filter or suction strainer, or oil passing the seals inside a cylinder or a motor.</dd></div>
+                <div><dt data-f>WE CHECK</dt><dd>Pump flow and system pressure with test gauges, compared with the maker’s specifications, to find whether the loss is at the pump, the valve, or the cylinder.</dd></div>
+                <div><dt data-f>TELL US</dt><dd>Which functions are slow, whether every function is slow or only one, and whether it gets worse as the machine warms up.</dd></div>
+                <div class="warn"><dt data-f>KEEP WORKING?</dt><dd>When every function is slow, the pump or the oil supply is the usual cause, and working the machine hard can finish off the pump, so call before the next shift.</dd></div>
               </dl>
             </div>
             <div data-reply="move" hidden>
-              <h3>Inconsistent movement</h3>
+              <h3>Erratic movement or drift</h3>
               <dl class="fields1b">
-                <div><dt data-f>LIKELY CAUSE</dt><dd>Air in the oil, a low oil level, a sticking control valve, or worn piston seals that let a cylinder drift under load</dd></div>
-                <div><dt data-f>WE CHECK</dt><dd>The oil level and condition, the control valves, and whether each cylinder holds its load</dd></div>
-                <div><dt data-f>TELL US</dt><dd>What the machine does differently, when it began, and whether more than one function is affected</dd></div>
+                <div><dt data-f>LIKELY CAUSE</dt><dd>Air in the oil, a low oil level, a sticking control valve spool, or worn piston seals that let a cylinder creep down while it holds a load.</dd></div>
+                <div><dt data-f>WE CHECK</dt><dd>The oil level and condition, the control valve, and a <span class="tw" data-tipwrap><button type="button" data-tiptrigger aria-describedby="tp-drift">drift test</button><span id="tp-drift" role="tooltip" data-tip><b>DRIFT TEST</b><span>The technician holds a load up and measures how far each cylinder creeps down over a set time.</span></span></span> on each cylinder with a load held up.</dd></div>
+                <div><dt data-f>TELL US</dt><dd>What the machine does differently, when it began, and whether more than one function is affected.</dd></div>
+                <div class="warn"><dt data-f>KEEP WORKING?</dt><dd>A cylinder that creeps down under load can drop a raised bucket or boom, so keep everyone out from under a raised attachment until it is repaired.</dd></div>
               </dl>
             </div>
+            <div data-reply="heat" hidden>
+              <h3>Hot oil or a loud pump</h3>
+              <dl class="fields1b">
+                <div><dt data-f>LIKELY CAUSE</dt><dd>A low oil level, a clogged oil cooler or filter, a relief valve that stays open, or a worn pump. Foamy oil points to air getting in on the suction side, and milky oil points to water.</dd></div>
+                <div><dt data-f>WE CHECK</dt><dd>The oil level, the cooler, the filters, and the relief settings, and we take an oil sample when the oil looks contaminated.</dd></div>
+                <div><dt data-f>TELL US</dt><dd>When the heat or the noise starts, the outside temperature, and the color of the oil in the sight glass.</dd></div>
+                <div class="warn"><dt data-f>KEEP WORKING?</dt><dd>Shut down when the hydraulic temperature warning comes on, because oil that runs too hot breaks down and damages the seals and the pump.</dd></div>
+              </dl>
+            </div>
+            <div class="pact"><button type="button" class="kb" data-kb="dark" data-travel="4" data-addsym><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l">Add This Symptom to the Request</span><svg viewBox="0 0 22 10" width="22" height="10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#F4703F" stroke-width="2"/></svg></span></button></div>
           </div>
         </div>
       </div>
@@ -671,42 +1140,172 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   </section>
 
   
-  <section class="sec white on-light" id="section-3" aria-labelledby="s3-title" data-reveal>
+  <section class="sec white on-light" id="request" aria-labelledby="s3-title" data-reveal>
     <div class="wrap">
       <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s3-title">Send the context with the request</h2></div>
-        <p class="slede">Send the details you know. A missing serial number or an uncertain diagnosis shouldn’t stop you from calling.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s3-title">Hydraulic Repair Request &amp; Photo Upload</h2></div>
+        <p class="slede">This form goes to our service team in Fernley, which reads it and calls or texts you back to schedule a technician and a truck. Fill in what you know about the machine, the function that changed, its history, and where it sits. A missing serial number or a guess at the cause is fine.</p>
       </div>
-      <div class="ctxgrid">
-        <ul class="ctxlist">
-          <li><div><h3>The machine</h3><p>The make, model, and serial number.</p></div></li>
-          <li><div><h3>The affected function</h3><p>The attachment, circuit, or movement involved, in your own words.</p></div></li>
-          <li><div><h3>The history</h3><p>When it began, what happens just before it occurs, recent work, and parts already replaced.</p></div></li>
-          <li><div><h3>The location</h3><p>Where the machine is and whether it can move.</p></div></li>
-        </ul>
-        <div class="cpybox" data-cpybox>
-          <span class="lab">FOR A TEXT MESSAGE</span>
-          <span class="ttl">Copy these questions, fill them in, and text them to us</span>
-          <div class="cpyrows" data-cpyrows><span>Machine (make, model, serial):</span><span>Function that changed:</span><span>When it started, and recent work:</span><span>Where the machine is, and can it move:</span></div>
-          <div><button type="button" class="kb paper" data-kb="paper" data-travel="4" data-cpy><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l" data-cpylabel>Copy the questions</span></span></button></div>
-          <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#486F5D" stroke-width="2" data-cpykerf/></svg>
-          <span data-cpysay role="status" aria-live="polite" data-default="Paste them into a text to (775) 625-0062, and add a photo of the leak or the damaged part if you can.">Paste them into a text to (775) 625-0062, and add a photo of the leak or the damaged part if you can.</span>
+      <div class="reqgrid">
+        <div class="formcard" id="wo">
+          <span class="topbar" aria-hidden="true"></span>
+          <form novalidate>
+            <div class="errsum" data-errsum tabindex="-1" role="alert">
+              <svg viewBox="0 0 20 18" aria-hidden="true"><path d="M10 1L19 17H1Z" fill="#1A1A1A"/><path d="M10 7v5M10 13.6v1.6" stroke="#FFFFFF" stroke-width="2"/></svg>
+              <div><b>ONE THING TO ADD</b><span>Add a phone number so our service team can call or text you back.</span><a href="#f-call" data-errlink>Go to the phone number field</a></div>
+            </div>
+
+            <fieldset class="grp">
+              <legend>The machine</legend>
+              <div class="fgrid2">
+                <div class="fld"><label for="f-machine">Make &amp; model</label><div class="chan2"><input id="f-machine" name="machine" autocomplete="off" placeholder="For example, XCMG XE300U" data-rk="Machine"><span class="kf" aria-hidden="true"></span></div></div>
+                <div class="fld"><label for="f-serial">Serial number <span class="opt">IF YOU HAVE IT</span></label><div class="chan2"><input id="f-serial" name="serial" class="serial" autocomplete="off" spellcheck="false" data-rk="Serial"><span class="kf" aria-hidden="true"></span></div><p class="hint">It is on the plate near the cab. Leave it blank if you cannot reach the plate safely.</p></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="grp" id="grp-func">
+              <legend>The affected function</legend>
+              <p class="gnote">Choose the closest symptom, then describe the attachment, circuit, or movement in your own words.</p>
+              <div class="togs" role="group" aria-label="Symptom">
+                <button type="button" class="mono-btn" data-mono="light" data-sym="leak" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Leak</span></button>
+                <button type="button" class="mono-btn" data-mono="light" data-sym="slow" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Slow or weak</span></button>
+                <button type="button" class="mono-btn" data-mono="light" data-sym="move" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Erratic or drifting</span></button>
+                <button type="button" class="mono-btn" data-mono="light" data-sym="heat" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Hot or noisy</span></button>
+                <button type="button" class="mono-btn" data-mono="light" data-sym="unsure" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Not sure</span></button>
+              </div>
+              <div class="fld"><label for="f-func">Which function, and what it does</label><div class="chan2"><textarea id="f-func" name="function" placeholder="For example: the boom creeps down with a full bucket, and there is oil on the left lift cylinder rod" data-rk="Function"></textarea><span class="kf" aria-hidden="true"></span></div></div>
+            </fieldset>
+
+            <fieldset class="grp">
+              <legend>The history</legend>
+              <div class="fld"><label for="f-hist">When it started, recent work &amp; parts already replaced</label><div class="chan2"><textarea id="f-hist" name="history" placeholder="For example: started last Tuesday after a hose was replaced; worse when the oil is hot" data-rk="History"></textarea><span class="kf" aria-hidden="true"></span></div></div>
+            </fieldset>
+
+            <fieldset class="grp">
+              <legend>The location</legend>
+              <div class="fld">
+                <label for="f-loc">Where the machine sits</label>
+                <div class="locrow">
+                  <div class="chan2"><input id="f-loc" name="location" autocomplete="street-address" placeholder="Job site, mine, town, or cross streets" data-rk="Location"><span class="kf" aria-hidden="true"></span></div>
+                  <button type="button" class="kb" data-kb="sec" data-travel="4" data-locate><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="#F4703F" stroke-width="2.4"/><path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5" stroke="#F4703F" stroke-width="2.4"/></svg><span class="l" data-loclabel>Use my location</span></span></button>
+                </div>
+                <p class="hint" data-locsay role="status" aria-live="polite">Your location is used only for this request. Add a gate code or a landmark if the site is hard to find.</p>
+              </div>
+              <div class="fld" style="margin-top: 18px;">
+                <span class="lab2" id="seg-move-l">Can the machine be moved?</span>
+                <div class="seg" role="radiogroup" aria-labelledby="seg-move-l" data-seg="move">
+                  <span data-segplate aria-hidden="true"></span>
+                  <button type="button" role="radio" aria-checked="false" tabindex="0" data-segv="yes">It can move</button>
+                  <button type="button" role="radio" aria-checked="false" tabindex="-1" data-segv="no">It is down</button>
+                  <button type="button" role="radio" aria-checked="true" tabindex="-1" data-segv="unsure">Not sure</button>
+                </div>
+              </div>
+              <p class="cover">Field service covers job sites anywhere in Nevada, and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. If your site is outside that area, we tell you on the call.</p>
+            </fieldset>
+
+            <fieldset class="grp">
+              <legend>Photos</legend>
+              <p class="gnote">Two photos let the technician load the right hose or seal kit before the first trip. Only photograph a machine that is shut down and safe to approach.</p>
+              <div class="slotrow">
+                <label class="slot" data-slot><input type="file" accept="image/*" capture="environment" aria-label="Photo of the leak or the damaged part"><span class="plus" aria-hidden="true">+</span><span class="sl-t">The leak or damaged part</span><span class="sl-d">A close view of the wet area, hose, or fitting</span><button type="button" class="rm" data-rm>Remove</button></label>
+                <label class="slot" data-slot><input type="file" accept="image/*" capture="environment" aria-label="Photo of the serial plate"><span class="plus" aria-hidden="true">+</span><span class="sl-t">The serial plate</span><span class="sl-d">So we can look up the right parts for the machine</span><button type="button" class="rm" data-rm>Remove</button></label>
+              </div>
+              <p class="slotsay" data-slotsay role="status" aria-live="polite">No photos added yet. The request sends without them.</p>
+            </fieldset>
+
+            <fieldset class="grp" id="grp-call">
+              <legend>Who we call back</legend>
+              <div class="fld" data-callfld>
+                <label for="f-call">Company name &amp; phone number</label>
+                <div class="chan2"><input id="f-call" name="contact" autocomplete="tel" inputmode="text" data-rk="Call back"><span class="kf" aria-hidden="true"></span></div>
+                <div class="err" id="f-call-err"><svg viewBox="0 0 20 18" aria-hidden="true"><path d="M10 1L19 17H1Z" fill="#1A1A1A"/><path d="M10 7v5M10 13.6v1.6" stroke="#FFFFFF" stroke-width="2"/></svg><div><b>ADD A PHONE NUMBER</b><span>Type the number we should call or text, including the area code.</span></div></div>
+              </div>
+              <button type="button" class="cbx" role="checkbox" aria-checked="false" data-rental id="f-rental"><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path data-tick d="M5 12.5 L10 17.5 L19 6.5" fill="none" stroke="#1A1A1A" stroke-width="2.8" stroke-linecap="square"/></svg></span><span class="ct"><b>Also send me a rental option while it is repaired</b><span>Our rental team adds a matching machine to the call back if the repair will keep yours down.</span></span></button>
+            </fieldset>
+
+            <div class="formact">
+              <button type="submit" class="btn-orange" data-b="slat" data-ripple="#1A1A1A"><span class="cf"><span class="slats" aria-hidden="true"><span class="slat" data-slat style="left:-6%"></span><span class="slat" data-slat style="left:15%"></span><span class="slat" data-slat style="left:36%"></span><span class="slat" data-slat style="left:57%"></span><span class="slat" data-slat style="left:78%"></span></span><span class="lbl"><span data-label>Send the Machine Details</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="busy" aria-hidden="true"></span></span></button>
+              <p class="pv">If the machine is down, call <a href="tel:+17756250062">(775) 625-0062</a> as well, so dispatch can plan the trip while we read the details.</p>
+            </div>
+          </form>
+          <div class="done" data-cnfdone tabindex="-1" role="status" aria-live="polite">
+            <span class="edge" aria-hidden="true"></span>
+            <span class="sent">SENT · JUST NOW</span>
+            <span class="dh">Request received.</span>
+            <span class="db">Our service team in Fernley reviews the machine details and photos and calls or texts you back to schedule a technician. A request sent after hours is answered the next day, so call (775) 625-0062 if the machine is down.</span>
+            <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#486F5D" stroke-width="2" data-cnfkerf/></svg>
+            <div class="rows" data-cnfsent></div>
+            <div class="dact">
+              <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call Field Service Dispatch at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call Dispatch</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
+              <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-dcopy><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l" data-dcopylabel>Copy What You Sent</span></span></button>
+              <button type="button" class="again" data-cnfreset>Start another request</button>
+            </div>
+            <span data-dsay role="status" aria-live="polite">Copy the request to paste into a purchase order or a message to your crew.</span>
+          </div>
         </div>
+
+        <aside class="rec" data-rec aria-label="What our service team receives">
+          <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span>
+          <div class="rh"><b>DBM HYDRAULIC REQUEST</b><span data-rstate>NOT SENT</span></div>
+          <div data-rrows></div>
+          <div class="owner"><span>GOES TO</span><b>Service team · Fernley</b></div>
+          <p class="rn">This is exactly what our service team receives. Blank lines are fine, because the call back fills them in.</p>
+          <button type="button" class="kb" data-kb="dark" data-travel="4" data-cpy><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l" data-cpylabel>Copy for a Text Message</span></span></button>
+          <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#486F5D" stroke-width="2" data-cpykerf/></svg>
+          <span data-cpysay role="status" aria-live="polite" data-default="Rather text than send the form? Copy these lines and paste them into a text to (775) 625-0062 with your photos.">Rather text than send the form? Copy these lines and paste them into a text to (775) 625-0062 with your photos.</span>
+        </aside>
       </div>
     </div>
   </section>
 
   
   <section class="sec cement on-light" id="section-4" aria-labelledby="s4-title" data-reveal>
-    <div class="wrap split">
-      <div class="pwin"><img src="../../assets/b36d203e72429fea.jpg" alt="A gear assembly taken apart, showing a splined shaft, a large toothed gear, and a retainer plate with bolts" loading="lazy"></div>
-      <div class="scopy">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s4-title">A repair and a parts request start differently</h2></div>
-        <p>If you know the part you need, send its part number or a description with the machine details, and our parts counter quotes it. If you only know the symptom, ask for a repair, and the technician finds the failed part. Either way, we tell you the cost and how long the parts will take before we order.</p>
-        <div class="details">
-          <h3>Already know the part?</h3>
-          <p>We carry XCMG and SAS parts and get aftermarket parts for most other makes, usually within 48 hours.</p>
-          <a class="tlink" href="../../services/#parts">Request a part <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+    <div class="wrap">
+      <div class="headrow">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s4-title">Do You Need a Repair or Only the Part?</h2></div>
+        <p class="slede">A repair request starts from the symptom and ends with a technician’s diagnosis and an itemized quote. A parts order starts from the part number and the serial number on the machine’s plate, and it ends with a price and a delivery date at your yard or job site.</p>
+      </div>
+      <div class="svcplate">
+        <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
+        <ul class="svcwins">
+          <li class="svcitem">
+            <div class="svcwin"><img src="../../assets/5eae62a82beabb0e.jpg" alt="Two crane service trucks on either side of a wheel loader raised on wooden cribbing at a quarry, with two large tires on the ground" loading="lazy" style="object-position: 50% 62%"></div>
+            <a class="svclink" href="#request">
+              <span class="svccap">Request a repair</span>
+              <span class="svcchip" aria-hidden="true"><span class="sl"></span><span class="sl"></span><span class="sl"></span><span class="sl"></span><span class="sl"></span><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span>
+              <span class="svcdesc">For when you can see the symptom but do not know which part failed.</span>
+              <dl class="svcrows">
+                <div><dt>YOU SEND</dt><dd>The make and model, the symptom, and the job site, with a photo of the leak if you have one</dd></div>
+                <div><dt>WE DO</dt><dd>A technician diagnoses the fault at the machine, or in our shop for a cylinder rebuild</dd></div>
+                <div><dt>YOU GET</dt><dd>A call with the fault found, an itemized price, and the parts lead time, before any repair goes ahead</dd></div>
+              </dl>
+            </a>
+          </li>
+          <li class="svcitem">
+            <div class="svcwin"><img src="../../assets/b36d203e72429fea.jpg" alt="A gear assembly taken apart, showing a splined shaft, a large toothed gear, and a retainer plate with bolts" loading="lazy" style="object-position: 50% 50%"></div>
+            <a class="svclink" href="../../services/#parts">
+              <span class="svccap">Order a hydraulic part</span>
+              <span class="svcchip" aria-hidden="true"><span class="sl"></span><span class="sl"></span><span class="sl"></span><span class="sl"></span><span class="sl"></span><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span>
+              <span class="svcdesc">For when you know the part, or you have the old one in your hand.</span>
+              <dl class="svcrows">
+                <div><dt>YOU SEND</dt><dd>The make, model, and serial number, and the part number or a photo of the old part</dd></div>
+                <div><dt>WE DO</dt><dd>Our parts counter finds it among XCMG and SAS parts and our aftermarket suppliers for most other makes</dd></div>
+                <div><dt>YOU GET</dt><dd>A price and a delivery date. Almost any part arrives within 48 hours, and overnight shipping is available</dd></div>
+              </dl>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="bill">
+        <div>
+          <h3>How a hydraulic repair is billed</h3>
+          <p>You approve the price before parts are ordered or repair work begins.</p>
+        </div>
+        <div class="billcells">
+          <div><div class="fl">TRAVEL</div><div class="fv">Portal to portal</div><p>Billed from our nearest facility gate to the machine and back.</p></div>
+          <div><div class="fl">CALL-OUT</div><div class="fv">Flat-rate minimum</div><p>Covers the trip out and the first diagnosis at the machine.</p></div>
+          <div><div class="fl">QUOTE</div><div class="fv">Itemized</div><p>Labor hours, parts, and seal kits listed before work is authorized.</p></div>
+          <div><div class="fl">PARTS</div><div class="fv">Ordered on approval</div><p>Including the option to pay for overnight shipping.</p></div>
         </div>
       </div>
     </div>
@@ -714,15 +1313,28 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
 
   
   <section class="sec bone on-light" id="section-5" aria-labelledby="s5-title" data-reveal>
-    <div class="wrap stmt">
-      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s5-title">Keep working while the machine is repaired</h2></div>
-      <div class="body">
-        <p>If a hydraulic failure has stopped the job, tell us when you request service. We can put a rental machine on your site while your machine or its cylinder is repaired.</p>
-        <div class="item">
-          <h3>A repair and a rental in one request</h3>
-          <p>Describe the work that has to keep going, and we’ll plan the repair and the rental together.</p>
-          <a class="tlink" href="../../services/#request">Request service and a rental <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
-        </div>
+    <div class="wrap rentgrid">
+      <div class="rentcopy">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s5-title">Keep the Job Running While the Machine Is Repaired</h2></div>
+        <p>A pump that waits on parts or a cylinder that comes into our shop for a rebuild can keep a machine off the job for days. Tell us in the same request, and we plan the repair and a rental machine together, so a matching excavator or loader works your site until yours comes back.</p>
+        <ul class="ticks">
+          <li>Rentals run by the month, and some large machines have a three-month minimum.</li>
+          <li>We rent to contractors.</li>
+          <li>Our rental team quotes the rental on the same call back as the repair, so you approve both at once.</li>
+        </ul>
+      </div>
+      <div class="ledger-w">
+        <a class="ledger" href="#grp-call" data-plate data-addrental>
+          <span class="lpic"><span class="lwin"><img src="../../assets/cdb54fa31ecc6e58.jpg" alt="A yellow XCMG XE300U excavator on a gravel lot, with its boom and stick cylinders in view" loading="lazy"></span></span>
+          <span class="ltxt">
+            <span class="lmeta"><b>RENTAL · DURING A REPAIR</b><span>FERNLEY, NV</span></span>
+            <span data-platetitle>A Rental Machine on Your Site</span>
+            <span class="ldesc">Press this card to tick the rental box on the request form, and our rental team includes a matching machine in the call back about the repair.</span>
+            <span class="lbtn"><span class="lkey" aria-hidden="true"><span class="lb"></span><span class="lf">Add a Rental to the Request<svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></span>
+          </span>
+          <span class="tread" aria-hidden="true"><span data-treadpads></span><span class="tshade"></span><span data-treadrail></span><span class="tfoot"></span></span>
+        </a>
+        <div class="rentmore"><a class="tlink" href="../../rentals/">See the rental fleet <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
       </div>
     </div>
   </section>
@@ -731,40 +1343,50 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   <section class="sec white on-light" id="questions" aria-labelledby="faq-title" data-reveal>
     <div class="wrap faqgrid">
       <div class="left">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="faq-title">Questions about hydraulic repair</h2></div>
-        <p>Something else on your mind?</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="faq-title">Hydraulic Repair Questions</h2></div>
+        <p>For anything these answers do not cover, call or text our service team, which answers the main number.</p>
         <a class="tlink" href="tel:+17756250062">Call or text (775) 625-0062 <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
       </div>
       <div class="acc1" data-acc>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Do I need to identify the failed component first?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Do I need to know which part failed before I call?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q1" role="region"><div><p>No. Describe the symptom and which function it affects. The technician finds the failed part before anything is priced.</p></div></div>
+          <div data-accpanel id="q1" role="region"><div><p>No. Tell us the symptom and which function it affects, and the technician finds the failed part during the diagnosis, before any repair is priced.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can you replace a hydraulic hose at the job site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q2" role="region"><div><p>Yes. Our service trucks carry hose and fittings, so in most cases the technician can make and fit a replacement hose at the machine instead of waiting for a part to ship.</p></div></div>
+          <div data-accpanel id="q2" role="region"><div><p>Yes. Our service trucks carry bulk hose and a crimper, so in most cases the technician makes the replacement hose at the machine, to the original length and pressure rating, instead of waiting for one to ship.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Is it cheaper to rebuild a cylinder than to replace it?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Is rebuilding a cylinder cheaper than buying a new one?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q3" role="region"><div><p>Usually. A rebuild replaces only the parts that wore out. We give you the rebuild price, and the price of a new cylinder when one is available, before you decide.</p></div></div>
+          <div data-accpanel id="q3" role="region"><div><p>Usually, because a rebuild replaces the seals and only the metal parts that are worn. We quote the rebuild and, when one is available, a new cylinder, so you can compare the two before you approve the work.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can you identify a part from the machine model alone?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How long will the machine be down?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q4" role="region"><div><p>Not always. We need the serial number from the plate on the machine, and the part number or a photo of the part if you have one.</p></div></div>
+          <div data-accpanel id="q4" role="region"><div><p>Our field crews usually reach the machine the day after you call, and sometimes the same day. A hose or fitting is often replaced on that first visit, while a pump or a cylinder rebuild depends on the parts, so the technician gives you a completion date with the quote. Almost any part arrives within 48 hours, and overnight shipping is available.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q5"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Which machines do you work on?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q5" role="region"><div><p>Excavators, wheel loaders, dozers, haul trucks, and other heavy equipment from XCMG, Caterpillar, Case, and most other makers, whether or not you bought the machine from us.</p></div></div>
+          <div data-accpanel id="q5" role="region"><div><p>Excavators, wheel loaders, dozers, haul trucks, graders, and other heavy equipment from XCMG, Caterpillar, Case, and most other makers, whether or not you bought the machine from us.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q6"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Who receives my service request?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q6"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can your technicians work on a mine site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q6" role="region"><div><p>Calls, texts, and service requests go to our service team in Fernley, which calls or texts you back. You can always call (775) 625-0062 without filling out a form.</p></div></div>
+          <div data-accpanel id="q6" role="region"><div><p>Yes. Our field technicians work at mine sites across Nevada, hold Mine Safety and Health Administration (MSHA) Part 46 and Part 48 training for surface mines, and arrive with the protective equipment the mine requires.</p></div></div>
+        </div>
+        <div data-accitem>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q7"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can you identify a part from the machine model alone?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
+          <div data-accpanel id="q7" role="region"><div><p>Not always, because the same model can use different parts from one serial number range to the next. Send the serial number from the machine’s plate, and the part number or a photo of the old part if you have one.</p></div></div>
+        </div>
+        <div data-accitem>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q8"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Who receives my request, and when do you answer?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
+          <div data-accpanel id="q8" role="region"><div><p>Requests from this page, and calls and texts to (775) 625-0062, go to our service team in Fernley, which calls or texts you back. A request sent after hours is answered the next day, so call as well if the machine is down.</p></div></div>
         </div>
       </div>
     </div>
@@ -778,12 +1400,12 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
         <div class="call-in">
           <div style="display:flex; flex-direction:column; gap:16px;">
             <span class="accent" aria-hidden="true" style="margin-top:0"></span>
-            <h2 class="h" id="call-title">Call or text us about a hydraulic problem</h2>
-            <p class="cl">Tell us the machine, which function changed, and where it is. A photo of the leak or the damaged part helps.</p>
+            <h2 class="h" id="call-title">Call or Text Us About a Hydraulic Problem</h2>
+            <p class="cl">Our service team answers the main number in Fernley. Tell us the make and model and which function changed, and text a photo of the leak or the damaged part, so the technician loads the right hose or seal kit before the truck leaves the yard.</p>
           </div>
           <div class="acts">
             <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-            <a class="kplate" href="../../services/#request"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request</span></a>
+            <a class="kplate" href="#request"><span class="kbase" aria-hidden="true"></span><span class="kface">Send the Machine Details</span></a>
           </div>
           <p class="fine">Our yard and shop are at 2366 Resource Dr, Fernley, NV 89408.</p>
         </div>
@@ -798,11 +1420,11 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
-        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a></div>
+        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
       <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/">New equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../we-buy-equipment/">We buy equipment</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
       <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; repair</a></li><li><a href="../../services/mobile-field-service/">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/" aria-current="page">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/">Request a part</a></li></ul></div>
-      <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
+      <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../blog/">Job stories and guides</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span class="tagline">Built for work. <span>Driven to perform.</span></span>
@@ -813,10 +1435,12 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
 </footer>
 
 
+
 <div class="callbar" aria-hidden="true">
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-  <a class="kb" href="../../services/#request" tabindex="-1" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l">Send a request</span></span></a>
+  <a class="kplate" href="#request" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Send details</span></a>
 </div>
+
 
 <script>
 (function () {
@@ -830,7 +1454,15 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset
   var navEl = document.getElementById('nav'), navbar = navEl && navEl.querySelector('.navbar'), navLogo = navEl && navEl.querySelector('.brand img');
   function setTight(t) { navbar.style.paddingTop = navbar.style.paddingBottom = t ? '12px' : ''; navLogo.style.height = t ? (window.innerWidth <= 620 ? '30px' : '38px') : ''; }
-  function measure() { document.documentElement.style.setProperty('--dbm-nav', Math.ceil(navEl.getBoundingClientRect().height) + 10 + 'px'); }
+  // Buy pages: their row of links to each other moves directly under the header (CSS already shows it there), so keyboard order matches what is seen
+  var buyRow = document.querySelector('main > .subnav[aria-label="Buy equipment"]');
+  if (buyRow && buyRow.parentNode.firstElementChild !== buyRow) buyRow.parentNode.insertBefore(buyRow, buyRow.parentNode.firstElementChild);
+  // --dbm-nav-h is the header's exact height (the sticky Buy row sits under it); --dbm-nav adds the sticky Buy row and 10 px for anchor jumps
+  function measure() {
+    var h = navEl.getBoundingClientRect().height, extra = buyRow && getComputedStyle(buyRow).position === 'sticky' ? buyRow.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--dbm-nav-h', h + 'px');
+    document.documentElement.style.setProperty('--dbm-nav', Math.ceil(h + extra) + 10 + 'px');
+  }
   if (navbar && navLogo) {
     var sentinel = document.createElement('span');
     sentinel.setAttribute('aria-hidden', 'true');
@@ -838,6 +1470,7 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
     document.body.insertBefore(sentinel, document.body.firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (en) { setTight(!en.isIntersecting); measure(); }); }).observe(sentinel);
     window.addEventListener('resize', measure, { passive: true }); measure();
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(navEl);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
@@ -911,6 +1544,111 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   if (callbar && heroActs) new IntersectionObserver(function (es) { heroGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(heroActs);
   if (callbar && callBand) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(callBand);
 })();
+
+/* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
+   The diamond beside a route opens that route's panel under the bar on click, never on hover, and one panel is open at a time.
+   The same diamond, Escape, or a click outside closes it. Tab moves from an open diamond into its panel and from the panel's
+   last link on to the next route. Durations and eases are the board's, and reduced motion sets them to 0. */
+(function () {
+  var nav = document.getElementById('nav'), host = nav && nav.querySelector('[data-menuhost]');
+  if (!host) return;
+  var R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D = function (t) { return R ? 0 : t; };
+  var G = function () { return document.documentElement.classList.contains('gsap-on') && window.gsap; };
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  var toggles = nav.querySelectorAll('[data-mt]'), open = null;
+  var panelOf = function (k) { return document.getElementById('menu-' + k); };
+  var toggleOf = function (k) { return nav.querySelector('[data-mt="' + k + '"]'); };
+  var fit = function (p) { p.style.maxHeight = Math.max(160, window.innerHeight - nav.getBoundingClientRect().bottom) + 'px'; };
+
+  // The menu link for the page the visitor is on is marked as the current page. Review copies live at pages/<folder>/hifi.html.
+  var m = location.pathname.match(/\/([^\/]+)\/hifi\.html$/), special = { home: '', 'line-boring': '/services/line-boring', 'welding-fabrication': '/services/welding-fabrication' };
+  var here = m ? (m[1] in special ? special[m[1]] : '/' + m[1].replace(/--/g, '/')) : location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+  each(host.querySelectorAll('a[href]'), function (a) {
+    if (a.getAttribute('href').indexOf('#') !== -1) return;
+    var path = m ? a.getAttribute('href').replace(/\/$/, '') : a.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+    if (path === here) a.setAttribute('aria-current', 'page');
+  });
+
+  function diam(t, on) {
+    var g = G(), d = t.querySelector('[data-diam]');
+    if (g) g.to(d, { rotate: on ? 180 : 0, backgroundColor: on ? '#EF5016' : '#8A8D93', duration: D(on ? 0.3 : 0.24), ease: on ? 'back.out(2)' : 'power1.out', overwrite: 'auto' });
+  }
+  function hideNow(p) {
+    var g = window.gsap;
+    if (g) g.killTweensOf(p);
+    p.hidden = true; p.style.height = ''; p.classList.remove('is-open');
+  }
+  function close(refocus, now) {
+    if (!open) return;
+    var k = open, p = panelOf(k), t = toggleOf(k), g = G();
+    open = null;
+    t.setAttribute('aria-expanded', 'false'); diam(t, false);
+    p.classList.remove('is-open');
+    if (g && !now) { g.killTweensOf(p); g.to(p, { height: 0, duration: D(0.26), ease: 'power2.in', onComplete: function () { hideNow(p); } }); }
+    else hideNow(p);
+    if (refocus) t.focus({ preventScroll: true });
+  }
+  function show(k) {
+    if (open === k) { close(true); return; }
+    if (open) close(false, true);
+    var p = panelOf(k), t = toggleOf(k), g = G();
+    each(host.querySelectorAll('.menu'), function (x) { if (x !== p && !x.hidden) hideNow(x); });
+    open = k;
+    t.setAttribute('aria-expanded', 'true'); diam(t, true);
+    p.hidden = false; fit(p);
+    if (!g) { p.classList.add('is-open'); return; }
+    g.killTweensOf(p);
+    g.fromTo(p, { height: 0 }, { height: 'auto', duration: D(0.34), ease: 'power3.out', onComplete: function () { p.style.height = ''; p.classList.add('is-open'); } });
+    var kerf = p.querySelector('[data-menukerf]');
+    if (kerf && !R) {
+      if (window.DrawSVGPlugin) g.fromTo(kerf, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'power2.inOut' });
+      else g.fromTo(kerf, { strokeDasharray: 1000, strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.inOut', clearProps: 'strokeDasharray,strokeDashoffset' });
+    }
+    if (!R) g.fromTo(p.querySelectorAll('[data-mitem]'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.28, stagger: 0.04, delay: 0.08, ease: 'power2.out' });
+  }
+
+  each(toggles, function (t) {
+    t.addEventListener('click', function (e) { e.stopPropagation(); show(t.getAttribute('data-mt')); });
+    t.addEventListener('pointerenter', function () { var g = G(); if (g) g.to(t, { scale: 1.12, duration: D(0.18) }); });
+    t.addEventListener('pointerleave', function () { var g = G(); if (g) g.to(t, { scale: 1, duration: D(0.18) }); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(true); return; }
+    if (e.key !== 'Tab') return;
+    var t = toggleOf(open), f = panelOf(open).querySelectorAll('a[href]'), a = document.activeElement;
+    if (a === t && !e.shiftKey) { e.preventDefault(); f[0].focus(); }
+    else if (a === f[0] && e.shiftKey) { e.preventDefault(); t.focus(); }
+    else if (a === f[f.length - 1] && !e.shiftKey) {
+      var bar = Array.prototype.slice.call(nav.querySelectorAll('.navbar a[href], .navbar button')), next = bar[bar.indexOf(t) + 1];
+      e.preventDefault(); close(false); (next || t).focus();
+    }
+  }, true);
+  document.addEventListener('click', function (e) { if (open && !host.contains(e.target) && !(e.target.closest && e.target.closest('[data-mt]'))) close(false); }, true);
+  window.addEventListener('resize', function () { if (open) fit(panelOf(open)); }, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (open) fit(panelOf(open)); }).observe(nav);
+  window.addEventListener('pageshow', function (e) { if (e.persisted && open) close(false, true); });
+
+  // Row target (board C08 _rows): pointing at a row strikes the orange line down its leading edge, moves the title and arrow 6 px, and turns the title orange
+  each(host.querySelectorAll('[data-row]'), function (r) {
+    var edge = r.querySelector('[data-edge]'), arr = r.querySelector('[data-rarr]'), title = r.querySelector('[data-rtitle]');
+    function set(v) {
+      var g = G(); if (!g) return;
+      var lit = v || r.hasAttribute('aria-current');
+      g.to(edge, { scaleY: lit ? 1 : 0, duration: D(0.26), ease: 'power2.out', overwrite: 'auto' });
+      g.to(arr, { x: v ? 6 : 0, duration: D(0.26), ease: v ? 'back.out(2)' : 'power2.out', overwrite: 'auto' });
+      g.to(title, { x: v ? 6 : 0, color: lit ? '#F4703F' : '#FFFFFF', duration: D(0.24), ease: 'power2.out', overwrite: 'auto' });
+    }
+    r.addEventListener('pointerenter', function () { set(true); });
+    r.addEventListener('pointerleave', function () { set(false); var g = G(); if (g) g.to(r, { y: 0, duration: 0.1, overwrite: 'auto' }); });
+    r.addEventListener('focus', function () { set(true); });
+    r.addEventListener('blur', function () { set(false); });
+    r.addEventListener('pointerdown', function () { var g = G(); if (g) g.to(r, { y: 1, duration: 0.06, overwrite: 'auto' }); });
+    r.addEventListener('pointerup', function () { var g = G(); if (g) g.to(r, { y: 0, duration: 0.12, overwrite: 'auto' }); });
+  });
+})();
+/* NAV-05 route menus: end */
 </script>
 <script>
 /*!
@@ -1433,10 +2171,20 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
 <script>
 (function () {
   var g = window.gsap, R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D = function (t) { return R ? 0 : t; };
+  var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  var monoSet = function (b, on) { if (window.dbmMonoSet) window.dbmMonoSet(b, on); else b.setAttribute('aria-pressed', on ? 'true' : 'false'); };
+  // Scrolls so the target sits below the sticky header, then runs the callback once the scroll has had time to finish
+  var goTo = function (el, cb) {
+    var nav = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--dbm-nav'), 10) || 100;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - nav - 8, behavior: R ? 'auto' : 'smooth' });
+    if (cb) setTimeout(cb, R ? 0 : 700);
+  };
 
   // C08 NAV-01 second-level bar: the kerf travels to the link under the pointer and returns to the current page
-  var row = document.querySelector('[data-subnav]'), kerf = row.querySelector('[data-skerf]'), links = $$('a', row);
+  var row = $('[data-subnav]'), kerf = $('[data-skerf]', row), links = $$('a', row);
   var cur = links.filter(function (a) { return a.hasAttribute('aria-current'); })[0] || links[0];
   var seat = function (a, now) {
     var x = a.offsetLeft, w = a.offsetWidth;
@@ -1445,33 +2193,118 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
   };
   links.forEach(function (a) { a.addEventListener('pointerenter', function () { seat(a); }); a.addEventListener('focus', function () { seat(a); }); a.addEventListener('blur', function () { seat(cur); }); });
   row.addEventListener('pointerleave', function () { seat(cur); });
-  // On a phone the bar scrolls sideways, so it opens with the current page's link in view
   if (row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, cur.offsetLeft - 24);
   seat(cur, true);
   window.addEventListener('resize', function () { seat(cur, true); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { seat(cur, true); });
 
+  // C07 H5 qualifier: one toggle stays pressed, and the status line gives the reply for that answer; no answer blocks the buttons
+  var qual = $('[data-qual]');
+  if (qual) {
+    var qsay = $('[data-qsay]', qual), qb = $$('[data-q]', qual);
+    qb.forEach(function (b) {
+      b.addEventListener('click', function () {
+        qb.forEach(function (o) { monoSet(o, o === b); });
+        qsay.textContent = b.getAttribute('data-say');
+        if (g && !R) g.fromTo(qsay, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+      });
+    });
+  }
+
+  // C09 CAR-03 rail over C09 CAR-09 explainer: the plate travels to the chosen job, the picture and key swap,
+  // pins sit in picture space (cover crop for the photo, contain fit for the drawing), and a pin and its key row light together
+  var hx = $('[data-hx]');
+  if (hx) {
+    var hsel = $$('[data-hxsel]', hx), hmark = $('[data-hxmarker]', hx);
+    var hpan = $$('[data-hxpanel]', hx), htxt = $$('[data-hxtext]', hx), hfac = $$('[data-hxfacts]', hx);
+    var hcur = 'sys';
+    var seatH = function (b, now) {
+      var r = b.getBoundingClientRect(), p = b.parentElement.getBoundingClientRect();
+      var to = { left: (r.left - p.left) + 'px', top: (r.top - p.top) + 'px', width: r.width + 'px', height: r.height + 'px' };
+      if (!g) { Object.assign(hmark.style, to); return; }
+      if (R || now) g.set(hmark, to); else g.to(hmark, Object.assign({ duration: 0.44, ease: 'power3.out', overwrite: 'auto' }, to));
+    };
+    var place = function (panel) {
+      var W = panel.clientWidth, H = panel.clientHeight, img = $('img', panel), svg = $('svg', panel), dw, dh, ox, oy, s;
+      if (!W || !H) return;
+      if (img) {
+        if (!img.naturalWidth) return;
+        s = Math.max(W / img.naturalWidth, H / img.naturalHeight); dw = img.naturalWidth * s; dh = img.naturalHeight * s;
+        var op = (img.getAttribute('data-op') || '0.5,0.5').split(',').map(Number); ox = (W - dw) * op[0]; oy = (H - dh) * op[1];
+      } else if (svg) {
+        // The cylinder drawing keeps one viewBox; on a phone the CSS hides the legend and the small second line of each label
+        svg.setAttribute('viewBox', window.innerWidth <= 620 ? '0 0 680 740' : '0 0 680 740');
+        var vb = svg.viewBox.baseVal, fw = +svg.getAttribute('data-fw'), fh = +svg.getAttribute('data-fh');
+        s = Math.min(W / vb.width, H / vb.height); ox = (W - vb.width * s) / 2 - vb.x * s; oy = (H - vb.height * s) / 2 - vb.y * s; dw = fw * s; dh = fh * s;
+      } else return;
+      $$('[data-xpin]', panel).forEach(function (pn) {
+        pn.style.left = Math.max(18, Math.min(W - 18, ox + (+pn.getAttribute('data-ix')) * dw)) + 'px';
+        pn.style.top = Math.max(18, Math.min(H - 18, oy + (+pn.getAttribute('data-iy')) * dh)) + 'px';
+      });
+    };
+    var lightK = function (k, n) {
+      var panel = hpan.filter(function (p) { return p.getAttribute('data-hxpanel') === k; })[0], text = htxt.filter(function (t) { return t.getAttribute('data-hxtext') === k; })[0];
+      $$('[data-xpin]', panel).forEach(function (pn) { pn.style.background = pn.getAttribute('data-xpin') === n ? '#EF5016' : '#1A1A1A'; });
+      $$('[data-xkey]', text).forEach(function (r) { var a = r.getAttribute('data-xkey') === n; r.style.background = a ? '#EEF0F2' : 'transparent'; $('[data-xnum]', r).style.background = a ? '#EF5016' : '#1A1A1A'; });
+    };
+    var showH = function (k, now) {
+      hcur = k; hx.classList.toggle('is-cyl', k === 'cyl');
+      hsel.forEach(function (b) { var a = b.getAttribute('data-hxsel') === k; b.style.color = a ? '#FFFFFF' : '#C7C9CC'; b.setAttribute('aria-pressed', a ? 'true' : 'false'); if (a) seatH(b, now); });
+      hpan.forEach(function (p) { p.hidden = p.getAttribute('data-hxpanel') !== k; });
+      htxt.forEach(function (t) { t.hidden = t.getAttribute('data-hxtext') !== k; });
+      hfac.forEach(function (f) { f.hidden = f.getAttribute('data-hxfacts') !== k; });
+      var p = hpan.filter(function (x) { return !x.hidden; })[0], t = htxt.filter(function (x) { return !x.hidden; })[0], f = hfac.filter(function (x) { return !x.hidden; })[0];
+      place(p); lightK(k, null);
+      if (!now && g && !R) { g.fromTo(p, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' }); g.fromTo(t, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }); g.fromTo(f.children, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', stagger: 0.04 }); }
+    };
+    hsel.forEach(function (b) { b.addEventListener('click', function () { showH(b.getAttribute('data-hxsel')); }); });
+    hpan.forEach(function (p) {
+      var k = p.getAttribute('data-hxpanel'), img = $('img', p);
+      if (img) img.addEventListener('load', function () { place(p); });
+      $$('[data-xpin]', p).forEach(function (pn) {
+        var n = pn.getAttribute('data-xpin');
+        ['pointerenter', 'focus'].forEach(function (ev) { pn.addEventListener(ev, function () { lightK(k, n); }); });
+        ['pointerleave', 'blur'].forEach(function (ev) { pn.addEventListener(ev, function () { lightK(k, null); }); });
+        // On a phone the key sits under the picture, so a tapped pin brings its row into view
+        pn.addEventListener('click', function () {
+          lightK(k, n);
+          var t = htxt.filter(function (x) { return x.getAttribute('data-hxtext') === k; })[0], r = $('[data-xkey="' + n + '"]', t), rr = r.getBoundingClientRect();
+          if (rr.bottom > window.innerHeight || rr.top < 80) r.scrollIntoView({ behavior: R ? 'auto' : 'smooth', block: 'center' });
+        });
+      });
+    });
+    htxt.forEach(function (t) {
+      var k = t.getAttribute('data-hxtext');
+      $$('[data-xkey]', t).forEach(function (r) { var n = r.getAttribute('data-xkey'); r.addEventListener('pointerenter', function () { lightK(k, n); }); r.addEventListener('pointerleave', function () { lightK(k, null); }); });
+    });
+    showH('sys', true);
+    var reH = function () { var a = hsel.filter(function (b) { return b.getAttribute('data-hxsel') === hcur; })[0]; seatH(a, true); hpan.forEach(function (p) { if (!p.hidden) place(p); }); };
+    window.addEventListener('resize', reH);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reH);
+    if (window.ResizeObserver) new ResizeObserver(reH).observe($('.xpics', hx));
+  }
+
   // C10 Radio cards: the plug seats, the chosen card takes a 2 px charcoal edge, arrow keys move the choice, and the Card 1b reply changes with it
-  var cards = $$('[data-rc]'), replies = $$('[data-reply]');
+  var cards = $$('[data-rc]'), replies = $$('[data-reply]'), symNow = 'leak';
   var paint = function (c, sel, anim) {
     c.setAttribute('aria-checked', sel ? 'true' : 'false'); c.tabIndex = sel ? 0 : -1;
     c.style.boxShadow = sel ? 'inset 0 0 0 2px #1A1A1A' : 'inset 0 0 0 1px #B9BCC1';
     c.style.background = sel ? '#FFFFFF' : '#F6F6F7';
-    c.querySelector('[data-rword]').textContent = sel ? 'SELECTED' : '';
-    var plug = c.querySelector('[data-plug]');
+    $('[data-rword]', c).textContent = sel ? 'SELECTED' : '';
+    var plug = $('[data-plug]', c);
     if (g) { if (sel) g.fromTo(plug, { scale: 0.5, y: -5, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: (anim && !R) ? 0.24 : 0, ease: 'power3.out', overwrite: 'auto' }); else g.to(plug, { scale: 0.5, opacity: 0, duration: R ? 0 : 0.12, overwrite: 'auto' }); }
     else plug.style.opacity = sel ? '1' : '0';
   };
   var pick = function (k, anim) {
-    cards.forEach(function (c) { paint(c, c.dataset.rc === k, anim); });
+    symNow = k;
+    cards.forEach(function (c) { paint(c, c.getAttribute('data-rc') === k, anim); });
     var shown = null;
-    replies.forEach(function (r) { var on = r.dataset.reply === k; r.hidden = !on; if (on) shown = r; });
+    replies.forEach(function (r) { var on = r.getAttribute('data-reply') === k; r.hidden = !on; if (on) shown = r; });
     if (shown && g && anim && !R) g.fromTo(shown.children, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', stagger: 0.05 });
   };
   cards.forEach(function (c, i) {
     c.addEventListener('click', function () {
-      pick(c.dataset.rc, true);
-      // On narrow screens the reply sits below the cards, so it scrolls into view when it is off screen
+      pick(c.getAttribute('data-rc'), true);
       var rp = document.getElementById('sym-reply'), r = rp.getBoundingClientRect();
       if (window.innerWidth < 960 && r.top > window.innerHeight - 120) rp.scrollIntoView({ behavior: R ? 'auto' : 'smooth', block: 'nearest' });
     });
@@ -1483,39 +2316,201 @@ body.show-assume .plate1b [data-assume] { background: #5A4A10 !important; color:
       var j = -1;
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight') j = (i + 1) % cards.length;
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') j = (i - 1 + cards.length) % cards.length;
-      if (j >= 0) { e.preventDefault(); pick(cards[j].dataset.rc, true); cards[j].focus(); }
+      if (j >= 0) { e.preventDefault(); pick(cards[j].getAttribute('data-rc'), true); cards[j].focus(); }
     });
   });
   pick('leak', false);
 
-  // C05 CPY-03: the button copies the questions as plain text, its label rolls to "Copied", the green line draws, and a sentence says what was copied; all of it resets after three seconds
-  var box = document.querySelector('[data-cpybox]'), btn = box.querySelector('[data-cpy]'), label = box.querySelector('[data-cpylabel]'), ck = box.querySelector('[data-cpykerf]'), say = box.querySelector('[data-cpysay]');
-  var base = label.textContent, def = say.getAttribute('data-default'), t = null, D = !!(g && window.DrawSVGPlugin);
-  if (D) g.set(ck, { drawSVG: '0%' });
-  var roll = function (txt) { if (g && !R) g.fromTo(label, { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.22, ease: 'power2.out' }); label.textContent = txt; };
-  var text = 'Hydraulic repair request\n' + $$('[data-cpyrows] span', box).map(function (s) { return s.textContent + ' '; }).join('\n');
-  var finish = function (ok) {
-    roll(ok ? 'Copied' : base);
-    if (ok && D) g.fromTo(ck, { drawSVG: '0%' }, { drawSVG: '100%', duration: R ? 0 : 0.5, ease: 'power2.out' });
-    say.textContent = ok ? 'The four questions are copied. Paste them into a text to (775) 625-0062 and fill in your answers.' : 'Your browser blocked copying. Select the questions above and copy them by hand.';
-    clearTimeout(t);
-    t = setTimeout(function () { roll(base); if (D) g.to(ck, { drawSVG: '100% 100%', duration: R ? 0 : 0.4 }); say.textContent = def; }, 3000);
-  };
-  // When the Clipboard API is refused, a hidden text area and the browser's copy command are tried before the page asks the visitor to copy by hand
-  var legacy = function () {
-    var ta = document.createElement('textarea'), ok = false;
-    ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
-    document.body.appendChild(ta); ta.select();
-    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
-    ta.remove(); btn.focus({ preventScroll: true });
-    finish(ok);
-  };
-  btn.addEventListener('click', function () {
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { finish(true); }, legacy);
-      else legacy();
-    } catch (e) { legacy(); }
+  // TIP-01: a tooltip near the right edge of the screen opens leftward so it stays on screen
+  $$('[data-tipwrap]').forEach(function (w) {
+    var tip = $('[data-tip]', w);
+    var place2 = function () { var r = w.getBoundingClientRect(); var wide = r.left + tip.offsetWidth > document.documentElement.clientWidth - 12; tip.style.left = wide ? 'auto' : '0'; tip.style.right = wide ? '0' : 'auto'; };
+    w.addEventListener('pointerenter', place2); w.addEventListener('focusin', place2);
+    place2(); window.addEventListener('resize', place2);
   });
+
+  // ---- Section 5: the request form ----
+  var card = document.getElementById('wo'), form = $('form', card), done = $('[data-cnfdone]', card), send = $('[type="submit"]', form);
+  var recRows = $('[data-rrows]'), recState = $('[data-rstate]');
+  var SYM = { leak: 'Leak', slow: 'Slow or weak', move: 'Erratic or drifting', heat: 'Hot or noisy', unsure: 'Not sure' };
+  var MOVE = { yes: 'It can move', no: 'It is down', unsure: 'Not sure' };
+  var state = { sym: '', move: 'unsure', rental: false };
+
+  // Field Mono symptom toggles: one stays pressed, and a second press clears it
+  var symBtns = $$('[data-sym]', form);
+  var setSym = function (k) { state.sym = k; symBtns.forEach(function (b) { monoSet(b, b.getAttribute('data-sym') === k); }); render(); };
+  symBtns.forEach(function (b) { b.addEventListener('click', function () { setSym(state.sym === b.getAttribute('data-sym') ? '' : b.getAttribute('data-sym')); }); });
+
+  // C10 Segmented: one dark plate slides to the chosen answer; arrow keys move it
+  var seg = $('[data-seg="move"]', form), segPlate = $('[data-segplate]', seg), segBtns = $$('[data-segv]', seg);
+  var seatSeg = function (now) {
+    var b = segBtns.filter(function (x) { return x.getAttribute('aria-checked') === 'true'; })[0]; if (!b) return;
+    if (g) g.to(segPlate, { x: b.offsetLeft - 4, width: b.offsetWidth, duration: (now || R) ? 0 : 0.34, ease: 'power3.out', overwrite: 'auto' });
+    else { segPlate.style.transform = 'translateX(' + (b.offsetLeft - 4) + 'px)'; segPlate.style.width = b.offsetWidth + 'px'; }
+    segPlate.style.left = '4px';
+  };
+  var setSeg = function (v, focus) {
+    state.move = v;
+    segBtns.forEach(function (b) { var a = b.getAttribute('data-segv') === v; b.setAttribute('aria-checked', a ? 'true' : 'false'); b.tabIndex = a ? 0 : -1; if (a && focus) b.focus(); });
+    seatSeg(false); render();
+  };
+  segBtns.forEach(function (b, i) {
+    b.addEventListener('click', function () { setSeg(b.getAttribute('data-segv')); });
+    b.addEventListener('pointerenter', function () { if (b.getAttribute('aria-checked') !== 'true') b.style.color = '#1A1A1A'; });
+    b.addEventListener('pointerleave', function () { b.style.color = ''; });
+    b.addEventListener('keydown', function (e) {
+      var j = -1;
+      if (e.key === 'ArrowRight') j = (i + 1) % segBtns.length;
+      if (e.key === 'ArrowLeft') j = (i - 1 + segBtns.length) % segBtns.length;
+      if (j >= 0) { e.preventDefault(); setSeg(segBtns[j].getAttribute('data-segv'), true); }
+    });
+  });
+  seatSeg(true);
+  window.addEventListener('resize', function () { seatSeg(true); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { seatSeg(true); });
+
+  // C10 Location: the browser asks for permission only when the button is pressed, the result lands in the same editable field, and a failure says what to type instead
+  var locBtn = $('[data-locate]', form), locLab = $('[data-loclabel]', locBtn), locSay = $('[data-locsay]', form), locIn = document.getElementById('f-loc');
+  var locReset = function () { locBtn.disabled = false; locBtn.style.opacity = '1'; locLab.textContent = 'Use my location'; };
+  locBtn.addEventListener('click', function () {
+    if (!navigator.geolocation) { locSay.textContent = 'This device cannot share its location. Type the site name, the town, or the nearest cross streets instead.'; return; }
+    locBtn.disabled = true; locBtn.style.opacity = '0.7'; locLab.textContent = 'Finding you…'; locSay.textContent = 'Asking this device for its location.';
+    navigator.geolocation.getCurrentPosition(function (p) {
+      locIn.value = 'Near ' + p.coords.latitude.toFixed(4) + ', ' + p.coords.longitude.toFixed(4);
+      locReset(); locSay.textContent = 'Location added. Add a gate code or a landmark if the site is hard to find.'; render(); locIn.focus();
+    }, function () {
+      locReset(); locSay.textContent = 'Location is off for this page. Type the site name, the town, or the nearest cross streets instead, which works just as well.';
+    }, { timeout: 8000, maximumAge: 60000 });
+  });
+
+  // C10 Checkbox: the tick draws in when the rental box is checked
+  var rentBox = $('[data-rental]', form), tick = $('[data-tick]', rentBox), DS = !!(g && window.DrawSVGPlugin);
+  var setRental = function (on, now) {
+    state.rental = on; rentBox.setAttribute('aria-checked', on ? 'true' : 'false');
+    if (DS) g.to(tick, { drawSVG: on ? '100%' : '0%', duration: (now || R) ? 0 : (on ? 0.26 : 0.14), ease: on ? 'power2.out' : 'power1.in', overwrite: 'auto' });
+    else tick.style.opacity = on ? '1' : '0';
+    render();
+  };
+  rentBox.addEventListener('click', function () { setRental(!state.rental); });
+  rentBox.addEventListener('pointerenter', function () { if (!state.rental) $('.box', rentBox).style.boxShadow = 'inset 0 0 0 1.5px #C9430D'; });
+  rentBox.addEventListener('pointerleave', function () { $('.box', rentBox).style.boxShadow = ''; });
+
+  // C10 Photo Slots: a preview fills the slot, Remove clears it, and a line counts the photos added
+  var slotSay = $('[data-slotsay]', form);
+  var countPhotos = function () { return $$('[data-slot] input', form).filter(function (i) { return i.files && i.files.length; }).length; };
+  var sayPhotos = function () { var n = countPhotos(); slotSay.textContent = n ? (n === 1 ? '1 photo added.' : n + ' photos added.') : 'No photos added yet. The request sends without them.'; render(); };
+  $$('[data-slot]', form).forEach(function (sl) {
+    var inp = $('input', sl);
+    inp.addEventListener('change', function () {
+      var f = inp.files && inp.files[0], old = $('img', sl); if (old) old.remove();
+      if (f) { var img = document.createElement('img'); img.alt = ''; img.src = URL.createObjectURL(f); sl.insertBefore(img, $('[data-rm]', sl)); sl.classList.add('has'); } else sl.classList.remove('has');
+      sayPhotos();
+    });
+    $('[data-rm]', sl).addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); inp.value = ''; var old = $('img', sl); if (old) old.remove(); sl.classList.remove('has'); sayPhotos(); inp.focus(); });
+  });
+
+  // C12 request record: rebuilt on every change, so the visitor sees exactly what the service team receives
+  var rows = function () {
+    var v = function (id) { return document.getElementById(id).value.trim(); }, n = countPhotos();
+    return [
+      ['Machine', v('f-machine')], ['Serial', v('f-serial')], ['Symptom', SYM[state.sym] || ''], ['Function', v('f-func')], ['History', v('f-hist')],
+      ['Location', v('f-loc')], ['Can it move', state.move === 'unsure' ? '' : MOVE[state.move]], ['Photos', n ? n + ' attached' : ''],
+      ['Rental', state.rental ? 'Yes, send a rental option' : ''], ['Call back', v('f-call')]
+    ];
+  };
+  function render() {
+    recRows.innerHTML = rows().map(function (r) { return '<div class="rr"><span>' + r[0] + '</span><span' + (r[1] ? '>' + esc(r[1]) : ' class="nil">—') + '</span></div>'; }).join('');
+  }
+  form.addEventListener('input', render);
+  render();
+
+  // C05 CPY-03: the record and the receipt copy as labeled plain-text lines; the label rolls to "Copied", the green line draws, and a sentence says what was copied
+  var asText = function () { return 'Hydraulic repair request for DBM\n' + rows().map(function (r) { return r[0] + ': ' + (r[1] || 'Not given'); }).join('\n'); };
+  var copyText = function (text, ok, fail) {
+    var legacy = function () {
+      var ta = document.createElement('textarea'), res = false; ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+      document.body.appendChild(ta); ta.select(); try { res = document.execCommand('copy'); } catch (e) { res = false; } ta.remove(); (res ? ok : fail)();
+    };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, legacy); else legacy(); } catch (e) { legacy(); }
+  };
+  var roll = function (el, txt) { if (g && !R) g.fromTo(el, { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.22, ease: 'power2.out' }); el.textContent = txt; };
+  var cpyBtn = $('[data-cpy]'), cpyLab = $('[data-cpylabel]'), cpyK = $('[data-cpykerf]'), cpySay = $('[data-cpysay]'), cpyBase = cpyLab.textContent, cpyDef = cpySay.getAttribute('data-default'), cpyT = null;
+  if (DS) g.set(cpyK, { drawSVG: '0%' });
+  cpyBtn.addEventListener('click', function () {
+    var btn = this;
+    copyText(asText(), function () {
+      roll(cpyLab, 'Copied'); if (DS) g.fromTo(cpyK, { drawSVG: '0%' }, { drawSVG: '100%', duration: D(0.5), ease: 'power2.out' });
+      cpySay.textContent = 'The request lines are copied. Paste them into a text to (775) 625-0062 and attach your photos.';
+      clearTimeout(cpyT); cpyT = setTimeout(function () { roll(cpyLab, cpyBase); if (DS) g.to(cpyK, { drawSVG: '100% 100%', duration: D(0.4) }); cpySay.textContent = cpyDef; }, 3000);
+      btn.focus({ preventScroll: true });
+    }, function () { cpySay.textContent = 'Your browser blocked copying. Select the lines above and copy them by hand.'; });
+  });
+
+  // C05 ERR-01: the phone field is the only field the request needs; the summary shakes once, the field never shakes, and every typed word stays
+  var errSum = $('[data-errsum]', form), callFld = $('[data-callfld]', form), callIn = document.getElementById('f-call');
+  var phoneOk = function () { return (callIn.value.match(/\d/g) || []).length >= 7; };
+  var clearErr = function () { errSum.classList.remove('on'); callFld.classList.remove('bad'); callIn.removeAttribute('aria-invalid'); callIn.removeAttribute('aria-describedby'); };
+  callIn.addEventListener('input', function () { if (callFld.classList.contains('bad') && phoneOk()) clearErr(); });
+  $('[data-errlink]', errSum).addEventListener('click', function (e) { e.preventDefault(); goTo(callFld, function () { callIn.focus({ preventScroll: true }); }); });
+
+  // C05 CNF-01: the button shows its sending state, the card flips to the receipt, the green kerf draws, and focus moves to the receipt
+  var cnfRows = $('[data-cnfsent]', done);
+  var cnf = window.dbmConfirm ? window.dbmConfirm(card, form, done, send, $('[data-cnfkerf]', done)) : null;
+  var sentText = '';
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (send.disabled) return;
+    if (!phoneOk()) {
+      errSum.classList.add('on'); callFld.classList.add('bad'); callIn.setAttribute('aria-invalid', 'true'); callIn.setAttribute('aria-describedby', 'f-call-err');
+      errSum.focus({ preventScroll: true }); goTo(errSum);
+      if (g && !R) g.fromTo(errSum, { x: 0 }, { keyframes: [{ x: -8 }, { x: 7 }, { x: -5 }, { x: 3 }, { x: 0 }], duration: 0.42, ease: 'power1.inOut' });
+      return;
+    }
+    clearErr();
+    var list = rows(); sentText = asText();
+    var fill = function () {
+      cnfRows.innerHTML = list.map(function (r) { return '<span>' + r[0] + '</span><span' + (r[1] ? '>' + esc(r[1]) : ' class="nil">Not given') + '</span>'; }).join('');
+      recState.textContent = 'SENT'; recState.style.color = '#8FBF9F';
+    };
+    if (cnf) cnf.send('Send the Machine Details', fill);
+    else { fill(); form.style.display = 'none'; done.style.display = 'flex'; done.focus(); }
+  });
+  var dCopy = $('[data-dcopy]', done), dLab = $('[data-dcopylabel]', done), dSay = $('[data-dsay]', done), dBase = dLab.textContent, dDef = dSay.textContent, dT = null;
+  dCopy.addEventListener('click', function () {
+    copyText(sentText, function () {
+      roll(dLab, 'Copied'); dSay.textContent = 'Your request is copied as labeled lines, ready to paste into a purchase order or a message.';
+      clearTimeout(dT); dT = setTimeout(function () { roll(dLab, dBase); dSay.textContent = dDef; }, 3000);
+    }, function () { dSay.textContent = 'Your browser blocked copying. Select the lines above and copy them by hand.'; });
+  });
+  $('[data-cnfreset]', done).addEventListener('click', function () {
+    form.reset();
+    $$('[data-slot]', form).forEach(function (sl) { var im = $('img', sl); if (im) im.remove(); sl.classList.remove('has'); });
+    setSym(''); setSeg('unsure'); setRental(false, true); sayPhotos(); clearErr();
+    recState.textContent = 'NOT SENT'; recState.style.color = '';
+    if (cnf) cnf.reset(); else { done.style.display = 'none'; form.style.display = ''; }
+    setTimeout(function () { document.getElementById('f-machine').focus({ preventScroll: true }); }, 450);
+  });
+  setRental(false, true);
+
+  // The symptom plate and the rental card feed the form: each choice lands in the request, then the page scrolls to it
+  var addSym = $('[data-addsym]');
+  addSym.addEventListener('click', function () {
+    setSym(symNow);
+    var grp = document.getElementById('grp-func');
+    goTo(grp, function () { document.getElementById('f-func').focus({ preventScroll: true }); if (g && !R) g.fromTo(grp, { backgroundColor: 'rgba(239,80,22,0.08)' }, { backgroundColor: 'rgba(239,80,22,0)', duration: 1.2, ease: 'power2.out' }); });
+  });
+  $$('[data-addrental]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      setRental(true);
+      goTo(document.getElementById('grp-call'), function () { rentBox.focus({ preventScroll: true }); });
+    });
+  });
+  // Every "Send the Machine Details" link scrolls below the sticky header to the form card
+  $$('a[href="#request"]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); goTo(document.getElementById('request')); }); });
+
+  // C04 BAR-01 limit: the phone bar never sits over a form, so it steps down while the form card is on screen
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { document.body.classList.toggle('form-on', es[0].isIntersecting); }, { rootMargin: '-10% 0px -10% 0px' }).observe(card);
 })();
 </script>
 </body>

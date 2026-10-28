@@ -6,7 +6,8 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Used Equipment · DBM Heavy Equipment</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/bc77390d9895822a.svg">
+<title>Used Heavy Equipment of Any Make, Shipped Nationwide · DBM Heavy Equipment</title>
 <script>document.documentElement.classList.add('js');</script>
 <style>
 @font-face{font-family:'Sora';font-weight:700;font-style:normal;font-display:swap;src:url(../../assets/84aa810eb90e91d8.woff2) format('woff2');}
@@ -74,8 +75,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
 .nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
-@media (min-width: 1240px) { .navbar { flex-wrap: nowrap; } .nav nav { flex-wrap: nowrap; } }
-@media (max-width: 1239px) {
+/* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
+@media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
+@media (max-width: 1359px) {
   .navbar { row-gap: 10px; }
   .nav nav { order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 2px 0; -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); }
   .nav nav::-webkit-scrollbar { display: none; }
@@ -249,6 +251,69 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .call-plate { position: relative; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); overflow: hidden; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.32)) drop-shadow(0 3px 5px rgba(26,26,26,0.26)); }
 .call-plate .rv.bl, .call-plate .rv.br { bottom: 17px; }
 .call-in { padding: 54px clamp(24px, 4.5vw, 58px) 46px; display: flex; flex-direction: column; gap: 30px; }
+/* NAV-05 route menus: start (board C08 NAV-05, ported 2026-10-28; the same block is copied into the Home page) */
+.nav nav .route { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.nav .mt { appearance: none; border: 0; background: transparent; cursor: pointer; width: 24px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; flex: none; transition: transform .18s ease; }
+.nav .mt:focus-visible { outline-offset: -4px; }
+.nav .diam { display: block; width: 9px; height: 9px; background: var(--dim); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transition: transform .3s cubic-bezier(.34,1.56,.64,1), background-color .24s ease; }
+.nav .mt[aria-expanded="true"] .diam { transform: rotate(180deg); background: var(--orange); }
+html:not(.gsap-on) .nav .mt:hover { transform: scale(1.12); }
+.gsap-on .nav .diam { transition: none; }
+.menus { position: absolute; left: 0; right: 0; top: 100%; }
+.menu { position: relative; background: var(--charcoal); box-shadow: 0 18px 30px rgba(0,0,0,0.35); overflow: hidden; overscroll-behavior: contain; view-transition-name: dbm-menu; }
+.menu[hidden] { display: none; }
+.menu.is-open { overflow-y: auto; }
+.mkerf { display: block; width: 100%; height: 2px; }
+.menu-in { max-width: calc(1256px + 2 * var(--pad-x)); margin: 0 auto; padding: 24px var(--pad-x) 28px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: 34px; }
+.mcol { display: flex; flex-direction: column; min-width: 0; }
+.menu .mh { margin: 0; color: var(--orange-hover); font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; line-height: 1.5; text-transform: uppercase; }
+.mrows, .mreads { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; }
+.mreads { gap: 10px; }
+.mrow { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 14px 12px 16px; min-height: 56px; text-decoration: none; border-bottom: 1px solid #2A2A2A; }
+.medge { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--orange); transform: scaleY(0); transform-origin: top center; }
+.mtext { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mtitle { display: inline-block; align-self: flex-start; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; line-height: 1.3; }
+.msub { color: #9A9A9A; font-size: 13px; line-height: 1.45; }
+.marr { width: 22px; height: 10px; flex: none; color: var(--orange-hover); }
+.mrow[aria-current] .medge { transform: scaleY(1); }
+.mrow[aria-current] .mtitle { color: var(--orange-hover); }
+.mread { display: block; color: var(--silver); font-size: 14px; line-height: 1.5; padding: 6px 0; border-bottom: 1px solid #2A2A2A; text-decoration: none; transition: color .2s ease; }
+.mread:hover, .mread:focus-visible, .mread[aria-current] { color: #FFFFFF; }
+.mreach { align-self: start; display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); }
+.menu .mreach .mh { color: var(--silver); }
+.mreach p:last-child { margin: 0; color: #E4E4E4; font-size: 14px; line-height: 1.6; }
+.menu a:focus-visible { outline-offset: -2px; }
+html:not(.gsap-on) .medge, html:not(.gsap-on) .marr, html:not(.gsap-on) .mtitle { transition: transform .26s ease, color .24s ease; }
+html:not(.gsap-on) .mrow:hover .medge, html:not(.gsap-on) .mrow:focus-visible .medge { transform: scaleY(1); }
+html:not(.gsap-on) .mrow:hover .marr, html:not(.gsap-on) .mrow:focus-visible .marr { transform: translateX(6px); }
+html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .mtitle { transform: translateX(6px); color: var(--orange-hover); }
+@media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
+
+/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
+   Reduced motion: the transition is not switched on, so pages change at once. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+.nav { view-transition-name: dbm-header; }
+.callbar { view-transition-name: dbm-callbar; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
+::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; }
+::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
+::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
+@keyframes dbm-page-out { to { opacity: 0; } }
+@keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+/* NAV-05 route menus: end */
+
+/* Buy pages only (the four pages whose link row is labeled "Buy equipment"): that row of links to each other sits directly under
+   the header and stays there while the page scrolls, so it is in the same place on each Buy page and does not move when the visitor
+   changes page. The service pages' link rows are not affected. */
+main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction: column; }
+main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
+@media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -360,6 +425,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   .formact .btn-orange .cf { padding: 16px 14px; letter-spacing: 0.16em; }
   .btn-orange .lbl { white-space: normal; text-align: center; }
 }
+
+/* Footer address lines (shared footer) */
+.foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
 </style>
 <style>
 /* Buy section pages (Equipment, New, Used, XCMG), version 1 (2026-10-28). Each page keeps the sections, order and controls of its page in DBM HTML 5.
@@ -422,7 +490,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .hero-tc { position: relative; background: #1A1A1A; color: #FFFFFF; overflow: hidden; }
 .hero-tc .tc-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); min-height: clamp(540px, 66vh, 660px); }
 .hero-tc .tc-copy { display: flex; flex-direction: column; justify-content: center; gap: 18px; min-width: 0; padding: 56px clamp(28px, 4vw, 60px) 48px max(var(--pad-x), calc((100vw - 1256px) / 2)); }
-.hero-tc h1 { margin: 0; max-width: 13ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(36px, 3.7vw, 54px); line-height: 1.0; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
+.hero-tc h1 { margin: 0; max-width: 15ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(36px, 3.7vw, 54px); line-height: 1.0; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
 .hero-tc .tc-lede { margin: 0; max-width: 540px; color: #E4E4E4; font-size: 17px; line-height: 1.62; text-wrap: pretty; }
 .hero-tc .acts { margin-top: 8px; }
 .hero-tc .facts { margin-top: 10px; max-width: 600px; }
@@ -704,32 +772,104 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   <div class="wrap navbar">
     <a href="../../" class="brand" aria-label="DBM Heavy Equipment, home"><img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment"></a>
     <nav aria-label="Main">
-      <a href="../../rentals/">Rent</a>
-      <a href="../../equipment/" aria-current="true">Buy</a>
-      <a href="../../services/">Service &amp; Parts</a>
-      <a href="../../we-buy-equipment/">Sell &amp; Trade</a>
+      <span class="route"><a href="../../rentals/">Rent</a><button type="button" class="mt" data-mt="rent" aria-expanded="false" aria-controls="menu-rent" aria-label="Rent menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../equipment/" aria-current="true">Buy</a><button type="button" class="mt" data-mt="buy" aria-expanded="false" aria-controls="menu-buy" aria-label="Buy menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../services/">Service &amp; Parts</a><button type="button" class="mt" data-mt="service" aria-expanded="false" aria-controls="menu-service" aria-label="Service and Parts menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../we-buy-equipment/">Sell &amp; Trade</a><button type="button" class="mt" data-mt="sell" aria-expanded="false" aria-controls="menu-sell" aria-label="Sell and Trade menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
       <a href="../../finance/">Finance</a>
       <a href="../../about/">About</a>
     </nav>
     <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
   </div>
+  
+  <div class="menus" data-menuhost>
+    <div class="menu" id="menu-rent" data-menu="rent" role="region" aria-label="Rent menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../rentals/#fleet" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Browse the rental fleet</span><span class="msub">Excavators, wheel loaders, motor graders, haul trucks, and compaction machines, grouped by the work they do.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../rentals/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a rental</span><span class="msub">Send the machine, the jobsite, and the start date, and our rental team calls or texts back with the monthly rate and delivery date.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../finance/#rpo" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Buy the machine you rent</span><span class="msub">Under our rental purchase option, part of the rent you pay goes toward the price when you buy within six months.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../industries/construction-earthmoving/" data-mitem>Machines for construction and earthmoving</a></li>
+          <li><a class="mread" href="../../industries/utility-pipeline/" data-mitem>Machines for utility and pipeline work</a></li>
+          <li><a class="mread" href="../../faqs/#t-rentals" data-mitem>Answers to common rental questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We rent to contractors, mostly by the month, and deliver to jobsites anywhere in Nevada and in the California counties near the state line. Large machines such as mining haul trucks carry a three-month minimum.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-buy" data-menu="buy" role="region" aria-label="Buy menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../equipment/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>All equipment</span><span class="msub">New XCMG machines and used machines of any make, sorted by machine class.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../finance/#how" data-mitem>How financing works for new and used machines</a></li>
+          <li><a class="mread" href="../../equipment/sas-luxembourg/" data-mitem>SAS forks and attachments</a></li>
+          <li><a class="mread" href="../../industries/excavation/" data-mitem>Machines for excavation</a></li>
+          <li><a class="mread" href="../../industries/auto-scrap-recycling/" data-mitem>Machines for auto and scrap recycling</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We sell new XCMG machines in Nevada and the nearby California counties, and we sell used machines anywhere in the US. QuickFi, XCMG’s lender, finances new XCMG machines, and buyers of used machines call us about financing.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-service" data-menu="service" role="region" aria-label="Service and Parts menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
+          <li><a class="mread" href="../../case-studies/" data-mitem>All case studies</a></li>
+          <li><a class="mread" href="../../blog/" data-mitem>Job stories and guides</a></li>
+          <li><a class="mread" href="../../services/#questions" data-mitem>Answers to common service and parts questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>Our service trucks repair machines of any make anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. Parts ship to any address in the US.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-sell" data-menu="sell" role="region" aria-label="Sell and Trade menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../we-buy-equipment/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Sell your machine</span><span class="msub">Send the make, model, serial number, hours, and a few photos, and our sales team replies with an offer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../we-buy-equipment/#start" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Trade toward another machine</span><span class="msub">We price your trade and the new XCMG or used machine you want together.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../we-buy-equipment/#details" data-mitem>What to tell us about the machine</a></li>
+          <li><a class="mread" href="../../we-buy-equipment/#next" data-mitem>What happens after you send it</a></li>
+          <li><a class="mread" href="../../equipment/used/" data-mitem>Used equipment for sale</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We buy used equipment of any make. Sending your details does not commit you to selling or trading the machine.</p></div>
+      </div>
+    </div>
+  </div>
 </header>
+
 
 <main>
   
   <section class="hero-tc" aria-labelledby="page-title" data-hero data-torch>
     <div class="tc-in">
       <div class="tc-copy">
-        <h1 id="page-title">Used heavy equipment</h1>
-        <p class="tc-lede">We sell used machines of any make and ship them anywhere in the country. Every machine in our rental fleet is for sale, and we resell machines we take in on trade. Tell us what you’re looking for and where it will work.</p>
+        <h1 id="page-title">Used Heavy Equipment of Any Make</h1>
+        <p class="tc-lede">We sell used excavators, loaders, graders, and other machines of any make, including every machine in our rental fleet and the trade-ins we take in, and we ship them to buyers anywhere in the country. Ask about a listing below or tell us the machine you need, and our sales team replies with the year, hours, service records, and price.</p>
         <div class="acts">
-          <a class="ch-btn" href="#ask" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l">Ask about used equipment</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
-          <a class="kb" href="../../we-buy-equipment/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Sell or trade a machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" style="color: #F4703F"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a>
+          <a class="ch-btn" href="#ask" data-nadv="1" data-cut="16" data-cut-to="26"><span data-nfill aria-hidden="true"></span><span class="l">Ask About a Used Machine</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+          <a class="kb" href="../../we-buy-equipment/" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Get a Trade-In Offer</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" style="color: #F4703F"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a>
         </div>
         <dl class="facts">
           <div><dt>Makes</dt><dd>Any make, not only XCMG</dd></div>
-          <div><dt>Shipping</dt><dd>Anywhere in the country</dd></div>
-          <div><dt>Financing</dt><dd>Through the lenders we work with</dd></div>
+          <div><dt>Shipping</dt><dd>Sold and shipped anywhere in the U.S.</dd></div>
+          <div><dt>Financing</dt><dd>Call us or send an inquiry</dd></div>
         </dl>
       </div>
       <div class="tc-pic">
@@ -743,20 +883,20 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
 
   
   <nav class="subnav" aria-label="Buy equipment">
-    <ul class="wrap"><li><a href="../../equipment/">All equipment</a></li><li><a href="../../equipment/new/">New XCMG equipment</a></li><li><a href="../../equipment/used/" aria-current="page">Used equipment</a></li><li><a href="../../equipment/xcmg/">XCMG at DBM</a></li><li><a href="../../we-buy-equipment/">Sell or trade</a></li></ul>
+    <ul class="wrap"><li><a href="../../equipment/">Buying overview</a></li><li><a href="../../equipment/new/">New XCMG models</a></li><li><a href="../../equipment/used/" aria-current="page">Used machines</a></li><li><a href="../../equipment/xcmg/">Why XCMG from DBM</a></li><li><a href="../../we-buy-equipment/">Sell or trade in</a></li></ul>
   </nav>
 
   
   <section class="sec white on-light" id="listings" aria-labelledby="listings-title" data-reveal>
     <div class="wrap" data-filterroot data-noun="machine" data-nouns="machines">
       <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="listings-title">Browse used equipment</h2></div>
-        <p class="slede">Ask about any machine below, and we’ll send you its year, hours, service records, and price. We ship used machines anywhere in the country.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="listings-title">Used Machines for Sale, With Year, Hours &amp; Price on Request</h2></div>
+        <p class="slede">Choose Ask about this machine on any listing, and our sales team sends you its year, hours, service records, current photos, and price, plus a freight quote to your location when the machine has to ship.</p>
       </div>
       <div class="ctlbar">
         <div class="filt">
-          <label for="used-q">Find a machine</label>
-          <div class="fwrap"><input id="used-q" type="text" placeholder="Make, model, or type, like Cat or grader" autocomplete="off" data-filterq aria-describedby="used-count"><span class="kf" aria-hidden="true"></span></div>
+          <label for="used-q">Search by make, model, or machine type</label>
+          <div class="fwrap"><input id="used-q" type="text" placeholder="Cat, XCMG, excavator, or grader" autocomplete="off" data-filterq aria-describedby="used-count"><span class="kf" aria-hidden="true"></span></div>
         </div>
         <div class="filt">
           <span class="flabel" id="used-class-label">Machine class</span>
@@ -774,63 +914,63 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
         <a class="fleet" href="#ask" data-item data-cat="exc" data-text="xcmg xe300u excavator rental fleet" data-ask="XCMG XE300U excavator" data-cond="Used" data-target="#ask-card" aria-label="Ask about the used XCMG XE300U excavator">
           <span class="cf">
             <span class="ph"><img src="../../assets/310ed5d2a330aa0a.jpg" alt="A yellow XCMG XE300U excavator with a ripper tooth on a gravel lot" loading="lazy" style="object-position: 60% 55%"></span>
-            <span class="bd"><span class="cat">Excavator · XCMG</span><span class="nm">XCMG XE300U</span><span class="ds">A 30-ton class XCMG crawler excavator.</span><span class="sp">Year, hours, and price on request</span></span>
+            <span class="bd"><span class="cat">Excavator · XCMG</span><span class="nm">XCMG XE300U</span><span class="ds">A 30-ton class XCMG crawler excavator with a ripper tooth, sized for mass excavation and loading haul trucks.</span><span class="sp">Year, hours, and price on request</span></span>
             <span class="ft"><span>Ask about this machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
         <a class="fleet" href="#ask" data-item data-cat="exc" data-text="xcmg excavator dozer blade quick coupler rental fleet" data-ask="XCMG excavator with dozer blade" data-cond="Used" data-target="#ask-card" aria-label="Ask about the used XCMG excavator with a dozer blade">
           <span class="cf">
             <span class="ph"><img src="../../assets/d6b86ab06a3a4736.jpg" alt="An XCMG crawler excavator with a dozer blade and a quick coupler, in front of a metal building" loading="lazy" style="object-position: 50% 50%"></span>
-            <span class="bd"><span class="cat">Excavator · XCMG</span><span class="nm">XCMG excavator with dozer blade</span><span class="ds">An XCMG crawler excavator with a dozer blade and a quick coupler for changing attachments.</span><span class="sp">Year, hours, and price on request</span></span>
+            <span class="bd"><span class="cat">Excavator · XCMG</span><span class="nm">XCMG excavator with dozer blade</span><span class="ds">An XCMG crawler excavator with a dozer blade for backfill and a quick coupler for swapping buckets and attachments.</span><span class="sp">Year, hours, and price on request</span></span>
             <span class="ft"><span>Ask about this machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
         <a class="fleet" href="#ask" data-item data-cat="exc" data-text="cat caterpillar 318e l excavator" data-ask="Cat 318E L excavator" data-cond="Used" data-target="#ask-card" aria-label="Ask about the used Cat 318E L excavator">
           <span class="cf">
             <span class="ph"><img src="../../assets/53dbb31d691d4380.jpg" alt="A used Cat 318E L excavator with its bucket on the ground in a gravel lot" loading="lazy" style="object-position: 50% 55%"></span>
-            <span class="bd"><span class="cat">Excavator · Cat</span><span class="nm">Cat 318E L</span><span class="ds">A Cat crawler excavator.</span><span class="sp">Year, hours, and price on request</span></span>
+            <span class="bd"><span class="cat">Excavator · Cat</span><span class="nm">Cat 318E L</span><span class="ds">A Cat crawler excavator for utility trenching, site work, and loading trucks.</span><span class="sp">Year, hours, and price on request</span></span>
             <span class="ft"><span>Ask about this machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
         <a class="fleet" href="#ask" data-item data-cat="load" data-text="xcmg xc958 wheel loader rental fleet" data-ask="XCMG XC958 wheel loader" data-cond="Used" data-target="#ask-card" aria-label="Ask about the used XCMG XC958 wheel loader">
           <span class="cf">
             <span class="ph"><img src="../../assets/d04f34fdc20ac8b7.jpg" alt="The rear of a yellow XCMG XC958 wheel loader in a gravel yard" loading="lazy" style="object-position: 50% 55%"></span>
-            <span class="bd"><span class="cat">Wheel loader · XCMG</span><span class="nm">XCMG XC958</span><span class="ds">An XCMG wheel loader for loading trucks and moving material.</span><span class="sp">Year, hours, and price on request</span></span>
+            <span class="bd"><span class="cat">Wheel loader · XCMG</span><span class="nm">XCMG XC958</span><span class="ds">An XCMG wheel loader for stockpiles, aggregate, and loading highway trucks.</span><span class="sp">Year, hours, and price on request</span></span>
             <span class="ft"><span>Ask about this machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
         <a class="fleet" href="#ask" data-item data-cat="grad" data-text="xcmg gr2605 motor grader rental fleet" data-ask="XCMG GR2605 motor grader" data-cond="Used" data-target="#ask-card" aria-label="Ask about the used XCMG GR2605 motor grader">
           <span class="cf">
             <span class="ph"><img src="../../assets/bb46d50e6e938186.jpg" alt="An XCMG GR2605 motor grader loaded on a lowboy trailer behind a truck" loading="lazy" style="object-position: 40% 55%"></span>
-            <span class="bd"><span class="cat">Motor grader · XCMG</span><span class="nm">XCMG GR2605</span><span class="ds">A 260 hp XCMG motor grader.</span><span class="sp">Year, hours, and price on request</span></span>
+            <span class="bd"><span class="cat">Motor grader · XCMG</span><span class="nm">XCMG GR2605</span><span class="ds">A 260 hp XCMG motor grader for road building, site grading, and haul road maintenance.</span><span class="sp">Year, hours, and price on request</span></span>
             <span class="ft"><span>Ask about this machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
         <a class="fleet" href="#ask" data-item data-cat="grad" data-text="john deere jd 872gp motor grader" data-ask="John Deere 872GP motor grader" data-cond="Used" data-target="#ask-card" aria-label="Ask about the used John Deere 872GP motor grader">
           <span class="cf">
             <span class="ph"><img src="../../assets/cdec0d65ab09cde6.jpg" alt="A used John Deere 872GP motor grader in front of a white metal building" loading="lazy" style="object-position: 50% 55%"></span>
-            <span class="bd"><span class="cat">Motor grader · John Deere</span><span class="nm">John Deere 872GP</span><span class="ds">A John Deere motor grader.</span><span class="sp">Year, hours, and price on request</span></span>
+            <span class="bd"><span class="cat">Motor grader · John Deere</span><span class="nm">John Deere 872GP</span><span class="ds">A John Deere motor grader for road building, site grading, and haul road maintenance.</span><span class="sp">Year, hours, and price on request</span></span>
             <span class="ft"><span>Ask about this machine</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span class="slats" aria-hidden="true"><span class="slat" style="left:-6%"></span><span class="slat" style="left:15%"></span><span class="slat" style="left:36%"></span><span class="slat" style="left:57%"></span><span class="slat" style="left:78%"></span></span></span>
           </span>
         </a>
       </div>
       <div class="emp" data-emp role="status">
         <span class="acc4" aria-hidden="true"></span>
-        <span class="et">No used machine here matches <span data-empq></span>.</span>
-        <p class="eb">Our used stock changes as rental machines come off rent and trade-ins come in. Tell us what you’re looking for, and we’ll tell you when we have one.</p>
+        <span class="et">None of the used machines listed here matches <span data-empq></span>.</span>
+        <p class="eb">Our used stock changes as rental machines come off rent and trade-ins come in, so send us the machine you need, and our sales team tells you when one arrives or looks for one through the companies we work with.</p>
         <div class="acts">
-          <a class="ch-btn m" href="#ask" data-nadv="1" data-cut="14" data-cut-to="22"><span data-nfill aria-hidden="true"></span><span class="l">Tell us what you need</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
-          <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-filterclear><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Show every machine</span></span></button>
+          <a class="ch-btn m" href="#ask" data-nadv="1" data-cut="14" data-cut-to="22"><span data-nfill aria-hidden="true"></span><span class="l">Send the machine you need</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+          <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-filterclear><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Clear the search</span></span></button>
         </div>
       </div>
       <div class="catfoot">
         <div>
-          <h3>Prefer to talk through the equipment?</h3>
-          <p>Call or text our sales team, or send what you already know about the machine you need.</p>
+          <h3>Talk Through a Used Machine With Our Sales Team</h3>
+          <p>Call or text our sales team with the machine, the work, and your budget, or send the same details in writing, and we reply with the used machines that fit.</p>
         </div>
         <div class="acts">
           <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-          <a class="kb" href="#ask" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send equipment requirements</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" style="color: #F4703F"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a>
+          <a class="kb" href="#ask" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send the machine you need</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" style="color: #F4703F"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a>
         </div>
       </div>
     </div>
@@ -840,14 +980,14 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   <section class="sec cement on-light" id="compare" aria-labelledby="compare-title" data-reveal>
     <div class="wrap">
       <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="compare-title">Know what you’re comparing</h2></div>
-        <p class="slede">Ask for the details that affect the work and the price of the machine you’re looking at.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="compare-title">What to Ask Before You Buy a Used Machine</h2></div>
+        <p class="slede">The price is only one number on a used machine. Two machines of the same model can differ by thousands of hours and by the repairs they still need, so ask for these details on every machine you compare, from us or from anyone else.</p>
       </div>
       <div class="lrows">
-        <div class="lrow"><h3>Identity and hours</h3><p>Ask for the make, model, serial number, year, and the hours on the meter.</p></div>
-        <div class="lrow"><h3>Setup</h3><p>Ask which attachments, coupler, and other equipment come with the machine, and for its main specifications.</p></div>
-        <div class="lrow"><h3>Condition</h3><p>Ask for current photos, any known problems, and the service records we have. Our own technicians service our rental fleet, so we can tell you what’s been done to those machines.</p></div>
-        <div class="lrow"><h3>Price and shipping</h3><p>Ask for the price, where the machine sits, and how you can inspect it. We ship used machines anywhere in the country and can quote the freight.</p></div>
+        <div class="lrow"><h3>Identity &amp; Hours</h3><p>Ask for the make, model, serial number, year, and the hours on the meter, and check the serial number against the paperwork before you compare prices.</p></div>
+        <div class="lrow"><h3>Attachments &amp; Setup</h3><p>Ask which attachments, coupler, and options come with the machine, because a used machine that needs a bucket, thumb, or coupler added before it can work costs more than its price.</p></div>
+        <div class="lrow"><h3>Condition &amp; Service Records</h3><p>Ask for current photos, any known problems, and the service records. Our own technicians service our rental fleet, so we can tell you what work has been done on those machines.</p></div>
+        <div class="lrow"><h3>Price, Inspection &amp; Freight</h3><p>Ask for the price, where the machine sits, and how you can inspect it. We ship used machines anywhere in the country and quote the freight to your location before you buy.</p></div>
       </div>
     </div>
   </section>
@@ -856,9 +996,9 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   <section class="sec white on-light" id="ask" aria-labelledby="ask-title" data-reveal>
     <div class="wrap reqgrid">
       <div class="reqside">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="ask-title">No match in front of you? Ask.</h2></div>
-        <p class="slede">Describe the work, the type of machine, your budget if you have one, and when you need it. That tells us more than a model name alone.</p>
-        <p class="slede">If we don’t have the machine, we can look for one through the companies we work with.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="ask-title">Tell Us the Used Machine You Need</h2></div>
+        <p class="slede">Describe the work, the type and size of machine, your budget if you have one, and when you need it, because those details tell our sales team more than a model name alone.</p>
+        <p class="slede">If we don’t have the machine, our sales team looks for one through the companies we work with and tells you what it finds.</p>
         <div class="acts">
           <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
         </div>
@@ -867,37 +1007,37 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <span class="topacc" aria-hidden="true"></span>
           <form novalidate>
             <div class="ctx" aria-label="Details carried into your request">
-              <span class="ck">ABOUT YOUR REQUEST</span>
+              <span class="ck">MACHINE FROM THE LISTINGS</span>
               <div class="chips" data-chips></div>
-              <p class="cn" data-chipempty>Choose Ask about this machine on any listing above, and the machine comes along here. You can also type what you’re looking for below.</p>
-              <button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-chipclear hidden style="align-self: flex-start;"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Clear these details</span></span></button>
+              <p class="cn" data-chipempty>Choose Ask about this machine on any listing above, and the machine appears here and in the machine field. You can also type the machine you’re looking for below.</p>
+              <button type="button" class="kb paper sm" data-kb="paper" data-travel="3" data-chipclear hidden style="align-self: flex-start;"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Remove this machine</span></span></button>
             </div>
             <div class="fgrid2">
               <div class="fld"><label for="ask-name">Your name</label><div class="chan2"><input id="ask-name" name="name" autocomplete="name" data-sum="Name"><span class="kf" aria-hidden="true"></span></div></div>
               <div class="fld"><label for="ask-company">Company<span class="opt">Optional</span></label><div class="chan2"><input id="ask-company" name="company" autocomplete="organization" data-sum="Company"><span class="kf" aria-hidden="true"></span></div></div>
               <div class="fld"><label for="ask-phone">Phone</label><div class="chan2"><input id="ask-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" data-sum="Phone"><span class="kf" aria-hidden="true"></span></div></div>
               <div class="fld"><label for="ask-email">Email</label><div class="chan2"><input id="ask-email" name="email" type="email" autocomplete="email" data-sum="Email"><span class="kf" aria-hidden="true"></span></div></div>
-              <p class="full" style="margin:-6px 0 0; color:#4B4F56; font-size:14px;">Give us a phone number, an email, or both.</p>
-              <div class="fld"><label for="ask-machine">Machine you’re looking for<span class="opt">Optional</span></label><div class="chan2"><input id="ask-machine" name="machine" placeholder="For example, a 20-ton excavator or a Cat 140 grader" data-sum="Machine"><span class="kf" aria-hidden="true"></span></div></div>
-              <div class="fld"><label for="ask-location">Where the machine will work<span class="opt">Optional</span></label><div class="chan2"><input id="ask-location" name="location" placeholder="City and state" autocomplete="address-level2" data-sum="Location"><span class="kf" aria-hidden="true"></span></div></div>
-              <div class="fld full"><label for="ask-details">What will the machine do?</label><div class="chan2"><textarea id="ask-details" name="details" required placeholder="The work, your budget if you have one, and when you need the machine" data-sum="Details"></textarea><span class="kf" aria-hidden="true"></span></div></div>
+              <p class="full" style="margin:-6px 0 0; color:#4B4F56; font-size:14px;">Our sales team replies to the phone number or email you give, so add at least one.</p>
+              <div class="fld"><label for="ask-machine">Machine you’re looking for<span class="opt">Optional</span></label><div class="chan2"><input id="ask-machine" name="machine" placeholder="A 20-ton excavator or a Cat 140 grader" data-sum="Machine"><span class="kf" aria-hidden="true"></span></div></div>
+              <div class="fld"><label for="ask-location">Where the machine will work<span class="opt">Optional</span></label><div class="chan2"><input id="ask-location" name="location" placeholder="City and state" autocomplete="address-level2" data-sum="Where it works"><span class="kf" aria-hidden="true"></span></div></div>
+              <div class="fld full"><label for="ask-details">The work, your budget, and when you need it</label><div class="chan2"><textarea id="ask-details" name="details" required placeholder="The work the machine will do, your budget if you have one, and the date you need it" data-sum="The work"></textarea><span class="kf" aria-hidden="true"></span></div></div>
             </div>
             <p class="ferr" data-ferr role="alert"></p>
             <div class="formact">
-              <button type="submit" class="btn-orange" data-b="slat" data-ripple="#1A1A1A"><span class="cf"><span class="slats" aria-hidden="true"><span class="slat" data-slat style="left:-6%"></span><span class="slat" data-slat style="left:15%"></span><span class="slat" data-slat style="left:36%"></span><span class="slat" data-slat style="left:57%"></span><span class="slat" data-slat style="left:78%"></span></span><span class="lbl"><span data-label>Send request</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="busy" aria-hidden="true"></span></span></button>
-              <span class="hint">We use these details only to answer your request. <a href="../../privacy/">Privacy</a></span>
+              <button type="submit" class="btn-orange" data-b="slat" data-ripple="#1A1A1A"><span class="cf"><span class="slats" aria-hidden="true"><span class="slat" data-slat style="left:-6%"></span><span class="slat" data-slat style="left:15%"></span><span class="slat" data-slat style="left:36%"></span><span class="slat" data-slat style="left:57%"></span><span class="slat" data-slat style="left:78%"></span></span><span class="lbl"><span data-label>Send to Our Sales Team</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="busy" aria-hidden="true"></span></span></button>
+              <span class="hint">We use these details only to answer this request. <a href="../../privacy/">Privacy policy</a></span>
             </div>
           </form>
           <div class="done" data-cnfdone tabindex="-1" role="status" aria-live="polite">
             <span class="edge" aria-hidden="true"></span>
             <span class="sent">SENT · JUST NOW</span>
-            <span class="dh">Request received</span>
-            <span class="db">Our sales team has your request and will reply by phone or email with what we have. For a faster answer, call or text (775) 625-0062.</span>
+            <span class="dh">Your request is with our sales team</span>
+            <span class="db">Our sales team replies by phone or email with the machines we have that match, their year, hours, and price, and a freight quote if the machine has to ship. For a faster answer, call or text (775) 625-0062.</span>
             <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#486F5D" stroke-width="2" data-cnfkerf/></svg>
             <div class="rows" data-cnfsent></div>
             <div class="dact">
               <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-              <button type="button" class="again" data-cnfreset>Start another request</button>
+              <button type="button" class="again" data-cnfreset>Send another request</button>
             </div>
           </div>
         </div>
@@ -908,12 +1048,12 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   <section class="sec cement on-light" id="own" aria-labelledby="own-title" data-reveal>
     <div class="wrap">
       <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="own-title">Considering the machine you already own?</h2></div>
-        <p class="slede">Repairing, replacing, and trading in are different conversations, and we can help with each one.</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="own-title">Sell, Trade, or Repair the Machine You Own Now</h2></div>
+        <p class="slede">Our sales and service teams quote both the trade-in value of your old machine and the repair it needs, so you can compare the two before you replace it. When an old machine breaks down mid-job, renting one of ours under the rental purchase option keeps the work going while you decide.</p>
       </div>
       <div class="cards two">
-        <a class="card" href="../../we-buy-equipment/"><span class="bd" aria-hidden="true"></span><span class="face"><span class="win"><img src="../../assets/18ebceecffeb770f.jpg" alt="A yellow Komatsu bulldozer with its blade lowered beside a metal building" loading="lazy"></span><span class="txt"><span class="ct">Sell or trade</span><span class="cd">Send the make, model, hours, condition, and photos. We reply with an offer to buy the machine or take it in trade.</span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
-        <a class="card" href="../../services/"><span class="bd" aria-hidden="true"></span><span class="face"><span class="win"><img src="../../assets/3b7d28fe5eddc0dc.jpg" alt="A service truck with its crane raised beside a Cat D9T dozer while a technician works at the track" loading="lazy" style="object-position: 50% 55%"></span><span class="txt"><span class="ct">Service and repair</span><span class="cd">Describe the problem and what it’s affecting. We repair any make in the field or in our Fernley shop.</span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
+        <a class="card" href="../../we-buy-equipment/"><span class="bd" aria-hidden="true"></span><span class="face"><span class="win"><img src="../../assets/18ebceecffeb770f.jpg" alt="A yellow Komatsu bulldozer with its blade lowered beside a metal building" loading="lazy"></span><span class="txt"><span class="ct">Sell or trade in</span><span class="cd">Send the make, model, hours, condition, and photos, and our sales team replies with an offer to buy the machine outright or take it in trade against the machine you buy.</span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
+        <a class="card" href="../../services/"><span class="bd" aria-hidden="true"></span><span class="face"><span class="win"><img src="../../assets/3b7d28fe5eddc0dc.jpg" alt="A service truck with its crane raised beside a Cat D9T dozer while a technician works at the track" loading="lazy" style="object-position: 50% 55%"></span><span class="txt"><span class="ct">Repair instead of replace</span><span class="cd">Describe the problem and the work it is holding up, and our service team repairs machines of any make in the field anywhere in Nevada or in our Fernley shop.</span></span></span><span class="go" aria-hidden="true"><span class="gb"></span><span class="gp"><svg viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="#EF5016" stroke-width="2.4"/></svg></span></span></a>
       </div>
     </div>
   </section>
@@ -921,12 +1061,12 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   
   <section class="sec bone on-light" id="price" aria-labelledby="price-title" data-reveal>
     <div class="wrap bonegrid">
-      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="price-title">From the machine to a price</h2></div>
+      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="price-title">How a Listing Becomes a Price Quote</h2></div>
       <div>
-        <p class="lead2">Start with the listing when you have one. Choose <b>Ask about this machine</b>, and the machine goes into your request, so we know which one you looked at.</p>
+        <p class="lead2">Choose <b>Ask about this machine</b> on a listing, and the machine goes into your request with its make and model, so our sales team quotes that exact machine instead of asking which one you saw.</p>
         <div class="bonerows">
-          <div class="bonerow ic"><svg class="bico" viewBox="0 0 200 200" fill="#1A1A1A" aria-hidden="true"><path d="M25 86A61 61 0 1 0 147 86A61 61 0 1 0 25 86ZM43 86A43 43 0 1 0 129 86A43 43 0 1 0 43 86Z" fill-rule="evenodd"/><path d="M115.41 132.59L159.41 176.59L176.59 159.41L132.59 115.41Z"/></svg><h3>Review the machines for sale</h3><p>Compare the machines above, then ask about the one that fits your work.</p><a class="more" href="#listings">Browse the machines<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
-          <div class="bonerow ic"><img class="bico" src="../../assets/710ce1ad1f303ac6.svg" alt="" width="44" height="44"><h3>Financing a used machine</h3><p>QuickFi’s 0% offer covers new XCMG machines only. For a used machine, call us and we’ll connect you with the lenders we work with.</p><a class="more" href="../../finance/">See financing<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
+          <div class="bonerow ic"><svg class="bico" viewBox="0 0 200 200" fill="#1A1A1A" aria-hidden="true"><path d="M25 86A61 61 0 1 0 147 86A61 61 0 1 0 25 86ZM43 86A43 43 0 1 0 129 86A43 43 0 1 0 43 86Z" fill-rule="evenodd"/><path d="M115.41 132.59L159.41 176.59L176.59 159.41L132.59 115.41Z"/></svg><h3>Compare the Machines for Sale</h3><p>Filter the listings by class or search by make, then ask about each machine you want to compare, and we quote each one separately.</p><a class="more" href="#listings">Browse the listings<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
+          <div class="bonerow ic"><img class="bico" src="../../assets/710ce1ad1f303ac6.svg" alt="" width="44" height="44"><h3>Financing a Used Machine</h3><p>QuickFi’s 0% offer covers new XCMG machines only. For a used machine, call (775) 625-0062 or send an inquiry, and someone from DBM reaches out about financing.</p><a class="more" href="../../finance/">Compare financing options<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
         </div>
       </div>
     </div>
@@ -936,30 +1076,35 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   <section class="sec white on-light" id="questions" aria-labelledby="questions-title" data-reveal>
     <div class="wrap faqgrid">
       <div>
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="questions-title">Questions about used equipment</h2></div>
-        <p class="aside">Something else on your mind? Call or text us, or ask in the form above.</p>
-        <a class="more" href="#ask" style="margin-top: 10px;">Ask DBM<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="questions-title">Questions Buyers Ask About Used Machines</h2></div>
+        <p class="aside">Call or text (775) 625-0062 with any other question, or send it to our sales team with the form above.</p>
+        <a class="more" href="#ask" style="margin-top: 10px;">Send a question<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
       </div>
       <div class="acc1" data-acc>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Will you sell to a buyer outside Nevada?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Will you sell a used machine to a buyer outside Nevada?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q1" role="region"><div><p>Yes. We sell used machines anywhere in the country. The territory limit applies only to new XCMG machines.</p></div></div>
+          <div data-accpanel id="q1" role="region"><div><p>Yes. We sell used machines to buyers anywhere in the country, and the territory limit on our sales applies only to new XCMG machines.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Are prices and shipping costs shown on the site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q2" role="region"><div><p>No. Ask about the machine, and we’ll send you the price and a shipping quote to your location.</p></div></div>
+          <div data-accpanel id="q2" role="region"><div><p>No. Ask about the machine, and our sales team sends you the price and a freight quote to your location.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How do I check what’s available?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How current are the listings on this page?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q3" role="region"><div><p>The listings on this page update every night from our equipment system. To check a machine today, call or text (775) 625-0062 or send a request.</p></div></div>
+          <div data-accpanel id="q3" role="region"><div><p>Our used machines sell, go out on rent, and come in on trade, so a machine listed here may have sold since the list was last updated. To check a machine now, call or text (775) 625-0062 or send a request, and our sales team tells you whether it is still available.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I finance a used machine?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q4" role="region"><div><p>Yes. QuickFi’s 0% financing is for new XCMG machines only, but we work with other lenders on used machines. Call us and we’ll start the application.</p></div></div>
+          <div data-accpanel id="q4" role="region"><div><p>Yes, but not through QuickFi, whose 0% offer covers new XCMG machines only. Call (775) 625-0062 or send an inquiry about the machine, and someone from DBM reaches out about financing it.</p></div></div>
+        </div>
+        <div data-accitem>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q5"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can I rent a used machine before I buy it?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <svg viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
+          <div data-accpanel id="q5" role="region"><div><p>Yes, for machines in our rental fleet, which are all for sale. Contractors can rent one by the month under our rental purchase option, and part of the rent applies to the price when they buy the machine within six months.</p></div></div>
         </div>
       </div>
     </div>
@@ -973,14 +1118,14 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
         <div class="call-in">
           <div style="display:flex; flex-direction:column; gap:16px;">
             <span class="accent" aria-hidden="true" style="margin-top:0"></span>
-            <h2 class="h" id="call-title">Let’s talk about what you need</h2>
-            <p class="cl">Call or text our sales team about a used machine. Our office phone takes texts, so you can send photos of the machine you want to replace.</p>
+            <h2 class="h" id="call-title">Call or Text Our Sales Team</h2>
+            <p class="cl">Our office line takes calls and texts, so you can send photos of the machine you want to replace, and our sales team answers with the used machines we have, their price, and the freight to your location.</p>
           </div>
           <div class="acts">
             <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-            <a class="kplate" href="#ask"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a request<svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a>
+            <a class="kplate" href="#ask"><span class="kbase" aria-hidden="true"></span><span class="kface">Send a written request<svg class="arr" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a>
           </div>
-          <p class="fine">Our yard, shop, and parts counter are at 2366 Resource Dr, Fernley, NV 89408.</p>
+          <p class="fine">Our yard, shop, and parts counter are at 2366 Resource Dr, Fernley, NV 89408, where you can look at the used machines we have on the lot.</p>
         </div>
         <span class="kerf" aria-hidden="true"></span>
       </div>
@@ -994,11 +1139,11 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
-        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a></div>
+        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
       <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/">New equipment</a></li><li><a href="../../equipment/used/" aria-current="page">Used equipment</a></li><li><a href="../../we-buy-equipment/">We buy equipment</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
       <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; repair</a></li><li><a href="../../services/mobile-field-service/">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/">Request a part</a></li></ul></div>
-      <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
+      <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../blog/">Job stories and guides</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span class="tagline">Built for work. <span>Driven to perform.</span></span>
@@ -1009,10 +1154,12 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
 </footer>
 
 
+
 <div class="callbar" aria-hidden="true">
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-  <a class="kb" href="#ask" tabindex="-1" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Ask about a machine</span></span></a>
+  <a class="kplate" href="#ask" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Ask about a machine</span></a>
 </div>
+
 
 <script>
 (function () {
@@ -1026,7 +1173,15 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset
   var navEl = document.getElementById('nav'), navbar = navEl && navEl.querySelector('.navbar'), navLogo = navEl && navEl.querySelector('.brand img');
   function setTight(t) { navbar.style.paddingTop = navbar.style.paddingBottom = t ? '12px' : ''; navLogo.style.height = t ? (window.innerWidth <= 620 ? '30px' : '38px') : ''; }
-  function measure() { document.documentElement.style.setProperty('--dbm-nav', Math.ceil(navEl.getBoundingClientRect().height) + 10 + 'px'); }
+  // Buy pages: their row of links to each other moves directly under the header (CSS already shows it there), so keyboard order matches what is seen
+  var buyRow = document.querySelector('main > .subnav[aria-label="Buy equipment"]');
+  if (buyRow && buyRow.parentNode.firstElementChild !== buyRow) buyRow.parentNode.insertBefore(buyRow, buyRow.parentNode.firstElementChild);
+  // --dbm-nav-h is the header's exact height (the sticky Buy row sits under it); --dbm-nav adds the sticky Buy row and 10 px for anchor jumps
+  function measure() {
+    var h = navEl.getBoundingClientRect().height, extra = buyRow && getComputedStyle(buyRow).position === 'sticky' ? buyRow.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--dbm-nav-h', h + 'px');
+    document.documentElement.style.setProperty('--dbm-nav', Math.ceil(h + extra) + 10 + 'px');
+  }
   if (navbar && navLogo) {
     var sentinel = document.createElement('span');
     sentinel.setAttribute('aria-hidden', 'true');
@@ -1034,6 +1189,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
     document.body.insertBefore(sentinel, document.body.firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (en) { setTight(!en.isIntersecting); measure(); }); }).observe(sentinel);
     window.addEventListener('resize', measure, { passive: true }); measure();
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(navEl);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
@@ -1107,6 +1263,111 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
   if (callbar && heroActs) new IntersectionObserver(function (es) { heroGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(heroActs);
   if (callbar && callBand) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(callBand);
 })();
+
+/* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
+   The diamond beside a route opens that route's panel under the bar on click, never on hover, and one panel is open at a time.
+   The same diamond, Escape, or a click outside closes it. Tab moves from an open diamond into its panel and from the panel's
+   last link on to the next route. Durations and eases are the board's, and reduced motion sets them to 0. */
+(function () {
+  var nav = document.getElementById('nav'), host = nav && nav.querySelector('[data-menuhost]');
+  if (!host) return;
+  var R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D = function (t) { return R ? 0 : t; };
+  var G = function () { return document.documentElement.classList.contains('gsap-on') && window.gsap; };
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  var toggles = nav.querySelectorAll('[data-mt]'), open = null;
+  var panelOf = function (k) { return document.getElementById('menu-' + k); };
+  var toggleOf = function (k) { return nav.querySelector('[data-mt="' + k + '"]'); };
+  var fit = function (p) { p.style.maxHeight = Math.max(160, window.innerHeight - nav.getBoundingClientRect().bottom) + 'px'; };
+
+  // The menu link for the page the visitor is on is marked as the current page. Review copies live at pages/<folder>/hifi.html.
+  var m = location.pathname.match(/\/([^\/]+)\/hifi\.html$/), special = { home: '', 'line-boring': '/services/line-boring', 'welding-fabrication': '/services/welding-fabrication' };
+  var here = m ? (m[1] in special ? special[m[1]] : '/' + m[1].replace(/--/g, '/')) : location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+  each(host.querySelectorAll('a[href]'), function (a) {
+    if (a.getAttribute('href').indexOf('#') !== -1) return;
+    var path = m ? a.getAttribute('href').replace(/\/$/, '') : a.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+    if (path === here) a.setAttribute('aria-current', 'page');
+  });
+
+  function diam(t, on) {
+    var g = G(), d = t.querySelector('[data-diam]');
+    if (g) g.to(d, { rotate: on ? 180 : 0, backgroundColor: on ? '#EF5016' : '#8A8D93', duration: D(on ? 0.3 : 0.24), ease: on ? 'back.out(2)' : 'power1.out', overwrite: 'auto' });
+  }
+  function hideNow(p) {
+    var g = window.gsap;
+    if (g) g.killTweensOf(p);
+    p.hidden = true; p.style.height = ''; p.classList.remove('is-open');
+  }
+  function close(refocus, now) {
+    if (!open) return;
+    var k = open, p = panelOf(k), t = toggleOf(k), g = G();
+    open = null;
+    t.setAttribute('aria-expanded', 'false'); diam(t, false);
+    p.classList.remove('is-open');
+    if (g && !now) { g.killTweensOf(p); g.to(p, { height: 0, duration: D(0.26), ease: 'power2.in', onComplete: function () { hideNow(p); } }); }
+    else hideNow(p);
+    if (refocus) t.focus({ preventScroll: true });
+  }
+  function show(k) {
+    if (open === k) { close(true); return; }
+    if (open) close(false, true);
+    var p = panelOf(k), t = toggleOf(k), g = G();
+    each(host.querySelectorAll('.menu'), function (x) { if (x !== p && !x.hidden) hideNow(x); });
+    open = k;
+    t.setAttribute('aria-expanded', 'true'); diam(t, true);
+    p.hidden = false; fit(p);
+    if (!g) { p.classList.add('is-open'); return; }
+    g.killTweensOf(p);
+    g.fromTo(p, { height: 0 }, { height: 'auto', duration: D(0.34), ease: 'power3.out', onComplete: function () { p.style.height = ''; p.classList.add('is-open'); } });
+    var kerf = p.querySelector('[data-menukerf]');
+    if (kerf && !R) {
+      if (window.DrawSVGPlugin) g.fromTo(kerf, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'power2.inOut' });
+      else g.fromTo(kerf, { strokeDasharray: 1000, strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.inOut', clearProps: 'strokeDasharray,strokeDashoffset' });
+    }
+    if (!R) g.fromTo(p.querySelectorAll('[data-mitem]'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.28, stagger: 0.04, delay: 0.08, ease: 'power2.out' });
+  }
+
+  each(toggles, function (t) {
+    t.addEventListener('click', function (e) { e.stopPropagation(); show(t.getAttribute('data-mt')); });
+    t.addEventListener('pointerenter', function () { var g = G(); if (g) g.to(t, { scale: 1.12, duration: D(0.18) }); });
+    t.addEventListener('pointerleave', function () { var g = G(); if (g) g.to(t, { scale: 1, duration: D(0.18) }); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(true); return; }
+    if (e.key !== 'Tab') return;
+    var t = toggleOf(open), f = panelOf(open).querySelectorAll('a[href]'), a = document.activeElement;
+    if (a === t && !e.shiftKey) { e.preventDefault(); f[0].focus(); }
+    else if (a === f[0] && e.shiftKey) { e.preventDefault(); t.focus(); }
+    else if (a === f[f.length - 1] && !e.shiftKey) {
+      var bar = Array.prototype.slice.call(nav.querySelectorAll('.navbar a[href], .navbar button')), next = bar[bar.indexOf(t) + 1];
+      e.preventDefault(); close(false); (next || t).focus();
+    }
+  }, true);
+  document.addEventListener('click', function (e) { if (open && !host.contains(e.target) && !(e.target.closest && e.target.closest('[data-mt]'))) close(false); }, true);
+  window.addEventListener('resize', function () { if (open) fit(panelOf(open)); }, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (open) fit(panelOf(open)); }).observe(nav);
+  window.addEventListener('pageshow', function (e) { if (e.persisted && open) close(false, true); });
+
+  // Row target (board C08 _rows): pointing at a row strikes the orange line down its leading edge, moves the title and arrow 6 px, and turns the title orange
+  each(host.querySelectorAll('[data-row]'), function (r) {
+    var edge = r.querySelector('[data-edge]'), arr = r.querySelector('[data-rarr]'), title = r.querySelector('[data-rtitle]');
+    function set(v) {
+      var g = G(); if (!g) return;
+      var lit = v || r.hasAttribute('aria-current');
+      g.to(edge, { scaleY: lit ? 1 : 0, duration: D(0.26), ease: 'power2.out', overwrite: 'auto' });
+      g.to(arr, { x: v ? 6 : 0, duration: D(0.26), ease: v ? 'back.out(2)' : 'power2.out', overwrite: 'auto' });
+      g.to(title, { x: v ? 6 : 0, color: lit ? '#F4703F' : '#FFFFFF', duration: D(0.24), ease: 'power2.out', overwrite: 'auto' });
+    }
+    r.addEventListener('pointerenter', function () { set(true); });
+    r.addEventListener('pointerleave', function () { set(false); var g = G(); if (g) g.to(r, { y: 0, duration: 0.1, overwrite: 'auto' }); });
+    r.addEventListener('focus', function () { set(true); });
+    r.addEventListener('blur', function () { set(false); });
+    r.addEventListener('pointerdown', function () { var g = G(); if (g) g.to(r, { y: 1, duration: 0.06, overwrite: 'auto' }); });
+    r.addEventListener('pointerup', function () { var g = G(); if (g) g.to(r, { y: 0, duration: 0.12, overwrite: 'auto' }); });
+  });
+})();
+/* NAV-05 route menus: end */
 </script>
 <script>
 /*!
@@ -1764,22 +2025,22 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
       var bad = [];
       $$('[data-bad]', form).forEach(function (n) { n.removeAttribute('data-bad'); });
       var name = F('name'), phone = F('phone'), email = F('email'), details = F('details');
-      if (name && !name.value.trim()) bad.push([name, 'Add your name.']);
+      if (name && !name.value.trim()) bad.push([name, 'Add your name so our sales team knows who to answer.']);
       var ph = phone ? phone.value.trim() : '', em = email ? email.value.trim() : '';
-      if (!ph && !em) bad.push([phone || email, 'Add a phone number or an email so we can reach you.']);
-      else if (ph && ph.replace(/\D/g, '').length < 10) bad.push([phone, 'Include the area code in the phone number.']);
-      else if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) bad.push([email, 'Check the email address. It needs an @ and a domain.']);
-      if (details && details.required && !details.value.trim()) bad.push([details, 'Tell us what you need the machine for.']);
+      if (!ph && !em) bad.push([phone || email, 'Add a phone number or an email address so our sales team can reply.']);
+      else if (ph && ph.replace(/\D/g, '').length < 10) bad.push([phone, 'Include the area code so we can call or text you back.']);
+      else if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) bad.push([email, 'Check the email address, which needs an @ sign and a domain.']);
+      if (details && details.required && !details.value.trim()) bad.push([details, 'Describe the work the machine will do.']);
       if (bad.length) {
         bad.forEach(function (b) { b[0].closest('.chan2').setAttribute('data-bad', ''); b[0].setAttribute('aria-invalid', 'true'); });
-        if (err) { err.textContent = bad.map(function (b) { return b[1]; }).join(' ') + ' Everything you typed is still here.'; err.classList.add('on'); }
+        if (err) { err.textContent = bad.map(function (b) { return b[1]; }).join(' ') + ' Everything you typed is still in the form.'; err.classList.add('on'); }
         bad[0][0].focus();
         return;
       }
       if (err) err.classList.remove('on');
       $$('[aria-invalid]', form).forEach(function (n) { n.removeAttribute('aria-invalid'); });
       var list = [];
-      var names = { cond: 'New or used', questions: 'Questions' };
+      var names = { cond: 'Condition', questions: 'Questions' };
       Object.keys(ctx).forEach(function (k) { if (ctx[k] && k !== 'machine') list.push([names[k] || k, ctx[k]]); });
       $$('[data-sum]', form).forEach(function (f) { list.push([f.dataset.sum, f.value.trim()]); });
       var fill = function () { rows.innerHTML = list.filter(function (r) { return r[1]; }).map(function (r) { return '<span>' + esc(r[0]) + '</span><span>' + esc(r[1]) + '</span>'; }).join(''); };

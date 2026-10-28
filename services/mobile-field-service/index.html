@@ -6,6 +6,7 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="../../assets/bc77390d9895822a.svg">
 <title>Mobile Field Service · DBM Heavy Equipment</title>
 <script>document.documentElement.classList.add('js');</script>
 <style>
@@ -74,8 +75,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .nav nav { display: flex; align-items: center; gap: clamp(18px, 1.9vw, 28px); flex-wrap: wrap; }
 .nav nav a { color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; padding: 6px 0; display: inline-block; white-space: nowrap; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left bottom; background-size: 0% 3px; transition: background-size .3s ease; }
 .nav nav a:hover, .nav nav a:focus-visible, .nav nav a[aria-current] { background-size: 100% 3px; }
-@media (min-width: 1240px) { .navbar { flex-wrap: nowrap; } .nav nav { flex-wrap: nowrap; } }
-@media (max-width: 1239px) {
+/* With the four menu diamonds the one-row header needs 1360 px; below that the routes take their own row under the logo and call plate */
+@media (min-width: 1360px) { .navbar { flex-wrap: nowrap; gap: 24px; } .nav nav { flex-wrap: nowrap; gap: 18px; } }
+@media (max-width: 1359px) {
   .navbar { row-gap: 10px; }
   .nav nav { order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 2px 0; -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%); }
   .nav nav::-webkit-scrollbar { display: none; }
@@ -249,6 +251,69 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .call-plate { position: relative; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); overflow: hidden; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.32)) drop-shadow(0 3px 5px rgba(26,26,26,0.26)); }
 .call-plate .rv.bl, .call-plate .rv.br { bottom: 17px; }
 .call-in { padding: 54px clamp(24px, 4.5vw, 58px) 46px; display: flex; flex-direction: column; gap: 30px; }
+/* NAV-05 route menus: start (board C08 NAV-05, ported 2026-10-28; the same block is copied into the Home page) */
+.nav nav .route { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.nav .mt { appearance: none; border: 0; background: transparent; cursor: pointer; width: 24px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; flex: none; transition: transform .18s ease; }
+.nav .mt:focus-visible { outline-offset: -4px; }
+.nav .diam { display: block; width: 9px; height: 9px; background: var(--dim); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transition: transform .3s cubic-bezier(.34,1.56,.64,1), background-color .24s ease; }
+.nav .mt[aria-expanded="true"] .diam { transform: rotate(180deg); background: var(--orange); }
+html:not(.gsap-on) .nav .mt:hover { transform: scale(1.12); }
+.gsap-on .nav .diam { transition: none; }
+.menus { position: absolute; left: 0; right: 0; top: 100%; }
+.menu { position: relative; background: var(--charcoal); box-shadow: 0 18px 30px rgba(0,0,0,0.35); overflow: hidden; overscroll-behavior: contain; view-transition-name: dbm-menu; }
+.menu[hidden] { display: none; }
+.menu.is-open { overflow-y: auto; }
+.mkerf { display: block; width: 100%; height: 2px; }
+.menu-in { max-width: calc(1256px + 2 * var(--pad-x)); margin: 0 auto; padding: 24px var(--pad-x) 28px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1fr); gap: 34px; }
+.mcol { display: flex; flex-direction: column; min-width: 0; }
+.menu .mh { margin: 0; color: var(--orange-hover); font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; line-height: 1.5; text-transform: uppercase; }
+.mrows, .mreads { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; }
+.mreads { gap: 10px; }
+.mrow { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 14px 12px 16px; min-height: 56px; text-decoration: none; border-bottom: 1px solid #2A2A2A; }
+.medge { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--orange); transform: scaleY(0); transform-origin: top center; }
+.mtext { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mtitle { display: inline-block; align-self: flex-start; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; line-height: 1.3; }
+.msub { color: #9A9A9A; font-size: 13px; line-height: 1.45; }
+.marr { width: 22px; height: 10px; flex: none; color: var(--orange-hover); }
+.mrow[aria-current] .medge { transform: scaleY(1); }
+.mrow[aria-current] .mtitle { color: var(--orange-hover); }
+.mread { display: block; color: var(--silver); font-size: 14px; line-height: 1.5; padding: 6px 0; border-bottom: 1px solid #2A2A2A; text-decoration: none; transition: color .2s ease; }
+.mread:hover, .mread:focus-visible, .mread[aria-current] { color: #FFFFFF; }
+.mreach { align-self: start; display: flex; flex-direction: column; gap: 10px; padding: 18px 20px; background: var(--plate); box-shadow: inset 0 0 0 1px var(--dark-rule); }
+.menu .mreach .mh { color: var(--silver); }
+.mreach p:last-child { margin: 0; color: #E4E4E4; font-size: 14px; line-height: 1.6; }
+.menu a:focus-visible { outline-offset: -2px; }
+html:not(.gsap-on) .medge, html:not(.gsap-on) .marr, html:not(.gsap-on) .mtitle { transition: transform .26s ease, color .24s ease; }
+html:not(.gsap-on) .mrow:hover .medge, html:not(.gsap-on) .mrow:focus-visible .medge { transform: scaleY(1); }
+html:not(.gsap-on) .mrow:hover .marr, html:not(.gsap-on) .mrow:focus-visible .marr { transform: translateX(6px); }
+html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .mtitle { transform: translateX(6px); color: var(--orange-hover); }
+@media (max-width: 960px) { .menu-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px 28px; } .mreach { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .menu-in { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px var(--pad-x) 24px; } .mreach { grid-column: auto; } .mrow { padding-right: 6px; } }
+
+/* Page-to-page moves: cross-document view transitions. The header stays in place while the page content fades across.
+   Reduced motion: the transition is not switched on, so pages change at once. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+.nav { view-transition-name: dbm-header; }
+.callbar { view-transition-name: dbm-callbar; }
+::view-transition-group(dbm-header), ::view-transition-new(dbm-header) { animation: none; }
+::view-transition-old(dbm-header) { animation: none; opacity: 0; }
+::view-transition-group(dbm-header) { z-index: 3; }
+::view-transition-group(dbm-menu) { z-index: 2; }
+::view-transition-old(root) { animation: .18s cubic-bezier(.4, 0, 1, 1) both dbm-page-out; }
+::view-transition-new(root) { animation: .28s cubic-bezier(0, 0, .2, 1) .1s both dbm-page-in; }
+@keyframes dbm-page-out { to { opacity: 0; } }
+@keyframes dbm-page-in { from { opacity: 0; transform: translateY(8px); } }
+/* NAV-05 route menus: end */
+
+/* Buy pages only (the four pages whose link row is labeled "Buy equipment"): that row of links to each other sits directly under
+   the header and stays there while the page scrolls, so it is in the same place on each Buy page and does not move when the visitor
+   changes page. The service pages' link rows are not affected. */
+main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction: column; }
+main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
+@media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -360,10 +425,15 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   .formact .btn-orange .cf { padding: 16px 14px; letter-spacing: 0.16em; }
   .btn-orange .lbl { white-space: normal; text-align: center; }
 }
+
+/* Footer address lines (shared footer) */
+.foot-facts .foot-addr { color: var(--dim); font-size: 14.5px; line-height: 1.5; }
 </style>
 <style>
-/* Mobile Field Service page (2026-10-28). The sections, their order, and the controls follow the existing page,
-   DBM HTML 5/services--mobile-field-service.html. Each block names the board component it was raised to. Unconfirmed statements carry. */
+/* Mobile Field Service page, version 2 (2026-10-28). The sections and their order follow the existing page,
+   DBM HTML 5/services--mobile-field-service.html: hero, service bar, the no-diagnosis statement, the checklist, timing and what happens next,
+   the rental statement, questions, related services, and the closing call band. Each section is raised to the board component named in its comment.
+   Unconfirmed statements carry. */
 :root { --chamfer-10: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
 [data-c] { position: absolute; width: 15px; height: 15px; transform: scale(0); pointer-events: none; }
 [data-c="tl"] { top: 0; left: 0; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform-origin: top left; }
@@ -375,19 +445,33 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .ch-btn .l { position: relative; z-index: 1; }
 .ch-btn svg { position: relative; z-index: 1; width: 22px; height: 10px; flex: none; }
 
-/* C07 Control Plate */
+/* C07 Control Plate, in the sec (dark) and paper (light) variants */
 .kb { appearance: none; border: 0; background: transparent; cursor: pointer; display: inline-block; position: relative; padding: 0 0 4px 0; text-decoration: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.38)); transition: padding 0.09s ease; max-width: 100%; }
 .kb [data-kbase] { position: absolute; left: 0; right: 0; bottom: 0; top: 4px; background: #0A0A0A; clip-path: var(--chamfer-12); }
 .kb [data-kplate] { position: relative; overflow: hidden; display: inline-flex; justify-content: center; align-items: center; gap: 12px; padding: 17px 24px 17px 28px; min-height: 52px; max-width: 100%; font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase; text-align: center; color: #C7C9CC; background: linear-gradient(#26292D, #1A1C1F); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -2px 0 rgba(0,0,0,0.4); clip-path: var(--chamfer-12); }
 .kb [data-kedge] { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016; }
 .kb .l { position: relative; }
+.kb.paper { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.22)); }
+.kb.paper [data-kbase] { background: #A9AEB8; }
+.kb.paper [data-kplate] { padding: 12px 20px 12px 24px; min-height: 0; color: #1A1A1A; background: linear-gradient(#FFFFFF, #E2E4E7); box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -2px 0 rgba(0,0,0,0.12); }
+.kb.paper [data-kedge] { background: #4B4F56; }
+.kb.paper svg { position: relative; width: 20px; height: 20px; flex: none; color: #1A1A1A; }
+.kb.icon [data-kplate] { width: 48px; height: 48px; padding: 0; }
+.kb .ic { width: 18px; height: 18px; color: #1A1A1A; }
 
-/* Section heads (Home sample head, accent strike on scroll), with the lede beside the heading as on the existing page */
-.shead { position: relative; padding-top: 26px; max-width: 760px; }
+/* C07 Field Mono with Bracket Lock, dark and light */
+.mono-btn { position: relative; border: 0; cursor: pointer; background: transparent; color: #C7C9CC; font-family: 'Chivo Mono', monospace; font-size: 11.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 16px; min-height: 44px; text-align: center; box-shadow: inset 0 0 0 1.5px #3A3D42; clip-path: var(--chamfer-10); }
+.mono-btn[data-mono="light"] { color: #4B4F56; box-shadow: inset 0 0 0 1.5px #B9BCC1; }
+.mono-btn .l { position: relative; }
+
+/* Section heads: the Home sample head with BAN-06's accent strike on scroll, and the lede beside the heading as on the existing page */
+.shead { position: relative; padding-top: 26px; max-width: 780px; }
 .shead .hacc { position: absolute; top: 0; left: 0; width: 74px; height: 3px; background: #EF5016; }
 .shead h2 { margin: 0; font-family: 'Chakra Petch', sans-serif; font-weight: 700; font-size: clamp(26px, 3.4vw, 38px); letter-spacing: 0.015em; line-height: 1.06; text-transform: uppercase; color: #1A1A1A; text-wrap: balance; }
-.headrow { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 24px clamp(28px, 5vw, 72px); align-items: end; }
-.slede { margin: 0; max-width: 58ch; color: #33363B; font-size: 17px; line-height: 1.65; text-wrap: pretty; }
+.dark .shead h2, .cov .shead h2 { color: #FFFFFF; }
+.headrow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px clamp(28px, 5vw, 72px); align-items: end; }
+.slede { margin: 0; max-width: 60ch; color: #33363B; font-size: 17px; line-height: 1.65; text-wrap: pretty; }
+.ph { color: inherit; }
 
 /* Text link with the boards' 22 by 10 arrow, which steps 7 px on hover */
 .tlink { display: inline-flex; align-items: center; gap: 12px; color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 0 8px; border-bottom: 1.5px solid #1A1A1A; transition: color .2s ease, border-color .2s ease; }
@@ -395,28 +479,30 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .tlink:hover, .tlink:focus-visible { color: #C9430D; border-bottom-color: #C9430D; }
 .tlink:hover svg, .tlink:focus-visible svg { transform: translateX(7px); }
 
-/* Icons from DBM's own set (ZZZ DBM/DBM Components/DBM Icons), drawn through a mask so each icon takes its row's ink and turns orange with the row. The same icons mark the same services on the Service & Parts page. */
-.ic { display: block; flex: none; background: currentColor; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; transition: color 0.2s ease; }
+/* Icons from DBM's own set, drawn through a mask so each takes the ink of its row */
+.ic { display: block; flex: none; background: currentColor; -webkit-mask: var(--ic) center / contain no-repeat; mask: var(--ic) center / contain no-repeat; }
+.ic-loc { --ic: url("../../assets/8920f8d9c8053c5e.svg"); }
+.ic-cam { --ic: url("../../assets/07b896c90263e89e.svg"); }
+.ic-alert { --ic: url("../../assets/fd626fa3062f2487.svg"); }
 .ic-lb { --ic: url("../../assets/fac76301d06847d6.svg"); }
 .ic-hyd { --ic: url("../../assets/73c06c4508ae2c0b.svg"); }
 .ic-weld { --ic: url("../../assets/e30269e5e3c7efca.svg"); }
 
-/* Section 1: the existing page's full-width photo hero, raised to board C07 H3 Full Bleed without route cards, with the C07 fact strip.
-   The hero is sized so the service-page bar shows in the first screen, as it does on the existing page, and the copy sits on the same 1256 px grid as the logo and every section. */
-.hero-fb { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: clamp(560px, calc(100vh - 160px), 780px); background: #1A1A1A; overflow: hidden; color: #FFFFFF; }
-.hero-fb .fb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
-.hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(0deg, #1A1A1A 0%, rgba(26,26,26,0.95) 30%, rgba(26,26,26,0.72) 48%, rgba(26,26,26,0.18) 68%, rgba(26,26,26,0) 80%, rgba(26,26,26,0.3) 100%), linear-gradient(90deg, rgba(26,26,26,0.5) 0%, rgba(26,26,26,0) 60%); }
-.hero-fb .fb-copy { position: relative; width: min(100%, calc(1256px + 2 * var(--pad-x))); max-width: none; margin: 0 auto; padding: 0 var(--pad-x) clamp(36px, 4.5vw, 56px); display: flex; flex-direction: column; gap: 18px; }
+/* Section 1: the existing full-width photo hero, board C07 H3 Full Bleed without route cards, with the C07 fact strip */
+.hero-fb { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: clamp(580px, calc(100vh - 160px), 790px); background: #1A1A1A; overflow: hidden; color: #FFFFFF; }
+.hero-fb .fb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.hero-fb .fb-scrim { position: absolute; inset: 0; background: linear-gradient(0deg, #1A1A1A 0%, rgba(26,26,26,0.95) 32%, rgba(26,26,26,0.74) 50%, rgba(26,26,26,0.2) 70%, rgba(26,26,26,0) 82%, rgba(26,26,26,0.3) 100%), linear-gradient(90deg, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0) 62%); }
+.hero-fb .fb-copy { position: relative; width: min(100%, calc(1256px + 2 * var(--pad-x))); max-width: none; margin: 0 auto; padding: 0 var(--pad-x) clamp(34px, 4vw, 52px); display: flex; flex-direction: column; gap: 16px; }
 .hero-fb .eyebrow { color: #F4703F; }
-.hero-fb h1 { margin: 0; max-width: 23ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(38px, 5.4vw, 72px); line-height: 0.98; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
-.hero-fb .fb-lede { margin: 4px 0 0; max-width: 700px; color: #E4E4E4; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.6; text-wrap: pretty; }
-.hero-fb .acts { margin-top: 10px; }
-.hero-fb .facts { margin: 14px 0 0; max-width: 980px; }
+.hero-fb h1 { margin: 0; max-width: 22ch; font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(34px, 4.3vw, 62px); line-height: 1; letter-spacing: 0.005em; text-transform: uppercase; text-wrap: balance; }
+.hero-fb .fb-lede { margin: 2px 0 0; max-width: 780px; color: #E4E4E4; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.6; text-wrap: pretty; }
+.hero-fb .acts { margin-top: 8px; }
+.hero-fb .facts { margin: 12px 0 0; max-width: 1120px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .hero-fb .facts div { border-top-color: #3A3D42; }
 .hero-fb .facts dd { font-size: 15px; }
 .hero-fb .hero-kerf { position: relative; display: block; width: 100%; height: 3px; }
 
-/* Section 2: the existing service bar, raised to the C08 NAV-01 second-level bar: one orange kerf travels to the link under the pointer and back to the current page */
+/* Section 2: the existing service bar, C08 NAV-01 second-level bar with one travelling kerf */
 .subnav { position: relative; background: #F2F3F4; padding: 0 var(--pad-x); box-shadow: inset 0 -1px 0 #D5D7DA; }
 .subnav .row { position: relative; display: flex; gap: clamp(22px, 3vw, 40px); overflow-x: auto; scrollbar-width: none; padding: 0; box-shadow: none; } /* padding and box-shadow cancel the shared .row rule, which belongs to another component */
 .subnav .row::-webkit-scrollbar { display: none; }
@@ -424,52 +510,288 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .subnav a:hover, .subnav a:focus-visible, .subnav a[aria-current] { color: #1A1A1A; }
 .subnav [data-skerf] { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: #EF5016; pointer-events: none; }
 
-/* Sections 3 and 6: the existing statement layout on the Bone band */
-.bone { background: #CDC4AF; }
-.bone p { color: #2A2D31; }
-.stmt { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 24px clamp(28px, 5vw, 72px); align-items: start; }
-.stmt .body { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-.stmt .body > p { margin: 0; font-size: 17px; line-height: 1.65; max-width: 60ch; text-wrap: pretty; }
-.stmt .item { align-self: stretch; margin-top: 10px; padding-top: 22px; border-top: 1px solid #A89F88; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.stmt .item h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; }
-.stmt .item p { margin: 0; font-size: 16.5px; line-height: 1.6; }
-.stmt .links { display: flex; gap: 10px 28px; flex-wrap: wrap; }
+/* Coverage: board C06 BAN-04 Territory Banner. Six Field Mono chips change the coverage text and zoom an offline map of Nevada and California.
+   The map uses the coverage map geometry from the About page (state outlines on a one-degree grid), with DBM's towns and the highways its trucks drive. */
+.cov { background: #141414; color: #FFFFFF; padding: 80px var(--pad-x); box-shadow: inset 0 1px 0 #2A2C30; }
+.covgrid { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
+.cov .lead { margin: 18px 0 24px; color: #DCDDDF; font-size: 17px; line-height: 1.65; max-width: 50ch; text-wrap: pretty; }
+.cov .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.covread { position: relative; margin-top: 26px; padding: 22px 24px 24px 28px; background: #1C1E21; box-shadow: inset 0 0 0 1px #2E3135; min-height: 176px; }
+.covread::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF5016; }
+.covread [data-covtxt][hidden] { display: none; }
+.covread .ct { display: block; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; line-height: 1.2; }
+.covread p { margin: 10px 0 0; color: #C7C9CC; font-size: 16px; line-height: 1.6; text-wrap: pretty; }
+.covmap { position: relative; aspect-ratio: 700 / 730; background: #0F1012; box-shadow: inset 0 0 0 1px #2A2C30; overflow: hidden; }
+.covmap svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.covmap .grat line { stroke: #1D1F22; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.covmap .base { fill: #191B1E; stroke: #3A3D42; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.covmap .nv { fill: #EF5016; fill-opacity: 0.1; stroke: #EF5016; stroke-width: 2.5; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.covmap .ca { fill: url(#cov-hatch); stroke: #8A8D93; stroke-width: 1.5; stroke-dasharray: 7 6; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.covmap .state { font-family: 'Sora', sans-serif; font-weight: 800; letter-spacing: 0.3em; fill: #34373C; }
+.covmap .hw { fill: none; stroke: #5B5F66; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease; }
+.covmap .hw.on { stroke: #F4703F; stroke-width: 3.5; }
+.covmap .hw.dim { opacity: 0.35; }
+.covmap .hwl text { font-family: 'Chivo Mono', monospace; font-weight: 700; letter-spacing: 0.06em; fill: #9A9DA3; paint-order: stroke; stroke: #0F1012; stroke-width: 3px; vector-effect: non-scaling-stroke; transition: fill 0.3s ease, opacity 0.3s ease; }
+.covmap .hwl.on text { fill: #FF8148; }
+.covmap .hwl.dim text { opacity: 0.35; }
+.covmap .city circle { fill: #8A8D93; transition: fill 0.3s ease; }
+.covmap .city text { font-family: 'Instrument Sans', sans-serif; font-weight: 500; fill: #C7C9CC; paint-order: stroke; stroke: #0F1012; stroke-width: 3px; transition: fill 0.3s ease, opacity 0.3s ease; }
+.covmap .city.on circle { fill: #EF5016; }
+.covmap .city.on text { fill: #FFFFFF; font-weight: 700; }
+.covmap .city.dim text, .covmap .city.dim circle { opacity: 0.4; }
+.covmap .city.ref circle { fill: #4B4F56; }
+.covmap .city.ref text { fill: #6B6F76; }
+.covmap .yardpin rect { fill: #EF5016; stroke: #FFFFFF; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.covmap .yardpin .ping { fill: none; stroke: #EF5016; transform-box: fill-box; transform-origin: center; animation: ping 2.4s ease-out infinite; }
+.covmap .yardpin text { font-family: 'Chivo Mono', monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; fill: #FFFFFF; paint-order: stroke; stroke: #0F1012; stroke-width: 3px; }
+@keyframes ping { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.4); opacity: 0; } }
+.covlegend { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 14px; color: #9A9DA3; font-family: 'Chivo Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+.covlegend span { display: inline-flex; align-items: center; gap: 9px; }
+.covlegend i { display: inline-block; flex: none; width: 16px; height: 12px; }
+.covlegend .k-nv { background: rgba(239,80,22,0.25); box-shadow: inset 0 0 0 2px #EF5016; }
+.covlegend .k-ca { background: repeating-linear-gradient(45deg, rgba(138,141,147,0.55) 0 2px, transparent 2px 6px); box-shadow: inset 0 0 0 1.5px #8A8D93; }
+.covlegend .k-hw { height: 3px; background: #F4703F; }
+.covnote { margin: 10px 0 0; color: #8A8D93; font-size: 13.5px; }
 
-/* Section 4: the existing checklist, raised to the C07 H6 checklist: pressable items, a live count, and a progress bar, with a safety line after the first tick */
-.cklist { margin-top: 40px; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.14)) drop-shadow(0 3px 5px rgba(26,26,26,0.12)); }
-.ckhead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 22px 28px 0; flex-wrap: wrap; }
+/* Section 3: the existing statement, with board C12 FND-02 Machine-Down Triage below it */
+.stmt { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px clamp(28px, 5vw, 72px); align-items: start; }
+.stmt .body p { margin: 0; color: #33363B; font-size: 17px; line-height: 1.65; max-width: 60ch; text-wrap: pretty; }
+.tri { position: relative; margin-top: 44px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); background: #1A1A1A; box-shadow: inset 0 4px 0 #EF5016; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.32)) drop-shadow(0 3px 5px rgba(26,26,26,0.26)); }
+.tri .tq { padding: 44px 40px 40px 44px; display: flex; flex-direction: column; gap: 16px; border-right: 1px solid #2A2A2A; min-width: 0; }
+.tri h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(26px, 2.4vw, 32px); font-weight: 800; line-height: 1.1; text-wrap: balance; }
+.tri .tsub { margin: 0; color: #C7C9CC; font-size: 15.5px; line-height: 1.6; max-width: 46ch; }
+.tri .tans { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.tri .tans .mono-btn { text-align: left; padding: 18px 20px; min-height: 56px; font-size: 12px; }
+.tri .tans .mono-btn[aria-checked="true"] { background: #FFFFFF; color: #1A1A1A; box-shadow: none; }
+.tri .tout { position: relative; background: #141414; padding: 44px 44px 40px 40px; min-height: 400px; min-width: 0; }
+.tpanel { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; min-height: 316px; }
+.tpanel[hidden] { display: none; }
+.tlab { color: #F4703F; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; }
+.tlab .ic { width: 16px; height: 16px; color: #F4703F; }
+.tpanel h4 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(24px, 2.2vw, 29px); font-weight: 800; line-height: 1.14; max-width: 24ch; text-wrap: balance; }
+.tpanel p { margin: 0; color: #C7C9CC; font-size: 16px; line-height: 1.62; max-width: 54ch; text-wrap: pretty; }
+.tbig { color: #FFFFFF; font-family: 'Chakra Petch', sans-serif; font-size: clamp(34px, 3.4vw, 46px); font-weight: 700; letter-spacing: 0.02em; line-height: 1.05; text-decoration: none; border-bottom: 2px solid #3A3D42; padding-bottom: 6px; transition: border-color .2s ease, color .2s ease; }
+.tbig:hover, .tbig:focus-visible { color: #FF8148; border-bottom-color: #EF5016; }
+.tacts { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+.tfoot { margin-top: auto; align-self: stretch; padding-top: 14px; border-top: 1px solid #2A2A2A; color: #8A8D93; font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.6; }
+
+/* Section 4: the existing checklist, raised to a working request. The C07 H6 checklist count and progress bar track the four details;
+   the fields are board C10 (text fields, Location, symptom presets, Photo slots, Radio cards, Checkboxes, Segmented contact choice);
+   the side panel is the board C12 request record; sending shows the C05 CNF-01 receipt with the CPY-03 copy button. */
+.intake { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 28px; margin-top: 40px; align-items: start; }
+.formcard { position: relative; background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.12)) drop-shadow(0 3px 5px rgba(26,26,26,0.1)); min-width: 0; }
+.ckhead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 22px clamp(18px, 3vw, 32px) 0; flex-wrap: wrap; }
 .ckhead .t { color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em; }
 .ckhead [data-ckcount] { color: #C9430D; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; }
-.ckbar { height: 4px; margin: 12px 28px 0; background: #E9EAEC; }
-.ckbar span { display: block; height: 4px; width: 0%; background: #EF5016; }
-.ckgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; padding: 10px 28px 6px; }
-.ck { position: relative; appearance: none; border: 0; background: transparent; cursor: pointer; text-align: left; font: inherit; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 16px; padding: 22px 12px 22px 0; box-shadow: inset 0 -1px 0 #E9EAEC; }
-.ck .box { position: relative; width: 24px; height: 24px; margin-top: 2px; background: #F2F3F4; box-shadow: inset 0 0 0 1.5px #4B4F56, inset 0 2px 3px rgba(0,0,0,0.16); }
-.ck .box svg { position: absolute; inset: 3px; width: 18px; height: 18px; opacity: 0; }
-.ck .h { display: block; margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; line-height: 1.25; transition: color .18s ease; }
-.ck .d { display: block; margin: 6px 0 0; color: #4B4F56; font-size: 15.5px; line-height: 1.55; }
-.ck:hover .h { color: #C9430D; }
-.ck[aria-pressed="true"] .box { background: #1A1A1A; box-shadow: none; }
-.ck[aria-pressed="true"] .box svg { opacity: 1; }
-.ckfoot { display: flex; justify-content: space-between; align-items: center; gap: 14px 24px; flex-wrap: wrap; padding: 18px 28px 22px; }
-.ckfoot [data-cksay] { margin: 0; color: #4B4F56; font-size: 14.5px; line-height: 1.5; max-width: 60ch; }
+.ckbar { height: 4px; margin: 12px clamp(18px, 3vw, 32px) 0; background: #E9EAEC; }
+.ckbar span { display: block; height: 4px; width: 0%; background: #EF5016; transition: width .36s ease; }
+.formcard form { padding: 6px clamp(18px, 3vw, 32px) 30px; }
+.grp { border: 0; margin: 0; padding: 26px 0 28px; min-width: 0; box-shadow: inset 0 1px 0 #E9EAEC; }
+.grp:first-of-type { box-shadow: none; }
+.grp legend { float: left; width: 100%; padding: 0; display: flex; align-items: center; gap: 14px; }
+.grp legend + * { clear: both; }
+.grp .box { position: relative; flex: none; width: 24px; height: 24px; background: #F2F3F4; box-shadow: inset 0 0 0 1.5px #4B4F56, inset 0 2px 3px rgba(0,0,0,0.16); transition: background .2s ease; }
+.grp .box svg { position: absolute; inset: 3px; width: 18px; height: 18px; opacity: 0; transition: opacity .2s ease; }
+.grp.ok .box { background: #1A1A1A; box-shadow: none; }
+.grp.ok .box svg { opacity: 1; }
+.grp .gt { color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; line-height: 1.2; }
+.grp .gbody { padding: 8px 0 0 38px; display: flex; flex-direction: column; gap: 16px; }
+.grp .gd { margin: 0; color: #4B4F56; font-size: 15px; line-height: 1.55; max-width: 62ch; }
+.frow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.fld { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.fld > label, .flab { font-family: 'Familjen Grotesk', sans-serif; font-weight: 600; font-size: 15px; color: #1A1A1A; }
+.fld .opt { color: #6B6F76; font-family: 'Chivo Mono', monospace; font-size: 10px; letter-spacing: 0.14em; margin-left: 8px; }
+.chan2 { position: relative; padding: 1.5px; background: #B9BCC1; clip-path: var(--chamfer-14); }
+.chan2:focus-within { background: #4B4F56; }
+.chan2 input, .chan2 textarea { width: 100%; border: 0; outline: none; background: #FFFFFF; padding: 14px 16px; min-height: 52px; font: 16px 'Instrument Sans', sans-serif; color: #1A1A1A; clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px)); border-radius: 0; -webkit-appearance: none; }
+.chan2 textarea { min-height: 116px; resize: vertical; display: block; line-height: 1.55; }
+.chan2 input::placeholder, .chan2 textarea::placeholder { color: #8A8D93; }
+.chan2 .kf { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform .3s cubic-bezier(0.22,1,0.36,1); pointer-events: none; }
+.chan2:focus-within .kf { transform: scaleX(1); }
+.locrow { display: flex; gap: 12px; align-items: flex-start; }
+.locrow .chan2 { flex: 1 1 auto; min-width: 0; }
+.fhelp { margin: 0; color: #4B4F56; font-size: 13.5px; line-height: 1.5; }
+.fhelp.cnt { text-align: right; font-family: 'Chivo Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: #6B6F76; }
+.syms { display: flex; flex-wrap: wrap; gap: 8px; }
+.slots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.slot { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; aspect-ratio: 16 / 8; background: #F2F3F4; box-shadow: inset 0 0 0 1.5px #B9BCC1; cursor: pointer; text-align: center; padding: 14px; overflow: hidden; transition: box-shadow .2s ease, background .2s ease; }
+.slot:hover, .slot:focus-within { box-shadow: inset 0 0 0 2px #4B4F56; background: #FFFFFF; }
+.slot input { position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 1; }
+.slot .ic { width: 26px; height: 26px; color: #C9430D; }
+.slot .sl-t { font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: #1A1A1A; }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot .rm { position: absolute; z-index: 3; right: 8px; top: 8px; border: 0; cursor: pointer; background: #1A1A1A; color: #FFFFFF; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 10px; clip-path: var(--chamfer-10); }
+.slot .rm[hidden] { display: none; }
+.rcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.rcard { position: relative; appearance: none; border: 0; cursor: pointer; text-align: left; font: inherit; background: #FFFFFF; box-shadow: inset 0 0 0 1.5px #B9BCC1; clip-path: var(--chamfer-10); padding: 16px 14px 16px 46px; min-height: 92px; display: flex; flex-direction: column; gap: 4px; transition: box-shadow .18s ease, background .18s ease, transform .12s ease; }
+.rcard:hover { box-shadow: inset 0 0 0 1.5px #4B4F56; }
+.rcard .rmk { position: absolute; left: 16px; top: 18px; width: 18px; height: 18px; box-shadow: inset 0 0 0 1.5px #4B4F56; background: #FFFFFF; }
+.rcard .rt { color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 16px; font-weight: 700; line-height: 1.3; }
+.rcard .rd { color: #4B4F56; font-size: 14px; line-height: 1.45; }
+.rcard[aria-checked="true"] { background: #FBF6F3; box-shadow: inset 0 0 0 2px #C9430D, inset 0 3px 6px rgba(0,0,0,0.08); transform: translateY(2px); }
+.rcard[aria-checked="true"] .rmk { box-shadow: inset 0 0 0 1.5px #C9430D, inset 0 0 0 5px #FFFFFF; background: #C9430D; }
+.rsay { margin: 0; padding: 4px 0 4px 14px; border-left: 3px solid #EF5016; color: #1A1A1A; font-size: 15px; line-height: 1.55; }
+.rsay[hidden] { display: none; }
+.cbx { position: relative; display: flex; gap: 14px; align-items: flex-start; cursor: pointer; color: #1A1A1A; font-size: 15.5px; line-height: 1.5; }
+.cbx input { position: absolute; opacity: 0; width: 24px; height: 24px; margin: 0; cursor: pointer; }
+.cbx .box { position: relative; flex: none; width: 24px; height: 24px; background: #F2F3F4; box-shadow: inset 0 0 0 1.5px #4B4F56, inset 0 2px 3px rgba(0,0,0,0.16); }
+.cbx .box svg { position: absolute; inset: 3px; width: 18px; height: 18px; opacity: 0; }
+.cbx input:checked + .box { background: #1A1A1A; box-shadow: none; }
+.cbx input:checked + .box svg { opacity: 1; }
+.cbx input:focus-visible + .box { outline: 2px solid #4B4F56; outline-offset: 3px; }
+.cbx b { font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; }
+.seg { position: relative; display: inline-grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 5px; background: #1A1A1A; box-shadow: inset 0 2px 7px rgba(0,0,0,0.7), inset 0 0 0 1px #0A0A0A; clip-path: var(--chamfer-12); min-width: 280px; }
+.seg [data-segplate] { position: absolute; left: 5px; top: 5px; bottom: 5px; width: calc(50% - 5px); background: linear-gradient(#565D67, #31353B); box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -3px 0 #EF5016; clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px)); transition: transform .34s cubic-bezier(0.22,1,0.36,1); }
+.seg[data-at="1"] [data-segplate] { transform: translateX(100%); }
+.seg button { position: relative; z-index: 1; border: 0; cursor: pointer; background: transparent; color: #C7C9CC; font-family: 'Familjen Grotesk', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 14px 18px; transition: color .18s ease; }
+.seg button[aria-checked="true"] { color: #FFFFFF; }
+.formact { margin-top: 6px; padding-top: 24px; box-shadow: inset 0 1px 0 #E9EAEC; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.formact .fnote { margin: 0; color: #4B4F56; font-size: 14.5px; line-height: 1.55; max-width: 64ch; }
+.formact .fnote b { color: #1A1A1A; }
 
-/* Section 5: the existing editorial split, with a recessed photo window */
-.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-.scopy { display: flex; flex-direction: column; gap: 16px; }
-.scopy > p { margin: 0; color: #33363B; font-size: 17px; line-height: 1.65; max-width: 60ch; text-wrap: pretty; }
-.details { margin-top: 8px; box-shadow: 0 1px 0 #D5D7DA; }
-.details > div { padding: 18px 0; box-shadow: inset 0 1px 0 #D5D7DA; }
-.details h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 800; line-height: 1.25; }
-.details p { margin: 6px 0 0; color: #4B4F56; font-size: 16px; line-height: 1.6; text-wrap: pretty; }
-.pwin { position: relative; aspect-ratio: 4 / 3; background: #DEE0E3; overflow: hidden; clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%); }
-.pwin img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.pwin::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #A9AEB8, inset 0 3px 9px rgba(0,0,0,0.3); pointer-events: none; }
+/* C12 request record, drawn on the Card 1b riveted plate */
+.record { position: sticky; top: calc(var(--dbm-nav) + 14px); background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; color: #FFFFFF; min-width: 0; }
+.record .strip { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 30px 13px; border-bottom: 1px solid #2A2A2A; color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.28em; }
+.record .rb { padding: 22px 30px 28px; display: flex; flex-direction: column; gap: 14px; }
+.record h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 21px; font-weight: 800; letter-spacing: 0.03em; line-height: 1.15; text-transform: uppercase; }
+.record dl { margin: 0; border-top: 1px solid #2A2A2A; }
+.record dl div { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 14px; padding: 11px 0; border-bottom: 1px solid #2A2A2A; }
+.record dt { color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; padding-top: 4px; transition: color .2s ease; }
+.record dd { margin: 0; color: #E4E4E4; font-size: 14.5px; line-height: 1.5; overflow-wrap: anywhere; }
+.record dd.nil { color: #5E6066; }
+.record .on dt { color: #F4703F; }
+.record .who { margin: 0; color: #C7C9CC; font-size: 14.5px; line-height: 1.6; }
+.record .who b { color: #FFFFFF; }
 
-/* Section 7: the existing questions layout, raised to C05 ACC-01 */
-.faqgrid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px clamp(28px, 5vw, 72px); align-items: start; }
-.faqgrid .left { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-.faqgrid .left p { margin: 0; color: #33363B; font-size: 16.5px; }
+/* C05 CNF-01 receipt and CPY-03 copy */
+.done { position: relative; display: none; padding: 30px clamp(18px, 3vw, 32px) 30px calc(clamp(18px, 3vw, 32px) + 14px); flex-direction: column; gap: 18px; outline: none; }
+.done .edge { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: #486F5D; }
+.done .sent { color: #486F5D; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; }
+.done .dh { color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 800; line-height: 1.12; }
+.done .db { color: #4B4F56; font-size: 15.5px; line-height: 1.65; max-width: 680px; }
+.done svg.k { display: block; width: 100%; height: 2px; }
+.done .rows2 { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 6px 0; }
+.done .rows2 span:nth-child(odd) { color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 4px 12px 4px 0; }
+.done .rows2 span:nth-child(even) { color: #1A1A1A; font-size: 15px; padding: 4px 0; overflow-wrap: anywhere; }
+.done .dact { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+.done .again { border: 0; background: transparent; cursor: pointer; color: #4B4F56; font-family: 'Familjen Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 12px 4px; border-bottom: 1.5px solid #B9BCC1; }
+.done .note { margin: 0; color: #4B4F56; font-size: 14px; min-height: 1.5em; }
+
+/* Section 5, part 1: arrival readings on board Card 1d tick scales, the C09 CAR-09 Info-Design Explainer, and C05 BDG-01 stamps */
+.eta { position: relative; margin-top: 40px; display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; color: #FFFFFF; }
+.eta .et { padding: 40px 40px 36px 42px; display: flex; flex-direction: column; gap: 14px; }
+.eta h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; letter-spacing: 0.02em; line-height: 1.18; text-transform: uppercase; }
+.eta .et p { margin: 0; color: #C7C9CC; font-size: 16px; line-height: 1.62; text-wrap: pretty; }
+.eta .et .fine { color: #9A9DA3; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 14px; margin-top: auto; }
+.eta .er { padding: 40px 42px 34px; border-left: 1px solid #2A2A2A; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+.read .rh { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.read .rl { color: #8A8D93; font-family: 'Chivo Mono', monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em; }
+.read .rval { color: #FFFFFF; font-family: 'Chakra Petch', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.02em; }
+.read.dbm .rval { color: #FF8148; }
+.dscale { position: relative; height: 44px; margin-top: 12px; }
+.dscale .tk { position: absolute; left: 0; right: 0; top: 14px; height: 16px; background-image: repeating-linear-gradient(90deg, #4B4F56 0 1px, transparent 1px calc(100% / 21)); box-shadow: inset -1px 0 0 #4B4F56, inset 0 -1px 0 #3A3D42; }
+.dscale .rg { position: absolute; top: 10px; height: 24px; left: 0; width: 0; min-width: 0; }
+.read.dbm .rg { background: #EF5016; box-shadow: 0 0 0 4px rgba(239,80,22,0.22); }
+.read.dlr .rg { background: repeating-linear-gradient(45deg, #6B6F76 0 6px, #4B4F56 6px 12px); }
+.dscale .en { position: absolute; top: 36px; left: 0; right: 0; height: 12px; color: #8A8D93; font-family: 'Chivo Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; }
+.dscale .en span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.dscale .en span:first-child { transform: none; }
+.dscale .en span:last-child { transform: translateX(-100%); }
+
+.xpl { margin-top: 28px; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.2)) drop-shadow(0 3px 5px rgba(26,26,26,0.16)); }
+.xpl-in { background: linear-gradient(#FFFFFF, #F4F5F6); box-shadow: inset 0 0 0 1px #D5D7DA, inset 0 1px 0 #FFFFFF; padding: 14px; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+.xpics { position: relative; min-height: 520px; background: #DEE0E3; overflow: hidden; }
+.xpanel { position: absolute; inset: 0; }
+.xpanel[hidden] { display: none; }
+.xpanel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.xpin { appearance: none; border: 0; cursor: pointer; position: absolute; z-index: 2; left: 22px; top: 22px; width: 34px; height: 34px; margin: -17px 0 0 -17px; padding: 0; background: #1A1A1A; color: #FFFFFF; font-family: 'Chakra Petch', sans-serif; font-size: 15px; font-weight: 700; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)); filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5)); transition: background-color 0.16s ease; }
+.xpics .xrim { position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #A9AEB8, inset 0 3px 9px rgba(0,0,0,0.28); pointer-events: none; z-index: 1; }
+.xtext { padding: 22px 16px 10px 32px; display: flex; flex-direction: column; min-width: 0; }
+.xcount { color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; }
+.xtitle { margin: 12px 0 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800; line-height: 1.12; }
+.xname { margin-top: 18px; color: #C9430D; font-family: 'Familjen Grotesk', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.xkeys { list-style: none; display: flex; flex-direction: column; margin: 12px 0 0; padding: 0; }
+.xkeys[hidden] { display: none; }
+.xkey { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 14px; padding: 14px 10px; border-top: 1px solid #E1E3E6; transition: background-color 0.16s ease; }
+.xnum { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: #1A1A1A; color: #FFFFFF; font-family: 'Chakra Petch', sans-serif; font-size: 14px; font-weight: 700; clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px)); transition: background-color 0.16s ease; }
+.xkey .xk { display: block; color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 16px; font-weight: 700; }
+.xkey .xd { display: block; margin-top: 4px; color: #4B4F56; font-size: 15px; line-height: 1.5; text-wrap: pretty; }
+.xnav { display: flex; gap: 14px; margin-top: auto; padding-top: 18px; }
+
+.crew { list-style: none; margin: 34px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); box-shadow: inset 0 1px 0 #D5D7DA, 0 1px 0 #D5D7DA; }
+.crew li { padding: 28px 24px 26px 0; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.crew li + li { padding-left: 24px; box-shadow: inset 1px 0 0 #E1E3E6; }
+.stamp { display: inline-block; transform: rotate(-2deg); padding: 9px 12px; border: 2px solid #1A1A1A; box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 3px #1A1A1A; font-family: 'Chivo Mono', monospace; font-size: 11.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #1A1A1A; background: #FFFFFF; line-height: 1.4; }
+.crew h3 { margin: 4px 0 0; color: #1A1A1A; font-family: 'Familjen Grotesk', sans-serif; font-size: 19px; font-weight: 700; }
+.crew p { margin: 0; color: #33363B; font-size: 15.5px; line-height: 1.6; text-wrap: pretty; }
+.tw { position: relative; display: inline-block; }
+.tw button { border: 0; background: transparent; cursor: help; padding: 0 0 1px; color: #1A1A1A; font: inherit; font-weight: 600; border-bottom: 1.5px dashed #8A8D93; transition: color 0.18s ease, border-color 0.18s ease; }
+.tw [data-tip] { position: absolute; left: 0; bottom: calc(100% + 10px); width: 260px; max-width: 78vw; background: #1A1A1A; padding: 13px 15px; clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px)); opacity: 0; pointer-events: none; z-index: 5; text-align: left; }
+.tw [data-tip] b { display: block; color: #F4703F; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; }
+.tw [data-tip] span { display: block; color: #E4E4E4; font-size: 13px; font-weight: 400; line-height: 1.55; margin-top: 6px; }
+
+/* Section 5, part 2: Card 1b Riveted Data Plate beside the C09 CAR-08 Explainer Stepper */
+.s2grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 28px; margin-top: 40px; align-items: stretch; }
+.plate1b { position: relative; display: flex; flex-direction: column; background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; color: #FFFFFF; }
+.plate1b .acc1b { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #EF5016; transform: scaleX(0); transform-origin: left center; transition: transform 0.34s cubic-bezier(0.22,1,0.36,1); }
+.plate1b .strip { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 38px 13px; border-bottom: 1px solid #2A2A2A; color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.28em; }
+.plate1b .pb { padding: 24px 38px 36px; display: flex; flex-direction: column; gap: 16px; }
+.plate1b h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 23px; font-weight: 800; letter-spacing: 0.03em; line-height: 1.15; text-transform: uppercase; }
+.plate1b .intro { margin: 0; color: #C7C9CC; font-size: 16px; line-height: 1.6; }
+.fields1b { margin: 4px 0 0; border-top: 1px solid #2A2A2A; }
+.fields1b div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding: 15px 0; border-bottom: 1px solid #2A2A2A; }
+.fields1b dt { color: #7E7E7E; font-family: 'Chivo Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; padding-top: 4px; transition: color 0.2s ease; }
+.fields1b dd { margin: 0; color: #E4E4E4; font-size: 15.5px; line-height: 1.6; }
+.stepcard { background: linear-gradient(#FFFFFF, #F4F5F6); box-shadow: inset 0 0 0 1px #D5D7DA, inset 0 1px 0 #FFFFFF; padding: 30px; display: flex; flex-direction: column; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.2)) drop-shadow(0 3px 5px rgba(26,26,26,0.16)); min-width: 0; }
+.stepcard .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 20px; flex-wrap: wrap; }
+.stepcard h3 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800; line-height: 1.12; max-width: 22ch; }
+.stepcard .count { color: #1A1A1A; font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.06em; white-space: nowrap; }
+.strack { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 24px; }
+.strack button { appearance: none; border: 0; background: transparent; cursor: pointer; padding: 0; text-align: left; display: flex; flex-direction: column; gap: 10px; color: #6B6F76; transition: color 0.18s ease; min-width: 0; }
+.strack [data-sbar] { display: block; height: 5px; width: 100%; background: #D5D7DA; transition: background-color 0.24s ease; }
+.strack .lab { display: flex; gap: 8px; align-items: baseline; }
+.strack .no { font-family: 'Chakra Petch', sans-serif; font-size: 15px; font-weight: 700; }
+.strack .tx { font-family: 'Familjen Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.35; }
+.slides { margin-top: 28px; flex: 1 1 auto; }
+.slide { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: start; }
+.slide[hidden] { display: none; }
+.slide .big { color: #EF5016; font-family: 'Chakra Petch', sans-serif; font-size: 64px; font-weight: 700; line-height: 0.9; }
+.slide h4 { margin: 0; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; line-height: 1.15; }
+.slide p { margin: 10px 0 0; color: #4B4F56; font-size: 17px; line-height: 1.6; max-width: 54ch; text-wrap: pretty; }
+.snav { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 28px; padding-top: 22px; border-top: 1px solid #E1E3E6; }
+.nx { white-space: nowrap; appearance: none; border: 0; cursor: pointer; position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 16px; background: #1A1A1A; color: #FFFFFF; font-family: 'Familjen Grotesk', sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase; padding: 13px 24px; clip-path: var(--chamfer-12); }
+.nx [data-nfill] { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.nx .l { position: relative; z-index: 1; }
+.nx svg { position: relative; z-index: 1; width: 22px; height: 10px; flex: none; }
+
+/* Field work: board C09 CAR-10 Job / Service-Proof Gallery in the Home sample's dark band */
+.why .why-head { max-width: 760px; }
+.why .why-lede { max-width: 62ch; }
+.why .rail { margin-top: 44px; }
+
+/* Section 6: the existing rental statement on the Bone band, with DBM Card Explorations 2d, two windows on the riveted plate */
+.bone { background: #CDC4AF; }
+.bone .stmt .body p { color: #2A2D31; }
+.bone .stmt .body { display: flex; flex-direction: column; gap: 14px; }
+.p2d { position: relative; margin-top: 40px; padding: 36px; background: #141414; box-shadow: inset 0 0 0 1px #3A3D42; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.3)) drop-shadow(0 3px 5px rgba(26,26,26,0.24)); }
+.w2d { display: flex; flex-direction: column; gap: 18px; text-decoration: none; color: inherit; }
+.w2d .win { position: relative; aspect-ratio: 2 / 1; background: #2A2D31; overflow: hidden; }
+.w2d .win img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.w2d .win::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #0A0A0A, inset 0 3px 9px rgba(0,0,0,0.55); }
+.w2d:hover .win img, .w2d:focus-visible .win img { transform: scale(1.03); }
+.w2d .cap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 18px; align-items: start; }
+.w2d .ct { color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 21px; font-weight: 800; line-height: 1.2; transition: color .2s ease; }
+.w2d .cd { grid-column: 1; color: #C7C9CC; font-size: 15.5px; line-height: 1.55; text-wrap: pretty; }
+.w2d .chip { grid-column: 2; grid-row: 1 / span 2; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #EF5016; clip-path: var(--chamfer-10); transition: background .2s ease; }
+.w2d .chip svg { width: 22px; height: 10px; color: #FFFFFF; transition: transform .3s cubic-bezier(.34,1.7,.64,1); }
+.w2d:hover .ct, .w2d:focus-visible .ct { color: #FF8148; }
+.w2d:hover .chip svg, .w2d:focus-visible .chip svg { transform: translateX(7px); }
+.w2d:hover .chip, .w2d:focus-visible .chip { background: #D9440F; }
+
+/* Section 7: the existing questions layout, C05 ACC-01 */
+.faqgrid { display: grid; grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr); gap: 32px clamp(28px, 5vw, 72px); align-items: start; }
+.faqgrid .left { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; position: sticky; top: calc(var(--dbm-nav) + 20px); }
+.faqgrid .left p { margin: 0; color: #33363B; font-size: 16.5px; line-height: 1.6; max-width: 40ch; }
 .acc1 { background: #FFFFFF; box-shadow: inset 0 0 0 1px #D5D7DA; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.14)) drop-shadow(0 3px 5px rgba(26,26,26,0.12)); }
 .acc1 [data-accitem] { border-bottom: 1px solid #E9EAEC; }
 .acc1 [data-accitem]:last-child { border-bottom: 0; }
@@ -484,35 +806,100 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .acc1 [data-accpanel] > div { padding: 10px 26px 24px 64px; }
 .acc1 [data-accpanel] p { margin: 0; color: #4B4F56; font-size: 16px; line-height: 1.65; max-width: 680px; text-wrap: pretty; }
 
-/* Section 8: the existing related links, raised to the C08 Row target */
-.related { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; margin-top: 34px; }
-.rlink { position: relative; display: grid; grid-template-columns: 50px minmax(0, 1fr) 22px; gap: 18px; align-items: center; padding: 24px 16px 24px 18px; background: #FFFFFF; text-decoration: none; box-shadow: inset 0 3px 0 #1A1A1A, 0 1px 0 #D5D7DA; }
-.rlink [data-edge] { position: absolute; left: 0; top: 3px; bottom: 0; width: 3px; background: #EF5016; transform: scaleY(0); transform-origin: top center; }
-.rlink .rt { display: block; color: #1A1A1A; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; line-height: 1.2; }
-.rlink .rd { display: block; margin-top: 6px; color: #4B4F56; font-size: 15.5px; line-height: 1.55; }
-.rlink svg { width: 22px; height: 10px; color: #C9430D; }
-.rlink .ic { width: 50px; height: 50px; color: #1A1A1A; }
-.rlink:hover .ic, .rlink:focus-visible .ic { color: #C9430D; }
+/* Section 8: the existing related services, raised to board C06 BAN-08 Capability Banner */
+.cap8 { position: relative; margin-top: 40px; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); background: #1A1A1A; box-shadow: inset 0 0 0 1px #2A2A2A; filter: drop-shadow(0 16px 22px rgba(26,26,26,0.28)) drop-shadow(0 3px 5px rgba(26,26,26,0.22)); }
+.cap8 .cpic { position: relative; min-height: 480px; background: #2A2D31; overflow: hidden; }
+.cap8 .cpic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .45s ease; }
+.cap8 .cpic img.on { opacity: 1; }
+.cap8 .cpic::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px #0A0A0A, inset 0 3px 9px rgba(0,0,0,0.5); pointer-events: none; }
+.cap8 .ctext { padding: 42px 42px 38px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.cap8 h3 { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(24px, 2.2vw, 30px); font-weight: 800; line-height: 1.12; text-wrap: balance; }
+.cap8 .cl { margin: 0; color: #C7C9CC; font-size: 16px; line-height: 1.62; text-wrap: pretty; }
+.cap8 .cchips { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 4px; }
+.cap8 .cchips .mono-btn { display: flex; align-items: center; gap: 14px; text-align: left; padding: 14px 18px; }
+.cap8 .cchips .mono-btn .ic { width: 22px; height: 22px; color: currentColor; }
+.cap8 .ccap { margin: 0; padding-top: 16px; border-top: 1px solid #2A2A2A; color: #E4E4E4; font-size: 15.5px; line-height: 1.6; min-height: 5.4em; }
+.cap8 .cgo { margin-top: auto; }
 
-/* Section 9: C06 BAN-06 call band */
-.call-in .cl { margin: 0; color: #DCDDDF; font-size: 17px; line-height: 1.65; max-width: 62ch; text-wrap: pretty; }
+/* Section 9: board C06 BAN-06 call band */
+.call-in .cl { margin: 0; color: #DCDDDF; font-size: 17px; line-height: 1.65; max-width: 64ch; text-wrap: pretty; }
 .callbar .kb { width: 100%; }
 .callbar .kb [data-kplate] { width: 100%; min-height: 50px; padding: 12px 10px; font-size: 11px; letter-spacing: 0.18em; }
 
+body.show-assume .cov [data-assume], body.show-assume .tri [data-assume], body.show-assume .record [data-assume], body.show-assume .eta [data-assume], body.show-assume .plate1b [data-assume], body.show-assume .p2d [data-assume], body.show-assume .cap8 [data-assume] { background: #5A4A10 !important; color: #FFFFFF !important; }
+
+@media (max-width: 1180px) {
+  .strack .tx { font-size: 11px; letter-spacing: 0.06em; }
+}
+@media (max-width: 1100px) {
+  .s2grid { grid-template-columns: minmax(0, 1fr); }
+  .intake { grid-template-columns: minmax(0, 1fr); }
+  .record { position: relative; top: auto; }
+  .crew { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .crew li:nth-child(3) { padding-left: 0; box-shadow: inset 0 1px 0 #E1E3E6; }
+  .crew li:nth-child(4) { box-shadow: inset 1px 0 0 #E1E3E6, inset 0 1px 0 #E1E3E6; }
+}
 @media (max-width: 960px) {
-  .headrow, .stmt, .split, .faqgrid { grid-template-columns: minmax(0, 1fr); }
-  .related { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .ckgrid { grid-template-columns: minmax(0, 1fr); }
+  .covgrid { display: flex; flex-direction: column; gap: 0; }
+  .covgrid > div:first-child { display: contents; }
+  .covgrid .shead { order: 1; } .cov .lead { order: 2; } .covright { order: 3; margin-bottom: 24px; } .cov .chips { order: 4; } .covread { order: 5; }
+  .headrow, .stmt, .faqgrid, .covgrid, .tri, .eta, .xpl-in, .cap8 { grid-template-columns: minmax(0, 1fr); }
+  .faqgrid .left { position: static; }
+  .tri .tq { border-right: 0; border-bottom: 1px solid #2A2A2A; }
+  .eta .er { border-left: 0; border-top: 1px solid #2A2A2A; }
+  .xpics { min-height: 0; aspect-ratio: 4 / 3; }
+  .xtext { padding: 24px 10px 12px; }
+  .cap8 .cpic { min-height: 0; aspect-ratio: 16 / 10; }
+  .hero-fb .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .p2d { grid-template-columns: minmax(0, 1fr); }
+  .rcards { grid-template-columns: minmax(0, 1fr); }
+  .rcard { min-height: 0; }
 }
 @media (max-width: 620px) {
-  .hero-fb { min-height: 88vh; }
-  .hero-fb .fb-copy { padding-top: 140px; } /* a band of the photo shows above the copy, as on the Service & Parts page */
-  .hero-fb .fb-img { object-position: 30% 60%; }
+  .hero-fb { min-height: 0; }
+  .hero-fb .fb-copy { padding-top: 150px; }
+  .hero-fb .fb-img { object-position: 30% 50%; height: 62%; }
+  .hero-fb .fb-scrim { background: linear-gradient(0deg, #1A1A1A 0%, #1A1A1A 44%, rgba(26,26,26,0.6) 58%, rgba(26,26,26,0) 72%); }
   .hero-fb .acts .ch-btn, .hero-fb .acts .kb, .hero-fb .acts .kb [data-kplate] { width: 100%; }
-  .ch-btn { justify-content: center; padding: 18px 20px; letter-spacing: 0.18em; }
-  .ckhead, .ckfoot { padding-left: 18px; padding-right: 18px; }
-  .ckbar { margin-left: 18px; margin-right: 18px; }
-  .ckgrid { padding-left: 18px; padding-right: 18px; }
+  .hero-fb .facts { gap: 12px 16px; }
+  .hero-fb .facts dd { font-size: 14px; }
+  .ch-btn { justify-content: center; padding: 18px 20px; letter-spacing: 0.16em; width: 100%; }
+  .cov { padding-top: 56px; padding-bottom: 56px; }
+  .covread { padding: 18px 18px 20px 22px; min-height: 0; }
+  .cov .chips .mono-btn { flex: 1 1 auto; font-size: 10.5px; letter-spacing: 0.1em; padding: 11px 12px; }
+  .hero-fb h1 { font-size: 30px; line-height: 1.04; }
+  .tri .tq { padding: 30px 20px 26px; }
+  .tri .tout { padding: 30px 20px 26px; min-height: 0; }
+  .tpanel { min-height: 0; }
+  .tacts { width: 100%; }
+  .tacts .kb, .tacts .kb [data-kplate] { width: 100%; }
+  .tri, .p2d, .cap8, .eta { margin-left: calc(-1 * var(--pad-x) + 8px); margin-right: calc(-1 * var(--pad-x) + 8px); }
+  .grp .gbody { padding-left: 0; }
+  .frow, .slots { grid-template-columns: minmax(0, 1fr); }
+  .slot { aspect-ratio: 16 / 7; }
+  .locrow { flex-direction: column; align-items: stretch; }
+  .locrow .kb, .locrow .kb [data-kplate] { width: 100%; }
+  .seg { min-width: 0; width: 100%; }
+  .record .strip, .record .rb { padding-left: 20px; padding-right: 20px; }
+  .record dl div { grid-template-columns: 92px minmax(0, 1fr); gap: 10px; }
+  .done .rows2 { grid-template-columns: minmax(0, 1fr); }
+  .done .rows2 span:nth-child(odd) { padding-top: 10px; }
+  .done .dact .phone-plate, .done .dact .kb, .done .dact .kb [data-kplate] { width: 100%; }
+  .eta .et { padding: 30px 22px 24px; }
+  .eta .er { padding: 28px 22px 26px; }
+  .crew { grid-template-columns: minmax(0, 1fr); }
+  .crew li, .crew li + li, .crew li:nth-child(3), .crew li:nth-child(4) { padding: 24px 0 22px; box-shadow: inset 0 1px 0 #E1E3E6; }
+  .crew li:first-child { box-shadow: none; }
+  .plate1b .strip, .plate1b .pb { padding-left: 22px; padding-right: 22px; }
+  .fields1b div { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .stepcard { padding: 22px 18px; }
+  .strack { gap: 5px; }
+  .strack .tx { display: none; }
+  .slide { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .slide .big { font-size: 48px; }
+  .xtitle { font-size: 24px; }
+  .p2d { padding: 22px 16px; gap: 30px; }
+  .cap8 .ctext { padding: 28px 20px 26px; }
   .acc1 [data-acchead] { padding: 18px 20px; grid-template-columns: 18px minmax(0, 1fr); gap: 14px; }
   .acc1 [data-accstate] { display: none; }
   .acc1 [data-accpanel] > div { padding: 8px 20px 22px 52px; }
@@ -525,34 +912,107 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   <div class="wrap navbar">
     <a href="../../" class="brand" aria-label="DBM Heavy Equipment, home"><img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment"></a>
     <nav aria-label="Main">
-      <a href="../../rentals/">Rent</a>
-      <a href="../../equipment/">Buy</a>
-      <a href="../../services/" aria-current="true">Service &amp; Parts</a>
-      <a href="../../we-buy-equipment/">Sell &amp; Trade</a>
+      <span class="route"><a href="../../rentals/">Rent</a><button type="button" class="mt" data-mt="rent" aria-expanded="false" aria-controls="menu-rent" aria-label="Rent menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../equipment/">Buy</a><button type="button" class="mt" data-mt="buy" aria-expanded="false" aria-controls="menu-buy" aria-label="Buy menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../services/" aria-current="true">Service &amp; Parts</a><button type="button" class="mt" data-mt="service" aria-expanded="false" aria-controls="menu-service" aria-label="Service and Parts menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
+      <span class="route"><a href="../../we-buy-equipment/">Sell &amp; Trade</a><button type="button" class="mt" data-mt="sell" aria-expanded="false" aria-controls="menu-sell" aria-label="Sell and Trade menu"><span class="diam" data-diam aria-hidden="true"></span></button></span>
       <a href="../../finance/">Finance</a>
       <a href="../../about/">About</a>
     </nav>
     <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
   </div>
+  
+  <div class="menus" data-menuhost>
+    <div class="menu" id="menu-rent" data-menu="rent" role="region" aria-label="Rent menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../rentals/#fleet" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Browse the rental fleet</span><span class="msub">Excavators, wheel loaders, motor graders, haul trucks, and compaction machines, grouped by the work they do.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../rentals/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Request a rental</span><span class="msub">Send the machine, the jobsite, and the start date, and our rental team calls or texts back with the monthly rate and delivery date.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../finance/#rpo" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Buy the machine you rent</span><span class="msub">Under our rental purchase option, part of the rent you pay goes toward the price when you buy within six months.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../industries/construction-earthmoving/" data-mitem>Machines for construction and earthmoving</a></li>
+          <li><a class="mread" href="../../industries/utility-pipeline/" data-mitem>Machines for utility and pipeline work</a></li>
+          <li><a class="mread" href="../../faqs/#t-rentals" data-mitem>Answers to common rental questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We rent to contractors, mostly by the month, and deliver to jobsites anywhere in Nevada and in the California counties near the state line. Large machines such as mining haul trucks carry a three-month minimum.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-buy" data-menu="buy" role="region" aria-label="Buy menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../equipment/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>All equipment</span><span class="msub">New XCMG machines and used machines of any make, sorted by machine class.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../finance/#how" data-mitem>How financing works for new and used machines</a></li>
+          <li><a class="mread" href="../../equipment/sas-luxembourg/" data-mitem>SAS forks and attachments</a></li>
+          <li><a class="mread" href="../../industries/excavation/" data-mitem>Machines for excavation</a></li>
+          <li><a class="mread" href="../../industries/auto-scrap-recycling/" data-mitem>Machines for auto and scrap recycling</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We sell new XCMG machines in Nevada and the nearby California counties, and we sell used machines anywhere in the US. QuickFi, XCMG’s lender, finances new XCMG machines, and buyers of used machines call us about financing.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-service" data-menu="service" role="region" aria-label="Service and Parts menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../services/mobile-field-service/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Mobile field service</span><span class="msub">A technician drives a crane service truck to your jobsite, quarry, or mine, usually the day after you call.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/line-boring/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Line boring</span><span class="msub">Portable line boring and pin bore repair, done on the machine where it sits.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/hydraulic-services/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Hydraulic services</span><span class="msub">Hydraulic repair and cylinder rebuilds for machines of any make.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/welding-fabrication/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Welding and fabrication</span><span class="msub">Structural welding and fabrication on heavy equipment at your site.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../services/#parts" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Order a part</span><span class="msub">Send the brand, model, and serial number, and we get most parts within 48 hours and ship them anywhere in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../case-studies/sewer-pump-lift/" data-mitem>Case study: a sewer pump lift on a new construction job</a></li>
+          <li><a class="mread" href="../../case-studies/" data-mitem>All case studies</a></li>
+          <li><a class="mread" href="../../blog/" data-mitem>Job stories and guides</a></li>
+          <li><a class="mread" href="../../services/#questions" data-mitem>Answers to common service and parts questions</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>Our service trucks repair machines of any make anywhere in Nevada and in California from Sacramento to Bakersfield, including Bishop and Mammoth Lakes. Parts ship to any address in the US.</p></div>
+      </div>
+    </div>
+    <div class="menu" id="menu-sell" data-menu="sell" role="region" aria-label="Sell and Trade menu" hidden>
+      <svg class="mkerf" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line data-menukerf x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2"/></svg>
+      <div class="menu-in">
+        <div class="mcol"><p class="mh">What you can do</p><ul class="mrows">
+          <li><a class="mrow" href="../../we-buy-equipment/#request" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Sell your machine</span><span class="msub">Send the make, model, serial number, hours, and a few photos, and our sales team replies with an offer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../../we-buy-equipment/#start" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Trade toward another machine</span><span class="msub">We price your trade and the new XCMG or used machine you want together.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+        </ul></div>
+        <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
+          <li><a class="mread" href="../../we-buy-equipment/#details" data-mitem>What to tell us about the machine</a></li>
+          <li><a class="mread" href="../../we-buy-equipment/#next" data-mitem>What happens after you send it</a></li>
+          <li><a class="mread" href="../../equipment/used/" data-mitem>Used equipment for sale</a></li>
+        </ul></div>
+        <div class="mreach" data-mitem><p class="mh">Where this reaches</p><p>We buy used equipment of any make. Sending your details does not commit you to selling or trading the machine.</p></div>
+      </div>
+    </div>
+  </div>
 </header>
+
 
 <main>
   
   <section class="hero-fb" aria-labelledby="page-title" data-hero>
-    <img class="fb-img" src="../../assets/c84631524de63782.jpg" alt="A white DBM crane service truck parked beside a very large Cat wheel loader in low evening sun, with mountains behind">
+    <img class="fb-img" src="../../assets/c84631524de63782.jpg" alt="A white DBM crane service truck with its crane raised beside a very large Cat wheel loader in low evening sun, with mountains behind">
     <span class="fb-scrim" aria-hidden="true"></span>
     <div class="wrap fb-copy">
-      <div class="eyebrow">Mobile field service</div>
-      <h1 id="page-title">Heavy equipment repair at your job site</h1>
-      <p class="fb-lede">A DBM technician drives a service truck with a crane and tools to the machine, at a job site, a mine, or a quarry, and repairs it there. Call or text us with the machine, what it’s doing, and where it is.</p>
+      <div class="eyebrow">Mobile Field Service · From Fernley, Nevada</div>
+      <h1 id="page-title">On-Site Heavy Equipment Repair Across Nevada &amp; Central California</h1>
+      <p class="fb-lede"><span>Our 10 field service trucks and 11 technicians leave our yard in Fernley for stopped machines on job sites and in mines anywhere in Nevada and in California from Sacramento to Bakersfield. The technician usually reaches the machine the day after you call, and often the same day.</span></p>
       <div class="acts">
         <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
-        <a class="kb" href="../../services/#request" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l">Request field service</span></span></a>
+        <a class="kb" href="#request" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Send the Machine Details</span></span></a>
       </div>
       <dl class="facts">
-        <div><dt>Where</dt><dd>Anywhere in Nevada, and parts of California</dd></div>
+        <div><dt>Arrival</dt><dd>Next day, often the same day</dd></div>
+        <div><dt>Dealer crews</dt><dd>Often one to three weeks</dd></div>
+        <div><dt>Fleet</dt><dd>10 service trucks, 11 technicians</dd></div>
         <div><dt>Machines</dt><dd>Any make, including machines we didn’t sell</dd></div>
-        <div><dt>Trucks</dt><dd>10 service trucks with cranes and tools</dd></div>
       </dl>
     </div>
     <svg class="hero-kerf" viewBox="0 0 1200 3" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1.5" x2="1200" y2="1.5" stroke="#EF5016" stroke-width="3" data-kerf/></svg>
@@ -571,69 +1031,436 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   </nav>
 
   
-  <section class="sec bone on-light" id="section-1" aria-labelledby="s1-title" data-reveal>
-    <div class="wrap stmt">
-      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s1-title">You don’t need a diagnosis to call us</h2></div>
-      <div class="body">
-        <p>Tell us what the machine will do, what it won’t do, and when the problem started. Include any error code on the screen and any repair someone has already tried. That’s enough for us to plan the visit, and the technician finds the cause at the machine.</p>
+  <section class="cov" id="coverage" aria-labelledby="cov-title" data-reveal>
+    <div class="wrap covgrid">
+      <div>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="cov-title">Field Service Coverage Across Nevada &amp; California</h2></div>
+        <p class="lead">Our service trucks leave from 2366 Resource Dr in Fernley, east of Reno on Interstate 80, and work anywhere in Nevada and in California from Sacramento south to Bakersfield. Pick an area to see the towns and highways it covers.</p>
+        <div class="chips" role="group" aria-label="Show an area on the map">
+          <button type="button" class="mono-btn" data-mono="dark" data-area="all" aria-pressed="true"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">All coverage</span></button>
+          <button type="button" class="mono-btn" data-mono="dark" data-area="reno" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Reno, Carson City &amp; Fernley</span></button>
+          <button type="button" class="mono-btn" data-mono="dark" data-area="mines" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Northern Nevada mines on I-80</span></button>
+          <button type="button" class="mono-btn" data-mono="dark" data-area="south" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Central &amp; southern Nevada</span></button>
+          <button type="button" class="mono-btn" data-mono="dark" data-area="valley" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Sacramento to Bakersfield</span></button>
+          <button type="button" class="mono-btn" data-mono="dark" data-area="sierra" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Bishop &amp; Mammoth Lakes</span></button>
+        </div>
+        <div class="covread" role="status" aria-live="polite">
+          <div data-covtxt="all"><span class="ct">All of Nevada and central California</span><p>Our trucks work anywhere in Nevada and in California from Sacramento south to Bakersfield, including Bishop and Mammoth Lakes on US-395. Give dispatch the site address, the nearest cross streets, or the mine name, and we confirm the visit and its travel time on the call.</p></div>
+          <div data-covtxt="reno" hidden><span class="ct">Reno, Carson City &amp; Fernley</span><p>Our yard sits on Interstate 80 in Fernley, so job sites in Reno, Carson City, Fallon, and the towns between them are the shortest drives our trucks make.</p></div>
+          <div data-covtxt="mines" hidden><span class="ct">Northern Nevada mines on I-80</span><p>Our crews work at mines and quarries along Interstate 80 east through Lovelock, Winnemucca, Battle Mountain, and Elko, on jobs that run from a few hours to several weeks.</p></div>
+          <div data-covtxt="south" hidden><span class="ct">Central &amp; southern Nevada</span><p>US-95 takes our trucks south through Hawthorne and Tonopah to Las Vegas. Travel time is billed from Fernley and back, so we plan central and southern Nevada visits with you on the call.</p></div>
+          <div data-covtxt="valley" hidden><span class="ct">Sacramento to Bakersfield</span><p>In California our trucks work from Sacramento south through Stockton, Modesto, and Fresno to Bakersfield, reached over Interstate 80 and Highway 99.</p></div>
+          <div data-covtxt="sierra" hidden><span class="ct">Bishop &amp; Mammoth Lakes</span><p>US-395 runs south from Carson City along the eastern Sierra to Mammoth Lakes and Bishop, and our field service trucks work at job sites along that route.</p></div>
+        </div>
+      </div>
+      <div class="covright">
+        <div class="covmap">
+          <svg viewBox="-70 20 700 730" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="covmap-title covmap-desc" data-covmap>
+            <title id="covmap-title">DBM field service coverage map</title>
+            <desc id="covmap-desc">Our yard is in Fernley, Nevada. Field service works anywhere in Nevada and in California from Sacramento south to Bakersfield, including Bishop and Mammoth Lakes. Interstate 80, US-95, US-395, and Highway 99 are drawn.</desc>
+            <defs><pattern id="cov-hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#8A8D93" stroke-width="2" stroke-opacity="0.4"/></pattern></defs>
+            <g class="grat" aria-hidden="true"><line x1="-164.6" y1="-200" x2="-164.6" y2="1000"/><line x1="-86.4" y1="-200" x2="-86.4" y2="1000"/><line x1="-8.1" y1="-200" x2="-8.1" y2="1000"/><line x1="70.2" y1="-200" x2="70.2" y2="1000"/><line x1="148.4" y1="-200" x2="148.4" y2="1000"/><line x1="226.7" y1="-200" x2="226.7" y2="1000"/><line x1="305" y1="-200" x2="305" y2="1000"/><line x1="383.2" y1="-200" x2="383.2" y2="1000"/><line x1="461.5" y1="-200" x2="461.5" y2="1000"/><line x1="539.8" y1="-200" x2="539.8" y2="1000"/><line x1="618" y1="-200" x2="618" y2="1000"/><line x1="696.3" y1="-200" x2="696.3" y2="1000"/><line x1="-300" y1="-65" x2="800" y2="-65"/><line x1="-300" y1="35" x2="800" y2="35"/><line x1="-300" y1="135" x2="800" y2="135"/><line x1="-300" y1="235" x2="800" y2="235"/><line x1="-300" y1="335" x2="800" y2="335"/><line x1="-300" y1="435" x2="800" y2="435"/><line x1="-300" y1="535" x2="800" y2="535"/><line x1="-300" y1="635" x2="800" y2="635"/><line x1="-300" y1="735" x2="800" y2="735"/><line x1="-300" y1="835" x2="800" y2="835"/></g>
+            <path class="base" d="M-180.8 35.0 L148.2 35.0 L148.2 335.0 L568.7 734.8 L568.9 748.0 L607.3 805.0 L576.8 840.0 L561.9 895.0 L561.9 963.0 L374.1 982.0 L363.9 965.0 L352.1 915.0 L313.0 875.0 L273.9 860.0 L258.2 832.0 L211.3 825.0 L172.1 795.0 L111.9 790.0 L97.8 745.0 L78.2 690.0 L46.9 668.0 L-0.0 605.0 L-3.9 575.0 L-11.8 540.0 L-47.0 485.0 L-48.5 455.0 L-86.1 435.0 L-91.6 405.0 L-143.2 340.0 L-152.6 255.0 L-195.7 191.0 L-180.0 155.0 L-173.8 115.0 L-181.6 60.0 Z"/>
+            <path class="base" d="M148.2 35.0 L615.2 35.0 L615.2 535.5 L614.7 615.6 L561.1 633.9 L568.7 734.8 L148.2 335.0 Z"/>
+            <path class="ca" data-draw d="M148.2 325.0 L50.8 345.0 L23.5 377.0 L43.0 440.0 L66.5 471.0 L105.6 505.0 L160.4 561.0 L195.6 602.0 L215.2 705.0 L505.8 675.0 L148.2 335.0 Z"/>
+            <path class="nv" data-draw d="M148.2 35.0 L615.2 35.0 L615.2 535.5 L614.7 615.6 L561.1 633.9 L568.7 734.8 L148.2 335.0 Z"/>
+            <text class="state" data-x="452" data-y="352" data-fs="30" x="452" y="352" text-anchor="middle" aria-hidden="true">NEVADA</text>
+            <text class="state" data-x="340" data-y="742" data-fs="26" x="340" y="742" text-anchor="middle" aria-hidden="true">CALIFORNIA</text>
+            <g aria-hidden="true">
+              <polyline class="hw" data-reg="reno mines" points="134.3,302 163.3,282 207.1,274 268.2,217 325.9,137.7 385.6,171 453.7,164 480.3,151.8 542.9,124 612.6,161"/>
+              <polyline class="hw" data-reg="valley reno" points="31.8,377 64.7,345 134.3,302"/>
+              <polyline class="hw" data-reg="south" points="207.1,274 243.9,288 256.4,383 365.2,428 402,544 529.1,618"/>
+              <polyline class="hw" data-reg="sierra" points="163.3,282 166.9,318.6 166.4,340 208.7,409 217.3,439 233.7,472 273.7,499 300.3,575"/>
+              <polyline class="hw" data-reg="valley" points="31.8,377 47.5,439 70.2,471 110.9,505 164.9,561 204,602 225.1,698"/>
+            </g>
+            <g aria-hidden="true">
+              <g class="hwl" data-reg="reno mines"><text data-x="420" data-y="158" data-fs="12" text-anchor="middle">I-80</text></g>
+              <g class="hwl" data-reg="valley reno"><text data-x="86" data-y="322" data-fs="12" text-anchor="middle">I-80</text></g>
+              <g class="hwl" data-reg="south"><text data-x="306" data-y="430" data-fs="12" text-anchor="middle">US-95</text></g>
+              <g class="hwl" data-reg="sierra"><text data-x="180" data-y="398" data-fs="12" text-anchor="end">US-395</text></g>
+              <g class="hwl" data-reg="valley"><text data-x="132" data-y="528" data-fs="12" text-anchor="start">CA-99</text></g>
+            </g>
+            <g aria-hidden="true">
+              <g class="city" data-reg="reno" data-x="163.3" data-y="282" data-r="5" data-dx="-10" data-dy="-6" data-a="end"><circle/><text>Reno</text></g>
+              <g class="city" data-reg="reno sierra" data-x="166.9" data-y="318.6" data-r="4" data-dx="9" data-dy="6" data-a="start"><circle/><text>Carson City</text></g>
+              <g class="city" data-reg="reno south" data-x="243.9" data-y="288" data-r="4" data-dx="9" data-dy="16" data-a="start"><circle/><text>Fallon</text></g>
+              <g class="city" data-reg="mines" data-x="268.2" data-y="217" data-r="4" data-dx="-9" data-dy="-6" data-a="end"><circle/><text>Lovelock</text></g>
+              <g class="city" data-reg="mines" data-x="325.9" data-y="137.7" data-r="4" data-dx="0" data-dy="-12" data-a="middle"><circle/><text>Winnemucca</text></g>
+              <g class="city" data-reg="mines" data-x="385.6" data-y="171" data-r="4" data-dx="0" data-dy="22" data-a="middle"><circle/><text>Battle Mountain</text></g>
+              <g class="city" data-reg="mines" data-x="480.3" data-y="151.8" data-r="5" data-dx="0" data-dy="-12" data-a="middle"><circle/><text>Elko</text></g>
+              <g class="city" data-reg="south" data-x="548.4" data-y="310" data-r="4" data-dx="-9" data-dy="5" data-a="end"><circle/><text>Ely</text></g>
+              <g class="city" data-reg="south" data-x="256.4" data-y="383" data-r="4" data-dx="9" data-dy="5" data-a="start"><circle/><text>Hawthorne</text></g>
+              <g class="city" data-reg="south" data-x="365.2" data-y="428" data-r="4" data-dx="9" data-dy="5" data-a="start"><circle/><text>Tonopah</text></g>
+              <g class="city" data-reg="south" data-x="529.1" data-y="618" data-r="5" data-dx="-10" data-dy="5" data-a="end"><circle/><text>Las Vegas</text></g>
+              <g class="city" data-reg="valley" data-x="31.8" data-y="377" data-r="5" data-dx="-9" data-dy="-6" data-a="end"><circle/><text>Sacramento</text></g>
+              <g class="city" data-reg="valley" data-x="47.5" data-y="439" data-r="4" data-dx="-9" data-dy="5" data-a="end"><circle/><text>Stockton</text></g>
+              <g class="city" data-reg="valley" data-x="70.2" data-y="471" data-r="4" data-dx="-9" data-dy="5" data-a="end"><circle/><text>Modesto</text></g>
+              <g class="city" data-reg="valley" data-x="164.9" data-y="561" data-r="4" data-dx="-9" data-dy="5" data-a="end"><circle/><text>Fresno</text></g>
+              <g class="city" data-reg="valley" data-x="225.1" data-y="698" data-r="5" data-dx="-10" data-dy="5" data-a="end"><circle/><text>Bakersfield</text></g>
+              <g class="city" data-reg="sierra" data-x="229" data-y="470" data-r="4" data-dx="-9" data-dy="5" data-a="end"><circle/><text>Mammoth Lakes</text></g>
+              <g class="city" data-reg="sierra" data-x="273.7" data-y="499" data-r="4" data-dx="9" data-dy="5" data-a="start"><circle/><text>Bishop</text></g>
+              <g class="city ref" data-reg="" data-x="-40.7" data-y="458" data-r="4" data-dx="-9" data-dy="5" data-a="end"><circle/><text>San Francisco</text></g>
+            </g>
+            <g class="yardpin" aria-hidden="true" data-x="207.1" data-y="274.2"><rect class="ping" x="198.1" y="265.2" width="18" height="18"/><rect x="201.1" y="268.2" width="12" height="12"/><text x="221" y="264">OUR YARD · FERNLEY</text></g>
+          </svg>
+        </div>
+        <div class="covlegend" aria-hidden="true"><span><i class="k-nv"></i>Nevada: anywhere in the state</span><span><i class="k-ca"></i>California field service</span><span><i class="k-hw"></i>Highways our trucks drive</span></div>
+        <p class="covnote">Areas are approximate. Dispatch confirms your site on the call.</p>
       </div>
     </div>
   </section>
 
   
-  <section class="sec cement on-light" id="section-2" aria-labelledby="s2-title" data-reveal>
+  <section class="sec white on-light" id="start" aria-labelledby="s1-title" data-reveal>
     <div class="wrap">
-      <div class="headrow">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s2-title">Help the technician get to the machine</h2></div>
-        <p class="slede">These four details let us send the right technician with the right tools. Check off what you have, then call or text us. You can send the serial number and other details later.</p>
-      </div>
-      <div class="cklist" data-checklist>
-        <div class="ckhead"><span class="t">DETAILS THAT HELP</span><span data-ckcount role="status" aria-live="polite">0 OF 4 READY · NONE REQUIRED</span></div>
-        <div class="ckbar" aria-hidden="true"><span data-ckbar></span></div>
-        <div class="ckgrid">
-          <button type="button" class="ck" aria-pressed="false" data-ck><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span><span class="h">An exact location</span><span class="d">The site address or a clear description of where the machine is, a contact on site, and any gate, badge, or escort the technician will need.</span></span></button>
-          <button type="button" class="ck" aria-pressed="false" data-ck><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span><span class="h">Machine details</span><span class="d">The make, model, and serial number, and any attachment involved.</span></span></button>
-          <button type="button" class="ck" aria-pressed="false" data-ck><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span><span class="h">What changed</span><span class="d">Trouble starting, lost power, movement, noise, leaks, or an error code on the screen.</span></span></button>
-          <button type="button" class="ck" aria-pressed="false" data-ck><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span><span class="h">The effect on your job</span><span class="d">Whether the machine can move, what work has stopped, and when you need it running again.</span></span></button>
-        </div>
-        <div class="ckfoot">
-          <p data-cksay role="status" aria-live="polite">Check each detail you have ready.</p>
-          <a class="tlink" href="tel:+17756250062">Call or text (775) 625-0062 <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+      <div class="stmt">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s1-title">You Don’t Need a Diagnosis to Call Us</h2></div>
+        <div class="body">
+          <p>Tell us what the machine will do, what it won’t do, and when the problem started. Add any warning light or error code on the display and any repair someone has already tried. Those symptoms are enough for dispatch to choose the technician and load the truck, and the technician finds the cause at the machine.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  
-  <section class="sec white on-light" id="section-3" aria-labelledby="s3-title" data-reveal>
-    <div class="wrap split">
-      <div class="scopy">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s3-title">When the technician gets there, and what happens next</h2></div>
-        <p>Our crews usually reach the machine the day after you call, and sometimes the same day. The machine makers’ dealers often take one to three weeks to get a technician to a job.</p>
-        <div class="details">
-          <div><h3>What happens after the technician finds the problem?</h3><p>We tell you what failed, what the parts cost, and how long they’ll take to arrive. If that wait is too long for your job, we can ship the parts overnight for an added cost. We order nothing until you decide.</p></div>
-          <div><h3>How is the machine repaired?</h3><p>We repair machines back to the way the factory built them, not with a temporary fix to get them moving.</p></div>
-          <div><h3>How will I know where the repair stands?</h3><p>We call or text you with updates until the machine is working again.</p></div>
-        </div>
-      </div>
-      <div class="pwin"><img src="../../assets/91e6a6b2ae3e1f8e.jpg" alt="Two crane service trucks with their cranes raised on both sides of a yellow articulated haul truck with its dump body raised" loading="lazy"></div>
-    </div>
-  </section>
-
-  
-  <section class="sec bone on-light" id="section-4" aria-labelledby="s4-title" data-reveal>
-    <div class="wrap stmt">
-      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s4-title">Need a machine while this one is repaired?</h2></div>
-      <div class="body">
-        <p>If the repair will keep your machine down for a while, we can put a rental machine on your site so the work keeps going. When you request service, tell us what work has to continue and for how long, and we’ll plan the repair and the rental together.</p>
-        <div class="item">
-          <h3>If a DBM rental breaks down</h3>
-          <p>If a machine you rent from us breaks down and we can’t fix it the same day, we take those days off your rent.</p>
-          <div class="links">
-            <a class="tlink" href="../../services/#request">Request service and a rental <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
-            <a class="tlink" href="../../rentals/">See the rental fleet <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+      <div class="tri" data-tri>
+        <div class="tq">
+          <h3 id="tri-q">Is the Machine Holding Up a Job Right Now?</h3>
+          <p class="tsub">Your answer changes what we ask next, and a person on our service team reads every call, text, and request.</p>
+          <div class="tans" role="radiogroup" aria-labelledby="tri-q">
+            <button type="button" class="mono-btn" data-mono="dark" role="radio" aria-checked="false" data-ans="stopped"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Yes, the job has stopped</span></button>
+            <button type="button" class="mono-btn" data-mono="dark" role="radio" aria-checked="false" data-ans="wait"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">No, it can wait a few days</span></button>
+            <button type="button" class="mono-btn" data-mono="dark" role="radio" aria-checked="false" data-ans="unsafe"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">It isn’t safe to be near it</span></button>
           </div>
         </div>
+        <div class="tout" role="region" aria-live="polite" aria-label="What to do next" data-tout>
+          <div class="tpanel" data-tp="none">
+            <span class="tlab">The fastest way to reach dispatch</span>
+            <a class="tbig" href="tel:+17756250062" aria-label="Call DBM at (775) 625-0062">(775) 625-0062</a>
+            <p>The office phone takes calls and texts. Our office isn’t staffed around the clock, so a call, text, or request sent after hours is answered the next day. Pick the answer that fits your job, and the next step shows here.</p>
+          </div>
+          <div class="tpanel" data-tp="stopped" hidden>
+            <span class="tlab">Call dispatch now</span>
+            <h4>A Stopped Job Is Worth a Phone Call</h4>
+            <p>Tell dispatch the make, where the machine is sitting, and what it stopped doing. The serial number, photos, and the rest can follow by text after the call.</p>
+            <div class="tacts">
+              <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+              <a class="kb" href="#request" data-kb="sec" data-travel="4" data-goform="stopped"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l">Can’t call? Send the details</span></span></a>
+            </div>
+            <span class="tfoot">Calls and texts go to our service team in Fernley</span>
+          </div>
+          <div class="tpanel" data-tp="wait" hidden>
+            <span class="tlab">Book the visit</span>
+            <h4>Send the Details, and We’ll Call to Schedule the Visit</h4>
+            <p>The request below takes where the machine is, the make and model, and what changed, and our service team calls or texts you to set the day the technician arrives.</p>
+            <div class="tacts">
+              <a class="ch-btn" href="#request" data-nadv="1" data-cut="16" data-cut-to="26" data-goform="wait"><span data-nfill aria-hidden="true"></span><span class="l">Fill In the Request</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+            </div>
+            <span class="tfoot">No field in the request is required</span>
+          </div>
+          <div class="tpanel" data-tp="unsafe" hidden>
+            <span class="tlab"><span class="ic ic-alert" aria-hidden="true"></span>Step away first</span>
+            <h4>Get Everyone Clear of the Machine, Then Call</h4>
+            <p>Do not go back to read the serial plate or take photos. Tell us what happened and where the machine is, and that is enough for us to start.</p>
+            <div class="tacts">
+              <a class="ch-btn" href="tel:+17756250062" data-nadv="1" data-cut="16" data-cut-to="26" aria-label="Call Field Service Dispatch at (775) 625-0062"><span data-nfill aria-hidden="true"></span><span class="l">Call Field Service Dispatch</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></a>
+            </div>
+            <span class="tfoot">If anyone is hurt, call 911 before you call us</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="sec cement on-light" id="request" aria-labelledby="s2-title" data-reveal>
+    <div class="wrap">
+      <div class="headrow">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s2-title">Help the Technician Get to the Machine</h2></div>
+        <p class="slede">These four details let dispatch send the right technician with the right tools and parts. No field is required, so send what you have now, and text the serial number or more photos to <span class="ph">(775) 625-0062</span> when you have them.</p>
+      </div>
+      <div class="intake">
+        <div class="formcard" id="wo">
+          <div data-formhead>
+            <div class="ckhead"><span class="t">DETAILS THAT HELP</span><span data-ckcount role="status" aria-live="polite">0 OF 4 READY · NONE REQUIRED</span></div>
+            <div class="ckbar" aria-hidden="true"><span data-ckbar></span></div>
+          </div>
+          <form novalidate>
+            <fieldset class="grp" data-grp="where">
+              <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">Where the Machine Is</span></legend>
+              <div class="gbody">
+                <p class="gd">A street address, cross streets, or a mine or pit name, plus who meets the technician and any gate, badge, or escort rules for the site.</p>
+                <div class="fld">
+                  <label for="f-site">Site address, cross streets, or mine name</label>
+                  <div class="locrow">
+                    <div class="chan2"><input id="f-site" name="site" autocomplete="street-address" data-rec="where"><span class="kf" aria-hidden="true"></span></div>
+                    <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-locate><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="ic ic-loc" aria-hidden="true"></span><span class="l" data-loclabel>Use my location</span></span></button>
+                  </div>
+                  <p class="fhelp" data-locsay role="status" aria-live="polite">Your location is used only for this request.</p>
+                </div>
+                <div class="fld">
+                  <label for="f-access">Site contact, gate code, and access rules<span class="opt">OPTIONAL</span></label>
+                  <div class="chan2"><input id="f-access" name="access" data-rec="access"><span class="kf" aria-hidden="true"></span></div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="grp" data-grp="machine">
+              <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">Which Machine</span></legend>
+              <div class="gbody">
+                <p class="gd">The make and model tell the technician which tools and parts to put on the truck, and the make alone is enough to start.</p>
+                <div class="frow">
+                  <div class="fld"><label for="f-make">Make</label><div class="chan2"><input id="f-make" name="make" placeholder="XCMG, Cat, Komatsu, Deere" data-rec="machine"><span class="kf" aria-hidden="true"></span></div></div>
+                  <div class="fld"><label for="f-model">Model</label><div class="chan2"><input id="f-model" name="model" data-rec="machine"><span class="kf" aria-hidden="true"></span></div></div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="grp" data-grp="what">
+              <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">What Changed</span></legend>
+              <div class="gbody">
+                <p class="gd">Pick what fits and describe it in your own words. No error code or diagnosis is needed.</p>
+                <div class="syms" role="group" aria-label="What the machine is doing">
+                  <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Won’t start</span></button>
+                  <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Lost power</span></button>
+                  <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Won’t move or steer</span></button>
+                  <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Leaking</span></button>
+                  <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Unusual noise</span></button>
+                  <button type="button" class="mono-btn" data-mono="light" data-sym aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="l">Error code on the display</span></button>
+                </div>
+                <div class="fld">
+                  <label for="f-desc">What it’s doing, when it started, and any repair already tried</label>
+                  <div class="chan2"><textarea id="f-desc" name="desc" maxlength="1000" data-rec="what" aria-describedby="f-desc-cnt"></textarea><span class="kf" aria-hidden="true"></span></div>
+                  <p class="fhelp cnt" id="f-desc-cnt" data-cnt role="status" aria-live="polite">0 OF 1,000 CHARACTERS</p>
+                </div>
+                <div class="fld">
+                  <span class="flab">Photos<span class="opt">OPTIONAL</span></span>
+                  <div class="slots">
+                    <label class="slot"><input type="file" accept="image/*" capture="environment" aria-label="Add a close view of the problem"><span class="ic ic-cam" aria-hidden="true"></span><span class="sl-t">Close view of the problem</span><button type="button" class="rm" data-rm hidden>Remove</button></label>
+                    <label class="slot"><input type="file" accept="image/*" capture="environment" aria-label="Add a photo of the whole machine where it sits"><span class="ic ic-cam" aria-hidden="true"></span><span class="sl-t">The whole machine where it sits</span><button type="button" class="rm" data-rm hidden>Remove</button></label>
+                  </div>
+                  <p class="fhelp" data-photosay role="status" aria-live="polite">No photos added. A photo of the serial plate also helps, and you can text it later.</p>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="grp" data-grp="job">
+              <legend><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span class="gt">The Effect on Your Job</span></legend>
+              <div class="gbody">
+                <p class="gd" id="urg-q">This tells dispatch how soon the machine has to be running and whether you need a rental in the meantime.</p>
+                <div class="rcards" role="radiogroup" aria-labelledby="urg-q">
+                  <button type="button" class="rcard" role="radio" aria-checked="false" tabindex="0" data-urg="stopped"><span class="rmk" aria-hidden="true"></span><span class="rt">The job has stopped</span><span class="rd">Crews or other machines are waiting on this one.</span></button>
+                  <button type="button" class="rcard" role="radio" aria-checked="false" tabindex="-1" data-urg="around"><span class="rmk" aria-hidden="true"></span><span class="rt">We’re working around it</span><span class="rd">Other machines are covering, but not for long.</span></button>
+                  <button type="button" class="rcard" role="radio" aria-checked="false" tabindex="-1" data-urg="wait"><span class="rmk" aria-hidden="true"></span><span class="rt">It can wait a few days</span><span class="rd">Schedule the visit for a day that suits the job.</span></button>
+                </div>
+                <p class="rsay" data-urgsay role="status" aria-live="polite" hidden></p>
+                <label class="cbx"><input type="checkbox" id="f-rental" name="rental"><span class="box" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></span><span><b>We need a rental machine while this one is repaired.</b> Our service team plans the repair and the rental together.</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="grp" data-grp="contact">
+              <legend><span class="gt">How We Reach You</span></legend>
+              <div class="gbody">
+                <div class="frow">
+                  <div class="fld"><label for="f-name">Name and company</label><div class="chan2"><input id="f-name" name="name" autocomplete="organization"><span class="kf" aria-hidden="true"></span></div></div>
+                  <div class="fld"><label for="f-phone">Phone</label><div class="chan2"><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"><span class="kf" aria-hidden="true"></span></div></div>
+                </div>
+                <div class="fld">
+                  <span class="flab" id="reply-q">Reply by</span>
+                  <div class="seg" role="radiogroup" aria-labelledby="reply-q" data-seg data-at="0"><span data-segplate aria-hidden="true"></span><button type="button" role="radio" aria-checked="true" tabindex="0">Call me</button><button type="button" role="radio" aria-checked="false" tabindex="-1">Text me</button></div>
+                </div>
+              </div>
+            </fieldset>
+            <div class="formact">
+              <button type="submit" class="btn-orange" data-b="slat" data-ripple="#1A1A1A"><span class="cf"><span class="slats" aria-hidden="true"><span class="slat" data-slat style="left:-6%"></span><span class="slat" data-slat style="left:15%"></span><span class="slat" data-slat style="left:36%"></span><span class="slat" data-slat style="left:57%"></span><span class="slat" data-slat style="left:78%"></span></span><span class="lbl"><span data-label>Send to Field Service Dispatch</span><svg class="arr" viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="busy" aria-hidden="true"></span></span></button>
+              <p class="fnote"><b>Our service team in Fernley reads the request and calls or texts you to confirm the technician and the arrival day.</b> Sending it does not book a truck, so if the job has stopped, call <span class="ph">(775) 625-0062</span> as well.</p>
+            </div>
+          </form>
+          <div class="done" data-cnfdone tabindex="-1" role="status" aria-live="polite">
+            <span class="edge" aria-hidden="true"></span>
+            <span class="sent">SENT · JUST NOW</span>
+            <span class="dh">Request Received.</span>
+            <span class="db">Our service team in Fernley has your request, and dispatch calls or texts you back to confirm the technician and the arrival day. Sending it did not book a truck, so call (775) 625-0062 now if the job has stopped. A request sent after hours is answered the next day.</span>
+            <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#486F5D" stroke-width="2" data-cnfkerf/></svg>
+            <div class="rows2" data-cnfsent></div>
+            <div class="dact">
+              <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-copy><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><span class="l">Copy this request</span></span></button>
+              <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call Field Service Dispatch at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
+              <button type="button" class="again" data-cnfreset>Start another request</button>
+            </div>
+            <p class="note" data-copysay role="status" aria-live="polite">The copy button puts this request on your clipboard as labeled lines for an email, a work order, or a purchase order.</p>
+          </div>
+        </div>
+        <aside class="record" aria-label="What dispatch receives">
+          <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
+          <div class="strip"><span>DBM · FIELD SERVICE REQUEST</span></div>
+          <div class="rb">
+            <h3>What Dispatch Receives</h3>
+            <dl data-record>
+              <div data-row="where"><dt>WHERE</dt><dd class="nil">Not given</dd></div>
+              <div data-row="access"><dt>ACCESS</dt><dd class="nil">Not given</dd></div>
+              <div data-row="machine"><dt>MACHINE</dt><dd class="nil">Not given</dd></div>
+              <div data-row="what"><dt>WHAT CHANGED</dt><dd class="nil">Not given</dd></div>
+              <div data-row="photos"><dt>PHOTOS</dt><dd class="nil">None</dd></div>
+              <div data-row="job"><dt>THE JOB</dt><dd class="nil">Not given</dd></div>
+              <div data-row="rental"><dt>RENTAL</dt><dd class="nil">Not asked for</dd></div>
+              <div data-row="contact"><dt>CONTACT</dt><dd class="nil">Not given</dd></div>
+              <div data-row="reply"><dt>REPLY BY</dt><dd>Call</dd></div>
+            </dl>
+            <p class="who"><b>Who reads it:</b> our service team in Fernley, which schedules the technician and calls or texts you back.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="sec white on-light" id="arrival" aria-labelledby="s3-title" data-reveal>
+    <div class="wrap">
+      <div class="headrow">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s3-title">How Soon a Technician Reaches Your Machine</h2></div>
+        <p class="slede">A dealer’s field crew can take one to three weeks to reach a breakdown. Our dispatch sends a technician and a fully equipped service truck instead of putting your machine on a waiting list, and that truck usually reaches the machine the next day.</p>
+      </div>
+      <div class="eta" data-eta>
+        <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
+        <div class="et">
+          <h3>Days From Your Call to a Technician at the Machine</h3>
+          <p>Dealer field crews are busiest with their largest customers, so a contractor who calls in with one stopped machine often waits, and a large dealer recently told one of our customers to expect two to three weeks after a breakdown.</p>
+          <p class="fine">When every crew is committed, our founder drives a service truck to the job himself.</p>
+        </div>
+        <div class="er">
+          <div class="read dbm">
+            <div class="rh"><span class="rl">DBM FIELD SERVICE</span><span class="rval">Same day to next day</span></div>
+            <div class="dscale" aria-hidden="true"><span class="tk"></span><span class="rg" data-rg data-from="0" data-to="1.15"></span><span class="en"><span style="left:0">0</span><span style="left:33.333%">7</span><span style="left:66.667%">14</span><span style="left:100%">21 DAYS</span></span></div>
+          </div>
+          <div class="read dlr">
+            <div class="rh"><span class="rl">DEALER FIELD CREWS</span><span class="rval">One to three weeks</span></div>
+            <div class="dscale" aria-hidden="true"><span class="tk"></span><span class="rg" data-rg data-from="7" data-to="21"></span><span class="en"><span style="left:0">0</span><span style="left:33.333%">7</span><span style="left:66.667%">14</span><span style="left:100%">21 DAYS</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="xpl" data-explain data-xlabel="PHOTO">
+        <div class="xpl-in">
+          <div class="xpics">
+            <div class="xpanel" data-xpanel="0" data-name="Service truck"><img src="../../assets/6b02dd1e9f8eb4dc.jpg" alt="A black DBM crane service truck parked in front of two large yellow Komatsu mining haul trucks in low sun" data-op="0.5,0.5" loading="lazy" style="object-position: 50% 50%"><button type="button" class="xpin" data-xpin="1" data-ix="0.3" data-iy="0.37" aria-label="Crane">1</button><button type="button" class="xpin" data-xpin="2" data-ix="0.3" data-iy="0.64" aria-label="Tool compartments">2</button><button type="button" class="xpin" data-xpin="3" data-ix="0.83" data-iy="0.32" aria-label="Mining haul truck">3</button></div>
+            <div class="xpanel" data-xpanel="1" data-name="Crane lift" hidden><img src="../../assets/dc4cade3e19fa6c4.jpg" alt="A white crane service truck with its boom raised and a large wheel and tire hanging from the hook beside a yellow wheel loader" data-op="0.5,0.6" loading="lazy" style="object-position: 50% 60%"><button type="button" class="xpin" data-xpin="1" data-ix="0.28" data-iy="0.45" aria-label="Crane boom">1</button><button type="button" class="xpin" data-xpin="2" data-ix="0.19" data-iy="0.67" aria-label="Wheel and tire">2</button><button type="button" class="xpin" data-xpin="3" data-ix="0.47" data-iy="0.65" aria-label="Truck body">3</button></div>
+            <div class="xpanel" data-xpanel="2" data-name="At the machine" hidden><img src="../../assets/fd2d32ad6576004b.jpg" alt="A technician in a white hard hat and high-visibility vest works at the track of a Cat D9T dozer beside a black service truck with its crane raised" data-op="0.5,0.55" loading="lazy" style="object-position: 50% 55%"><button type="button" class="xpin" data-xpin="1" data-ix="0.43" data-iy="0.6" aria-label="Technician">1</button><button type="button" class="xpin" data-xpin="2" data-ix="0.49" data-iy="0.38" aria-label="Crane">2</button><button type="button" class="xpin" data-xpin="3" data-ix="0.24" data-iy="0.57" aria-label="Dozer track">3</button></div>
+            <span class="xrim" aria-hidden="true"></span>
+          </div>
+          <div class="xtext">
+            <span class="xcount" data-xcount role="status" aria-live="polite">PHOTO 1 OF 3</span>
+            <h3 class="xtitle">What Arrives With the Technician</h3>
+            <span class="xname" data-xname>Service truck</span>
+            <ol class="xkeys" data-xkeys="0"><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Crane</span><span class="xd">A truck-mounted crane lifts wheels, engines, and heavy components on and off the machine where it stopped.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Tool compartments</span><span class="xd">Side compartments carry the hand tools, power tools, and common parts for the repair.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">The machine</span><span class="xd">Our crews repair machines as large as mining haul trucks at the pit, without hauling them to a shop.</span></span></li></ol>
+            <ol class="xkeys" data-xkeys="1" hidden><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Crane boom</span><span class="xd">The boom swings out over the machine to lift a wheel and tire on or off the axle.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Wheel and tire</span><span class="xd">A loader wheel and tire hang from the hook, taken off at the job site instead of at a shop.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Truck body</span><span class="xd">The truck parks beside the machine with its tools, parts, and power on board.</span></span></li></ol>
+            <ol class="xkeys" data-xkeys="2" hidden><li class="xkey" data-xkey="1"><span class="xnum" data-xnum aria-hidden="true">1</span><span><span class="xk">Technician</span><span class="xd">One of our technicians works at the undercarriage of a Cat D9T dozer in a hard hat and high-visibility vest.</span></span></li><li class="xkey" data-xkey="2"><span class="xnum" data-xnum aria-hidden="true">2</span><span><span class="xk">Crane</span><span class="xd">The truck’s crane stands ready to lift heavy undercarriage parts off and on.</span></span></li><li class="xkey" data-xkey="3"><span class="xnum" data-xnum aria-hidden="true">3</span><span><span class="xk">Dozer track</span><span class="xd">The dozer stays where it was working while the technician repairs it.</span></span></li></ol>
+            <div class="xnav">
+              <button type="button" class="kb paper icon" data-kb="paper" data-travel="4" data-xnav="prev" aria-label="Previous photo"><span data-kbase aria-hidden="true"></span><span data-kplate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M10 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></button>
+              <button type="button" class="kb paper icon" data-kb="paper" data-travel="4" data-xnav="next" aria-label="Next photo"><span data-kbase aria-hidden="true"></span><span data-kplate><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="crew">
+        <li><span class="stamp">11 Technicians</span><h3>Our Own Field Technicians</h3><p>Eleven DBM technicians work from our trucks and our shop, and we’re hiring one more.</p></li>
+        <li><span class="stamp">XCMG Factory Trained</span><h3>Factory Training</h3><p>Three of our technicians completed XCMG factory training in August 2026, and our crews also repair Cat, Case, and other makes.</p></li>
+        <li><span class="stamp">MSHA Part 46 · 48</span><h3>Mine Site Readiness</h3><p>Field technicians hold <span class="tw" data-tipwrap><button type="button" data-tiptrigger aria-describedby="tp-msha">MSHA</button><span id="tp-msha" role="tooltip" data-tip><b>MSHA</b><span>Mine Safety and Health Administration, the federal agency that sets safety training rules for mines.</span></span></span> Part 46 and Part 48 training for surface mines and arrive with their own <span class="tw" data-tipwrap><button type="button" data-tiptrigger aria-describedby="tp-ppe">PPE</button><span id="tp-ppe" role="tooltip" data-tip><b>PPE</b><span>Personal protective equipment, such as hard hats, safety glasses, and high-visibility vests.</span></span></span>.</p></li>
+        <li><span class="stamp">0 Lost-Time Accidents</span><h3>Safety Record</h3><p>In 10 years, no one on our crew has missed work because of an injury on the job.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  
+  <section class="sec cement on-light" id="process" aria-labelledby="s4-title" data-reveal>
+    <div class="wrap">
+      <div class="headrow">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s4-title">Diagnosis, Parts Approval &amp; Field Service Billing</h2></div>
+        <p class="slede">Nothing is ordered until you decide. After the technician finds the problem, we call or text you with what failed, what the parts cost, and how long they take to arrive.</p>
+      </div>
+      <div class="s2grid">
+        <div class="plate1b" data-plate1b>
+          <span class="acc1b" data-accent aria-hidden="true"></span>
+          <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
+          <div class="strip"><span>DBM · FIELD SERVICE BILLING</span></div>
+          <div class="pb">
+            <h3>How Field Service Is Billed</h3>
+            <p class="intro">Dispatch tells you the billing terms when it schedules the visit, so the only new costs after the diagnosis are the parts and the repair you approve.</p>
+            <dl class="fields1b">
+              <div><dt data-f>TRAVEL</dt><dd>Travel time is billed portal-to-portal, from our yard in Fernley to the machine and back, so a job near Reno carries less travel time than one in Winnemucca or Bakersfield.</dd></div>
+              <div><dt data-f>CALL-OUT</dt><dd>A flat-rate call-out minimum covers bringing the truck out and the technician’s first diagnosis at the machine.</dd></div>
+              <div><dt data-f>PARTS</dt><dd>We call or text you with each part’s cost and how long it takes to arrive, and we order nothing until you approve it.</dd></div>
+              <div><dt data-f>OVERNIGHT</dt><dd>When the normal wait for a part is too long for your job, we can ship it overnight at an added cost.</dd></div>
+              <div><dt data-f>STANDARD</dt><dd>We repair the machine back to the way the factory built it rather than patching it to get it moving.</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="stepcard" data-stepper>
+          <div class="top">
+            <h3>How a Field Service Call Runs</h3>
+            <span class="count" data-scount role="status" aria-live="polite">STEP 1 OF 5</span>
+          </div>
+          <div class="strack">
+            <button type="button" data-stepbtn aria-label="Step 1, call or send the details"><span data-sbar aria-hidden="true"></span><span class="lab"><span class="no">1</span><span class="tx">Call or send</span></span></button>
+            <button type="button" data-stepbtn aria-label="Step 2, dispatch plans the visit"><span data-sbar aria-hidden="true"></span><span class="lab"><span class="no">2</span><span class="tx">Dispatch</span></span></button>
+            <button type="button" data-stepbtn aria-label="Step 3, diagnosis at the machine"><span data-sbar aria-hidden="true"></span><span class="lab"><span class="no">3</span><span class="tx">Diagnosis</span></span></button>
+            <button type="button" data-stepbtn aria-label="Step 4, parts and your decision"><span data-sbar aria-hidden="true"></span><span class="lab"><span class="no">4</span><span class="tx">Parts decision</span></span></button>
+            <button type="button" data-stepbtn aria-label="Step 5, repair and updates"><span data-sbar aria-hidden="true"></span><span class="lab"><span class="no">5</span><span class="tx">Repair</span></span></button>
+          </div>
+          <div class="slides">
+            <div class="slide" data-step><span class="big" aria-hidden="true">1</span><div><h4>Call, Text, or Send the Details</h4><p>Call or text <span class="ph">(775) 625-0062</span>, or send the request on this page, with where the machine is, the make and model, what it stopped doing, and how the stoppage affects the job.</p></div></div>
+            <div class="slide" data-step hidden><span class="big" aria-hidden="true">2</span><div><h4>Dispatch Plans the Visit</h4><p>Dispatch weighs which technician can get there soonest against which technician knows that machine best, talks the choice through with you, and tells you when the truck will arrive.</p></div></div>
+            <div class="slide" data-step hidden><span class="big" aria-hidden="true">3</span><div><h4>Diagnosis at the Machine</h4><p>The technician finds the cause where the machine stopped, starting fresh even if someone has already tried a repair, so you don’t need a diagnosis before you call.</p></div></div>
+            <div class="slide" data-step hidden><span class="big" aria-hidden="true">4</span><div><h4>Parts, Cost &amp; Your Decision</h4><p>We call or text you with what failed, what the parts cost, and how long they take to arrive, offer overnight shipping at an added cost when the wait is too long, and order nothing until you decide.</p></div></div>
+            <div class="slide" data-step hidden><span class="big" aria-hidden="true">5</span><div><h4>Repair &amp; Updates</h4><p>The technician repairs the machine back to the way the factory built it, and we call or text you with updates until it is working again.</p></div></div>
+          </div>
+          <div class="snav">
+            <button type="button" class="kb paper" data-kb="paper" data-travel="4" data-snav="prev"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#4B4F56" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M10 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4"/></svg><span class="l">Back</span></span></button>
+            <button type="button" class="nx" data-nadv="1" data-nbg="#1A1A1A" data-nfc="#EF5016" data-nlight data-snav="next" data-cut="12" data-cut-to="20"><span data-nfill aria-hidden="true"></span><span class="l">Next step</span><svg data-narrow viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="#FFFFFF" stroke-width="2"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="why" id="work" aria-labelledby="work-title" data-reveal>
+    <div class="wrap">
+      <div class="why-head">
+        <h2 id="work-title">Field Service Jobs at Mines, Pits &amp; Job Sites</h2>
+        <p class="why-lede">These photos come from our crews’ field jobs, where the repair happened next to the machine instead of in a shop, from mining excavators and haul trucks in open pits to loaders and excavators on snowed-in job sites.</p>
+      </div>
+      <div class="rail" aria-labelledby="rail-title">
+        <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
+        <div class="rail-head">
+          <div class="rail-title" id="rail-title">Photos From Our Field Jobs</div>
+          <div class="rail-ctl">
+            <span class="rail-count" aria-live="polite">1–2 OF 6</span>
+            <button type="button" class="nbtn" data-rail="prev" aria-label="Previous photos"><svg class="back" viewBox="0 0 22 10" aria-hidden="true"><path d="M22 5H5M9 1L4 5l5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>Prev</span></button>
+            <button type="button" class="nbtn" data-rail="next" aria-label="Next photos"><span>Next</span><svg class="fwd" viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+          </div>
+        </div>
+        <div class="track" tabindex="0" aria-label="Photos of DBM field service jobs">
+          <figure class="frame"><span class="win"><img src="../../assets/eda62f425e6e7200.jpg" alt="Two white service trucks, a black pickup, and a yellow rough-terrain crane beside a large orange Hitachi mining excavator in an open pit" loading="lazy"></span><figcaption><span class="t">Mining Excavator in an Open Pit</span><span class="d">Two of our service trucks and a rough-terrain crane set up beside a Hitachi mining excavator.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/912ce495ef962535.jpg" alt="Four service trucks and a mobile crane stand around a mining haul truck with its dump body raised" loading="lazy" style="object-position: 50% 35%"></span><figcaption><span class="t">Haul Truck Repair at the Mine</span><span class="d">Four service trucks and a mobile crane work around a mining haul truck with its dump body raised.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/ce5771d2435d4813.jpg" alt="Two white crane service trucks with booms raised beside the lift arm and bucket of a large wheel loader set on the ground" loading="lazy" style="object-position: 50% 62%"></span><figcaption><span class="t">Loader Lift Arm Removed in the Field</span><span class="d">Two crane trucks took a wheel loader’s lift arm and bucket off the machine and set them on the ground.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/1eb013588af150a4.jpg" alt="A large diesel engine hangs from a truck crane while a technician in a hard hat holds a tag line" loading="lazy" style="object-position: 50% 35%"></span><figcaption><span class="t">Engine Lift at the Job Site</span><span class="d">A technician steadies a diesel engine with a tag line while the truck’s crane lifts it.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/c9035bf852b7908e.jpg" alt="A snow-covered black service truck and an excavator in heavy snowfall, with a technician in a high-visibility jacket" loading="lazy"></span><figcaption><span class="t">Repairs Through a Snowstorm</span><span class="d">A service truck and an excavator under fresh snow, with a technician in a high-visibility jacket at the machine.</span></figcaption></figure>
+          <figure class="frame"><span class="win"><img src="../../assets/dbd82d99d30d49e2.jpg" alt="A black service truck's crane lifts an engine out of a yellow machine that has been taken apart on gravel" loading="lazy" style="object-position: 50% 40%"></span><figcaption><span class="t">Engine Out of a Stripped Machine</span><span class="d">A service truck’s crane lifts an engine out of a machine taken apart on the gravel where it stopped.</span></figcaption></figure>
+        </div>
+        <div class="bar" aria-hidden="true"><span></span></div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="sec bone on-light" id="rental" aria-labelledby="s5-title" data-reveal>
+    <div class="wrap">
+      <div class="stmt">
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="s5-title">Need a Machine While This One Is Repaired?</h2></div>
+        <div class="body">
+          <p>When a repair will keep your machine down for days or weeks, we can put a rental machine on your site so the work keeps going. The same service team plans the repair and the rental together. Our rentals go to contractors and run mostly by the month, and some large machines need a three-month minimum.</p>
+          <p>When our own fleet had no matching machine, we rented one from a competitor at our own cost so the customer’s job kept running.</p>
+        </div>
+      </div>
+      <div class="p2d">
+        <span class="rv tl" aria-hidden="true"></span><span class="rv tr" aria-hidden="true"></span><span class="rv bl" aria-hidden="true"></span><span class="rv br" aria-hidden="true"></span>
+        <a class="w2d" href="#request" data-rental><span class="win"><img src="../../assets/8e5e3e10377ac700.jpg" alt="A blue tractor pulling a lowboy trailer that carries a yellow wheel loader across a gravel lot under storm clouds" loading="lazy"></span><span class="cap"><span class="ct">Add a Rental to Your Request</span><span class="cd">Tick the rental box in the request above and say what work has to continue and for how long, and we plan the repair and the rental together.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
+        <a class="w2d" href="../../rentals/"><span class="win"><img src="../../assets/91e6a6b2ae3e1f8e.jpg" alt="Two crane service trucks with their cranes raised on both sides of a yellow articulated haul truck with its dump body raised" loading="lazy"></span><span class="cap"><span class="ct">See the Rental Fleet</span><span class="cd">If a machine you rent from us breaks down and we can’t fix it the same day, we take those days off your rent.</span><span class="chip" aria-hidden="true"><svg viewBox="0 0 22 10"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></span></a>
       </div>
     </div>
   </section>
@@ -642,53 +1469,71 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   <section class="sec white on-light" id="questions" aria-labelledby="faq-title" data-reveal>
     <div class="wrap faqgrid">
       <div class="left">
-        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="faq-title">Questions about field service</h2></div>
-        <p>Something else on your mind?</p>
+        <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="faq-title">Field Service Questions</h2></div>
+        <p>Something else on your mind? Call or text dispatch, and a person on our service team answers.</p>
         <a class="tlink" href="tel:+17756250062">Call or text (775) 625-0062 <svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
       </div>
       <div class="acc1" data-acc>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q1"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How far do you travel?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q1" role="region"><div><p>Our trucks leave from our yard in Fernley, east of Reno on I-80. They work anywhere in Nevada, including Reno, Carson City, and the mine sites along I-80, and in California from Sacramento south to Bakersfield, including Bishop and Mammoth Lakes.</p></div></div>
+          <div data-accpanel id="q1" role="region"><div><p>Our trucks go anywhere in Nevada and into California from Sacramento south to Bakersfield, including Bishop and Mammoth Lakes. They leave from our yard in Fernley, east of Reno on Interstate 80, and dispatch tells you the travel time to your site on the call.</p></div></div>
         </div>
         <div data-accitem>
           <button type="button" data-acchead aria-expanded="false" aria-controls="q2"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Will someone come out right away?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q2" role="region"><div><p>Call or text us as soon as the machine goes down, so we can schedule a truck and tell you when to expect it. Our office isn’t staffed around the clock, so a request or a text sent after hours is answered the next day.</p></div></div>
+          <div data-accpanel id="q2" role="region"><div><p>A technician usually reaches the machine the day after you call and often the same day. Our office isn’t staffed around the clock, so a call, text, or request sent after hours is answered the next day.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What if someone has already tried to repair it?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q3"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Do you repair machines you didn’t sell?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q3" role="region"><div><p>Tell us what was done, which parts were replaced, and what the machine is still doing. Our technician starts with a fresh diagnosis instead of repeating the earlier repair.</p></div></div>
+          <div data-accpanel id="q3" role="region"><div><p>Yes. We repair XCMG machines as the exclusive XCMG dealer, and our field crews also repair Cat, Case, and other makes, including machines you bought from another dealer.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can your technicians work at a mine site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q4"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What if someone has already tried to repair it?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q4" role="region"><div><p>Yes. Our crews work at mines and quarries on jobs that run from a few hours to several weeks. <span>Our field technicians hold MSHA Part 46 and Part 48 training for surface mines.</span> Tell us the site’s access and safety rules when you call.</p></div></div>
+          <div data-accpanel id="q4" role="region"><div><p>Tell us what was done, which parts were replaced, and what the machine still does, and the technician starts with a fresh diagnosis instead of repeating the earlier repair.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q5"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>How is field service billed?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q5"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>What if the truck doesn’t carry the part I need?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q5" role="region"><div><p>Travel time is billed from our facility to the machine and back. A flat call-out minimum covers bringing the truck out and the first diagnosis. We tell you the cost of parts before we order them.</p></div></div>
+          <div data-accpanel id="q5" role="region"><div><p>We can get almost any part within 48 hours, and we can ship parts overnight at an added cost when the job can’t wait. We tell you the cost and the wait first, and we order nothing until you decide.</p></div></div>
         </div>
         <div data-accitem>
-          <button type="button" data-acchead aria-expanded="false" aria-controls="q6"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Who receives my service request?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q6"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Can your technicians work on a mine site?</span><span data-accstate aria-hidden="true">OPEN</span></button>
           <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
-          <div data-accpanel id="q6" role="region"><div><p>Calls, texts, and service requests go to our service team in Fernley, which schedules the technician and calls or texts you back. You can always call (775) 625-0062 without filling out a form.</p></div></div>
+          <div data-accpanel id="q6" role="region"><div><p>Yes. Our crews work at mines and quarries on jobs that run from a few hours to several weeks, <span>and our field technicians hold MSHA Part 46 and Part 48 training for surface mines</span>. Tell dispatch the site’s access, badge, and safety rules when you call.</p></div></div>
+        </div>
+        <div data-accitem>
+          <button type="button" data-acchead aria-expanded="false" aria-controls="q9"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span data-accmark aria-hidden="true"></span><span data-acctitle>Who receives my service request?</span><span data-accstate aria-hidden="true">OPEN</span></button>
+          <svg class="k" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="1" x2="1000" y2="1" stroke="#EF5016" stroke-width="2" data-acckerf/></svg>
+          <div data-accpanel id="q9" role="region"><div><p>Calls, texts, and requests go to our service team in Fernley, which schedules the technician and calls or texts you back. You can always call (775) 625-0062 without filling in a form.</p></div></div>
         </div>
       </div>
     </div>
   </section>
 
   
-  <section class="sec cement on-light" aria-labelledby="rel-title" data-reveal>
+  <section class="sec cement on-light" id="specialty" aria-labelledby="rel-title" data-reveal>
     <div class="wrap">
-      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="rel-title">Specialty repairs our field crews do</h2></div>
-      <div class="related">
-        <a class="rlink" href="../../services/line-boring/" data-row="light"><span data-edge aria-hidden="true"></span><span class="ic ic-lb" aria-hidden="true"></span><span><span class="rt" data-rtitle>Line boring</span><span class="rd">Worn pin bores and pivot points machined back to size with the machine left in place.</span></span><svg data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
-        <a class="rlink" href="../../services/hydraulic-services/" data-row="light"><span data-edge aria-hidden="true"></span><span class="ic ic-hyd" aria-hidden="true"></span><span><span class="rt" data-rtitle>Hydraulic services</span><span class="rd">Leaks, slow or drifting functions, and cylinder rebuilds.</span></span><svg data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
-        <a class="rlink" href="../../services/welding-fabrication/" data-row="light"><span data-edge aria-hidden="true"></span><span class="ic ic-weld" aria-hidden="true"></span><span><span class="rt" data-rtitle>Welding and fabrication</span><span class="rd">Cracked booms, frames, and buckets welded at the job site.</span></span><svg data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+      <div class="shead"><span class="hacc" data-scrollaccent aria-hidden="true"></span><h2 id="rel-title">Specialty Repairs Our Field Crews Do</h2></div>
+      <div class="cap8" data-cap8>
+        <div class="cpic">
+          <img class="on" data-capimg="lb" src="../../assets/8a70b83d80476de3.jpg" alt="Two portable boring machines on boring bars through the rear lugs of a large yellow loader bucket at a job site" loading="lazy" style="object-position: 50% 45%">
+          <img data-capimg="hyd" src="../../assets/9cb0578716454746.jpg" alt="A hydraulic valve block and hoses exposed on the frame of a yellow loader" loading="lazy">
+          <img data-capimg="weld" src="../../assets/18b1c23559d20e9c.jpg" alt="A DBM worker crouches inside a large orange excavator bucket on desert ground, beside a white service truck" loading="lazy" style="object-position: 50% 55%">
+        </div>
+        <div class="ctext">
+          <h3>Line Boring, Hydraulic Repair &amp; Welding From the Same Trucks</h3>
+          <p class="cl">The crew that answers a breakdown call also line bores worn pin joints and welds cracked booms and buckets where the machine stands. Hydraulic leaks and failed cylinders are repaired the same way, so the machine stays on the job site instead of going to a machine shop.</p>
+          <div class="cchips" role="group" aria-label="Choose a specialty repair">
+            <button type="button" class="mono-btn" data-mono="dark" data-cap="lb" aria-pressed="true"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="ic ic-lb" aria-hidden="true"></span><span class="l">Line boring</span></button>
+            <button type="button" class="mono-btn" data-mono="dark" data-cap="hyd" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="ic ic-hyd" aria-hidden="true"></span><span class="l">Hydraulic services</span></button>
+            <button type="button" class="mono-btn" data-mono="dark" data-cap="weld" aria-pressed="false"><span data-c="tl" aria-hidden="true"></span><span data-c="br" aria-hidden="true"></span><span class="ic ic-weld" aria-hidden="true"></span><span class="l">Welding &amp; fabrication</span></button>
+          </div>
+          <p class="ccap" data-capcap role="status" aria-live="polite">Portable boring bars machine worn, oval pin bores back to round at the jobsite, so the machine stays assembled where it stopped.</p>
+          <div class="cgo"><a class="kb" href="../../services/line-boring/" data-kb="sec" data-travel="4" data-capgo><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge data-e="#EF5016" aria-hidden="true"></span><span class="l" data-capgol>See line boring</span><svg viewBox="0 0 22 10" aria-hidden="true" style="width:22px;height:10px;position:relative;color:#F4703F"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a></div>
+        </div>
       </div>
     </div>
   </section>
@@ -701,12 +1546,12 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
         <div class="call-in">
           <div style="display:flex; flex-direction:column; gap:16px;">
             <span class="accent" aria-hidden="true" style="margin-top:0"></span>
-            <h2 class="h" id="call-title">Call or text us when a machine goes down</h2>
-            <p class="cl">Tell us the machine, what it’s doing, and where it is. Photos sent by text help the technician bring the right tools.</p>
+            <h2 class="h" id="call-title">Call or Text Dispatch When a Machine Goes Down</h2>
+            <p class="cl">Tell us where the machine is, the make and model, and what it stopped doing, and text photos of the problem to (775) 625-0062 so the technician brings the right tools and parts.</p>
           </div>
           <div class="acts">
             <a class="phone-plate" href="tel:+17756250062" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-            <a class="kplate" href="../../services/#request"><span class="kbase" aria-hidden="true"></span><span class="kface">Request field service</span></a>
+            <a class="kplate" href="#request"><span class="kbase" aria-hidden="true"></span><span class="kface">Send the machine details</span></a>
           </div>
           <p class="fine">Our yard and shop are at 2366 Resource Dr, Fernley, NV 89408.</p>
         </div>
@@ -721,11 +1566,11 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="../../assets/438155a4f6199c2b.svg" alt="DBM Heavy Equipment">
-        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a></div>
+        <div class="foot-facts"><a href="tel:+17756250062">(775) 625-0062</a><span class="foot-addr">2366 Resource Dr, Fernley, NV 89408</span><span class="foot-addr">Call or text the same number.</span></div>
       </div>
       <div class="foot-col"><h3>Equipment</h3><ul><li><a href="../../rentals/">Rentals</a></li><li><a href="../../equipment/new/">New equipment</a></li><li><a href="../../equipment/used/">Used equipment</a></li><li><a href="../../we-buy-equipment/">We buy equipment</a></li><li><a href="../../finance/">Finance</a></li></ul></div>
       <div class="foot-col"><h3>Service</h3><ul><li><a href="../../services/">Service &amp; repair</a></li><li><a href="../../services/mobile-field-service/" aria-current="page">Mobile field service</a></li><li><a href="../../services/line-boring/">Line boring</a></li><li><a href="../../services/hydraulic-services/">Hydraulic services</a></li><li><a href="../../services/welding-fabrication/">Welding &amp; fabrication</a></li><li><a href="../../services/">Request a part</a></li></ul></div>
-      <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
+      <div class="foot-col"><h3>Company</h3><ul><li><a href="../../about/">About DBM</a></li><li><a href="../../case-studies/">Case studies</a></li><li><a href="../../faqs/">FAQs</a></li><li><a href="../../blog/">Job stories and guides</a></li><li><a href="../../careers/">Careers</a></li><li><a href="../../contact/">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span class="tagline">Built for work. <span>Driven to perform.</span></span>
@@ -736,10 +1581,12 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 </footer>
 
 
+
 <div class="callbar" aria-hidden="true">
   <a class="phone-plate" href="tel:+17756250062" tabindex="-1" data-b="hazard" data-ripple="#F4703F" aria-label="Call DBM at (775) 625-0062"><span class="plate-base" aria-hidden="true"></span><span class="plate-face" data-slot="plate"><span class="plate-edge" aria-hidden="true"></span><span class="plate-strip" data-strip aria-hidden="true"></span><span class="k">Call</span><span class="sep" aria-hidden="true"></span><span class="num">(775) 625-0062</span></span></a>
-  <a class="kb" href="../../services/#request" tabindex="-1" data-kb="sec" data-travel="4"><span data-kbase aria-hidden="true"></span><span data-kplate><span data-kedge aria-hidden="true"></span><span class="l">Request service</span></span></a>
+  <a class="kplate" href="#request" tabindex="-1"><span class="kbase" aria-hidden="true"></span><span class="kface">Send details</span></a>
 </div>
+
 
 <script>
 (function () {
@@ -753,7 +1600,15 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   // Home sample R header: the sticky header tightens once the page scrolls past 92 px, and its height sets the anchor offset
   var navEl = document.getElementById('nav'), navbar = navEl && navEl.querySelector('.navbar'), navLogo = navEl && navEl.querySelector('.brand img');
   function setTight(t) { navbar.style.paddingTop = navbar.style.paddingBottom = t ? '12px' : ''; navLogo.style.height = t ? (window.innerWidth <= 620 ? '30px' : '38px') : ''; }
-  function measure() { document.documentElement.style.setProperty('--dbm-nav', Math.ceil(navEl.getBoundingClientRect().height) + 10 + 'px'); }
+  // Buy pages: their row of links to each other moves directly under the header (CSS already shows it there), so keyboard order matches what is seen
+  var buyRow = document.querySelector('main > .subnav[aria-label="Buy equipment"]');
+  if (buyRow && buyRow.parentNode.firstElementChild !== buyRow) buyRow.parentNode.insertBefore(buyRow, buyRow.parentNode.firstElementChild);
+  // --dbm-nav-h is the header's exact height (the sticky Buy row sits under it); --dbm-nav adds the sticky Buy row and 10 px for anchor jumps
+  function measure() {
+    var h = navEl.getBoundingClientRect().height, extra = buyRow && getComputedStyle(buyRow).position === 'sticky' ? buyRow.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty('--dbm-nav-h', h + 'px');
+    document.documentElement.style.setProperty('--dbm-nav', Math.ceil(h + extra) + 10 + 'px');
+  }
   if (navbar && navLogo) {
     var sentinel = document.createElement('span');
     sentinel.setAttribute('aria-hidden', 'true');
@@ -761,6 +1616,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     document.body.insertBefore(sentinel, document.body.firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (en) { setTight(!en.isIntersecting); measure(); }); }).observe(sentinel);
     window.addEventListener('resize', measure, { passive: true }); measure();
+    if ('ResizeObserver' in window) new ResizeObserver(measure).observe(navEl);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
@@ -834,6 +1690,111 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   if (callbar && heroActs) new IntersectionObserver(function (es) { heroGone = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; sync(); }).observe(heroActs);
   if (callbar && callBand) new IntersectionObserver(function (es) { bandOn = es[0].isIntersecting; sync(); }).observe(callBand);
 })();
+
+/* NAV-05 route menus: start (board C08 _menus and _rows, ported 2026-10-28; the same block is copied into the Home page).
+   The diamond beside a route opens that route's panel under the bar on click, never on hover, and one panel is open at a time.
+   The same diamond, Escape, or a click outside closes it. Tab moves from an open diamond into its panel and from the panel's
+   last link on to the next route. Durations and eases are the board's, and reduced motion sets them to 0. */
+(function () {
+  var nav = document.getElementById('nav'), host = nav && nav.querySelector('[data-menuhost]');
+  if (!host) return;
+  var R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D = function (t) { return R ? 0 : t; };
+  var G = function () { return document.documentElement.classList.contains('gsap-on') && window.gsap; };
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  var toggles = nav.querySelectorAll('[data-mt]'), open = null;
+  var panelOf = function (k) { return document.getElementById('menu-' + k); };
+  var toggleOf = function (k) { return nav.querySelector('[data-mt="' + k + '"]'); };
+  var fit = function (p) { p.style.maxHeight = Math.max(160, window.innerHeight - nav.getBoundingClientRect().bottom) + 'px'; };
+
+  // The menu link for the page the visitor is on is marked as the current page. Review copies live at pages/<folder>/hifi.html.
+  var m = location.pathname.match(/\/([^\/]+)\/hifi\.html$/), special = { home: '', 'line-boring': '/services/line-boring', 'welding-fabrication': '/services/welding-fabrication' };
+  var here = m ? (m[1] in special ? special[m[1]] : '/' + m[1].replace(/--/g, '/')) : location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+  each(host.querySelectorAll('a[href]'), function (a) {
+    if (a.getAttribute('href').indexOf('#') !== -1) return;
+    var path = m ? a.getAttribute('href').replace(/\/$/, '') : a.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+    if (path === here) a.setAttribute('aria-current', 'page');
+  });
+
+  function diam(t, on) {
+    var g = G(), d = t.querySelector('[data-diam]');
+    if (g) g.to(d, { rotate: on ? 180 : 0, backgroundColor: on ? '#EF5016' : '#8A8D93', duration: D(on ? 0.3 : 0.24), ease: on ? 'back.out(2)' : 'power1.out', overwrite: 'auto' });
+  }
+  function hideNow(p) {
+    var g = window.gsap;
+    if (g) g.killTweensOf(p);
+    p.hidden = true; p.style.height = ''; p.classList.remove('is-open');
+  }
+  function close(refocus, now) {
+    if (!open) return;
+    var k = open, p = panelOf(k), t = toggleOf(k), g = G();
+    open = null;
+    t.setAttribute('aria-expanded', 'false'); diam(t, false);
+    p.classList.remove('is-open');
+    if (g && !now) { g.killTweensOf(p); g.to(p, { height: 0, duration: D(0.26), ease: 'power2.in', onComplete: function () { hideNow(p); } }); }
+    else hideNow(p);
+    if (refocus) t.focus({ preventScroll: true });
+  }
+  function show(k) {
+    if (open === k) { close(true); return; }
+    if (open) close(false, true);
+    var p = panelOf(k), t = toggleOf(k), g = G();
+    each(host.querySelectorAll('.menu'), function (x) { if (x !== p && !x.hidden) hideNow(x); });
+    open = k;
+    t.setAttribute('aria-expanded', 'true'); diam(t, true);
+    p.hidden = false; fit(p);
+    if (!g) { p.classList.add('is-open'); return; }
+    g.killTweensOf(p);
+    g.fromTo(p, { height: 0 }, { height: 'auto', duration: D(0.34), ease: 'power3.out', onComplete: function () { p.style.height = ''; p.classList.add('is-open'); } });
+    var kerf = p.querySelector('[data-menukerf]');
+    if (kerf && !R) {
+      if (window.DrawSVGPlugin) g.fromTo(kerf, { drawSVG: '0%' }, { drawSVG: '100%', duration: 0.5, ease: 'power2.inOut' });
+      else g.fromTo(kerf, { strokeDasharray: 1000, strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.inOut', clearProps: 'strokeDasharray,strokeDashoffset' });
+    }
+    if (!R) g.fromTo(p.querySelectorAll('[data-mitem]'), { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.28, stagger: 0.04, delay: 0.08, ease: 'power2.out' });
+  }
+
+  each(toggles, function (t) {
+    t.addEventListener('click', function (e) { e.stopPropagation(); show(t.getAttribute('data-mt')); });
+    t.addEventListener('pointerenter', function () { var g = G(); if (g) g.to(t, { scale: 1.12, duration: D(0.18) }); });
+    t.addEventListener('pointerleave', function () { var g = G(); if (g) g.to(t, { scale: 1, duration: D(0.18) }); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(true); return; }
+    if (e.key !== 'Tab') return;
+    var t = toggleOf(open), f = panelOf(open).querySelectorAll('a[href]'), a = document.activeElement;
+    if (a === t && !e.shiftKey) { e.preventDefault(); f[0].focus(); }
+    else if (a === f[0] && e.shiftKey) { e.preventDefault(); t.focus(); }
+    else if (a === f[f.length - 1] && !e.shiftKey) {
+      var bar = Array.prototype.slice.call(nav.querySelectorAll('.navbar a[href], .navbar button')), next = bar[bar.indexOf(t) + 1];
+      e.preventDefault(); close(false); (next || t).focus();
+    }
+  }, true);
+  document.addEventListener('click', function (e) { if (open && !host.contains(e.target) && !(e.target.closest && e.target.closest('[data-mt]'))) close(false); }, true);
+  window.addEventListener('resize', function () { if (open) fit(panelOf(open)); }, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(function () { if (open) fit(panelOf(open)); }).observe(nav);
+  window.addEventListener('pageshow', function (e) { if (e.persisted && open) close(false, true); });
+
+  // Row target (board C08 _rows): pointing at a row strikes the orange line down its leading edge, moves the title and arrow 6 px, and turns the title orange
+  each(host.querySelectorAll('[data-row]'), function (r) {
+    var edge = r.querySelector('[data-edge]'), arr = r.querySelector('[data-rarr]'), title = r.querySelector('[data-rtitle]');
+    function set(v) {
+      var g = G(); if (!g) return;
+      var lit = v || r.hasAttribute('aria-current');
+      g.to(edge, { scaleY: lit ? 1 : 0, duration: D(0.26), ease: 'power2.out', overwrite: 'auto' });
+      g.to(arr, { x: v ? 6 : 0, duration: D(0.26), ease: v ? 'back.out(2)' : 'power2.out', overwrite: 'auto' });
+      g.to(title, { x: v ? 6 : 0, color: lit ? '#F4703F' : '#FFFFFF', duration: D(0.24), ease: 'power2.out', overwrite: 'auto' });
+    }
+    r.addEventListener('pointerenter', function () { set(true); });
+    r.addEventListener('pointerleave', function () { set(false); var g = G(); if (g) g.to(r, { y: 0, duration: 0.1, overwrite: 'auto' }); });
+    r.addEventListener('focus', function () { set(true); });
+    r.addEventListener('blur', function () { set(false); });
+    r.addEventListener('pointerdown', function () { var g = G(); if (g) g.to(r, { y: 1, duration: 0.06, overwrite: 'auto' }); });
+    r.addEventListener('pointerup', function () { var g = G(); if (g) g.to(r, { y: 0, duration: 0.12, overwrite: 'auto' }); });
+  });
+})();
+/* NAV-05 route menus: end */
 </script>
 <script>
 /*!
@@ -1357,6 +2318,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 (function () {
   var g = window.gsap, R = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var monoSet = function (b, on) { if (window.dbmMonoSet) window.dbmMonoSet(b, on); else b.setAttribute('aria-pressed', on ? 'true' : 'false'); };
 
   // C08 NAV-01 second-level bar: the kerf travels to the link under the pointer and returns to the current page
   var row = document.querySelector('[data-subnav]'), kerf = row.querySelector('[data-skerf]'), links = $$('a', row);
@@ -1364,7 +2326,7 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
   var seat = function (a, now) {
     var x = a.offsetLeft, w = a.offsetWidth;
     if (g && !now && !R) g.to(kerf, { x: x, width: w, duration: 0.42, ease: 'power3.inOut', overwrite: 'auto' });
-    else { if (g) g.set(kerf, { x: x, width: w }); else { kerf.style.transform = 'translateX(' + x + 'px)'; kerf.style.width = w + 'px'; } }
+    else if (g) g.set(kerf, { x: x, width: w }); else { kerf.style.transform = 'translateX(' + x + 'px)'; kerf.style.width = w + 'px'; }
   };
   links.forEach(function (a) {
     a.addEventListener('pointerenter', function () { seat(a); });
@@ -1372,47 +2334,274 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
     a.addEventListener('blur', function () { seat(cur); });
   });
   row.addEventListener('pointerleave', function () { seat(cur); });
-  // On a phone the bar scrolls sideways, so it opens with the current page's link in view
   if (row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, cur.offsetLeft - 24);
   seat(cur, true);
   window.addEventListener('resize', function () { seat(cur, true); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { seat(cur, true); });
 
-  // C07 H6 checklist: each item presses in, the count and the bar follow, and a safety line appears after the first tick
-  var box = document.querySelector('[data-checklist]'), items = $$('[data-ck]', box), count = box.querySelector('[data-ckcount]'), bar = box.querySelector('[data-ckbar]'), sayEl = box.querySelector('[data-cksay]');
-  var sync = function () {
-    var n = items.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length;
-    count.textContent = n + ' OF ' + items.length + ' READY' + (n ? '' : ' · NONE REQUIRED');
-    if (g) g.to(bar, { width: (n / items.length * 100) + '%', duration: R ? 0 : 0.36, ease: 'power2.out', overwrite: 'auto' }); else bar.style.width = (n / items.length * 100) + '%';
-    sayEl.textContent = n === items.length ? 'You have everything we need to plan the visit. Call or text us now.' : (n ? 'If you go to the machine to read the serial plate or take photos, make sure it is shut down and safe to approach.' : 'Check each detail you have ready.');
-  };
-  items.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var on = b.getAttribute('aria-pressed') !== 'true';
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      if (g && on && !R) g.fromTo(b.querySelector('.box svg'), { scale: 0.4 }, { scale: 1, duration: 0.24, ease: 'back.out(2.2)' });
-      sync();
-    });
-    b.addEventListener('pointerdown', function () { if (g) g.to(b, { y: 1, duration: 0.06, overwrite: 'auto' }); });
-    b.addEventListener('pointerup', function () { if (g) g.to(b, { y: 0, duration: 0.12, overwrite: 'auto' }); });
-    b.addEventListener('pointerleave', function () { if (g) g.to(b, { y: 0, duration: 0.1, overwrite: 'auto' }); });
-  });
-  sync();
-
-  // C08 Row target on the related links
-  $$('[data-row]').forEach(function (r) {
-    var edge = r.querySelector('[data-edge]'), arr = r.querySelector('[data-rarr]'), title = r.querySelector('[data-rtitle]');
-    var set = function (v) {
-      if (!g) return;
-      g.to(edge, { scaleY: v ? 1 : 0, duration: R ? 0 : 0.26, ease: 'power2.out', overwrite: 'auto' });
-      g.to(arr, { x: v ? 6 : 0, duration: R ? 0 : 0.26, ease: v ? 'back.out(2)' : 'power2.out', overwrite: 'auto' });
-      g.to(title, { x: v ? 6 : 0, color: v ? '#C9430D' : '#1A1A1A', duration: R ? 0 : 0.24, ease: 'power2.out', overwrite: 'auto' });
-      r.style.background = v ? '#F6F7F8' : '';
+  // C06 BAN-04 Territory Banner: an area chip rewrites the coverage text, zooms the map, and lights that area's towns and highways
+  (function () {
+    var svg = document.querySelector('[data-covmap]'); if (!svg) return;
+    var W0 = 700;
+    var VIEWS = { all: [-70, 20, 700, 730], reno: [62, 150, 290, 302], mines: [128, -40, 520, 542], south: [196, 250, 450, 469], valley: [-96, 318, 420, 438], sierra: [80, 262, 330, 344] };
+    var view = { x: -70, y: 20, w: 700, h: 730 };
+    var cities = $$('.city', svg), hws = $$('.hw', svg), hwls = $$('.hwl', svg), states = $$('.state', svg), yard = svg.querySelector('.yardpin');
+    var scale = function () {
+      var k = view.w / W0;
+      svg.setAttribute('viewBox', view.x + ' ' + view.y + ' ' + view.w + ' ' + view.h);
+      cities.forEach(function (c) {
+        var x = +c.dataset.x, y = +c.dataset.y, ci = c.querySelector('circle'), t = c.querySelector('text');
+        ci.setAttribute('cx', x); ci.setAttribute('cy', y); ci.setAttribute('r', (+c.dataset.r) * k);
+        t.setAttribute('x', x + (+c.dataset.dx) * k); t.setAttribute('y', y + (+c.dataset.dy) * k);
+        t.setAttribute('text-anchor', c.dataset.a); t.setAttribute('font-size', 15 * k);
+      });
+      hwls.forEach(function (l) { var t = l.querySelector('text'); t.setAttribute('x', t.dataset.x); t.setAttribute('y', t.dataset.y); t.setAttribute('font-size', (+t.dataset.fs) * k); });
+      states.forEach(function (t) { t.setAttribute('font-size', (+t.dataset.fs) * k); });
+      var yx = +yard.dataset.x, yy = +yard.dataset.y;
+      yard.setAttribute('transform', 'translate(' + yx + ' ' + yy + ') scale(' + k + ') translate(' + (-yx) + ' ' + (-yy) + ')');
     };
-    r.addEventListener('pointerenter', function () { set(true); });
-    r.addEventListener('pointerleave', function () { set(false); });
-    r.addEventListener('focus', function () { set(true); }); r.addEventListener('blur', function () { set(false); });
+    var mark = function (area) {
+      var on = function (el) { return area !== 'all' && (' ' + el.dataset.reg + ' ').indexOf(' ' + area + ' ') > -1; };
+      cities.forEach(function (c) { var a = on(c); c.classList.toggle('on', a); c.classList.toggle('dim', area !== 'all' && !a); });
+      hws.concat(hwls).forEach(function (h) { var a = on(h); h.classList.toggle('on', a); h.classList.toggle('dim', area !== 'all' && !a); });
+    };
+    var chips = $$('[data-area]'), txts = $$('[data-covtxt]');
+    var go = function (area, now) {
+      chips.forEach(function (c) { monoSet(c, c.dataset.area === area); });
+      txts.forEach(function (t) { t.hidden = t.dataset.covtxt !== area; });
+      var shown = txts.filter(function (t) { return !t.hidden; })[0];
+      if (g && !R && !now && shown) g.fromTo(shown, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+      mark(area);
+      var v = VIEWS[area];
+      if (g && !R && !now) g.to(view, { x: v[0], y: v[1], w: v[2], h: v[3], duration: 0.9, ease: 'power3.inOut', overwrite: 'auto', onUpdate: scale });
+      else { view.x = v[0]; view.y = v[1]; view.w = v[2]; view.h = v[3]; scale(); }
+    };
+    chips.forEach(function (c) { c.addEventListener('click', function () { go(c.dataset.area); }); });
+    go('all', true);
+    // The state outlines draw once when the band scrolls into view (the About page's map reveal)
+    var paths = $$('[data-draw]', svg);
+    if (g && window.DrawSVGPlugin && !R && 'IntersectionObserver' in window) {
+      g.set(paths, { drawSVG: '0%' });
+      var io = new IntersectionObserver(function (es) { if (!es[0].isIntersecting) return; io.disconnect(); g.to(paths, { drawSVG: '100%', duration: 1.1, ease: 'power2.inOut', stagger: 0.25 }); }, { threshold: 0.3 });
+      io.observe(svg);
+    }
+  })();
+
+  // C12 FND-02 Machine-Down Triage: one answer decides whether the panel shows the phone, the request, or a safety instruction; the column resizes instead of jumping
+  (function () {
+    var root = document.querySelector('[data-tri]'); if (!root) return;
+    var answers = $$('[data-ans]', root), out = root.querySelector('[data-tout]'), panels = $$('[data-tp]', root);
+    answers.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.dataset.ans, h0 = out.offsetHeight;
+        answers.forEach(function (o) { var a = o === b; monoSet(o, a); o.removeAttribute('aria-pressed'); o.setAttribute('aria-checked', a ? 'true' : 'false'); });
+        panels.forEach(function (p) { p.hidden = p.dataset.tp !== k; });
+        var shown = panels.filter(function (p) { return !p.hidden; })[0], h1 = out.offsetHeight;
+        if (g && !R) {
+          if (h0 !== h1) g.fromTo(out, { height: h0 }, { height: h1, duration: 0.36, ease: 'power2.inOut', clearProps: 'height' });
+          g.fromTo(shown, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.34, ease: 'power2.out' });
+        }
+      });
+    });
+  })();
+
+  // Section 4: the request. C07 H6 count and bar over four details, C10 fields, C12 request record, C05 CNF-01 receipt, CPY-03 copy
+  (function () {
+    var card = document.getElementById('wo'), form = card.querySelector('form'), done = card.querySelector('[data-cnfdone]'), head = card.querySelector('[data-formhead]');
+    var send = form.querySelector('[type="submit"]'), rec = document.querySelector('[data-record]');
+    var $ = function (id) { return document.getElementById(id); };
+    var v = function (id) { return ($(id).value || '').trim(); };
+    var syms = $$('[data-sym]', form), cards = $$('[data-urg]', form), slots = $$('.slot', form);
+    var URG = { stopped: 'The job has stopped', around: 'Working around it', wait: 'Can wait a few days' };
+    var SAY = {
+      stopped: 'A stopped job is worth a phone call. Send this, then call or text (775) 625-0062 so dispatch can start planning the truck now.',
+      around: 'Dispatch schedules the visit around your work and confirms the arrival day when we call or text you back.',
+      wait: 'Dispatch calls or texts you to set a day for the visit that suits the job.'
+    };
+    var urg = '', reply = 'Call';
+    var pickedSyms = function () { return syms.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; }).map(function (b) { return b.textContent.trim(); }); };
+    var photoCount = function () { return slots.filter(function (s) { var i = s.querySelector('input'); return i.files && i.files.length; }).length; };
+    var data = function () {
+      var what = pickedSyms().join(', '), d = v('f-desc');
+      if (what && d) what += '. ' + d; else what = what || d;
+      var n = photoCount(), name = v('f-name'), ph = v('f-phone');
+      return [
+        ['where', 'Where', v('f-site')],
+        ['access', 'Access', v('f-access')],
+        ['machine', 'Machine', (v('f-make') + ' ' + v('f-model')).trim()],
+        ['what', 'What changed', what],
+        ['photos', 'Photos', n ? n + (n === 1 ? ' photo attached' : ' photos attached') : ''],
+        ['job', 'The job', urg ? URG[urg] : ''],
+        ['rental', 'Rental', $('f-rental').checked ? 'Needed while the machine is repaired' : ''],
+        ['contact', 'Contact', [name, ph].filter(Boolean).join(', ')],
+        ['reply', 'Reply by', reply]
+      ];
+    };
+    var NIL = { photos: 'None', rental: 'Not asked for' };
+    var sync = function (changed) {
+      var d = data();
+      d.forEach(function (r) {
+        var row = rec.querySelector('[data-row="' + r[0] + '"]'), dd = row.querySelector('dd');
+        var txt = r[2] || NIL[r[0]] || 'Not given';
+        if (dd.textContent !== txt) {
+          dd.textContent = txt; dd.classList.toggle('nil', !r[2]);
+          if (changed && r[2] && g && !R) { row.classList.add('on'); clearTimeout(row.__t); row.__t = setTimeout(function () { row.classList.remove('on'); }, 900); }
+        }
+      });
+      var ok = {
+        where: !!(v('f-site') || v('f-access')),
+        machine: !!(v('f-make') || v('f-model')),
+        what: !!(pickedSyms().length || v('f-desc') || photoCount()),
+        job: !!urg
+      };
+      var n = 0;
+      Object.keys(ok).forEach(function (k) { form.querySelector('[data-grp="' + k + '"]').classList.toggle('ok', ok[k]); if (ok[k]) n++; });
+      card.querySelector('[data-ckcount]').textContent = n + ' OF 4 READY' + (n ? '' : ' · NONE REQUIRED');
+      card.querySelector('[data-ckbar]').style.width = (n / 4 * 100) + '%';
+      $('f-desc-cnt').textContent = v('f-desc').length.toLocaleString('en-US') + ' OF 1,000 CHARACTERS';
+    };
+    form.addEventListener('input', function () { sync(true); });
+    form.addEventListener('change', function () { sync(true); });
+
+    // Symptom presets: Field Mono toggles
+    syms.forEach(function (b) { b.addEventListener('click', function () { monoSet(b, b.getAttribute('aria-pressed') !== 'true'); sync(true); }); });
+
+    // Radio cards: one choice, arrow keys move it, and a status line answers the choice
+    var say = form.querySelector('[data-urgsay]');
+    var choose = function (k, focus) {
+      urg = k;
+      cards.forEach(function (c) { var a = c.dataset.urg === k; c.setAttribute('aria-checked', a ? 'true' : 'false'); c.tabIndex = a ? 0 : -1; if (a && focus) c.focus(); });
+      say.textContent = SAY[k]; say.hidden = false;
+      if (g && !R) g.fromTo(say, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+      sync(true);
+    };
+    cards.forEach(function (c, i) {
+      c.addEventListener('click', function () { choose(c.dataset.urg); });
+      c.addEventListener('keydown', function (e) {
+        var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+        if (!d) return; e.preventDefault(); choose(cards[(i + d + cards.length) % cards.length].dataset.urg, true);
+      });
+    });
+
+    // Segmented reply choice: the plate slides to Call me or Text me
+    var seg = form.querySelector('[data-seg]'), segBtns = $$('button', seg);
+    var segSet = function (i, focus) { seg.dataset.at = i; segBtns.forEach(function (b, k) { b.setAttribute('aria-checked', k === i ? 'true' : 'false'); b.tabIndex = k === i ? 0 : -1; if (k === i && focus) b.focus(); }); reply = i ? 'Text' : 'Call'; sync(true); };
+    segBtns.forEach(function (b, i) {
+      b.addEventListener('click', function () { segSet(i); });
+      b.addEventListener('keydown', function (e) { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) < 0) return; e.preventDefault(); segSet(i ? 0 : 1, true); });
+    });
+
+    // C10 Location: the browser asks only when the button is pressed, and the result goes into the same field for correction
+    var loc = form.querySelector('[data-locate]'), locL = form.querySelector('[data-loclabel]'), locSay = form.querySelector('[data-locsay]');
+    loc.addEventListener('click', function () {
+      if (!navigator.geolocation) { locSay.textContent = 'This device cannot share its location. Type the address or the nearest cross streets instead.'; return; }
+      loc.disabled = true; locL.textContent = 'Finding you…'; locSay.textContent = 'Asking this device for its location.';
+      navigator.geolocation.getCurrentPosition(function (p) {
+        $('f-site').value = 'Near ' + p.coords.latitude.toFixed(4) + ', ' + p.coords.longitude.toFixed(4);
+        loc.disabled = false; locL.textContent = 'Use my location';
+        locSay.textContent = 'Location added. Add a gate code or a landmark if the site is hard to find.';
+        $('f-site').focus(); sync(true);
+      }, function () {
+        loc.disabled = false; locL.textContent = 'Use my location';
+        locSay.textContent = 'Location is off for this site. Type the address or the nearest cross streets instead, which works just as well.';
+      }, { timeout: 8000, maximumAge: 60000 });
+    });
+
+    // C10 Photo slots: a thumbnail, a Remove button, and a count
+    var photoSay = form.querySelector('[data-photosay]');
+    var photoSync = function () { var n = photoCount(); photoSay.textContent = n ? n + (n === 1 ? ' photo added.' : ' photos added.') + ' Remove a photo to replace it.' : 'No photos added. A photo of the serial plate also helps, and you can text it later.'; };
+    slots.forEach(function (s) {
+      var inp = s.querySelector('input'), rm = s.querySelector('[data-rm]');
+      inp.addEventListener('change', function () {
+        var f = inp.files && inp.files[0], old = s.querySelector('img'); if (old) old.remove();
+        if (f) { var img = document.createElement('img'); img.alt = ''; img.src = URL.createObjectURL(f); s.appendChild(img); rm.hidden = false; }
+        photoSync(); sync(true);
+      });
+      rm.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); inp.value = ''; var old = s.querySelector('img'); if (old) old.remove(); rm.hidden = true; photoSync(); sync(true); inp.focus(); });
+    });
+
+    // Links from the triage card and the rental window preset the request
+    $$('[data-goform]').forEach(function (a) { a.addEventListener('click', function () { choose(a.dataset.goform === 'stopped' ? 'stopped' : 'wait'); }); });
+    $$('[data-rental]').forEach(function (a) { a.addEventListener('click', function () { $('f-rental').checked = true; sync(true); }); });
+
+    // CNF-01 receipt
+    var rows2 = done.querySelector('[data-cnfsent]'), copySay = done.querySelector('[data-copysay]'), lastText = '';
+    var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+    var cnf = window.dbmConfirm ? window.dbmConfirm(card, form, done, send, done.querySelector('[data-cnfkerf]')) : null;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (send.disabled) return;
+      var d = data();
+      lastText = 'DBM field service request\n' + d.map(function (r) { return r[1] + ': ' + (r[2] || NIL[r[0]] || 'Not given'); }).join('\n') + '\nField service dispatch: (775) 625-0062';
+      var fill = function () { rows2.innerHTML = d.map(function (r) { return '<span>' + r[1] + '</span><span>' + esc(r[2] || NIL[r[0]] || 'Not given') + '</span>'; }).join(''); head.style.display = 'none'; };
+      if (cnf) cnf.send('Send to Field Service Dispatch', fill);
+      else { fill(); form.style.display = 'none'; done.style.display = 'flex'; done.focus(); }
+    });
+    // CPY-03 What You Sent: copies the request as labeled lines and says what was copied
+    done.querySelector('[data-copy]').addEventListener('click', function () {
+      var ok = function () { copySay.textContent = 'Copied the request as ' + lastText.split('\n').length + ' labeled lines. Paste it into an email, a work order, or a purchase order.'; };
+      var fail = function () { copySay.textContent = 'This browser blocked copying. Select the lines above and copy them instead.'; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(lastText).then(ok, function () {
+        try { var ta = document.createElement('textarea'); ta.value = lastText; ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); var r = document.execCommand('copy'); ta.remove(); if (r) ok(); else fail(); } catch (x) { fail(); }
+      }); else fail();
+    });
+    done.querySelector('[data-cnfreset]').addEventListener('click', function () {
+      form.reset(); urg = ''; say.hidden = true;
+      syms.forEach(function (b) { monoSet(b, false); });
+      cards.forEach(function (c, i) { c.setAttribute('aria-checked', 'false'); c.tabIndex = i ? -1 : 0; });
+      slots.forEach(function (s) { var img = s.querySelector('img'); if (img) img.remove(); s.querySelector('[data-rm]').hidden = true; });
+      segSet(0); photoSync();
+      copySay.textContent = 'The copy button puts this request on your clipboard as labeled lines for an email, a work order, or a purchase order.';
+      head.style.display = '';
+      if (cnf) cnf.reset(); else { done.style.display = 'none'; form.style.display = ''; }
+      sync(false);
+      $('f-site').focus({ preventScroll: true });
+    });
+    sync(false);
+  })();
+
+  // Card 1d tick scales: each range grows to its reading once, when the arrival panel comes into view
+  (function () {
+    var eta = document.querySelector('[data-eta]'); if (!eta) return;
+    var bars = $$('[data-rg]', eta);
+    var place = function (b, full) { var a = +b.dataset.from, z = +b.dataset.to; b.style.left = (a / 21 * 100) + '%'; b.style.width = full ? ((z - a) / 21 * 100) + '%' : '0%'; };
+    bars.forEach(function (b) { place(b, R || !g); });
+    if (!g || R) return;
+    var run = function () { bars.forEach(function (b, k) { var a = +b.dataset.from, z = +b.dataset.to; g.to(b, { width: ((z - a) / 21 * 100) + '%', duration: 0.9, ease: 'power3.out', delay: 0.15 + k * 0.25 }); }); };
+    if (window.ScrollTrigger) window.ScrollTrigger.create({ trigger: eta, start: 'top 80%', once: true, onEnter: run }); else run();
+  })();
+
+  // TIP-01: a tooltip near the right edge of the screen opens leftward so it stays on screen
+  $$('[data-tipwrap]').forEach(function (w) {
+    var tip = w.querySelector('[data-tip]');
+    var place = function () { var r = w.getBoundingClientRect(); var wide = r.left + tip.offsetWidth > document.documentElement.clientWidth - 12; tip.style.left = wide ? 'auto' : '0'; tip.style.right = wide ? '0' : 'auto'; };
+    w.addEventListener('pointerenter', place); w.addEventListener('focusin', place);
+    place(); window.addEventListener('resize', place);
   });
+
+  // C06 BAN-08 Capability Banner: pointing at a chip previews its photo and caption, clicking keeps the choice
+  (function () {
+    var root = document.querySelector('[data-cap8]'); if (!root) return;
+    var CAP = {
+      lb: ['Portable boring bars machine worn, oval pin bores back to round at the jobsite, so the machine stays assembled where it stopped.', '/services/line-boring', 'See line boring'],
+      hyd: ['Leaking hoses, slow or drifting functions, and worn hydraulic cylinders are diagnosed and repaired where the machine is working.', '/services/hydraulic-services', 'See hydraulic services'],
+      weld: ['Cracked booms, frames, and buckets are gouged out and rewelded in the field, and worn buckets are rebuilt with wear plate.', '/services/welding-fabrication', 'See welding & fabrication']
+    };
+    var chips = $$('[data-cap]', root), imgs = $$('[data-capimg]', root), cap = root.querySelector('[data-capcap]'), goA = root.querySelector('[data-capgo]'), goL = root.querySelector('[data-capgol]');
+    var kept = 'lb';
+    var show = function (k) {
+      imgs.forEach(function (i) { i.classList.toggle('on', i.dataset.capimg === k); });
+      if (cap.textContent !== CAP[k][0]) { cap.textContent = CAP[k][0]; if (g && !R) g.fromTo(cap, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' }); }
+      goA.setAttribute('href', CAP[k][1]); goL.textContent = CAP[k][2];
+    };
+    var keep = function (k) { kept = k; chips.forEach(function (c) { monoSet(c, c.dataset.cap === k); }); show(k); };
+    chips.forEach(function (c) {
+      c.addEventListener('pointerenter', function () { show(c.dataset.cap); });
+      c.addEventListener('click', function () { keep(c.dataset.cap); });
+    });
+    root.querySelector('.cchips').addEventListener('pointerleave', function () { show(kept); });
+    keep('lb');
+  })();
 })();
 </script>
 </body>
