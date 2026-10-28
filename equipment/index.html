@@ -360,6 +360,21 @@ main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction:
 main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 @media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
 
+/* 0% financing band (DBM's review call, 28 Oct 2026), from hifi/partials/qf-band.html: one slim band on the header's dark plate
+   under the site header on Home, Equipment, New XCMG Equipment, XCMG at DBM, and the XE18U page. On the Buy pages it comes after
+   the row of Buy links, so that row stays directly under the header. It scrolls with the page. The sentence is set in the body
+   type and the link in the header's Archivo capitals with the Brand Site's 22 by 10 arrow, which steps 7 px on hover. */
+.qf-band { background: var(--plate); box-shadow: inset 0 1px 0 var(--dark-rule), inset 0 -1px 0 var(--dark-rule); padding: 0 var(--pad-x); }
+.qf-in { display: flex; align-items: center; justify-content: space-between; gap: 2px 32px; flex-wrap: wrap; padding: 6px 0; }
+.qf-band p { margin: 0; color: var(--silver); font-size: 15px; line-height: 1.5; padding: 6px 0; }
+.qf-band p b { color: #FFFFFF; font-weight: 700; }
+.qf-go { display: inline-flex; align-items: center; gap: 12px; min-height: 36px; padding-right: 9px; color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: 0.3em; text-transform: uppercase; white-space: nowrap; text-decoration: none; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left calc(100% - 4px); background-size: 0% 2px; transition: background-size .3s ease; }
+.qf-go svg { width: 22px; height: 10px; flex: none; color: var(--orange-hover); transition: transform .32s cubic-bezier(.34,1.7,.64,1); }
+.qf-go:hover, .qf-go:focus-visible { background-size: 100% 2px; }
+.qf-go:hover svg, .qf-go:focus-visible svg { transform: translateX(7px); }
+.qf-band a:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
+@media (max-width: 620px) { .qf-in { padding: 8px 0 4px; } .qf-band p { font-size: 14.5px; padding: 0; } .qf-go { min-height: 44px; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -868,6 +883,12 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
 .att-list a.an svg { width: 18px; height: 9px; transition: transform .32s cubic-bezier(.34,1.7,.64,1); }
 .att-list a.an:hover svg, .att-list a.an:focus-visible svg { transform: translateX(7px); }
 .att-list li > span:last-child { color: #4B4F56; font-size: 15px; line-height: 1.5; }
+/* The attachment makers (DBM's review call, 28 Oct 2026): each maker's logo sits above its name, and one link carries both to the maker's home page */
+.att-makers li { align-items: center; }
+.att-makers a.mk { flex-direction: column; align-items: flex-start; gap: 8px; }
+.att-makers .mk-logo { display: block; }
+.att-makers .mk-logo img { object-fit: contain; object-position: left center; } /* each logo's own width and height give the three about the same visual weight */
+.att-makers .mk-nm { display: inline-flex; align-items: center; gap: 10px; }
 @media (max-width: 900px) { .brands { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 620px) { .att-list li { grid-template-columns: minmax(0, 1fr); } .brand-card .bd { padding: 20px; } }
 
@@ -922,6 +943,7 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
           <li><a class="mrow" href="../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/#attachments" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Attachments</span><span class="msub">We sell forks, couplers, and other attachments from SAS Forks, DRKhorse Tools, and Taurox.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="../finance/#how" data-mitem>How financing works for new and used machines</a></li>
@@ -1030,6 +1052,14 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
     ul.addEventListener('click', function (e) { if (e.target.closest('a')) try { sessionStorage.setItem(KEY, String(ul.scrollLeft)); } catch (x) {} });
   })();
   </script>
+  
+<aside class="qf-band" aria-label="Financing for new XCMG machines">
+  <div class="wrap qf-in">
+    <p>New XCMG machines qualify for <b>0% financing</b> on approved credit through QuickFi, XCMG’s lender.</p>
+    <a class="qf-go" href="https://quickfi.ai/xcmg" target="_blank" rel="noopener" aria-label="Apply with QuickFi (opens in a new tab)">Apply with QuickFi<svg viewBox="0 0 22 10" aria-hidden="true" focusable="false"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+  </div>
+</aside>
+
   
   <section class="hero-tc" aria-labelledby="page-title" data-hero data-torch>
     <div class="tc-in">
@@ -1177,16 +1207,16 @@ body.show-assume .plate1b [data-assume], body.show-assume .hero-tc [data-assume]
             <div class="acts2"><a class="more" href="../equipment/xcmg/">Why buy XCMG from DBM<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><a class="more" href="../equipment/new/">Browse all 43 XCMG models<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></div>
           </div>
         </div>
-        <div class="brand-card">
+        <div class="brand-card" id="attachments">
           <div class="im"><img src="../assets/33708f7a322e3787.jpg" alt="Excavator buckets and quick couplers on pallets in front of a row of XCMG excavators" loading="lazy" style="object-position: 50% 70%"></div>
           <div class="bd">
             <h3 class="bc-h">Attachments</h3>
             <p>Buy an attachment at the same time as a new XCMG machine, and QuickFi finances the attachment with the machine.</p>
             <p>Our sales team confirms which attachment fits your machine and its coupler before you order.</p>
-            <ul class="att-list">
-              <li><span class="an">Taurox</span><span>We sell Taurox attachments for excavators and loaders.</span></li>
-              <li><a class="an" href="https://sasforks.com/" target="_blank" rel="noopener">SAS Forks<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><span>SAS makes long forks, adjustable pallet and multi-use forks, and the Gladiator quick coupler for recycling yards and material handling.</span></li>
-              <li><a class="an" href="https://www.drkhorsetools.com/" target="_blank" rel="noopener">DRKhorse Tools<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a><span>DRKhorse Tools makes attachments and tools for heavy equipment. The maker’s website lists every product, and our sales team gives you the price and checks the fit for your machine.</span></li>
+            <ul class="att-list att-makers">
+              <li><a class="an mk" href="https://taurox.com/" target="_blank" rel="noopener" aria-label="Taurox (opens in a new tab)"><span class="mk-logo"><img src="../assets/17fc03a4b1e38e7f.png" alt="Taurox logo" width="800" height="211" loading="lazy" style="width: 138px; height: 36px"></span><span class="mk-nm">Taurox<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a><span>We sell Taurox attachments for excavators and loaders.</span></li>
+              <li><a class="an mk" href="https://sasforks.com/" target="_blank" rel="noopener" aria-label="SAS Forks (opens in a new tab)"><span class="mk-logo"><img src="../assets/0e5122f2974c2e20.png" alt="SAS Forks logo" width="537" height="315" loading="lazy" style="width: 92px; height: 54px"></span><span class="mk-nm">SAS Forks<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a><span>SAS makes long forks, adjustable pallet and multi-use forks, and the Gladiator quick coupler for recycling yards and material handling.</span></li>
+              <li><a class="an mk" href="https://www.drkhorsetools.com/" target="_blank" rel="noopener" aria-label="DRKhorse Tools (opens in a new tab)"><span class="mk-logo"><img src="../assets/9dc63c18910e9aa5.png" alt="DRKhorse Tools logo" width="671" height="253" loading="lazy" style="width: 116px; height: 44px"></span><span class="mk-nm">DRKhorse Tools<svg viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></span></a><span>DRKhorse Tools makes attachments and tools for heavy equipment. The maker’s website lists every product, and our sales team gives you the price and checks the fit for your machine.</span></li>
             </ul>
           </div>
         </div>

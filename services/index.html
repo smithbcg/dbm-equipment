@@ -360,6 +360,21 @@ main:has(> .subnav[aria-label="Buy equipment"]) { display: flex; flex-direction:
 main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 @media (min-width: 701px) { main > .subnav[aria-label="Buy equipment"] { position: sticky; top: var(--dbm-nav-h, 0px); view-transition-name: dbm-buy-row; } }
 
+/* 0% financing band (DBM's review call, 28 Oct 2026), from hifi/partials/qf-band.html: one slim band on the header's dark plate
+   under the site header on Home, Equipment, New XCMG Equipment, XCMG at DBM, and the XE18U page. On the Buy pages it comes after
+   the row of Buy links, so that row stays directly under the header. It scrolls with the page. The sentence is set in the body
+   type and the link in the header's Archivo capitals with the Brand Site's 22 by 10 arrow, which steps 7 px on hover. */
+.qf-band { background: var(--plate); box-shadow: inset 0 1px 0 var(--dark-rule), inset 0 -1px 0 var(--dark-rule); padding: 0 var(--pad-x); }
+.qf-in { display: flex; align-items: center; justify-content: space-between; gap: 2px 32px; flex-wrap: wrap; padding: 6px 0; }
+.qf-band p { margin: 0; color: var(--silver); font-size: 15px; line-height: 1.5; padding: 6px 0; }
+.qf-band p b { color: #FFFFFF; font-weight: 700; }
+.qf-go { display: inline-flex; align-items: center; gap: 12px; min-height: 36px; padding-right: 9px; color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: 0.3em; text-transform: uppercase; white-space: nowrap; text-decoration: none; background-image: linear-gradient(var(--orange), var(--orange)); background-repeat: no-repeat; background-position: left calc(100% - 4px); background-size: 0% 2px; transition: background-size .3s ease; }
+.qf-go svg { width: 22px; height: 10px; flex: none; color: var(--orange-hover); transition: transform .32s cubic-bezier(.34,1.7,.64,1); }
+.qf-go:hover, .qf-go:focus-visible { background-size: 100% 2px; }
+.qf-go:hover svg, .qf-go:focus-visible svg { transform: translateX(7px); }
+.qf-band a:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
+@media (max-width: 620px) { .qf-in { padding: 8px 0 4px; } .qf-band p { font-size: 14.5px; padding: 0; } .qf-go { min-height: 44px; } }
+
 .call-in .h { margin: 0; color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; line-height: 1.04; text-transform: uppercase; }
 .call-in .mono { color: var(--silver); font-size: 12px; letter-spacing: 0.2em; }
 .call-in .fine { color: #9A9A9A; font-size: 14.5px; border-top: 1px solid #2A2A2A; padding-top: 18px; margin: 0; }
@@ -835,6 +850,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
           <li><a class="mrow" href="../equipment/new/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>New XCMG equipment</span><span class="msub">XCMG’s lineup with published specifications and price requests, and 0% financing available on approved credit.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../equipment/used/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Used equipment</span><span class="msub">Used machines of any make, sold and shipped to any address in the US.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
           <li><a class="mrow" href="../equipment/xcmg/" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>XCMG at DBM</span><span class="msub">How we sell, deliver, and service XCMG machines as the exclusive XCMG dealer.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
+          <li><a class="mrow" href="../equipment/#attachments" data-row="dark" data-mitem><span class="medge" data-edge aria-hidden="true"></span><span class="mtext"><span class="mtitle" data-rtitle>Attachments</span><span class="msub">We sell forks, couplers, and other attachments from SAS Forks, DRKhorse Tools, and Taurox.</span></span><svg class="marr" data-rarr viewBox="0 0 22 10" aria-hidden="true"><path d="M0 5h17M13 1l5 4-5 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a></li>
         </ul></div>
         <div class="mcol"><p class="mh">Read first</p><ul class="mreads">
           <li><a class="mread" href="../finance/#how" data-mitem>How financing works for new and used machines</a></li>
