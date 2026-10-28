@@ -53,6 +53,14 @@ img { display: block; max-width: 100%; }
 [id] { scroll-margin-top: var(--dbm-nav); }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--silver); outline-offset: 4px; }
 .on-light button:focus-visible, .on-light a:focus-visible { outline-color: var(--steel); }
+/* The link rows under the header (Buy pages and service pages) sit on white or light gray, so their focus ring is Steel Gray, not Silver */
+.subnav a:focus-visible { outline-color: var(--steel); }
+/* The mono buttons (.mono-btn, and .monol on the industry pages) cut two corners with clip-path, and that clip also cut off the focus ring.
+   On keyboard focus the clip below keeps the two cut corners, and it also leaves an 8 px margin open around the button, so the 2 px ring set 4 px outside shows. */
+.mono-btn:focus-visible, .monol:focus-visible { clip-path: polygon(evenodd, calc(100% - 10px) -8px, calc(100% + 8px) -8px, calc(100% + 8px) calc(100% + 8px), 10px calc(100% + 8px), 10px 100%, 0 100%, 0 calc(100% - 10px), 10px 100%, 10px calc(100% + 8px), -8px calc(100% + 8px), -8px -8px, calc(100% - 10px) -8px, calc(100% - 10px) 0, 100% 0, 100% 10px, calc(100% - 10px) 0); }
+/* The dark mono buttons sit on dark panels and the light ones on light grounds, so the ring color follows the variant, even inside an .on-light section. */
+.mono-btn[data-mono="dark"]:focus-visible, .monol[data-mono="dark"]:focus-visible { outline-color: var(--silver); }
+.mono-btn[data-mono="light"]:focus-visible, .monol[data-mono="light"]:focus-visible { outline-color: var(--steel); }
 @keyframes tread-march { to { background-position: 22.63px 0; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -192,11 +200,15 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .rail-title { color: #FFFFFF; font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 800; line-height: 1.1; margin-top: 10px; }
 .rail-ctl { display: flex; gap: 14px; align-items: center; flex: none; }
 .rail-count { color: var(--silver); font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.06em; margin-right: 6px; white-space: nowrap; }
-.nbtn { appearance: none; border: 0; cursor: pointer; position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 14px; background: var(--orange); color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; padding: 13px 22px; clip-path: var(--chamfer-12); transition: clip-path .32s cubic-bezier(.215,.61,.355,1), background-color .2s ease; }
-.nbtn:hover:not([disabled]), .nbtn:focus-visible { clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); background: #D9440F; }
-.nbtn[disabled] { background: #3A3D42; color: #8A8D93; cursor: default; }
+/* The orange fill and its cut corners are drawn on ::before instead of on the button itself.
+   A clip on the button would also cut off the button's focus ring, and keyboard users would not see which button has focus. */
+.nbtn { appearance: none; border: 0; cursor: pointer; position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; gap: 14px; background: none; color: #FFFFFF; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; padding: 13px 22px; }
+.nbtn::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--orange); clip-path: var(--chamfer-12); transition: clip-path .32s cubic-bezier(.215,.61,.355,1), background-color .2s ease; }
+.nbtn:hover:not([disabled])::before, .nbtn:focus-visible::before { clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); background: #D9440F; }
+.nbtn[disabled] { color: #8A8D93; cursor: default; }
+.nbtn[disabled]::before { background: #3A3D42; }
 .nbtn svg { width: 22px; height: 10px; flex: none; transition: transform .32s cubic-bezier(.34,1.7,.64,1); }
-.nbtn:hover:not([disabled]) .fwd { transform: translateX(5px); } .nbtn:hover:not([disabled]) .back { transform: translateX(-5px); }
+.nbtn:hover:not([disabled]) .fwd { transform: translateX(7px); } .nbtn:hover:not([disabled]) .back { transform: translateX(-7px); }
 .track { display: flex; gap: 26px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 6px 6px 30px; scroll-padding-left: 6px; scrollbar-width: none; }
 .track::-webkit-scrollbar { display: none; }
 .frame { flex: none; width: min(440px, 78vw); scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 18px; }
@@ -1578,11 +1590,16 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     g.fromTo(sp, { scale: 0, opacity: 0.9 }, { scale: 12, opacity: 0, duration: D(0.6), ease: 'power2.out', onComplete: function () { sp.remove(); } });
   }
 
-  /* Chamfer Orange, notch advance (C07 _nadv lines 933 to 962, C09 _nadv): the cut deepens, five slats drop from the top, the arrow steps */
+  /* Chamfer Orange, notch advance (C07 _nadv lines 933 to 962, C09 _nadv): the cut deepens, five slats drop from the top, the arrow steps.
+     The script draws the fill and the cut on the inner [data-nfill] layer instead of on the button itself.
+     A clip on the button would also cut off the button's focus ring, and keyboard users would not see which button has focus. */
   $$('[data-nadv]').forEach(function (btn) {
     var host = btn.querySelector('[data-nfill]'), arrow = btn.querySelector('[data-narrow]');
     if (!host) return;
     host.innerHTML = '';
+    host.style.background = getComputedStyle(btn).backgroundColor;
+    btn.style.background = 'transparent';
+    btn.style.clipPath = 'none';
     var slats = [];
     for (var i = 0; i < 5; i++) {
       var s = document.createElement('span');
@@ -1590,9 +1607,9 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       host.appendChild(s); slats.push(s);
     }
     g.set(slats, { skewX: -20, scaleY: 0, transformOrigin: 'top center' });
-    g.set(btn, { clipPath: poly(+btn.dataset.cut) });
+    g.set(host, { clipPath: poly(+btn.dataset.cut) });
     var tl = g.timeline({ paused: true })
-      .to(btn, { clipPath: poly(+btn.dataset.cutTo), duration: D(0.32), ease: 'power2.out' }, 0)
+      .to(host, { clipPath: poly(+btn.dataset.cutTo), duration: D(0.32), ease: 'power2.out' }, 0)
       .to(slats, { scaleY: 1, duration: D(0.26), ease: 'power2.out', stagger: D(0.04) }, 0);
     if (arrow) tl.to(arrow, { x: 7 * (+btn.dataset.nadv || 1), duration: D(0.32), ease: 'back.out(2)' }, D(0.05));
     btn.__tl = tl;
@@ -1627,11 +1644,12 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   /* Kit B2 disabled state (C09 _kdis): a flat inset plate with dead ink, no base and no shadow */
   function kdis(btn, off) {
     if (btn.hasAttribute('data-nadv')) {
+      var fill = btn.querySelector('[data-nfill]') || btn;
       btn.disabled = off;
       if (off && btn.__tl) btn.__tl.pause(0);
-      if (off) g.set(btn, { clipPath: poly(12), y: 0 });
+      if (off) { g.set(fill, { clipPath: poly(12) }); g.set(btn, { y: 0 }); }
       var lt = btn.hasAttribute('data-nlight');
-      btn.style.background = off ? (lt ? '#D5D7DA' : '#232323') : (btn.dataset.nbg || '#EF5016');
+      fill.style.background = off ? (lt ? '#D5D7DA' : '#232323') : (btn.dataset.nbg || '#EF5016');
       btn.style.color = off ? (lt ? '#6B6F76' : '#5E5E5E') : '#FFFFFF';
       btn.style.cursor = off ? 'not-allowed' : 'pointer';
       var p = btn.querySelector('[data-narrow] path'); if (p) p.setAttribute('stroke', off ? (lt ? '#6B6F76' : '#5E5E5E') : '#FFFFFF');
@@ -1662,7 +1680,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
       btn.classList.toggle('is-busy', !!off);
       if (off && btn.__tl) btn.__tl.reverse();
     } else if (btn.dataset.nadv !== undefined) {
-      btn.style.background = off ? '#D5D7DA' : '#EF5016';
+      (btn.querySelector('[data-nfill]') || btn).style.background = off ? '#D5D7DA' : '#EF5016';
       btn.style.color = off ? '#4B4F56' : '#FFFFFF';
       if (off && btn.__tl) btn.__tl.reverse();
     }
@@ -1671,10 +1689,13 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
 
   /* Field Mono with Bracket Lock (C07 _mono, _br, _set, lines 989 to 1023) */
   function brackets(el, show) { var c = $$('[data-c]', el); if (c.length) g.to(c, { scale: show ? 1 : 0, duration: D(0.24), ease: 'back.out(2.2)', overwrite: 'auto' }); }
+  /* A band can set the rest outline color of its mono buttons with the --mono-rule property, and the script then uses that color instead of the default.
+     The Bone coverage bands set it, because the default light outline (#B9BCC1) has almost no contrast against Bone. */
+  function monoRule(btn, dark) { return getComputedStyle(btn).getPropertyValue('--mono-rule').trim() || (dark ? '#3A3D42' : '#B9BCC1'); }
   $$('[data-mono]').forEach(function (btn) {
     var dark = btn.dataset.mono === 'dark';
     on(btn, 'pointerenter', function () { if (btn.getAttribute('aria-pressed') === 'true') return; brackets(btn, true); btn.style.boxShadow = 'inset 0 0 0 1.5px ' + (dark ? '#EF5016' : '#C9430D'); btn.style.color = dark ? '#FFFFFF' : '#1A1A1A'; });
-    on(btn, 'pointerleave', function () { g.to(btn, { y: 0, duration: 0.1, overwrite: 'auto' }); if (btn.getAttribute('aria-pressed') === 'true') return; brackets(btn, false); btn.style.boxShadow = 'inset 0 0 0 1.5px ' + (dark ? '#3A3D42' : '#B9BCC1'); btn.style.color = dark ? '#C7C9CC' : '#4B4F56'; });
+    on(btn, 'pointerleave', function () { g.to(btn, { y: 0, duration: 0.1, overwrite: 'auto' }); if (btn.getAttribute('aria-pressed') === 'true') return; brackets(btn, false); btn.style.boxShadow = 'inset 0 0 0 1.5px ' + monoRule(btn, dark); btn.style.color = dark ? '#C7C9CC' : '#4B4F56'; });
     on(btn, 'pointerdown', function () { g.to(btn, { y: 1, duration: D(0.06), overwrite: 'auto' }); });
     on(btn, 'pointerup', function () { g.to(btn, { y: 0, duration: D(0.12), overwrite: 'auto' }); });
   });
@@ -1683,7 +1704,7 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     btn.style.background = active ? (dark ? '#FFFFFF' : '#1A1A1A') : 'transparent';
     btn.style.color = active ? (dark ? '#1A1A1A' : '#FFFFFF') : (dark ? '#C7C9CC' : '#4B4F56');
-    btn.style.boxShadow = active ? 'none' : 'inset 0 0 0 1.5px ' + (dark ? '#3A3D42' : '#B9BCC1');
+    btn.style.boxShadow = active ? 'none' : 'inset 0 0 0 1.5px ' + monoRule(btn, dark);
     brackets(btn, false);
   };
 

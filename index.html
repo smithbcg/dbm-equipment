@@ -735,6 +735,8 @@ html:not(.js) #not-sure, html:not(.js) .req-close { display: none; }
 .monol { position: relative; border: 0; cursor: pointer; background: transparent; color: #4B4F56; font-family: 'Chivo Mono', monospace; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 13px 22px; min-height: 44px; text-align: center; box-shadow: inset 0 0 0 1.5px #B9BCC1; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
 .monol[aria-pressed="true"] { background: #1A1A1A; color: #FFFFFF; box-shadow: none; }
 .monol .l { position: relative; }
+/* The chamfer clip above also cut off the focus ring. On keyboard focus this clip keeps the two cut corners, and it also leaves an 8 px margin open around the button, so the 2 px ring set 4 px outside shows. */
+.monol:focus-visible { clip-path: polygon(evenodd, calc(100% - 10px) -8px, calc(100% + 8px) -8px, calc(100% + 8px) calc(100% + 8px), 10px calc(100% + 8px), 10px 100%, 0 100%, 0 calc(100% - 10px), 10px 100%, 10px calc(100% + 8px), -8px calc(100% + 8px), -8px -8px, calc(100% - 10px) -8px, calc(100% - 10px) 0, 100% 0, 100% 10px, calc(100% - 10px) 0); }
 .monol [data-c] { position: absolute; width: 15px; height: 15px; transform: scale(0); pointer-events: none; }
 .monol [data-c="tl"] { top: 0; left: 0; border-top: 2.5px solid #EF5016; border-left: 2.5px solid #EF5016; transform-origin: top left; }
 .monol [data-c="br"] { bottom: 0; right: 0; border-bottom: 2.5px solid #EF5016; border-right: 2.5px solid #EF5016; transform-origin: bottom right; }
@@ -1793,13 +1795,16 @@ html:not(.gsap-on) .mrow:hover .mtitle, html:not(.gsap-on) .mrow:focus-visible .
     var g = window.gsap; if (!g) return;
     var D = function (t) { return reduce ? 0 : t; };
     var poly = function (c) { return 'polygon(0 0, calc(100% - ' + c + 'px) 0, 100% ' + c + 'px, 100% 100%, ' + c + 'px 100%, 0 calc(100% - ' + c + 'px))'; };
-    // C07 _nadv: the cut deepens, five slats drop from the top, the arrow steps 7px
+    // C07 _nadv: the cut deepens, five slats drop from the top, the arrow steps 7px.
+    // The script draws the fill and the cut on the inner [data-nfill] layer instead of on the button itself.
+    // A clip on the button would also cut off the button's focus ring, and keyboard users would not see which button has focus.
     $$('[data-nadv]').forEach(function (btn) {
       var host = btn.querySelector('[data-nfill]'), arrow = btn.querySelector('[data-narrow]'); if (!host || host.children.length) return;
+      host.style.background = getComputedStyle(btn).backgroundColor; btn.style.background = 'transparent'; btn.style.clipPath = 'none';
       var slats = [];
       for (var i = 0; i < 5; i++) { var sp = document.createElement('span'); sp.style.cssText = 'position:absolute;top:-12%;bottom:-12%;width:27%;left:' + (-6 + i * 21) + '%;background:#1A1A1A;'; host.appendChild(sp); slats.push(sp); }
-      g.set(slats, { skewX: -20, scaleY: 0, transformOrigin: 'top center' }); g.set(btn, { clipPath: poly(+btn.dataset.cut) });
-      var tl = g.timeline({ paused: true }).to(btn, { clipPath: poly(+btn.dataset.cutTo), duration: D(0.32), ease: 'power2.out' }, 0).to(slats, { scaleY: 1, duration: D(0.26), ease: 'power2.out', stagger: D(0.04) }, 0);
+      g.set(slats, { skewX: -20, scaleY: 0, transformOrigin: 'top center' }); g.set(host, { clipPath: poly(+btn.dataset.cut) });
+      var tl = g.timeline({ paused: true }).to(host, { clipPath: poly(+btn.dataset.cutTo), duration: D(0.32), ease: 'power2.out' }, 0).to(slats, { scaleY: 1, duration: D(0.26), ease: 'power2.out', stagger: D(0.04) }, 0);
       if (arrow) tl.to(arrow, { x: 7, duration: D(0.32), ease: 'back.out(2)' }, D(0.05));
       btn.addEventListener('pointerenter', function () { tl.play(); });
       btn.addEventListener('pointerleave', function () { tl.reverse(); g.to(btn, { y: 0, duration: 0.12, ease: 'power1.out', overwrite: 'auto' }); });
