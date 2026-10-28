@@ -221,6 +221,8 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .frame .d { color: var(--silver); font-size: 15.5px; line-height: 1.5; text-wrap: pretty; }
 .bar { position: relative; height: 6px; background: var(--black); box-shadow: inset 0 1px 2px rgba(0,0,0,.22); }
 .bar span { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; background: linear-gradient(#6A707A, #4B4F56); box-shadow: inset 0 1px 0 rgba(255,255,255,.2); transition: left .25s ease, width .25s ease; }
+/* CAR-10: the spoken position and the arrow-key help that service-page.js adds are read by screen readers and are not shown */
+.rail-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* 4. How a job works: board C09 CAR-08 Explainer Stepper, as a static version that shows all four steps (a new variant) */
 .steps-card { background: linear-gradient(#FFFFFF, #F4F5F6); box-shadow: inset 0 0 0 1px var(--rule), inset 0 1px 0 #FFFFFF; padding: clamp(24px, 3vw, 40px); filter: drop-shadow(0 16px 22px rgba(26,26,26,0.14)) drop-shadow(0 3px 5px rgba(26,26,26,0.12)); }
@@ -252,6 +254,9 @@ body.show-assume .why [data-assume], body.show-assume .hero-lb [data-assume], bo
 .acc-panel { overflow: hidden; transition: height .3s ease; }
 .js .acc-panel[data-closed] { height: 0; }
 .acc-panel p { margin: 0; padding: 12px 26px 26px 64px; color: var(--steel); font-size: 16px; line-height: 1.65; max-width: 720px; text-wrap: pretty; }
+/* ACC-01 Questions ([data-acc]): a closed answer is hidden once it has finished closing, so the Tab key skips its links and screen readers
+   do not read it. service-page.js and dbm-motion.js add and remove the is-shut class. */
+[data-accpanel].is-shut { visibility: hidden; }
 
 /* 6. Other services: DBM Card Explorations 1e, Notched Plate, Title and Description */
 .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 34px; }
@@ -1097,7 +1102,55 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     });
   });
 
-  // CAR-10: native scroll with Prev and Next, a range count, and a progress bar
+  // ACC-01 Questions (the [data-acc] accordions; dbm-motion.js runs their motion). Each answer panel is named by its question for screen
+  // readers through aria-labelledby. A closed answer carries the is-shut class, which service-page.css turns into visibility: hidden, so
+  // the Tab key skips the links in it and screen readers do not read it. dbm-motion.js removes the class when an answer starts to open.
+  var accGroups = document.querySelectorAll('[data-acc]');
+  accGroups.forEach(function (group) {
+    group.querySelectorAll('[data-accitem]').forEach(function (item) {
+      var head = item.querySelector('[data-acchead]'), panel = item.querySelector('[data-accpanel]');
+      if (!head || !panel) return;
+      if (!head.id && panel.id) head.id = panel.id + '-q';
+      if (head.id && !panel.hasAttribute('aria-labelledby')) panel.setAttribute('aria-labelledby', head.id);
+      if (head.getAttribute('aria-expanded') !== 'true') panel.classList.add('is-shut');
+    });
+  });
+  // If GSAP does not load, dbm-motion.js does not run and the page's CSS holds every answer at 0 px. The code below then opens and
+  // closes each answer at once, one open at a time, and the tapped question still keeps its place on screen.
+  function accFallback() {
+    if (document.documentElement.classList.contains('gsap-on')) return;
+    accGroups.forEach(function (group) {
+      var items = Array.prototype.slice.call(group.querySelectorAll('[data-accitem]'));
+      var isOpen = function (item) { return item.querySelector('[data-acchead]').getAttribute('aria-expanded') === 'true'; };
+      var set = function (item, open) {
+        var head = item.querySelector('[data-acchead]'), panel = item.querySelector('[data-accpanel]'), mark = item.querySelector('[data-accmark]'),
+            state = item.querySelector('[data-accstate]'), title = item.querySelector('[data-acctitle]'), kerf = item.querySelector('[data-acckerf]');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (state) { state.textContent = open ? 'CLOSE' : 'OPEN'; state.style.color = open ? '#C9430D' : '#6B6F76'; }
+        if (title) title.style.color = open ? '#C9430D' : '#1A1A1A';
+        if (mark) { mark.style.transform = open ? 'rotate(90deg)' : ''; mark.style.background = open ? '#EF5016' : ''; }
+        if (kerf) kerf.style.visibility = open ? '' : 'hidden';
+        panel.style.height = open ? 'auto' : '0px';
+        panel.classList.toggle('is-shut', !open);
+      };
+      items.forEach(function (item) {
+        set(item, isOpen(item));
+        item.querySelector('[data-acchead]').addEventListener('click', function () {
+          var open = !isOpen(item), others = items.filter(function (o) { return o !== item && isOpen(o); });
+          window.dbmHoldPlace(item, others.map(function (o) { return o.querySelector('[data-accpanel]'); }), 0);
+          others.forEach(function (o) { set(o, false); });
+          set(item, open);
+        });
+      });
+    });
+  }
+  if (accGroups.length) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', accFallback); else setTimeout(accFallback, 0); }
+
+  // CAR-10: native scroll with Prev and Next, a range count, and a progress bar.
+  // A live region says the position in words after each move, such as "Showing photos 2 to 3 of 6", and the visible count is hidden from
+  // screen readers so the position is not read twice. While the row has focus, the Left and Right arrow keys move one whole photo, and
+  // Home and End go to the first and last photo. A hidden sentence tells screen-reader users about those keys. When Previous or Next turns
+  // disabled at an end while it has keyboard focus, focus moves to the other button.
   var track = document.querySelector('.track');
   if (track) {
   var frames = track.querySelectorAll('.frame');
@@ -1105,7 +1158,19 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
   var bar = document.querySelector('.bar span');
   var prev = document.querySelector('[data-rail="prev"]');
   var next = document.querySelector('[data-rail="next"]');
+  var keysTip = document.createElement('p'), live = document.createElement('p'), said = '', sayT = 0;
+  keysTip.className = live.className = 'rail-sr';
+  keysTip.id = 'rail-keys';
+  keysTip.textContent = 'Use the Left and Right arrow keys to move one photo at a time, and Home or End to reach the first or last photo.';
+  live.setAttribute('role', 'status');
+  live.setAttribute('aria-live', 'polite');
+  track.parentNode.insertBefore(keysTip, track.nextSibling);
+  track.parentNode.insertBefore(live, keysTip.nextSibling);
+  if (!track.hasAttribute('role')) track.setAttribute('role', 'region');
+  track.setAttribute('aria-describedby', 'rail-keys');
+  if (count) { count.removeAttribute('aria-live'); count.setAttribute('aria-hidden', 'true'); }
   function step() { return frames[0].getBoundingClientRect().width + 26; }
+  function go(left) { track.scrollBy({ left: left, behavior: reduce ? 'auto' : 'smooth' }); }
   function report() {
     var n = frames.length, w = step();
     var first = Math.round(track.scrollLeft / w);
@@ -1114,11 +1179,30 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     count.textContent = (first + 1) + (last > first + 1 ? '–' + last : '') + ' OF ' + n;
     bar.style.width = Math.max(10, (last - first) / n * 100) + '%';
     bar.style.left = (first / n * 100) + '%';
+    var onPrev = document.activeElement === prev, onNext = document.activeElement === next;
     prev.disabled = track.scrollLeft < 10;
     next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+    if (onNext && next.disabled) (prev.disabled ? track : prev).focus({ preventScroll: true });
+    if (onPrev && prev.disabled) (next.disabled ? track : next).focus({ preventScroll: true });
+    var cap = frames[first] && frames[first].querySelector('.t');
+    var t = last > first + 1 ? 'Showing photos ' + (first + 1) + ' to ' + last + ' of ' + n + '.' : 'Showing photo ' + (first + 1) + ' of ' + n + (cap ? ', ' + cap.textContent : '') + '.';
+    // The first reading is kept without being spoken, and later readings wait 250 ms so that a smooth scroll is announced once, where it stops
+    if (!said) { said = t; return; }
+    clearTimeout(sayT);
+    sayT = setTimeout(function () { if (t !== said) { said = t; live.textContent = t; } }, 250);
   }
-  prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }); });
-  next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }); });
+  prev.addEventListener('click', function () { go(-step()); });
+  next.addEventListener('click', function () { go(step()); });
+  track.addEventListener('keydown', function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight') go(step());
+    else if (k === 'ArrowLeft') go(-step());
+    else if (k === 'Home') track.scrollTo({ left: 0, behavior: reduce ? 'auto' : 'smooth' });
+    else if (k === 'End') track.scrollTo({ left: track.scrollWidth, behavior: reduce ? 'auto' : 'smooth' });
+    else return;
+    e.preventDefault();
+  });
   track.addEventListener('scroll', function () { window.requestAnimationFrame(report); }, { passive: true });
   window.addEventListener('resize', report);
   report();
@@ -1613,7 +1697,10 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
     });
   });
 
-  /* ACC-01 Questions (C05 _accordion): the corner turns to Ignition, the kerf draws, the panel tweens to auto height, one open at a time */
+  /* ACC-01 Questions (C05 _accordion): the corner turns to Ignition, the kerf draws, the panel tweens to auto height, one open at a time.
+     A closed answer carries the is-shut class, which service-page.css turns into visibility: hidden, so the Tab key skips the links in it
+     and screen readers do not read it. This code removes the class before an answer starts to open and adds it back once an answer has
+     finished closing, so the motion is unchanged. service-page.js adds the class to every closed answer when the page loads. */
   $$('[data-acc]').forEach(function (group) {
     var items = $$('[data-accitem]', group);
     items.forEach(function (item) {
@@ -1628,7 +1715,8 @@ main > .subnav[aria-label="Buy equipment"] { order: -1; z-index: 30; }
         title.style.color = open ? '#C9430D' : '#1A1A1A';
         g.to(mark, { rotate: open ? 90 : 0, backgroundColor: open ? '#EF5016' : '#4B4F56', duration: D(0.3), ease: 'power2.out', overwrite: 'auto' });
         if (kerf && window.DrawSVGPlugin) g.to(kerf, { drawSVG: open ? '100%' : '0%', duration: D(0.42), ease: 'power2.inOut', overwrite: 'auto' });
-        g.to(panel, { height: open ? 'auto' : 0, duration: D(0.38), ease: 'power2.inOut', overwrite: 'auto' });
+        if (open) panel.classList.remove('is-shut');
+        g.to(panel, { height: open ? 'auto' : 0, duration: D(0.38), ease: 'power2.inOut', overwrite: 'auto', onComplete: function () { if (!item.__open) panel.classList.add('is-shut'); } });
         if (open && !R) g.fromTo(panel.firstElementChild, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', delay: 0.08, overwrite: 'auto' });
       };
       on(head, 'pointerenter', function () { brackets(head, true); head.style.background = '#F6F7F8'; });
